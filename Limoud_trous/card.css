@@ -1,0 +1,45 @@
+.card {
+ background-color: white;
+ color: black;
+ font-family: arial;
+ font-size: 20px;
+ text-align: center;
+}
+
+.cloze-ref {
+ color: #0ea529;
+ font-size: 1.1em;
+ font-weight: bold;
+ margin-top: 10px;
+}
+
+.cloze {
+ color: blue;
+ font-weight: bold;
+}
+
+.cloze::before, .cloze::after {
+ content: "\200F";
+}
+
+.daf {
+ background-position: center top;
+ background-repeat: no-repeat;
+ background-size: contain;
+}
+
+.ref {
+ color: green;
+ font-size: 1em;
+ font-weight: normal;
+}
+
+.context {
+ color: #81930E;
+ font-size: 0.65em;
+}
+
+.context  b {
+ color: #B5690D;
+ font-size: 1.1em;
+}

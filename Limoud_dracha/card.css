@@ -1,0 +1,39 @@
+.card {
+ background-color: white;
+ color: black;
+ font-family: arial;
+ font-size: 20px;
+ text-align: center;
+}
+
+.env {
+ color: green;
+ font-size: 1em;
+ font-weight: normal;
+}
+
+.daf {
+ background-position: center top;
+ background-repeat: no-repeat;
+ background-size: contain;
+}
+
+.drachWord {
+ color: red;
+}
+
+.sic {
+ color: blue;
+}
+
+.daf {
+ background-position: center -2px;
+ background-size: contain;
+}
+
+.ref {
+ color: #0ea529;
+ font-size: 1.1em;
+ font-weight: bold;
+ margin-top: 10px;
+}
