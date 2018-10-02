@@ -120,3 +120,19 @@ pre {
   text-decoration: white;
   white-space: pre-wrap;
 }
+
+i {
+  font-style: normal;
+}
+
+.typ {
+  color: cyan;
+}
+
+.nam {
+  color: #FD971F;
+}
+
+.val {
+  color: #E6DB74;
+}
