@@ -1,0 +1,122 @@
+.card {
+  background-color: white;
+  color: black;
+  display: inline-block;
+  font-family: arial;
+  font-size: 20px;
+  margin: auto;
+  text-align: center;
+}
+
+.cloze {
+  color: blue;
+  font-weight: bold;
+}
+
+.toam {
+  background-color: #939;
+}
+
+.toen {
+  background-color: red;
+}
+
+.tofr {
+  background-color: blue;
+}
+
+.tohe {
+  background-color: cyan;
+}
+
+.toam,
+.toen,
+.tofr,
+.tohe {
+  font-weight: bold;
+  padding: 7px;
+}
+
+:root {
+  text-align: center;
+}
+
+aside {
+  background: #eeb;
+  border-radius: 0.5em;
+  color: #a62;
+  margin-top: 1em;
+  padding: 15px 5px;
+}
+
+code {
+  background-color: #eee;
+  background-color: #ddd;
+  background-color: #ccc;
+  color: brown;
+  padding: 0 6px;
+  padding: 0 7px;
+  padding: 2px 6px;
+  padding: 2px 5px;
+  padding: 3px;
+  padding: 0 .5em;
+  white-space: nowrap;
+}
+
+.hotkey {
+  display: inline;
+  white-space: nowrap;
+}
+
+kbd,
+.key {
+  background-color: #ddd;
+  border: solid 2px #aaa;
+  border-radius: 5px;
+  display: inline-block;
+  font-size: .7em;
+  padding: 2px 15px;
+}
+
+/**
+dl {
+  text-align: left;
+}
+dd, dt {
+  display: inline;
+}
+dt {
+  font-weight: bold;
+}
+dt::after {
+  content: ":";
+}
+dt::before {
+  content: "\a\2022\20";
+  white-space: pre;
+}
+/**/
+h1 {
+  color: green;
+  font-weight: normal;
+}
+
+img {
+  float: left;
+}
+
+pre b {
+  color: red;
+}
+
+pre {
+  background: #282828;
+  color: white;
+  font-weight: bold;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 0.5em;
+  text-align: left;
+  text-decoration: white;
+  white-space: pre-wrap;
+}
