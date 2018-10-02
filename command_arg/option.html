@@ -1,0 +1,14 @@
+<h1 class="env">{{Tags}}</h1>
+<h2><code><i id="cn" onclick="this.outerText='{{CommandName}}'" style="font-size:.5em;">afficher CommandName</i></code> option to</h2>
+{{Usage}}
+
+<!------------------------>
+
+{{FrontSide}}
+
+<hr id="answer">
+
+{{#Arg}}<code>{{Arg}}</code>{{#ShortAlias}} or {{/ShortAlias}}{{/Arg}}{{#ShortAlias}}<code>{{ShortAlias}}</code>{{/ShortAlias}}
+<aside>{{Example}}</aside>
+<div style="font-size:.5em;margin-top:4em;">{{Type}}&gt;{{Card}}</div>
+<script>cn.onclick();</script>
