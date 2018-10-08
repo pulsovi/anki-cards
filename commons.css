@@ -59,12 +59,18 @@ pre {
   margin-right: auto;
   padding: 0 0.5em;
   text-align: left;
-  text-decoration: white;
+  text-decoration-color: white;
   white-space: pre-wrap;
 }
 
 pre b {
   color: red;
+}
+
+ul, ol {
+  display: inline-block;
+  margin: 0 auto;
+  text-align: left;
 }
 
 .card {
