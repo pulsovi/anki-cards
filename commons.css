@@ -34,6 +34,14 @@ h1 {
   font-weight: normal;
 }
 
+header {
+  background-color: #34b9ff;
+  color: white;
+  font-size: 2em;
+  margin-bottom: 1em;
+  padding: 0.5em 1em;
+}
+
 i {
   font-style: normal;
 }
