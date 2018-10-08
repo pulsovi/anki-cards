@@ -1,42 +1,3 @@
-.card {
-  background-color: white;
-  color: black;
-  display: inline-block;
-  font-family: arial;
-  font-size: 20px;
-  margin: auto;
-  text-align: center;
-}
-
-.cloze {
-  color: blue;
-  font-weight: bold;
-}
-
-.toam {
-  background-color: #939;
-}
-
-.toen {
-  background-color: red;
-}
-
-.tofr {
-  background-color: blue;
-}
-
-.tohe {
-  background-color: cyan;
-}
-
-.toam,
-.toen,
-.tofr,
-.tohe {
-  font-weight: bold;
-  padding: 7px;
-}
-
 :root {
   text-align: center;
 }
@@ -63,50 +24,31 @@ code {
   white-space: nowrap;
 }
 
-.hotkey {
-  display: inline;
-  white-space: nowrap;
+footer {
+  font-size:.5em;
+  margin-top:2em;
 }
 
-kbd,
-.key {
-  background-color: #ddd;
-  border: solid 2px #aaa;
-  border-radius: 5px;
-  display: inline-block;
-  font-size: .7em;
-  padding: 2px 15px;
-}
-
-/**
-dl {
-  text-align: left;
-}
-dd, dt {
-  display: inline;
-}
-dt {
-  font-weight: bold;
-}
-dt::after {
-  content: ":";
-}
-dt::before {
-  content: "\a\2022\20";
-  white-space: pre;
-}
-/**/
 h1 {
   color: green;
   font-weight: normal;
+}
+
+i {
+  font-style: normal;
 }
 
 img {
   float: left;
 }
 
-pre b {
-  color: red;
+kbd {
+  background-color: #ddd;
+  border: solid 2px #aaa;
+  border-radius: 5px;
+  display: inline-block;
+  font-size: .7em;
+  padding: 2px 15px;
 }
 
 pre {
@@ -121,16 +63,60 @@ pre {
   white-space: pre-wrap;
 }
 
-i {
-  font-style: normal;
+pre b {
+  color: red;
 }
 
-.typ {
-  color: cyan;
+.card {
+  background-color: white;
+  color: black;
+  display: inline-block;
+  font-family: arial;
+  font-size: 20px;
+  margin: auto;
+  text-align: center;
+}
+
+.cloze {
+  color: blue;
+  font-weight: bold;
+}
+
+.hotkey {
+  display: inline;
+  white-space: nowrap;
 }
 
 .nam {
   color: #FD971F;
+}
+
+.toam,
+.toen,
+.tofr,
+.tohe {
+  font-weight: bold;
+  padding: 7px;
+}
+
+.toam {
+  background-color: #939;
+}
+
+.toen {
+  background-color: red;
+}
+
+.tofr {
+  background-color: blue;
+}
+
+.tohe {
+  background-color: cyan;
+}
+
+.typ {
+  color: cyan;
 }
 
 .val {
