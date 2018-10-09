@@ -40,6 +40,7 @@ header {
   font-size: 2em;
   margin-bottom: 1em;
   padding: 0.5em 1em;
+  text-transform: uppercase;
 }
 
 i {
@@ -135,4 +136,8 @@ ul, ol {
 
 .val {
   color: #E6DB74;
+}
+
+#content {
+  margin: 0;
 }
