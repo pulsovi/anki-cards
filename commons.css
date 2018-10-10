@@ -11,15 +11,8 @@ aside {
 }
 
 code {
-  background-color: #eee;
-  background-color: #ddd;
   background-color: #ccc;
   color: brown;
-  padding: 0 6px;
-  padding: 0 7px;
-  padding: 2px 6px;
-  padding: 2px 5px;
-  padding: 3px;
   padding: 0 .5em;
   white-space: nowrap;
 }
