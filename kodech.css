@@ -1,0 +1,62 @@
+:root {
+  text-align: center;
+}
+
+footer {
+  font-size: .5em;
+  margin-top: 2em;
+}
+
+header {
+  background-color: #6bbf73;
+  color: white;
+  font-size: 2em;
+  margin-bottom: 1em;
+  padding: 0.5em 1em;
+  text-transform: uppercase;
+}
+
+i {
+  font-style: normal;
+}
+
+.cloze {
+  color: blue;
+  font-weight: bold;
+}
+
+.card {
+  background-color: white;
+  color: black;
+  font-family: arial;
+  font-size: 20px;
+  font-weight: normal;
+  text-align: center;
+}
+
+.daf {
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: contain;
+  padding: 0;
+}
+
+.rep {
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+.sic {
+  color: blue;
+  font-size: 0.8em;
+  font-weight: normal;
+}
+
+.tzurah img {
+  height: auto;
+  width: 50px;
+}
+
+#content {
+  margin: 0;
+}
