@@ -18,8 +18,8 @@ code {
 }
 
 footer {
-  font-size:.5em;
-  margin-top:2em;
+  font-size: .5em;
+  margin-top: 2em;
 }
 
 h1 {
@@ -78,7 +78,7 @@ ul, ol {
 .card {
   background-color: white;
   color: black;
-  display: inline-block;
+  /*display: inline-block;*/
   font-family: arial;
   font-size: 20px;
   margin: auto;
@@ -95,16 +95,39 @@ ul, ol {
   white-space: nowrap;
 }
 
+.lang-am {
+  color: #939;
+}
+
+.lang-en {
+  color: red;
+}
+
+.lang-fr {
+  color: blue;
+}
+
+.lang-he {
+  color: cyan;
+}
+
+.lang-title {
+  background-color: white;
+  background-color: rgba(128,128,128,0.8);
+  box-shadow: rgba(128,128,128,0.8) 0 0 0.5em 0.3em;
+  color: black;
+  color: rgba(0,0,0,0.7);
+  margin: 1em auto;
+  width: 4em;
+}
+
 .nam {
   color: #FD971F;
 }
 
-.toam,
-.toen,
-.tofr,
-.tohe {
+.toam, .toen, .tofr, .tohe {
   font-weight: bold;
-  padding: 7px;
+  padding: 1em;
 }
 
 .toam {
