@@ -59,11 +59,34 @@ section {
   font-weight: bold;
 }
 
+.cloze-ref {
+  color: #0ea529;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.context b {
+  color: #B5690D;
+  font-size: 1.1em;
+}
+
+.context {
+  color: #81930E;
+  font-size: 0.65em;
+}
+
 .daf {
   background-position: center top;
   background-repeat: no-repeat;
   background-size: contain;
   padding: 0;
+}
+
+.ref {
+  color: green;
+  font-size: 1em;
+  font-weight: normal;
 }
 
 .resp {
@@ -80,6 +103,19 @@ section {
 .tzurah img {
   height: auto;
   width: 50px;
+}
+
+.win .daf img {
+  margin: 0;
+  max-width: 100%;
+  padding: 0;
+  width: 100%;
+  width: 700px;
+}
+
+.win .daf {
+  height: 1000px;
+  margin: 0-25px;
 }
 
 #content {
