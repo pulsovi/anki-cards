@@ -56,9 +56,11 @@ kbd {
 pre {
   background: #282828;
   color: white;
+  display: table;
   font-weight: bold;
   margin-left: auto;
   margin-right: auto;
+  overflow-wrap: break-word;
   padding: 0 0.5em;
   text-align: left;
   text-decoration-color: white;
