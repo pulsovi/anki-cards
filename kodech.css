@@ -17,10 +17,6 @@ aside code {
   font-weight: 700;
 }
 
-section {
-  padding: 1em;
-}
-
 footer {
   background-color: darkgray;
   color: white;
@@ -47,6 +43,10 @@ i {
 .cloze {
   color: blue;
   font-weight: bold;
+}
+
+section {
+  padding: 1em;
 }
 
 .card {
