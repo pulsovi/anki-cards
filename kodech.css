@@ -12,16 +12,25 @@ aside {
   padding: 15px 5px;
 }
 
+section {
+  padding: 1em;
+}
+
 footer {
+  background-color: darkgray;
+  color: white;
   font-size: .5em;
-  margin-top: 2em;
+  padding: 2em 0;
+}
+
+h3 {
+  margin: 0 0 1em;
 }
 
 header {
   background-color: #6bbf73;
   color: white;
   font-size: 2em;
-  margin-bottom: 1em;
   padding: 0.5em 1em;
   text-transform: uppercase;
 }
@@ -52,9 +61,9 @@ i {
   padding: 0;
 }
 
-.rep {
-  font-size: 1.1em;
-  font-weight: bold;
+.resp {
+  background-color: #3d7198;
+  color:white;
 }
 
 .sic {
