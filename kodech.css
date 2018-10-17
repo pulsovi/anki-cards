@@ -9,7 +9,8 @@
 aside {
   background: #eeb;
   color: #a62;
-  padding: 15px 5px;
+  padding: 1em;
+  text-align: justify;
 }
 
 aside code {
@@ -119,6 +120,10 @@ section {
 
 .win .daf {
   height: 1000px;
+}
+
+.mobile section aside {
+  margin: 0 -1em -1em;
 }
 
 #content {
