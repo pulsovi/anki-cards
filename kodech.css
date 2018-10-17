@@ -80,6 +80,7 @@ section {
 }
 
 .daf {
+  background-origin: content-box;
   background-position: center top;
   background-repeat: no-repeat;
   background-size: contain;
@@ -118,7 +119,6 @@ section {
 
 .win .daf {
   height: 1000px;
-  margin: 0-25px;
 }
 
 #content {
