@@ -12,6 +12,11 @@ aside {
   padding: 15px 5px;
 }
 
+aside code {
+  color: black;
+  font-weight: 700;
+}
+
 section {
   padding: 1em;
 }
