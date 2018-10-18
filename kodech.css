@@ -15,6 +15,7 @@ aside {
 
 aside code {
   color: black;
+  font-family: monospace;
   font-weight: 700;
 }
 
