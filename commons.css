@@ -7,7 +7,8 @@ aside {
   border-radius: 0.5em;
   color: #a62;
   margin-top: 1em;
-  padding: 15px 5px;
+  padding: 1em;
+  text-align: justify;
 }
 
 code {
@@ -18,8 +19,10 @@ code {
 }
 
 footer {
+  background-color: darkgray;
+  color: white;
   font-size: .5em;
-  margin-top: 2em;
+  padding: 2em 0;
 }
 
 h1 {
@@ -69,6 +72,10 @@ pre {
 
 pre b {
   color: red;
+}
+
+section {
+  padding: 1em;
 }
 
 ul, ol {
@@ -123,8 +130,17 @@ ul, ol {
   width: 4em;
 }
 
+.mobile section aside {
+  margin: 0 -1em -1em;
+}
+
 .nam {
   color: #FD971F;
+}
+
+.resp {
+  background-color: #3d7198;
+  color: white;
 }
 
 .toam, .toen, .tofr, .tohe {
