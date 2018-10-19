@@ -143,6 +143,14 @@ ul, ol {
   color: #FD971F;
 }
 
+.oper {
+  color: #F92672;
+}
+
+.func {
+  color: #A6E22E;
+}
+
 .resp {
   background-color: #3d7198;
   color: white;

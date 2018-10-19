@@ -1,18 +1,24 @@
 {{#Param1Type}}
-<h1>{{Tags}}</h1>
-<h2>in function <code>{{MethodName}}</code></h2>
-<b>Type</b> of <code>{{Param1Name}}</code> parameter
+	<header>{{Tags}}</header>
+
+	<section>
+		<h2>in function <code>{{MethodName}}</code></h2>
+		<b>Type</b> of <code>{{Param1Name}}</code> parameter
+	</section>
 {{/Param1Type}}
 
 <!------------------------------------->
 
 {{FrontSide}}
 
-<hr id="answer">
+<i id="answer"></i>
 
-<h3>{{Param1Type}}</h3>
+<section class="resp">
+	<h3>{{Param1Type}}</h3>
 
-<pre><i class="typ">{{Param1Type}}</i> <i class="nam">{{Param1Name}}</i>{{#Param1IsOptional}} (optional){{/Param1IsOptional}}{{#Param1Default}} (default is <i class="val">{{Param1Default}}</i>){{/Param1Default}} :</pre>
-<aside>{{Param1Desc}}</aside>
+	{{#Param1Desc}}<aside>{{Param1Desc}}</aside>{{/Param1Desc}}
 
-<pre>{{#ReturnType}}<font color="cyan">{{ReturnType}}</font> {{/ReturnType}}<font color="#A6E22E">{{MethodName}}</font>({{#Param1Name}}{{#Param1IsOptional}}[{{/Param1IsOptional}}{{#Param1Type}}<font color="cyan">{{Param1Type}}</font> {{/Param1Type}}<font color="#FD971F">{{Param1Name}}</font>{{#Param1Default}}<font color="#F92672">=</font><font color="#E6DB74">{{Param1Default}}</font>{{/Param1Default}}{{#Param1IsOptional}}]{{/Param1IsOptional}}{{/Param1Name}}{{#Param2Name}}, {{#Param2IsOptional}}[{{/Param2IsOptional}}{{#Param2Type}}<font color="cyan">{{Param2Type}}</font> {{/Param2Type}}<font color="#FD971F">{{Param2Name}}</font>{{#Param2Default}}<font color="#F92672">=</font><font color="#E6DB74">{{Param2Default}}</font>{{/Param2Default}}{{#Param2IsOptional}}]{{/Param2IsOptional}}{{/Param2Name}}{{#Param3Name}}, {{#Param3IsOptional}}[{{/Param3IsOptional}}{{#Param3Type}}<font color="cyan">{{Param3Type}}</font> {{/Param3Type}}<font color="#FD971F">{{Param3Name}}</font>{{#Param3Default}}<font color="#F92672">=</font><font color="#E6DB74">{{Param3Default}}</font>{{/Param3Default}}{{#Param3IsOptional}}]{{/Param3IsOptional}}{{/Param3Name}}{{#Param4Name}}, {{#Param4IsOptional}}[{{/Param4IsOptional}}{{#Param4Type}}<font color="cyan">{{Param4Type}}</font> {{/Param4Type}}<font color="#FD971F">{{Param4Name}}</font>{{#Param4Default}}<font color="#F92672">=</font><font color="#E6DB74">{{Param4Default}}</font>{{/Param4Default}}{{#Param4IsOptional}}]{{/Param4IsOptional}}{{/Param4Name}}{{#Param5Name}}, {{#Param5IsOptional}}[{{/Param5IsOptional}}{{#Param5Type}}<font color="cyan">{{Param5Type}}</font> {{/Param5Type}}<font color="#FD971F">{{Param5Name}}</font>{{#Param5Default}}<font color="#F92672">=</font><font color="#E6DB74">{{Param5Default}}</font>{{/Param5Default}}{{#Param5IsOptional}}]{{/Param5IsOptional}}{{/Param5Name}})</pre>
+	<pre>{{#ReturnType}}<i class="typ">{{ReturnType}} </i>{{/ReturnType}}<i class="func">{{MethodName}}</i>({{#Param1Name}}{{#Param1IsOptional}}[{{/Param1IsOptional}}{{#Param1Type}}<i class="typ">{{Param1Type}} </i>{{/Param1Type}}<i class="nam">{{Param1Name}}</i>{{#Param1Default}}<i class="oper">=</i><i class="val">{{Param1Default}}</i>{{/Param1Default}}{{#Param1IsOptional}}]{{/Param1IsOptional}}{{/Param1Name}}{{#Param2Name}}, {{#Param2IsOptional}}[{{/Param2IsOptional}}{{#Param2Type}}<i class="typ">{{Param2Type}} </i>{{/Param2Type}}<i class="nam">{{Param2Name}}</i>{{#Param2Default}}<i class="oper">=</i><i class="val">{{Param2Default}}</i>{{/Param2Default}}{{#Param2IsOptional}}]{{/Param2IsOptional}}{{/Param2Name}}{{#Param3Name}}, {{#Param3IsOptional}}[{{/Param3IsOptional}}{{#Param3Type}}<i class="typ">{{Param3Type}} </i>{{/Param3Type}}<i class="nam">{{Param3Name}}</i>{{#Param3Default}}<i class="oper">=</i><i class="val">{{Param3Default}}</i>{{/Param3Default}}{{#Param3IsOptional}}]{{/Param3IsOptional}}{{/Param3Name}}{{#Param4Name}}, {{#Param4IsOptional}}[{{/Param4IsOptional}}{{#Param4Type}}<i class="typ">{{Param4Type}} </i>{{/Param4Type}}<i class="nam">{{Param4Name}}</i>{{#Param4Default}}<i class="oper">=</i><i class="val">{{Param4Default}}</i>{{/Param4Default}}{{#Param4IsOptional}}]{{/Param4IsOptional}}{{/Param4Name}}{{#Param5Name}}, {{#Param5IsOptional}}[{{/Param5IsOptional}}{{#Param5Type}}<i class="typ">{{Param5Type}} </i>{{/Param5Type}}<i class="nam">{{Param5Name}}</i>{{#Param5Default}}<i class="oper">=</i><i class="val">{{Param5Default}}</i>{{/Param5Default}}{{#Param5IsOptional}}]{{/Param5IsOptional}}{{/Param5Name}})</pre>
+</section>
+
+<footer>{{Type}}&gt;{{Card}}</footer>
