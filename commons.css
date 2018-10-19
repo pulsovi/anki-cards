@@ -1,10 +1,11 @@
 :root {
+  background: #282828;
+  height: 100%;
   text-align: center;
 }
 
 aside {
   background: #eeb;
-  border-radius: 0.5em;
   color: #a62;
   margin-top: 1em;
   padding: 1em;
@@ -34,7 +35,6 @@ header {
   background-color: #34b9ff;
   color: white;
   font-size: 2em;
-  margin-bottom: 1em;
   padding: 0.5em 1em;
   text-transform: uppercase;
 }
@@ -78,6 +78,10 @@ section {
   padding: 1em;
 }
 
+section aside {
+  margin-top: 1em;
+}
+
 ul, ol {
   display: inline-block;
   margin: 0 auto;
@@ -87,10 +91,11 @@ ul, ol {
 .card {
   background-color: white;
   color: black;
-  /*display: inline-block;*/
   font-family: arial;
   font-size: 20px;
   margin: auto;
+  max-width: 700px;
+  min-height: 100%;
   text-align: center;
 }
 
