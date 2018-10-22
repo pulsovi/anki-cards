@@ -1,0 +1,23 @@
+{
+  "name": "anki-cards",
+  "version": "1.0.0",
+  "description": "mes cartes anki",
+  "main": "''",
+  "dependencies": {
+    "mkdirp": "^0.5.1",
+    "pug": "^2.0.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": ".."
+  },
+  "keywords": [
+    "anki"
+  ],
+  "author": "pulsovi",
+  "license": "ISC"
+}
