@@ -98,6 +98,10 @@ ul, ol {
   text-align: center;
 }
 
+.clearfix {
+  clear: both;
+}
+
 .cloze {
   color: blue;
   font-weight: bold;
