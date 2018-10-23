@@ -20,6 +20,7 @@ const th = [
 const list = [
   'nom',
   'pos',
+  'typ',
 ];
 
 list.forEach(function(name) {
