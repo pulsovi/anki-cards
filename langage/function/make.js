@@ -1,3 +1,4 @@
+//jshint esversion:6
 const pug = require('pug');
 const fs = require('fs');
 const mkdirp= require('mkdirp');
@@ -13,12 +14,12 @@ const th = [
   'second',
   'third',
   'fourth',
-  'fifth'
+  'fifth',
 ];
 
 const list = [
   'nom',
-  'pos'
+  'pos',
 ];
 
 list.forEach(function(name) {
