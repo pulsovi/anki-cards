@@ -1,0 +1,7 @@
+extends ../kodech_verso_layout.pug
+block response-content
+	h3.p {{Source}}
+	|{{#SourceLachon}}<aside>{{SourceLachon}}</aside>{{/SourceLachon}}
+	|{{^SourceLachon}}{{#Lachon}}<aside>{{Lachon}}</aside>{{/Lachon}}{{/SourceLachon}}
+block response-after
+	include daf.pug

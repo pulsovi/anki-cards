@@ -1,0 +1,11 @@
+block variables
+if condition
+	|{{##{condition}}}
+block header
+	header(dir='rtl') {{Tags}}
+block question
+	section.quest(dir='rtl')
+		block question-content
+		div.clearfix
+if condition
+	|{{/#{condition}}}

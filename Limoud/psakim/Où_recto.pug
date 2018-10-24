@@ -1,0 +1,8 @@
+extends ../kodech_recto_layout.pug
+block header
+	header
+		i(id='tg' onclick="this.outerText='{{Tags}}'" style="font-style:italic; font-size: 0.5em;") afficher Tags
+block question-content
+	.p איפא אמר {{Auteur}}
+		|{{#Psak}} {{Psak}}{{/Psak}}
+		|{{^Psak}} {{Question}} =&gt; {{Reponse}}{{/Psak}}

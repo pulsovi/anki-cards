@@ -1,0 +1,7 @@
+extends ../kodech_recto_layout.pug
+block variables
+	- var condition = 'Source';
+block question-content
+	.p 	על מי סמך {{Auteur}} לאמר
+		|{{#Psak}} {{Psak}}{{/Psak}}
+		|{{^Psak}} {{Question}} =&gt; {{Reponse}}{{/Psak}}
