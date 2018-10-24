@@ -26,10 +26,6 @@ footer {
   padding: 2em 0;
 }
 
-h3 {
-  margin: 0 0 1em;
-}
-
 header {
   background-color: #6bbf73;
   color: white;
@@ -43,7 +39,15 @@ i {
 }
 
 section {
-  padding: 1em;
+  padding: 1px;
+}
+
+section aside, section .p {
+  margin: 1em;
+}
+
+section .p {
+  padding: 0;
 }
 
 .card {
@@ -89,6 +93,22 @@ section {
   padding: 0;
 }
 
+.mobile section {
+  padding: 0;
+}
+
+.mobile section aside, .mobile section .p {
+  margin: 0;
+}
+
+.mobile section .p {
+  padding: 1em;
+}
+
+.mobile section .p + .p {
+  padding-top: 0;
+}
+
 .ref {
   color: green;
   font-size: 1em;
@@ -124,10 +144,6 @@ section {
   max-width: 100%;
   padding: 0;
   width: 700px;
-}
-
-.mobile section aside {
-  margin: 0 -1em -1em;
 }
 
 #content {
