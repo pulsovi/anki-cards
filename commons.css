@@ -76,7 +76,7 @@ pre b {
 }
 
 section {
-  padding: 1px;
+  padding: 1px 0;
 }
 
 section aside, section .p {
