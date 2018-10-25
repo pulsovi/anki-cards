@@ -9,7 +9,6 @@
 aside {
   background: #eeb;
   color: #a62;
-  margin-top: 1em;
   padding: 1em;
   text-align: justify;
 }
@@ -71,11 +70,15 @@ pre b {
 }
 
 section {
-  padding: 1em;
+  padding: 1px;
 }
 
-section aside {
-  margin-top: 1em;
+section aside, section .p {
+  margin: 1em;
+}
+
+section .p {
+  padding: 0;
 }
 
 ul, ol {
@@ -133,8 +136,20 @@ ul, ol {
   width: 4em;
 }
 
-.mobile section aside {
-  margin: 0 -1em -1em;
+.mobile section {
+  padding: 0;
+}
+
+.mobile section aside, .mobile section .p {
+  margin: 0;
+}
+
+.mobile section .p {
+  padding: 1em;
+}
+
+.mobile section .p + .p {
+  padding-top: 0;
 }
 
 .nam {
