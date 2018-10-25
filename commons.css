@@ -13,6 +13,11 @@ aside {
   text-align: justify;
 }
 
+aside pre, .p pre {
+  margin-bottom: 1em;
+  margin-top: 1em;
+}
+
 code {
   background-color: #ccc;
   color: brown;
