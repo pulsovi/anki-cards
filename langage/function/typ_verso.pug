@@ -1,6 +1,6 @@
 extends ../../hol_verso_layout.pug
 block response-content
-	h3 <code>{{Param#{i}Type}}</code>
+	h3.p <code>{{Param#{i}Type}}</code>
 	|{{#Param#{i}Desc}}<aside>{{Param#{i}Desc}}</aside>{{/Param#{i}Desc}}
 block response-after
 	include prototype.pug
