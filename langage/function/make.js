@@ -24,6 +24,10 @@ const list = [
   'def',
 ];
 
+const single = [
+  'paramsNb',
+];
+
 list.forEach(function(name) {
   mkdirp.sync('out/' + name);
   let recto = pug.compileFile(name + '_recto.pug');
@@ -32,4 +36,10 @@ list.forEach(function(name) {
     fs.writeFileSync('out/' + name + '/' + i + name + '_recto.html', recto({ th: th[i - 1], i: i, max: max }));
     fs.writeFileSync('out/' + name + '/' + i + name + '_verso.html', verso({ th: th[i - 1], i: i, max: max }));
   }
+});
+
+mkdirp.sync('out');
+single.forEach(function(name) {
+  fs.writeFileSync('out/' + name + '_recto.html', pug.renderFile(name + '_recto.pug', {max: max}));
+  fs.writeFileSync('out/' + name + '_verso.html', pug.renderFile(name + '_verso.pug', {max: max}));
 });

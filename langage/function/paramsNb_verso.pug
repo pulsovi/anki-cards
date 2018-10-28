@@ -1,0 +1,11 @@
+extends ../../hol_verso_layout.pug
+block response-content
+	h3.p
+		script
+			|document.write(0
+			- var i = 1;
+			while i <= max
+				|{{#Param#{i}Name}} + 1{{/Param#{i++}Name}}
+			|);
+block response-after
+	include prototype.pug
