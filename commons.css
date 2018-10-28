@@ -1,7 +1,5 @@
 :root {
   background: #282828;
-  font-family: arial;
-  font-size: 20px;
   height: 100%;
   text-align: center;
 }
@@ -96,6 +94,8 @@ ul, ol {
 .card {
   background-color: white;
   color: black;
+  font-family: arial;
+  font-size: 20px;
   margin: auto;
   max-width: 700px;
   min-height: 100%;
