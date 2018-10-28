@@ -21,6 +21,7 @@ const list = [
   'nom',
   'pos',
   'typ',
+  'def',
 ];
 
 list.forEach(function(name) {
