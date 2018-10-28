@@ -18,14 +18,15 @@ const th = [
 ];
 
 const list = [
+  'def',
   'nom',
   'pos',
   'typ',
-  'def',
 ];
 
 const single = [
   'paramsNb',
+  'usage',
 ];
 
 list.forEach(function(name) {
