@@ -85,6 +85,10 @@ section .p {
   padding: 0;
 }
 
+section + pre {
+  display: block;
+}
+
 ul, ol {
   display: inline-block;
   margin: 0 auto;
