@@ -1,7 +1,7 @@
 extends ../kodech_verso_layout.pug
 block response-content
 	h3.coord.p {{Où}}
-	aside {{Lachon}}
+	|{{#Lachon}}<aside>{{Lachon}}</aside>{{/Lachon}}
 block response-after
 	include daf.pug
 block scripts
