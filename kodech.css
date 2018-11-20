@@ -50,14 +50,6 @@ section .p {
   padding: 0;
 }
 
-.resp .p .cloze {
-  color: lime;
-}
-
-.resp .p .cloze-ref {
-  color: #e7ca70;
-}
-
 .card {
   background-color: white;
   color: black;
