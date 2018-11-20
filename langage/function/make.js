@@ -26,6 +26,7 @@ const list = [
 ];
 
 const single = [
+  'main_nom',
   'paramsNb',
   'usage',
 ];
