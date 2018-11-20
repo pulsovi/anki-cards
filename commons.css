@@ -117,6 +117,11 @@ ul, ol, pre {
   white-space: nowrap;
 }
 
+.indent {
+  background:#555;
+  border-right: solid 1px #888;
+}
+
 .lang-am {
   color: #939;
 }
@@ -203,6 +208,10 @@ ul, ol, pre {
 
 .val {
   color: #E6DB74;
+}
+
+.win .mobile-only {
+  display: none;
 }
 
 #content {
