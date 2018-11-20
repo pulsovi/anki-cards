@@ -59,12 +59,9 @@ kbd {
 pre {
   background: #282828;
   color: white;
-  display: table;
   font-weight: bold;
-  margin: 0 auto;
   overflow-wrap: break-word;
   padding: 0.2em 0.5em;
-  text-align: left;
   text-decoration-color: white;
   white-space: pre-wrap;
 }
@@ -85,8 +82,8 @@ section .p {
   padding: 0;
 }
 
-ul, ol {
-  display: inline-block;
+ul, ol, pre {
+  display: table;
   margin: 0 auto;
   text-align: left;
 }
