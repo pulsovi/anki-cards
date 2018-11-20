@@ -4,6 +4,7 @@ const fs = require('fs');
 const mkdirp = require('mkdirp');
 
 const list = [
+  'Option',
   'ShortUsage',
   'Usage',
 ];
