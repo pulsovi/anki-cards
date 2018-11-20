@@ -1,0 +1,6 @@
+extends ../../hol_recto_layout.pug
+block variables
+	- var condition = 'Param' + i + 'Desc';
+block question-content
+	h2.p in function <code>{{MethodName}}</code>
+	.p <b>Description</b> of <code>{{Param#{i}Name}}</code> parameter

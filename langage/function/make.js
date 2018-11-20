@@ -19,6 +19,7 @@ const th = [
 
 const list = [
   'def',
+  'desc',
   'nom',
   'pos',
   'typ',
