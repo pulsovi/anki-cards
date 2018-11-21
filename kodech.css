@@ -50,6 +50,12 @@ section .p {
   padding: 0;
 }
 
+ul {
+  display: table;
+  margin: 0 auto;
+  text-align: right;
+}
+
 .card {
   background-color: white;
   color: black;
