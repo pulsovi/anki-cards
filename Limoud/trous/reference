@@ -6,4 +6,6 @@ Passouk
 Guemarah
 
 ||
-<div class="cloze-ref">‏{{c#::\||<b>&rlm;</b>/::‎Daf‎}}‏</div>
+<div class="cloze-ref">‏{{c#::|<b>&rlm;</b>::‎Daf‎}}‏</div>
+#Mettre le daf entre le c#:: et le | puis Delete le |
+#Le <b>&rlm;</b> est là pour corriger un bug d'affichage quand on est en Amoud Beith, la référence se terminait par un : qui est confondu avec les :: de fin de cloze
