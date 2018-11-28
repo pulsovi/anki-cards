@@ -4,9 +4,10 @@ const fs = require('fs');
 const mkdirp = require('mkdirp');
 
 const list = [
+  'Ou',
+  'Pourquoi',
   'Psak',
   'Source',
-  'Où',
 ];
 
 mkdirp.sync('out');
