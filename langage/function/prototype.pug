@@ -1,7 +1,7 @@
 - var j = 1;
 
 pre
-	|{{#ReturnType}}<i class="typ">{{ReturnType}} </i>{{/ReturnType}}<i class="func">{{MethodName}} </i>(
+	|{{#ReturnType}}#[i.typ {{ReturnType}} ]{{/ReturnType}}#[i.func {{MethodName}} ](
 	while j <= max
-		|{{#Param#{j}Name}} <br class="mobile-only" /><i class="mobile-only indent">  </i>{{#Param#{j}IsOptional}}[{{/Param#{j}IsOptional}}{{#Param#{j}Type}}<i class="typ">{{Param#{j}Type}} </i>{{/Param#{j}Type}}<i class="nam">{{Param#{j}Name}}</i>{{#Param#{j}Default}}<i class="oper">=</i><i class="val">{{Param#{j}Default}}</i>{{/Param#{j}Default}}{{#Param#{j}IsOptional}}]{{/Param#{j}IsOptional}}{{/Param#{j}Name}}{{#Param#{++j}Name}},{{/Param#{j}Name}}
-	|  <br class="mobile-only" />)
+		|{{#Param#{j}Name}} #[br.proto-indent]#[i.proto-indent   ]{{#Param#{j}IsOptional}}[{{/Param#{j}IsOptional}}{{#Param#{j}Type}}#[i.typ {{Param#{j}Type}} ]{{/Param#{j}Type}}#[i.nam {{Param#{j}Name}}]{{#Param#{j}Default}}#[i.oper =]#[i.val {{Param#{j}Default}}]{{/Param#{j}Default}}{{#Param#{j}IsOptional}}]{{/Param#{j}IsOptional}}{{/Param#{j}Name}}{{#Param#{++j}Name}},{{/Param#{j}Name}}
+	|  #[br.proto-indent])
