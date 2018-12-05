@@ -1,0 +1,7 @@
+- var j = 1;
+
+pre
+	|{{#ReturnType}}#[i.typ {{ReturnType}} ]{{/ReturnType}}#[i.func {{MethodName}}](
+	while j <= max
+		|{{#Param#{j}Name}}{{#Param#{j}IsOptional}}[{{/Param#{j}IsOptional}}{{#Param#{j}Type}}#[i.typ {{Param#{j}Type}}]{{/Param#{j}Type}}{{#Param#{j}IsOptional}}]{{/Param#{j}IsOptional}}{{/Param#{j}Name}}{{#Param#{++j}Name}}, {{/Param#{j}Name}}
+	|)
