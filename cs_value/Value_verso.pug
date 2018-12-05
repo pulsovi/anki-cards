@@ -1,6 +1,4 @@
 extends ../hol_verso_layout
 block response-content
-	code {{Arg}}={{Value}}
-	|{{#Extra}}<aside>{{Extra}}</aside>{{/Extra}}
-	script
-		|cof.onclick();arg.onclick();
+	.p #[code {{Arg}}={{Value}}]
+	|{{#Extra}}#[aside {{Extra}}]{{/Extra}}
