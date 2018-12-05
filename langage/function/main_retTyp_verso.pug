@@ -1,0 +1,6 @@
+extends ../../hol_verso_layout.pug
+block response-content
+	.p #[b {{ReturnType}}]
+	|{{#ReturnContent}}#[aside {{ReturnContent}}]{{/ReturnContent}}
+block response-after
+	include prototype.pug
