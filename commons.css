@@ -42,6 +42,11 @@ i {
   font-style: normal;
 }
 
+i.proto-indent {
+  background:#555;
+  border-left: solid 1px #888;
+}
+
 img {
   float: left;
 }
@@ -82,7 +87,7 @@ section .p {
   padding: 0;
 }
 
-section + pre {
+section + pre, header + pre {
   display: block;
 }
 
@@ -115,11 +120,6 @@ ul, ol, pre {
 .hotkey {
   display: inline;
   white-space: nowrap;
-}
-
-.indent {
-  background:#555;
-  border-right: solid 1px #888;
 }
 
 .lang-am {
