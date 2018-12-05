@@ -28,8 +28,8 @@ const list = [
 const single = [
   'main_nom',
   'main_retTyp',
+  'main_usage',
   'paramsNb',
-  'usage',
 ];
 
 list.forEach(function(name) {
