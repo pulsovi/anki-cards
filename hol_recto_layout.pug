@@ -1,5 +1,7 @@
 block variables
 if condition
+	if condition2
+		|{{##{condition2}}}
 	|{{##{condition}}}
 block header
 	header {{Tags}}
@@ -9,3 +11,5 @@ block question
 		div.clearfix
 if condition
 	|{{/#{condition}}}
+	if condition2
+		|{{/#{condition2}}}
