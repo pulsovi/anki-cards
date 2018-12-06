@@ -27,6 +27,7 @@ const list = [
 
 const single = [
   'main_nom',
+  'main_retContent',
   'main_retTyp',
   'main_usage',
   'paramsNb',
