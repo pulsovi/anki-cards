@@ -5,6 +5,7 @@ const mkdirp = require('mkdirp');
 
 const list = [
   'Option',
+  'ShortAlias',
   'ShortUsage',
   'Usage',
 ];
