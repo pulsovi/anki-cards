@@ -2,4 +2,6 @@ extends ../hol_verso_layout
 block response-content
 	.p
 		code {{CommandName}}
-	|{{#Extra}}<aside>{{Extra}}</aside>{{/Extra}}
+	|{{#Extra}}#[aside {{Extra}}]{{/Extra}}
+block response-after
+	|{{#Syntax}}#[pre {{Syntax}}]{{/Syntax}}
