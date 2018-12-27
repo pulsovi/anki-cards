@@ -1,8 +1,10 @@
 extends ../kodech_verso_layout.pug
 block response-content
 	h3.coord.p {{Où}}
+	|{{#OuContextRef}}
 	.p #[i(context-data="{{OuContextRef}}.title")]
-	|{{#Lachon}}<aside>{{Lachon}}</aside>{{/Lachon}}
+	|{{/OuContextRef}}
+	|{{#Lachon}}#[aside {{Lachon}}]{{/Lachon}}
 block response-after
 	include daf.pug
 block scripts
