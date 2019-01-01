@@ -19,6 +19,14 @@ aside code {
   font-weight: 700;
 }
 
+blockquote {
+  background-color: rgb(200, 200, 200);
+  background-color: rgba(200, 200, 200, 0.5);
+  display: inline;
+  font-family: "Times new roman";
+  font-style: italic;
+}
+
 footer {
   background-color: darkgray;
   color: white;
@@ -111,7 +119,7 @@ ul {
   padding: 1em;
 }
 
-.mobile section .p + .p {
+.mobile section .p+.p {
   padding-top: 0;
 }
 
@@ -122,8 +130,16 @@ ul {
 }
 
 .resp {
-  background-color: #3d7198;
+  background-color: #3d9946;
   color: white;
+}
+
+.resp .p .cloze {
+  color: lime;
+}
+
+.resp .p .cloze-ref {
+  color: #e7ca70;
 }
 
 .resp .ref {
