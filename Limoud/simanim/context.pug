@@ -1,0 +1,14 @@
+-
+	var context_list = {
+		'{{contextRef}}.previousSibling.previousSibling.previousSibling': 'sibling',
+		'{{contextRef}}.previousSibling.previousSibling': 'sibling',
+		'{{contextRef}}.previousSibling': 'sibling',
+		'{{contextRef}}': 'itself',
+		'{{contextRef}}.nextSibling': 'sibling',
+		'{{contextRef}}.nextSibling.nextSibling': 'sibling',
+		'{{contextRef}}.nextSibling.nextSibling.nextSibling': 'sibling'
+	};
+.parent
+	h4 הלכות #[i(context-data="{{contextRef}}.group.title")]
+	each className, ref in context_list
+		div(class=className context-show=ref) #[i(context-data=ref+".id")] : #[i(context-data=ref+".title")]
