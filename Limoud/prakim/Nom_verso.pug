@@ -1,4 +1,12 @@
 extends ../kodech_verso_layout.pug
 block response-content
-	h3.p {{Darchan}}
-	.p.ref {{Reference}}
+	h3.p {{Nom}}
+	|{{#contextRef}}
+	.parent
+		i(context-data="{{contextRef}}.parent.title")
+		.sibling #[i(context-data="{{contextRef}}.previousSibling.previousSibling.id")] : #[i(context-data="{{contextRef}}.previousSibling.title")]
+		.sibling #[i(context-data="{{contextRef}}.previousSibling.id")] : #[i(context-data="{{contextRef}}.previousSibling.previousSibling.title")]
+		.itself #[i(context-data="{{contextRef}}.id")] : #[i(context-data="{{contextRef}}.title")]
+		.sibling #[i(context-data="{{contextRef}}.nextSibling.id")] : #[i(context-data="{{contextRef}}.nextSibling.title")]
+		.sibling #[i(context-data="{{contextRef}}.nextSibling.nextSibling.id")] : #[i(context-data="{{contextRef}}.nextSibling.nextSibling.title")]
+	|{{/contextRef}}

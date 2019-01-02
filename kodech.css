@@ -145,11 +145,11 @@ ul {
 .resp .ref {
   color: lime;
 }
-
+/**
 .resp .sic {
   color: wheat;
 }
-
+/**/
 .sic {
   color: blue;
   font-size: 0.8em;
