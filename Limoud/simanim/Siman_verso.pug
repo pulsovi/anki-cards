@@ -1,0 +1,13 @@
+extends ../kodech_verso_layout.pug
+block response-content
+	|{{^contextRef}}#[h3.p {{Massekhet}} סימן {{Numero}}]{{/contextRef}}
+	|{{#contextRef}}
+	h3.p #[i(context-data="{{contextRef}}.parent.title")] סימן #[i(context-data="{{contextRef}}.id")]
+	.parent.p
+		h4 הלכות #[i(context-data="{{contextRef}}.group.title")]
+		.sibling #[i(context-data="{{contextRef}}.previousSibling.previousSibling.id")] : #[i(context-data="{{contextRef}}.previousSibling.title")]
+		.sibling #[i(context-data="{{contextRef}}.previousSibling.id")] : #[i(context-data="{{contextRef}}.previousSibling.previousSibling.title")]
+		.itself #[i(context-data="{{contextRef}}.id")] : #[i(context-data="{{contextRef}}.title")]
+		.sibling #[i(context-data="{{contextRef}}.nextSibling.id")] : #[i(context-data="{{contextRef}}.nextSibling.title")]
+		.sibling #[i(context-data="{{contextRef}}.nextSibling.nextSibling.id")] : #[i(context-data="{{contextRef}}.nextSibling.nextSibling.title")]
+	|{{/contextRef}}

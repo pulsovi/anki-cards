@@ -1,0 +1,7 @@
+extends ../kodech_recto_layout.pug
+block header
+	header(dir='rtl') סימנים
+block question-content
+	.p איפוא בשו"ע #[br]	הלכות {{#contextRef}}#[i(context-data="{{contextRef}}.group.title")]{{/contextRef}}{{^contextRef}}{{Hilkhot}}{{/contextRef}}#[br]דיני {{#contextRef}}#[i(context-data="{{contextRef}}.title")]{{/contextRef}}{{^contextRef}}{{Dinim}}{{/contextRef}}
+block scripts
+	script(src="_context-bootstrap.js")
