@@ -5,6 +5,7 @@ const mkdirp = require('mkdirp');
 
 const list = [
   'Nom',
+  'Place',
 ];
 
 mkdirp.sync('out');
