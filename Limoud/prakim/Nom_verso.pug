@@ -1,9 +1,10 @@
 extends ../kodech_verso_layout.pug
 block response-content
-	h3.p {{Nom}}
+	|{{^contextRef}}#[h3.p {{Nom}}]{{/contextRef}}
 	|{{#contextRef}}
-	.parent
-		i(context-data="{{contextRef}}.parent.title")
+	h3.p(context-data="{{contextRef}}.title")
+	.parent.p
+		h4(context-data="{{contextRef}}.parent.title")
 		.sibling #[i(context-data="{{contextRef}}.previousSibling.previousSibling.id")] : #[i(context-data="{{contextRef}}.previousSibling.title")]
 		.sibling #[i(context-data="{{contextRef}}.previousSibling.id")] : #[i(context-data="{{contextRef}}.previousSibling.previousSibling.title")]
 		.itself #[i(context-data="{{contextRef}}.id")] : #[i(context-data="{{contextRef}}.title")]

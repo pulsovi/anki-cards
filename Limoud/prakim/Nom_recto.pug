@@ -2,7 +2,6 @@ extends ../kodech_recto_layout.pug
 block header
 	header(dir='rtl') פרקים
 block question-content
-	.p פרק {{Numero}} {{Massekhet}}
-	aside #[i(context-data="{{contextRef}}.parent.title")] #[i(context-data="{{contextRef}}.id")]
+	.p פרק {{#contextRef}}#[i(context-data="{{contextRef}}.id")] #[i(context-data="{{contextRef}}.parent.title")]{{/contextRef}}{{^contextRef}}{{Numero}} {{Massekhet}}{{/contextRef}}
 block scripts
 	script(src="_context-bootstrap.js")
