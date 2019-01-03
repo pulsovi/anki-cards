@@ -7,7 +7,7 @@ String.prototype.toCapitalisationCase = function toCapitalisationCase() {
   return this.charAt(0).toUpperCase() + this.substring(1);
 };
 
-const max = 5;
+const max = 6;
 
 const th = [
   'first',
@@ -15,6 +15,7 @@ const th = [
   'third',
   'fourth',
   'fifth',
+  'sixth',
 ];
 
 const list = [
@@ -38,8 +39,11 @@ list.forEach(function(name) {
   let recto = pug.compileFile(name + '_recto.pug');
   let verso = pug.compileFile(name + '_verso.pug');
   for (let i = 1; i <= max; ++i) {
+    mkdirp.sync('out/' + i);
     fs.writeFileSync('out/' + name + '/' + i + name + '_recto.html', recto({ th: th[i - 1], i: i, max: max }));
     fs.writeFileSync('out/' + name + '/' + i + name + '_verso.html', verso({ th: th[i - 1], i: i, max: max }));
+    fs.writeFileSync('out/' + i + '/' + i + name + '_recto.html', recto({ th: th[i - 1], i: i, max: max }));
+    fs.writeFileSync('out/' + i + '/' + i + name + '_verso.html', verso({ th: th[i - 1], i: i, max: max }));
   }
 });
 
