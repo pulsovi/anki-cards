@@ -1,7 +1,4 @@
 extends ../kodech_verso_layout.pug
 block response-content
-	|{{^contextRef}}#[h3.p {{Massekhet}} סימן {{Numero}}]{{/contextRef}}
-	|{{#contextRef}}
 	h3.p #[i(context-data="{{contextRef}}.parent.title")] סימן #[i(context-data="{{contextRef}}.id")]
 	include context.pug
-	|{{/contextRef}}
