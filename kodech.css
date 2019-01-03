@@ -47,7 +47,7 @@ i {
 }
 
 section {
-  padding: 1px;
+  padding: 1px 0;
 }
 
 section aside, section .p {
@@ -111,10 +111,11 @@ ul {
   color: #185d1f;
 }
 
+/**
 .mobile section {
   padding: 0;
 }
-
+/**/
 .mobile section aside, .mobile section .p {
   margin: 0;
 }
