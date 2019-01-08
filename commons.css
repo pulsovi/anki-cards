@@ -73,6 +73,8 @@ pre {
 
 pre b {
   color: red;
+  background-color: rgb(100,0,0);
+  background-color: rgba(200,0,0,0.5);
 }
 
 section {
