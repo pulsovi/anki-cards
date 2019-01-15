@@ -4,7 +4,7 @@ const fs = require('fs');
 const mkdirp = require('mkdirp');
 
 const list = [
-  '-Ou',
+  'nOu',
   'Ou',
   'Pourquoi',
   'Psak',
