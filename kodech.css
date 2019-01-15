@@ -13,6 +13,10 @@ aside {
   text-align: justify;
 }
 
+aside b {
+  color: #d62;
+}
+
 aside code {
   color: black;
   font-family: monospace;
@@ -57,7 +61,7 @@ section .p {
   padding: 0;
 }
 
-ul {
+ul, ol {
   display: table;
   margin: 0 auto;
   text-align: right;
