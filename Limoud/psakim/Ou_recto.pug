@@ -1,4 +1,6 @@
 extends ../kodech_recto_layout.pug
+block variables
+	- var condition = "Ou";
 block header
 	header
 		i(id='tg' onclick="this.outerText='{{Tags}}'" style="font-style:italic; font-size: 0.5em;") afficher Tags
