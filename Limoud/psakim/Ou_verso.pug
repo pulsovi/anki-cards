@@ -7,6 +7,5 @@ block response-content
 	|{{#Lachon}}#[aside {{Lachon}}]{{/Lachon}}
 block response-after
 	include daf.pug
-block scripts
+append scripts
 	script tg.onclick();
-	script(src="_context-bootstrap.js")
