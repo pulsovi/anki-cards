@@ -23,6 +23,10 @@ aside code {
   font-weight: 700;
 }
 
+aside div + div {
+  margin-top: 1em;
+}
+
 blockquote {
   background-color: rgb(200, 200, 200);
   background-color: rgba(200, 200, 200, 0.5);
