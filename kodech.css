@@ -110,7 +110,7 @@ ul, ol {
   background-origin: content-box;
   background-position: center top;
   background-repeat: no-repeat;
-  background-size: contain;
+/*  background-size: contain;*/
   padding: 0;
 }
 
@@ -196,14 +196,13 @@ ul, ol {
 }
 
 .win .daf {
-  height: 1200px;
+  height: 40em;
 }
 
 .win .daf img {
   margin: 0;
   max-width: 100%;
   padding: 0;
-  width: 700px;
 }
 
 #content {
