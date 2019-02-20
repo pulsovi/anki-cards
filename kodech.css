@@ -1,7 +1,7 @@
 :root {
   background: #282828;
   font-family: arial;
-  font-size: 20px;
+  font-size: 30px;
   height: 100%;
   text-align: center;
 }
@@ -76,7 +76,7 @@ ul, ol {
   color: black;
   font-weight: normal;
   margin: 0 auto;
-  max-width: 700px;
+  max-width: 35em;
   min-height: 100%;
   text-align: center;
 }
@@ -110,7 +110,7 @@ ul, ol {
   background-origin: content-box;
   background-position: center top;
   background-repeat: no-repeat;
-  background-size: contain;
+/*  background-size: contain;*/
   padding: 0;
 }
 
@@ -196,14 +196,13 @@ ul, ol {
 }
 
 .win .daf {
-  height: 1200px;
+  height: 40em;
 }
 
 .win .daf img {
   margin: 0;
   max-width: 100%;
   padding: 0;
-  width: 700px;
 }
 
 #content {
