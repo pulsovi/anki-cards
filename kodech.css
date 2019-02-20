@@ -32,6 +32,7 @@ blockquote {
   background-color: rgba(200, 200, 200, 0.5);
   display: inline;
   font-style: italic;
+  text-align: justify;
 }
 
 footer {
@@ -147,8 +148,8 @@ ul, ol {
 
 .ref {
   color: green;
-  font-size: 1.1em;
-  font-weight: bold;
+  font-size: 1em;
+  font-weight: normal;
 }
 
 .resp {
