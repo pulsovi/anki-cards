@@ -43,7 +43,7 @@ i {
   font-style: normal;
 }
 
-i.proto-indent {
+i.proto-indent, .indent {
   background:#555;
   border-left: solid 1px #888;
 }
