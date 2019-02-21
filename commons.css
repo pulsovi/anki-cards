@@ -1,5 +1,6 @@
 :root {
   background: #282828;
+  font-size: 20px;
   height: 100%;
   text-align: center;
 }
@@ -103,9 +104,8 @@ ul, ol, pre {
   background-color: white;
   color: black;
   font-family: arial;
-  font-size: 20px;
   margin: auto;
-  max-width: 700px;
+  max-width: 35em;
   min-height: 100%;
   text-align: center;
 }
@@ -221,6 +221,10 @@ ul, ol, pre {
 
 .val {
   color: #E6DB74;
+}
+
+.win {
+  font-size: 2.5em;
 }
 
 .win .mobile-only {
