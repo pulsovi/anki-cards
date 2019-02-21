@@ -1,4 +1,4 @@
 extends ../../hol_verso_layout
 block response-content
-	.p {{#Arg}}<code>{{Arg}}</code>{{#ShortAlias}} or {{/ShortAlias}}{{/Arg}}{{#ShortAlias}}<code>{{ShortAlias}}</code>{{/ShortAlias}}
-	|{{#Example}}<aside>{{Example}}</aside>{{/Example}}
+	.p {{#Arg}}#[code {{Arg}}]{{#ShortAlias}} or {{/ShortAlias}}{{/Arg}}{{#ShortAlias}}#[code {{ShortAlias}}]{{/ShortAlias}}
+	|{{#Example}}#[aside {{Example}}]{{/Example}}
