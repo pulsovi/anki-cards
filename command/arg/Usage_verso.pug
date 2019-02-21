@@ -1,6 +1,5 @@
 extends ../../hol_verso_layout
 block response-content
 	.p {{Usage}}
-	|{{#Example}}<aside>{{Example}}</aside>{{/Example}}
-block scripts
-	script cn.onclick();
+	|{{#ShortAlias}}#[aside short alias : #[code {{ShortAlias}}]]{{/ShortAlias}}
+	|{{#Example}}#[aside {{Example}}]{{/Example}}
