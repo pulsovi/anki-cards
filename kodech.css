@@ -1,7 +1,7 @@
 :root {
   background: #282828;
   font-family: arial;
-  font-size: 30px;
+  font-size: 20px;
   height: 100%;
   text-align: center;
 }
@@ -194,6 +194,10 @@ ul, ol {
 .tzurah img {
   height: auto;
   width: 50px;
+}
+
+.win {
+  font-size: 2.5em;
 }
 
 .win .daf {
