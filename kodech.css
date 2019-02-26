@@ -43,8 +43,8 @@ footer {
 }
 
 header {
-  background-color: #6bbf73;
-  color: white;
+  background-color: #70c278;
+  color: #b8e0bc;
   font-size: 2em;
   padding: 0.5em 1em;
   text-transform: uppercase;
@@ -55,7 +55,7 @@ i {
 }
 
 section {
-  padding: 1px 0;
+  padding: 0 0 1px;
 }
 
 section aside, section .p {
@@ -146,6 +146,12 @@ ul, ol {
   margin: 0.5em;
 }
 
+.subheader {
+  background-color: #4db357;
+  color: #94d19a;
+  margin: 0;
+}
+
 .ref {
   color: green;
   font-size: 1em;
@@ -155,6 +161,7 @@ ul, ol {
 .resp {
   background-color: #3d9946;
   color: white;
+  padding-top: 1px;
 }
 
 .resp .p .cloze {

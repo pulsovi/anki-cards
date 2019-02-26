@@ -2,4 +2,5 @@ extends ../kodech_recto_layout.pug
 block variables
 	- var condition = "Question"
 block question-content
-	.p לפי #[em.head {{Auteur}}] {{Question}}
+	|{{#Auteur}}#[h1.subheader {{Auteur}}]{{/Auteur}}
+	.p {{Question}}
