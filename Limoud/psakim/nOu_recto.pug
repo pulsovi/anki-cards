@@ -2,5 +2,5 @@ extends ../kodech_recto_layout.pug
 block variables
 	- var condition = "Ou";
 block question-content
-	.p {{Auteur}}
+	|{{#Auteur}}#[h1.subheader {{Auteur}}]{{/Auteur}}
 	.p {{Ou}}
