@@ -2,7 +2,8 @@ extends ../kodech_recto_layout.pug
 block variables
 	- var condition = 'Pourquoi';
 block question-content
+	|{{#Auteur}}#[h1.subheader {{Auteur}}]{{/Auteur}}
 	h2.p למה
-	.p {{Auteur}} פוסק ש
+	.p
 		|{{#Psak}}{{Psak}}{{/Psak}}
 		|{{^Psak}}{{Question}} =&gt; {{Reponse}}{{/Psak}}
