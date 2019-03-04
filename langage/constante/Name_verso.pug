@@ -1,6 +1,4 @@
-|{{FrontSide}}
-section.resp#answer
-	|constante <code>{{Name}}</code>
-	|{{#Finally}}<aside>{{Finally}}</aside>{{/Finally}}
-footer
-	|{{Type}}&gt;{{Card}}
+extends ../../hol_verso_layout
+block response-content
+	.p constante #[code {{Name}}]
+	|{{#Finally}}#[aside {{Finally}}]{{/Finally}}
