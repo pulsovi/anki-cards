@@ -1,7 +1,4 @@
-|{{FrontSide}}
-
-section.resp#answer
-	|constante : {{Value}}
-	|{{#Finally}}<aside>{{Finally}}</aside>{{/Finally}}
-footer
-	|{{Type}}&gt;{{Card}}
+extends ../../hol_verso_layout
+block response-content
+	.p constante : {{Value}}
+	|{{#Finally}}#[aside {{Finally}}]{{/Finally}}
