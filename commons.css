@@ -227,6 +227,10 @@ ul, ol, pre {
   color: #E6DB74;
 }
 
+.win {
+  font-size: 1.7em;
+}
+
 .win .mobile-only {
   display: none;
 }
