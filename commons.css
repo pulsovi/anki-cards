@@ -1,6 +1,6 @@
 :root {
   background: #282828;
-  font-size: 20px;
+  font-size: 120%;
   height: 100%;
   text-align: center;
 }
@@ -15,6 +15,10 @@ aside {
 aside pre, .p pre {
   margin-bottom: 1em;
   margin-top: 1em;
+}
+
+body {
+  font-size: 1em;
 }
 
 code {
@@ -105,7 +109,7 @@ ul, ol, pre {
   color: black;
   font-family: arial;
   margin: auto;
-  max-width: 35em;
+  max-width: 120vh;
   min-height: 100%;
   text-align: center;
 }
@@ -221,10 +225,6 @@ ul, ol, pre {
 
 .val {
   color: #E6DB74;
-}
-
-.win {
-  font-size: 2.5em;
 }
 
 .win .mobile-only {
