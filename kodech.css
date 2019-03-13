@@ -1,7 +1,7 @@
 :root {
   background: #282828;
   font-family: arial;
-  font-size: 20px;
+  font-size: 120%;
   height: 100%;
   text-align: center;
 }
@@ -33,6 +33,10 @@ blockquote {
   display: inline;
   font-style: italic;
   text-align: justify;
+}
+
+body {
+  font-size: 1em;
 }
 
 footer {
@@ -77,7 +81,7 @@ ul, ol {
   color: black;
   font-weight: normal;
   margin: 0 auto;
-  max-width: 35em;
+  max-width: 120vh;
   min-height: 100%;
   text-align: center;
 }
@@ -201,10 +205,6 @@ ul, ol {
 .tzurah img {
   height: auto;
   width: 50px;
-}
-
-.win {
-  font-size: 2.5em;
 }
 
 .win .daf {
