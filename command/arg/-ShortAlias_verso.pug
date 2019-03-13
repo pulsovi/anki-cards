@@ -2,4 +2,6 @@ extends ../../hol_verso_layout
 block response-content
 	.p #[code {{Arg}}]
 	aside {{Usage}}
-	|{{#Example}}#[aside {{Example}}]{{/Example}}
+	|{{#Comment}}#[aside {{Comment}}]{{/Comment}}
+block response-after
+	|{{#Command_Form}}#[pre {{Command_Form}}]{{/Command_Form}}
