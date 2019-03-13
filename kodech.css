@@ -76,6 +76,10 @@ ul, ol {
   text-align: right;
 }
 
+ul ul, ul ol, ol ul, ol ol {
+  margin: initial;
+}
+
 .card {
   background-color: white;
   color: black;
