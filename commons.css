@@ -67,12 +67,12 @@ kbd {
 }
 
 pre {
-  background: #282828;
-  color: white;
+  background: #272822;
+  color: #f8f8f2;
   font-weight: bold;
   overflow-wrap: break-word;
   padding: 0.2em 0.5em;
-  text-decoration-color: white;
+  text-decoration-color: #f8f8f2;
   white-space: pre-wrap;
 }
 
