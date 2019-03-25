@@ -1,6 +1,6 @@
 :root {
   background: #282828;
-  font-size: 120%;
+  font-size: large;
   height: 100%;
   text-align: center;
 }
@@ -18,7 +18,7 @@ aside pre, .p pre {
 }
 
 body {
-  font-size: 1em;
+  font-size: large;
 }
 
 code {
@@ -67,19 +67,19 @@ kbd {
 }
 
 pre {
-  background: #282828;
-  color: white;
+  background: #272822;
+  color: #f8f8f2;
   font-weight: bold;
   overflow-wrap: break-word;
   padding: 0.2em 0.5em;
-  text-decoration-color: white;
+  text-decoration-color: #f8f8f2;
   white-space: pre-wrap;
 }
 
 pre b {
-  color: red;
   background-color: rgb(100,0,0);
   background-color: rgba(200,0,0,0.5);
+  color: red;
 }
 
 section {
@@ -170,6 +170,12 @@ ul, ol, pre {
   padding-top: 0;
 }
 
+.monokai {
+  background: #272822;
+  color: #f8f8f2;
+  text-decoration-color: #f8f8f2;
+}
+
 .nam {
   color: #FD971F;
 }
@@ -189,7 +195,7 @@ ul, ol, pre {
   border-color: red;
 }
 
-.func {
+.func, .class {
   color: #A6E22E;
 }
 

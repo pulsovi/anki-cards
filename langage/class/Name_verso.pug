@@ -1,4 +1,6 @@
 extend ../../hol_verso_layout
 block response-content
-	code {{Name}}
-	|{{#Finally}}#[aside {{Finally}}]{{/Finally}}
+	.p #[code.monokai.class {{Name}}]
+	|{{#Comment}}#[aside {{Comment}}]{{/Comment}}
+block response-after
+	|{{#Syntax}}#[pre {{Syntax}}]{{/Syntax}}
