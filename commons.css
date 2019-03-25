@@ -1,6 +1,6 @@
 :root {
   background: #282828;
-  font-size: 120%;
+  font-size: large;
   height: 100%;
   text-align: center;
 }
@@ -18,7 +18,7 @@ aside pre, .p pre {
 }
 
 body {
-  font-size: 1em;
+  font-size: large;
 }
 
 code {
@@ -77,9 +77,9 @@ pre {
 }
 
 pre b {
-  color: red;
   background-color: rgb(100,0,0);
   background-color: rgba(200,0,0,0.5);
+  color: red;
 }
 
 section {
