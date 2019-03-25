@@ -2,3 +2,5 @@ extend ../../hol_verso_layout
 block response-content
 	.p #[pre.keyword {{Keyword}}]
 	|{{#Comment}}#[aside {{Comment}}]{{/Comment}}
+block response-after
+	|{{#Syntax}}#[pre {{Syntax}}]{{/Syntax}}
