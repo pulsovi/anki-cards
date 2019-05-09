@@ -203,6 +203,10 @@ ul, ol, pre {
   color: #A6E22E;
 }
 
+.inline {
+  display: inline;
+}
+
 .resp {
   background-color: #3d7198;
   color: white;
