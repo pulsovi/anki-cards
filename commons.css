@@ -1,6 +1,6 @@
 :root {
   background: #282828;
-  font-size: large;
+  font-size: 20px;
   height: 100%;
   text-align: center;
 }
@@ -18,7 +18,7 @@ aside pre, .p pre {
 }
 
 body {
-  font-size: large;
+  font-size: inherit;
 }
 
 code {
@@ -152,6 +152,10 @@ ul, ol, pre {
   color: rgba(0,0,0,0.7);
   margin: 1em auto;
   width: 4em;
+}
+
+.mobile {
+  font-size: 1.4em;
 }
 
 .mobile section {
