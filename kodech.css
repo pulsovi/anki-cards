@@ -1,7 +1,7 @@
 :root {
   background: #282828;
   font-family: arial;
-  font-size: 120%;
+  font-size: 20px;
   height: 100%;
   text-align: center;
 }
@@ -37,7 +37,7 @@ blockquote {
 
 body {
   font-family: arial;
-  font-size: 1em;
+  font-size: inherit;
 }
 
 footer {
@@ -128,11 +128,10 @@ ul ul, ul ol, ol ul, ol ol {
   color: #185d1f;
 }
 
-/**
-.mobile section {
-  padding: 0;
+.mobile {
+  font-size: 1.4em;
 }
-/**/
+
 .mobile section aside, .mobile section .p {
   margin: 0;
 }
