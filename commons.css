@@ -127,6 +127,10 @@ ul, ol, dl, pre {
   font-weight: bold;
 }
 
+.comment {
+  color: #75715E;
+}
+
 .hotkey {
   display: inline;
   white-space: nowrap;
