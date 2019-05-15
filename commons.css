@@ -102,7 +102,7 @@ section+pre, header+pre {
   display: block;
 }
 
-ul, ol, pre {
+ul, ol, dl, pre {
   display: table;
   margin: 0 auto;
   text-align: left;
