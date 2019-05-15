@@ -48,7 +48,7 @@ i {
 }
 
 i.proto-indent, .indent {
-  background:#555;
+  background: #555;
   border-left: solid 1px #888;
 }
 
@@ -77,8 +77,8 @@ pre {
 }
 
 pre b {
-  background-color: rgb(100,0,0);
-  background-color: rgba(200,0,0,0.5);
+  background-color: rgb(100, 0, 0);
+  background-color: rgba(200, 0, 0, 0.5);
   color: red;
 }
 
@@ -94,7 +94,7 @@ section .p {
   padding: 0;
 }
 
-section + pre, header + pre {
+section+pre, header+pre {
   display: block;
 }
 
@@ -146,10 +146,10 @@ ul, ol, pre {
 
 .lang-title {
   background-color: white;
-  background-color: rgba(128,128,128,0.8);
-  box-shadow: rgba(128,128,128,0.8) 0 0 0.5em 0.3em;
+  background-color: rgba(128, 128, 128, 0.8);
+  box-shadow: rgba(128, 128, 128, 0.8) 0 0 0.5em 0.3em;
   color: black;
-  color: rgba(0,0,0,0.7);
+  color: rgba(0, 0, 0, 0.7);
   margin: 1em auto;
   width: 4em;
 }
@@ -170,7 +170,7 @@ ul, ol, pre {
   padding: 1em;
 }
 
-.mobile section .p + .p {
+.mobile section .p+.p {
   padding-top: 0;
 }
 
