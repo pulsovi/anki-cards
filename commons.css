@@ -182,6 +182,9 @@ ul, ol, dl, pre {
   padding-top: 0;
 }
 
+.num, .number {
+  color: #AE81FF;
+}
 
 .nam {
   color: #FD971F;
