@@ -23,7 +23,7 @@ aside code {
   font-weight: 700;
 }
 
-aside div + div {
+aside div+div {
   margin-top: 1em;
 }
 
