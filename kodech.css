@@ -120,7 +120,6 @@ ul ul, ul ol, ol ul, ol ol {
   background-origin: content-box;
   background-position: center top;
   background-repeat: no-repeat;
-/*  background-size: contain;*/
   padding: 0;
 }
 
@@ -142,6 +141,10 @@ ul ul, ul ol, ol ul, ol ol {
 
 .mobile section .p+.p {
   padding-top: 0;
+}
+
+.mobile .daf {
+  background-size: contain;
 }
 
 .parent {
