@@ -116,7 +116,7 @@ ul ul, ul ol, ol ul, ol ol {
   text-align: justify;
 }
 
-.daf {
+.daf img {
   background-origin: content-box;
   background-position: center top;
   background-repeat: no-repeat;
@@ -212,7 +212,7 @@ ul ul, ul ol, ol ul, ol ol {
 }
 
 .win .daf {
-  height: 40em;
+  height: 50em;
 }
 
 .win .daf img {
