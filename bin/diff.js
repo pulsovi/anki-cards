@@ -3,7 +3,6 @@ const fs = require('fs');
 const mkdirp = require('mkdirp');
 const path = require('path');
 const pug = require('pug');
-const sha1 = require('sha1');
 
 const ROOT_DIR = path.resolve(path.dirname(process.argv[1]), '..');
 const MODEL_DIR = path.resolve(ROOT_DIR, 'model');
@@ -48,7 +47,7 @@ function parseFile(makefile) {
 }
 
 function diffFile(filename, expected, actual) {
-  if (sha1(expected) !== sha1(actual)) {
+  if (expected !== actual) {
     createTempFile(filename, expected);
     addToDiffList(filename);
   }
