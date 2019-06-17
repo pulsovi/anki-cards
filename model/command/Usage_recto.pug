@@ -1,3 +1,5 @@
-extends ../hol_recto_layout
+extends command_recto_layout
+block command-present
+	|#{space}{{CommandName}} _
 block question-content
-	h2.p #[code {{CommandName}}]
+	.p Usage
