@@ -127,10 +127,6 @@ ul, ol, dl, pre {
   font-weight: bold;
 }
 
-.comment {
-  color: #75715E;
-}
-
 .hotkey {
   display: inline;
   white-space: nowrap;
@@ -162,6 +158,34 @@ ul, ol, dl, pre {
   width: 4em;
 }
 
+.mk-blue {
+  color: #66d9ef;
+}
+
+.mk-fg2, .mk-comment, .comment {
+  color: #75715e;
+}
+
+.mk-green, .mk-class-name, .mk-func-name, .class, .func {
+  color: #a6e22e;
+}
+
+.mk-orange, .mk-func-param, .nam {
+  color: #fd971f;
+}
+
+.mk-red, .mk-keyword, .oper, .keyword {
+  color: #f92672;
+}
+
+.mk-violet, .num, .number {
+  color: #ae81ff;
+}
+
+.mk-yellow, .mk-string, .val {
+  color: #e6db74;
+}
+
 .mobile {
   font-size: 1.4em;
 }
@@ -182,18 +206,6 @@ ul, ol, dl, pre {
   padding-top: 0;
 }
 
-.num, .number {
-  color: #AE81FF;
-}
-
-.nam {
-  color: #FD971F;
-}
-
-.oper, .keyword {
-  color: #F92672;
-}
-
 .outline {
   border: solid 0.1em;
   border-radius: 0.5em;
@@ -203,10 +215,6 @@ ul, ol, dl, pre {
 
 .outline-red {
   border-color: red;
-}
-
-.func, .class {
-  color: #A6E22E;
 }
 
 .inline {
@@ -241,10 +249,6 @@ ul, ol, dl, pre {
 
 .typ {
   color: cyan;
-}
-
-.val {
-  color: #E6DB74;
 }
 
 .win {
