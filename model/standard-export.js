@@ -26,6 +26,7 @@ function make(
   });
 
   outputList.push({
+    actualPath: css,
     content: fs.readFileSync(css, { encoding: 'utf8' }),
     name: 'out/style.css',
     pugFile: css,

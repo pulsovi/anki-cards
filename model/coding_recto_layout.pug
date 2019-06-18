@@ -1,0 +1,8 @@
+extends hol_recto_layout.pug
+block append header
+	if prototypeCondition
+		|{{##{prototypeCondition}}}
+	pre
+		block prototype
+	if prototypeCondition
+		|{{/#{prototypeCondition}}}
