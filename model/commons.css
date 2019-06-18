@@ -81,9 +81,9 @@ pre {
 }
 
 pre b, .monokai b {
-  background-color: rgb(100, 0, 0);
-  background-color: rgba(200, 0, 0, 0.5);
-  color: red;
+  background-color: #640000;
+  background-color: rgba(200, 0, 0, .5);
+  color: #f00;
 }
 
 section {
@@ -137,11 +137,11 @@ ul, ol, dl, pre {
 }
 
 .lang-en {
-  color: red;
+  color: #f00;
 }
 
 .lang-fr {
-  color: blue;
+  color: #00f;
 }
 
 .lang-he {
@@ -149,7 +149,7 @@ ul, ol, dl, pre {
 }
 
 .lang-title {
-  background-color: white;
+  background-color: #fff;
   background-color: rgba(128, 128, 128, 0.8);
   box-shadow: rgba(128, 128, 128, 0.8) 0 0 0.5em 0.3em;
   color: black;
@@ -214,7 +214,7 @@ ul, ol, dl, pre {
 }
 
 .outline-red {
-  border-color: red;
+  border-color: #f00;
 }
 
 .inline {
@@ -223,7 +223,7 @@ ul, ol, dl, pre {
 
 .resp {
   background-color: #3d7198;
-  color: white;
+  color: #fff;
 }
 
 .toam, .toen, .tofr, .tohe {
@@ -236,11 +236,11 @@ ul, ol, dl, pre {
 }
 
 .toen {
-  background-color: red;
+  background-color: #f00;
 }
 
 .tofr {
-  background-color: blue;
+  background-color: #00f;
 }
 
 .tohe {
