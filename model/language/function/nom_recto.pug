@@ -1,6 +1,7 @@
-extends ../../hol_recto_layout.pug
+extends ../../coding_recto_layout.pug
 block variables
 	- var condition = 'Param' + i + 'Name';
+block prototype
+	|{{#ClassName}}{{ClassName}}#[br]  {{/ClassName}}#[i.mk-func-name {{MethodName}}]
 block question-content
-	h2.p in function <code>{{MethodName}}</code>
 	.p <b>Name</b> of <b>#{th}</b> parameter

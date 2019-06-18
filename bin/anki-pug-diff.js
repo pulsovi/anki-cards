@@ -68,9 +68,14 @@ function manageNote(note) {
   var doManage;
   var templateNames = note.templateNames;
   var listOnly = false;
+  var back = false;
   for (let i = 0; i < templateNames.length; ++i) {
     let template = note.template[templateNames[i]];
-    if (template.actual === template.expected) continue;
+    if (template.actual === template.expected) {
+      if (back === true) i -= 2;
+      continue;
+    }
+    back = false;
     while (!doManage) {
       if (manageAllNotes) {
         doManage = true;
@@ -109,20 +114,28 @@ function manageNote(note) {
     if (listOnly) {
       console.log(CC.FgLightBlue + template.name + CC.Reset);
     } else {
-      listOnly = manageTemplate(note, template);
+      switch (manageTemplate(note, template)) {
+        case 'l':
+          listOnly = true;
+          break;
+        case 'p':
+          i -= 2;
+          back = true;
+          break;
+      }
     }
   }
 }
 
 function manageTemplate(note, template) {
   while (true) {
-    process.stdout.write(CC.FgLightBlue + '  compare ' + template.name + ' [ynolq]? ' + CC.Reset);
+    process.stdout.write(CC.FgLightBlue + '  compare ' + template.name + ' [ynoplq]? ' + CC.Reset);
     var response = readline.question();
     switch (response) {
       case 'y':
       case 'Y':
         var pugFile = template.pugFile;
-        if(!pugFile) pugFile = note.maker.fullname;
+        if (!pugFile) pugFile = note.maker.fullname;
         child_process.exec(`"${sublime_text}" "${pugFile}"`);
         mkdirp.sync(path.dirname(template.actualPath));
         fs.writeFileSync(template.actualPath, template.expected, { encoding: 'utf8' });
@@ -135,9 +148,12 @@ function manageTemplate(note, template) {
       case 'O':
         fs.writeFileSync(template.fullname, template.expected, { encoding: 'utf8' });
         return;
+      case 'p':
+      case 'P':
+        return 'p';
       case 'l':
       case 'L':
-        return true;
+        return 'l';
       case 'q':
       case 'Q':
         process.exit();
@@ -148,6 +164,7 @@ function manageTemplate(note, template) {
           '\ty - [yes]       compare versions\n' +
           '\tn - [no]        skip this template\n' +
           '\to - [overwrite] replace the actual note template with the parsed pug template\n' +
+          '\tp - [previous]  let this template undecided, jump to previous template\n' +
           '\tl - [list]      list all template conflict and quit this note\n' +
           '\tq - [quit]      skip all unmanaged notes and templates and quit the diff' +
           CC.Reset
