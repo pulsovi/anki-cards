@@ -66,7 +66,7 @@ kbd {
   padding: 2px 15px;
 }
 
-pre, .monokai {
+pre, .monokai, .mk {
   background: #272822;
   color: #f8f8f2;
   font-family: "Monospace", "Consolas", "Menlo-Regular";
@@ -80,7 +80,7 @@ pre {
   white-space: pre-wrap;
 }
 
-pre b, .monokai b {
+pre b, .monokai b, .mk b {
   background-color: #640000;
   background-color: rgba(200, 0, 0, .5);
   color: #f00;
@@ -158,8 +158,12 @@ ul, ol, dl, pre {
   width: 4em;
 }
 
-.mk-blue {
+.mk-blue, .mk-var-typ, .typ {
   color: #66d9ef;
+}
+
+.mk-cyan {
+  color:  #a1efe4;
 }
 
 .mk-fg2, .mk-comment, .comment {
@@ -245,10 +249,6 @@ ul, ol, dl, pre {
 
 .tohe {
   background-color: cyan;
-}
-
-.typ {
-  color: cyan;
 }
 
 .win {
