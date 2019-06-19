@@ -2,4 +2,4 @@ extends layout.pug
 block variables
 	- var condition = 'Param' + i + 'Name';
 block question-content
-	.p <b>Position</b> of <code>{{Param#{i}Name}}</code> parameter
+	.p #[b Position] of #[code.mk.mk-func-param {{Param#{i}Name}}] parameter
