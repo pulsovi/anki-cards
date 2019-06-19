@@ -1,6 +1,5 @@
-extends ../../hol_recto_layout.pug
+extends layout.pug
 block variables
 	- var condition = 'Param' + i + 'Name';
 block question-content
-	h2.p in function <code>{{MethodName}}</code>
-	.p <b>Position</b> of <code>{{Param#{i}Name}}</code> parameter
+	.p #[b Position] of #[code.mk.mk-func-param {{Param#{i}Name}}] parameter
