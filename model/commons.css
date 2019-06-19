@@ -37,7 +37,7 @@ footer {
 
 header {
   background-color: #34b9ff;
-  color: white;
+  color: #99dbff;
   font-size: 2em;
   padding: 0.5em 1em;
   text-transform: uppercase;
@@ -81,9 +81,9 @@ pre {
 }
 
 pre b, .monokai b {
-  background-color: rgb(100, 0, 0);
-  background-color: rgba(200, 0, 0, 0.5);
-  color: red;
+  background-color: #640000;
+  background-color: rgba(200, 0, 0, .5);
+  color: #f00;
 }
 
 section {
@@ -127,10 +127,6 @@ ul, ol, dl, pre {
   font-weight: bold;
 }
 
-.comment {
-  color: #75715E;
-}
-
 .hotkey {
   display: inline;
   white-space: nowrap;
@@ -141,11 +137,11 @@ ul, ol, dl, pre {
 }
 
 .lang-en {
-  color: red;
+  color: #f00;
 }
 
 .lang-fr {
-  color: blue;
+  color: #00f;
 }
 
 .lang-he {
@@ -153,13 +149,41 @@ ul, ol, dl, pre {
 }
 
 .lang-title {
-  background-color: white;
+  background-color: #fff;
   background-color: rgba(128, 128, 128, 0.8);
   box-shadow: rgba(128, 128, 128, 0.8) 0 0 0.5em 0.3em;
   color: black;
   color: rgba(0, 0, 0, 0.7);
   margin: 1em auto;
   width: 4em;
+}
+
+.mk-blue {
+  color: #66d9ef;
+}
+
+.mk-fg2, .mk-comment, .comment {
+  color: #75715e;
+}
+
+.mk-green, .mk-class-name, .mk-func-name, .class, .func {
+  color: #a6e22e;
+}
+
+.mk-orange, .mk-func-param, .nam {
+  color: #fd971f;
+}
+
+.mk-red, .mk-keyword, .oper, .keyword {
+  color: #f92672;
+}
+
+.mk-violet, .num, .number {
+  color: #ae81ff;
+}
+
+.mk-yellow, .mk-string, .val {
+  color: #e6db74;
 }
 
 .mobile {
@@ -182,18 +206,6 @@ ul, ol, dl, pre {
   padding-top: 0;
 }
 
-.num, .number {
-  color: #AE81FF;
-}
-
-.nam {
-  color: #FD971F;
-}
-
-.oper, .keyword {
-  color: #F92672;
-}
-
 .outline {
   border: solid 0.1em;
   border-radius: 0.5em;
@@ -202,11 +214,7 @@ ul, ol, dl, pre {
 }
 
 .outline-red {
-  border-color: red;
-}
-
-.func, .class {
-  color: #A6E22E;
+  border-color: #f00;
 }
 
 .inline {
@@ -215,7 +223,7 @@ ul, ol, dl, pre {
 
 .resp {
   background-color: #3d7198;
-  color: white;
+  color: #fff;
 }
 
 .toam, .toen, .tofr, .tohe {
@@ -228,11 +236,11 @@ ul, ol, dl, pre {
 }
 
 .toen {
-  background-color: red;
+  background-color: #f00;
 }
 
 .tofr {
-  background-color: blue;
+  background-color: #00f;
 }
 
 .tohe {
@@ -241,10 +249,6 @@ ul, ol, dl, pre {
 
 .typ {
   color: cyan;
-}
-
-.val {
-  color: #E6DB74;
 }
 
 .win {
