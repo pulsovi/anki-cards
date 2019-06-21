@@ -1,7 +1,7 @@
 extends ../../hol_verso_layout
 block response-content
 	.p {{Usage}}
-	|{{#ShortAlias}}#[aside short alias : #[code {{ShortAlias}}]]{{/ShortAlias}}
+	|{{#ShortAlias}}#[aside short alias : #[code.mk {{ShortAlias}}]]{{/ShortAlias}}
 	|{{#Comment}}#[aside {{Comment}}]{{/Comment}}
 block response-after
 	|{{#Command_Form}}#[pre {{Command_Form}}]{{/Command_Form}}
