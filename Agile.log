@@ -1,0 +1,39 @@
+… Daily
+	… -------------------------
+	… Vider Firefox Anki
+	… Vider Firefox BethRivkah
+	… Vider Firefox DHG
+	… Vider Firefox PanierBleu
+
+✓ Format this Agile cycle page
+	✓
+		… is U+2026
+		✓ is U+2713
+		✗ is U+2717
+	✓ Add Check Mark unicode char in anki
+
+… Courant
+	✓ Exploration : Defaut d'affichage du masque sur le daf mobile
+		✓ Code : kodech.css
+			​✓ Besoin d'un coding standard pour le css
+				✓ utilisation de cssLinter + CSSLint-custom-rules
+					✓ separation des règles 'hex colors' et 'properties in lowercase'
+					✓ Git : 'fix-split-hex_colors-from-properties_lowercase'
+				✗ etablissement d'un coding standard en markdown pour mes devs
+				✓ Ajout de feuilles d'exemple en .css bad/good (behaviour dd)
+		✓ Git : 'fix: daf mask on mobile'
+	✓ Exploration : Defaut d'affichage du masque sur le daf win
+		✓ Code : kodech.css
+		✓ Git : 'fix: flaw displaying of the daf mask on win display'
+		✓ Anki : nothing to do
+	✓ Exploration : Defaut d'affichage du masque sur le daf win
+		✓ Code : deplacer le mask comme background de l'image elle-meme (au lieu du div.daf la contenant)
+			✓ kodech.css
+			✗ Modifier tous les modèles : abandonné, se fera au fur et à mesure du besoin
+	✓ Exploration : Besoin d'afficher le header de tags sur les cartes langues
+		✓ Code : creation du pug et du export pour les cartes langue
+		✓ Git : feature-langue-model
+
+… Globals urgent missions
+	… Need to write card-model_updator in py
+	… Creation d'un layout 'daf' pouvant prendre en parametres le nom des champs de l'image et du masque
