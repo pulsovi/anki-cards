@@ -1,0 +1,6 @@
+.properties-in-lowercase {
+	/* bad */
+	background-color: #FFF;
+	/* good */
+	border-color: #fff;
+}
