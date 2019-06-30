@@ -1,0 +1,11 @@
+block variables
+|{{##{fullFrom}}}{{##{fullTo}}}{{#Tags}}
+header {{Tags}}
+|{{/Tags}}
+div(class='to' + to)
+	h2.lang-title
+		i(class='lang-' + from) #{from.toCapitalisationCase()}
+		|&gt;
+		i(class='lang-' + to) #{to.toCapitalisationCase()}
+	h3(class='lang-' + from) {{#{fullFrom}}}
+|{{/#{fullTo}}}{{/#{fullFrom}}}
