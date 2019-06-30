@@ -18,7 +18,7 @@ aside b {
 }
 
 aside code {
-  color: black;
+  color: #000;
   font-family: monospace;
   font-weight: 700;
 }
@@ -28,7 +28,7 @@ aside div+div {
 }
 
 blockquote {
-  background-color: rgb(200, 200, 200);
+  background-color: #c8c8c8;
   background-color: rgba(200, 200, 200, 0.5);
   display: inline;
   font-style: italic;
@@ -42,7 +42,7 @@ body {
 
 footer {
   background-color: darkgray;
-  color: white;
+  color: #fff;
   font-size: .5em;
   padding: 2em 0;
 }
@@ -82,8 +82,8 @@ ul ul, ul ol, ol ul, ol ol {
 }
 
 .card {
-  background-color: white;
-  color: black;
+  background-color: #fff;
+  color: #000;
   font-weight: normal;
   margin: 0 auto;
   max-width: 120vh;
@@ -92,7 +92,7 @@ ul ul, ul ol, ol ul, ol ol {
 }
 
 .cloze {
-  color: blue;
+  color: #00f;
   font-weight: bold;
 }
 
@@ -104,13 +104,13 @@ ul ul, ul ol, ol ul, ol ol {
 }
 
 .context b {
-  color: #B5690D;
+  color: #b5690d;
   font-size: 1.1em;
 }
 
 .context {
   background-color: #eeb;
-  color: #81930E;
+  color: #81930e;
   font-size: 0.65em;
   padding: 1em;
   text-align: justify;
@@ -161,7 +161,7 @@ ul ul, ul ol, ol ul, ol ol {
 }
 
 .ref {
-  color: green;
+  color: #0f0;
   font-size: 1em;
   font-weight: normal;
 }
@@ -201,7 +201,7 @@ ul ul, ul ol, ol ul, ol ol {
 }
 
 .sic {
-  color: blue;
+  color: #00f;
   font-size: 0.8em;
   font-weight: normal;
 }
