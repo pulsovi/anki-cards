@@ -9,6 +9,10 @@ function normalizeLineEnding(text) {
   return text.replace(/\r\n/g, '\r').replace(/\r/g, '\n').replace(/\s*$/, '\n');
 }
 
+function touch(path) {
+  fs.closeSync(fs.openSync(path, 'a'));
+}
+
 class Template {
   constructor(maker, rawTemplate, parent) {
     this.fullname = path.resolve(maker.path, rawTemplate.name);
@@ -21,6 +25,7 @@ class Template {
   }
 
   get actual() {
+    touch(this.fullname);
     return normalizeLineEnding(fs.readFileSync(this.fullname, { encoding: 'utf8' }));
   }
 }
