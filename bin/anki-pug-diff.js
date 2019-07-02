@@ -128,22 +128,25 @@ function manageNote(note) {
 }
 
 function manageTemplate(note, template) {
+  var pugFile;
   while (true) {
-    process.stdout.write(CC.FgLightBlue + '  compare ' + template.name + ' [ynoplq]? ' + CC.Reset);
+    process.stdout.write(CC.FgLightBlue + '  compare ' + template.name + ' [ynsoplq]? ' + CC.Reset);
     var response = readline.question();
     switch (response) {
       case 'y':
       case 'Y':
-        var pugFile = template.pugFile;
-        if (!pugFile) pugFile = note.maker.fullname;
+        pugFile = make_template(template);
         child_process.exec(`"${sublime_text}" "${pugFile}"`);
-        mkdirp.sync(path.dirname(template.actualPath));
-        fs.writeFileSync(template.actualPath, template.expected, { encoding: 'utf8' });
         child_process.execSync(`meld "${template.actualPath}" "${template.fullname}"`);
         break;
       case 'n':
       case 'N':
         return;
+      case 's':
+      case 'S':
+        make_template(template);
+        write_diff(template);
+        break;
       case 'o':
       case 'O':
         fs.writeFileSync(template.fullname, template.expected, { encoding: 'utf8' });
@@ -163,6 +166,7 @@ function manageTemplate(note, template) {
           CC.FgRed +
           '\ty - [yes]       compare versions\n' +
           '\tn - [no]        skip this template\n' +
+          '\ts - [simple]    print simple diff\n' +
           '\to - [overwrite] replace the actual note template with the parsed pug template\n' +
           '\tp - [previous]  let this template undecided, jump to previous template\n' +
           '\tl - [list]      list all template conflict and quit this note\n' +
@@ -177,4 +181,28 @@ function manageTemplate(note, template) {
       break;
     }
   }
+}
+
+function make_template(template) {
+  mkdirp.sync(path.dirname(template.actualPath));
+  fs.writeFileSync(template.actualPath, template.expected, { encoding: 'utf8' });
+  return template.pugFile ? template.pugFile : template.parent.maker.fullname;
+}
+
+function write_diff(template) {
+  var diff_lines = child_process
+    .execSync(`git diff "${template.actualPath}" "${template.fullname}"`)
+    .toString('utf8')
+    .split('\n');
+  process.stdout.write(diff_lines.map(colorize_diff).join('\n'));
+}
+
+function colorize_diff(line) {
+  if (line.charAt() === '+') {
+    return CC.FgGreen + line + CC.Reset;
+  }
+  if (line.charAt() === '-') {
+    return CC.FgRed + line + CC.Reset;
+  }
+  return line;
 }
