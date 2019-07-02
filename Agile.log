@@ -6,7 +6,7 @@
 	… Vider Firefox PanierBleu
 
 ✓ Format this Agile cycle page
-	✓
+	✓ CharCodes
 		… is U+2026
 		✓ is U+2713
 		✗ is U+2717
@@ -34,6 +34,9 @@
 		✓ Code : creation du pug et du export pour les cartes langue
 		✓ Git : feature-langue-model
 
-… Globals urgent missions
-	… Need to write card-model_updator in py
+… Globals missions
+	✓ Need to write card-model_updator in py
 	… Creation d'un layout 'daf' pouvant prendre en parametres le nom des champs de l'image et du masque
+	✓ Ajouter un diff simple en console pour l'outil d'import export de modèles
+		✓ Code
+		✓ Git
