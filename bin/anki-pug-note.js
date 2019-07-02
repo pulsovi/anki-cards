@@ -19,7 +19,7 @@ class Note {
     var content = require(this.maker.fullname);
     var _this = this;
     content.forEach(function(rawTemplate) {
-      var template = new Template(_this.maker, rawTemplate, _this.name);
+      var template = new Template(_this.maker, rawTemplate, _this);
       _this.template[template.name] = template;
     });
   }
