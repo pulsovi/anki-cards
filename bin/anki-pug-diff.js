@@ -128,17 +128,15 @@ function manageNote(note) {
 }
 
 function manageTemplate(note, template) {
+  var pugFile;
   while (true) {
     process.stdout.write(CC.FgLightBlue + '  compare ' + template.name + ' [ynoplq]? ' + CC.Reset);
     var response = readline.question();
     switch (response) {
       case 'y':
       case 'Y':
-        var pugFile = template.pugFile;
-        if (!pugFile) pugFile = note.maker.fullname;
+        pugFile = make_template(template);
         child_process.exec(`"${sublime_text}" "${pugFile}"`);
-        mkdirp.sync(path.dirname(template.actualPath));
-        fs.writeFileSync(template.actualPath, template.expected, { encoding: 'utf8' });
         child_process.execSync(`meld "${template.actualPath}" "${template.fullname}"`);
         break;
       case 'n':
@@ -177,4 +175,10 @@ function manageTemplate(note, template) {
       break;
     }
   }
+}
+
+function make_template(template) {
+  mkdirp.sync(path.dirname(template.actualPath));
+  fs.writeFileSync(template.actualPath, template.expected, { encoding: 'utf8' });
+  return template.pugFile ? template.pugFile : template.parent.maker.fullname;
 }
