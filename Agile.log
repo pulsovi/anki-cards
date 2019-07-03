@@ -40,3 +40,8 @@
 	✓ Ajouter un diff simple en console pour l'outil d'import export de modèles
 		✓ Code
 		✓ Git
+	✓ Permettre l'ajout de cartes via l'outil d'import de templates
+		✓ Code
+			✓ Fonction list_new_cards
+			✓ Ajouter les nouvelles cartes
+		✓ Git
