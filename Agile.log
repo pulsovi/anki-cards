@@ -33,6 +33,12 @@
 	✓ Exploration : Besoin d'afficher le header de tags sur les cartes langues
 		✓ Code : creation du pug et du export pour les cartes langue
 		✓ Git : feature-langue-model
+	✓ Exploration : Ajouter les cartes pour language:keyword
+		✓ Code : Ajout de export.js
+		✓ Diff : ne fonctionne pas correctement, il fait seulement un git diff
+			✓ Code : reecriture de la fonction write_file
+			✓ Code : ajout de la possibilité d'un word diff
+		✓ Git
 
 … Globals missions
 	✓ Need to write card-model_updator in py
