@@ -1,6 +1,6 @@
 #!/bin/bash
 # set -x
 
-node `dirname $0`/anki-pug-diff.js
+node `dirname $0`/../src/diff/anki-pug-diff.js
 exit $?
 

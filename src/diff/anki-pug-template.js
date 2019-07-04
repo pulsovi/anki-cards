@@ -1,9 +1,10 @@
 //jshint esversion: 6
-
-const path = require('path');
+// native dependancies
 const fs = require('fs');
+const path = require('path');
 
-const promiseNoCallback = require('./underscore/promise').noCallBack;
+// local dependancies
+const promiseNoCallback = require('./_promise').noCallBack;
 
 function normalizeLineEnding(text) {
   return text.replace(/\r\n/g, '\r').replace(/\r/g, '\n').replace(/\s*$/, '\n');
