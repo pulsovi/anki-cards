@@ -6,13 +6,11 @@ const pug = require('pug');
 const promiseNoCallback = require('./_promise').noCallBack;
 const Template = require('./anki-pug-template');
 
-const ROOT = path.resolve(__dirname, '../../model');
-
 class Note {
-  constructor(file) {
+  constructor(file, name) {
     this.maker = file;
     this.template = {};
-    this.name = file.path.slice(ROOT.length + 1).replace(/\\|\//g, ':');
+    this.name = name;
   }
 
   parse() {

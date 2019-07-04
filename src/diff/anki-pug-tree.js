@@ -16,22 +16,24 @@ class Tree {
 
   getNotes() {
     var { promise, resolve, reject } = promiseNoCallback();
+    var _this = this;
 
     rra
       .list(this.root)
       .then(function(list) {
         resolve(
           list
-            .filter(function(file) {
-              return file.name === 'export.js';
-            })
-            .sort(function(fileA, fileB) {
-              return fileA.path > fileB.path ? 1 :
-                fileB.path > fileA.path ? -1 : 0;
-            })
-            .map(function(file) {
-              return new Note(file);
-            })
+          .filter(function(file) {
+            return file.name === 'export.js';
+          })
+          .sort(function(fileA, fileB) {
+            return fileA.path > fileB.path ? 1 :
+              fileB.path > fileA.path ? -1 : 0;
+          })
+          .map(function(file) {
+            var name = file.path.slice(_this.root.length + 1).replace(/\\|\//g, ':');
+            return new Note(file, name);
+          })
         );
       })
       .catch(reject);
