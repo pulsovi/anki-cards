@@ -150,8 +150,7 @@ function manageTemplate(note, template) {
         return;
       case 's':
       case 'S':
-        make_template(template);
-        write_diff(template);
+        diff_lines(template);
         break;
       case 'o':
       case 'O':
@@ -195,20 +194,21 @@ function make_template(template) {
   return template.pugFile ? template.pugFile : template.parent.maker.fullname;
 }
 
-function write_diff(template) {
-  var diff_lines = child_process
-    .execSync(`git diff "${template.actualPath}" "${template.fullname}"`)
-    .toString('utf8')
-    .split('\n');
-  process.stdout.write(diff_lines.map(colorize_diff).join('\n'));
+function diff_lines(template) {
+  diff.diffLines(template.actual, template.expected).forEach(write_diff);
 }
 
-function colorize_diff(line) {
-  if (line.charAt() === '+') {
-    return CC.FgGreen + line + CC.Reset;
+function write_diff(chunk) {
+  var value = chunk.value;
+  if (chunk.added) {
+    process.stdout.write(CC.FgGreen);
+  } else if (chunk.removed) {
+    process.stdout.write(CC.FgRed);
+  } else {
+    value = value
+      .split('\n\n')
+      .filter((el, index, array) => index === 0 || index === array.length - 1)
+      .join('\n\n');
   }
-  if (line.charAt() === '-') {
-    return CC.FgRed + line + CC.Reset;
-  }
-  return line;
+  process.stdout.write(value + CC.Reset);
 }
