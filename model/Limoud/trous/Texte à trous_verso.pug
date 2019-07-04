@@ -1,7 +1,7 @@
 extends ../kodech_verso_layout.pug
 block front
 block response-content
-	.p {{cloze:Texte}}
+	aside.p {{cloze:Texte}}
 block response-after
 	|{{#Context}}<div class="context" dir="rtl">{{Context}}</div>{{/Context}}
-	|{{#Daf}}<div class="daf" {{#Mask}}style="background-image: url('{{Mask}}')"{{/Mask}}><img src="{{Daf}}" /></div>{{/Daf}}
+	|{{#Daf}}<div class="daf"><img src="{{Daf}}" {{#Mask}}style="background-image: url('{{Mask}}')"{{/Mask}}/></div>{{/Daf}}
