@@ -1,8 +1,11 @@
 //jshint esversion:6
+// native dependancies
 const path = require('path');
 
+// npm dependancies
 const rra = require('recursive-readdir-async');
 
+// local dependancies
 const promiseNoCallback = require('./_promise').noCallBack;
 const Note = require('./anki-pug-note');
 

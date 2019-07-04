@@ -1,13 +1,19 @@
 //jshint esversion: 6
+// Native dependancies
+const child_process = require('child_process');
 const fs = require('fs');
 const path = require('path');
-const mkdirp = require('mkdirp');
 
-const ankiPug = require('./anki-pug');
+// npm dependancies
+const mkdirp = require('mkdirp');
 const readline = require('readline-sync');
-const child_process = require('child_process');
+const diff = require('diff');
+
+// local dependancies
+const ankiPug = require('./anki-pug');
 
 const sublime_text = "C:\\Program Files\\Sublime Text 3\\sublime_text.exe";
+const ROOT = __dirname + '/../../model';
 const CC = { /*console_colors*/
   Reset: "\x1b[0m",
   Bright: "\x1b[1m",
@@ -48,7 +54,7 @@ const CC = { /*console_colors*/
 var manageAllNotes = false;
 
 ankiPug
-  .tree(__dirname + '/../../model')
+  .tree(ROOT)
   .getNotes()
   .then(function(notes) {
     manageNotes(notes);

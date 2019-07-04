@@ -1,8 +1,9 @@
 //jshint esversion: 6
-
-const path = require('path');
+// native dependancies
 const fs = require('fs');
+const path = require('path');
 
+// local dependancies
 const promiseNoCallback = require('./_promise').noCallBack;
 
 function normalizeLineEnding(text) {
