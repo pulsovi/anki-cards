@@ -7,7 +7,7 @@ String.prototype.toCapitalisationCase = function toCapitalisationCase() {
   return this.charAt(0).toUpperCase() + this.substring(1);
 };
 
-const max = 6;
+const max = 8;
 
 const th = [
   'first',
