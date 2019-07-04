@@ -76,6 +76,7 @@ Object.keys(single).forEach(function(pugName) {
 });
 
 outputList.push({
+  actualPath: path.resolve(__dirname, '../../commons.css'),
   content: fs.readFileSync(path.resolve(__dirname, '../../commons.css'), { encoding: 'utf8' }),
   name: 'out/style.css',
   pugFile: path.resolve(__dirname, '../../commons.css'),
