@@ -3,7 +3,7 @@
 const path = require('path');
 const fs = require('fs');
 
-const promiseNoCallback = require('./underscore/promise').noCallBack;
+const promiseNoCallback = require('./_promise').noCallBack;
 
 function normalizeLineEnding(text) {
   return text.replace(/\r\n/g, '\r').replace(/\r/g, '\n').replace(/\s*$/, '\n');

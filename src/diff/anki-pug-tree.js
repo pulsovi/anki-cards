@@ -3,7 +3,7 @@ const path = require('path');
 
 const rra = require('recursive-readdir-async');
 
-const promiseNoCallback = require('./underscore/promise').noCallBack;
+const promiseNoCallback = require('./_promise').noCallBack;
 const Note = require('./anki-pug-note');
 
 class Tree {
