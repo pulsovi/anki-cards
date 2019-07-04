@@ -48,7 +48,7 @@ const CC = { /*console_colors*/
 var manageAllNotes = false;
 
 ankiPug
-  .tree(__dirname + '/../model')
+  .tree(__dirname + '/../../model')
   .getNotes()
   .then(function(notes) {
     manageNotes(notes);
