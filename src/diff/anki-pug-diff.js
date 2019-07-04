@@ -136,7 +136,7 @@ function manageNote(note) {
 function manageTemplate(note, template) {
   var pugFile;
   while (true) {
-    process.stdout.write(CC.FgLightBlue + '  compare ' + template.name + ' [ynsoplq]? ' + CC.Reset);
+    process.stdout.write(CC.FgLightBlue + '  compare ' + template.name + ' [ynsSoplq]? ' + CC.Reset);
     var response = readline.question();
     switch (response) {
       case 'y':
@@ -149,8 +149,10 @@ function manageTemplate(note, template) {
       case 'N':
         return;
       case 's':
-      case 'S':
         diff_lines(template);
+        break;
+      case 'S':
+        diff_words(template);
         break;
       case 'o':
       case 'O':
@@ -171,7 +173,8 @@ function manageTemplate(note, template) {
           CC.FgRed +
           '\ty - [yes]       compare versions\n' +
           '\tn - [no]        skip this template\n' +
-          '\ts - [simple]    print simple diff\n' +
+          '\ts - [simple-l]  print simple lines diff\n' +
+          '\tS - [simple-w]  print simple words diff\n' +
           '\to - [overwrite] replace the actual note template with the parsed pug template\n' +
           '\tp - [previous]  let this template undecided, jump to previous template\n' +
           '\tl - [list]      list all template conflict and quit this note\n' +
@@ -196,6 +199,10 @@ function make_template(template) {
 
 function diff_lines(template) {
   diff.diffLines(template.actual, template.expected).forEach(write_diff);
+}
+
+function diff_words(template){
+  diff.diffWords(template.actual, template.expected).forEach(write_diff);
 }
 
 function write_diff(chunk) {
