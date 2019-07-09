@@ -20,11 +20,13 @@ class Note {
       var template = new Template(_this.maker, rawTemplate, _this);
       _this.template[template.name] = template;
     });
+    return this;
   }
 
   reload() {
     delete require.cache[require.resolve(this.maker.fullname)];
     this.parse();
+    return this;
   }
 
   get templateNames() {

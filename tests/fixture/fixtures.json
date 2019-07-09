@@ -1,0 +1,93 @@
+[
+	{
+		"title": "question padding bottom",
+		"description": "le bloc de question doit avoir un padding en bas de 1em, attention au margin collapsing",
+		"note": "Basic",
+		"card": "Card 1",
+		"face": "verso",
+		"platform": "mobile",
+		"locals": {
+			"Tags": "symfony",
+			"Front": "What is the form_label",
+			"Back": "<img src=\"form-field-parts.svg\" style=\"max-width: 100%;\"/>"
+		},
+		"id": "1lvc0dhgjxsnmeqm",
+		"ok": false
+	},
+	{
+		"title": "question padding bottom",
+		"description": "le bloc de question doit avoir un padding en bas de 1em, attention au margin collapsing",
+		"note": "Basic",
+		"card": "Card 1",
+		"face": "verso",
+		"platform": "mobile",
+		"locals": {
+			"Tags": "symfony",
+			"Front": "What is the form_label",
+			"Back": "Un petit texte innocent"
+		},
+		"id": "1lvc0h3cjxtbpayt",
+		"ok": true
+	},
+	{
+		"id": "1lvc0ersjxvjyfj7",
+		"note": "language::objectProperty",
+		"card": "Usage",
+		"locals": {
+			"Object": "note type structure",
+			"PropertyName": "[\"tmpls\"]",
+			"PropertyType": "list",
+			"PropertyDescription": "list of all templates (cards) attached to the note type",
+			"Extra": "templates are dictionary structure contains properties of the template",
+			"Tags": " anki-addon "
+		},
+		"title": "Title color",
+		"description": "Le titre doit être écrit en bleu clair sur bleu foncé",
+		"face": "recto",
+		"platform": "mobile",
+		"ok": false
+	},
+	{
+		"id": "1lvc0au4jxvm4nit",
+		"note": "language::function",
+		"card": "usage",
+		"locals": {
+			"MethodName": "REPT",
+			"Usage": "Repeats text a given number of times.",
+			"Description": "Use REPT to fill a cell with a number of instances of a text string.",
+			"ReturnType": "String",
+			"Param1Name": "Text",
+			"Param1Type": "String",
+			"Param1Desc": "The text you want to repeat.",
+			"Param2Name": "Number_times",
+			"Param2Type": "Integer",
+			"Param2Desc": "A positive number specifying the number of times to repeat text.<div>If number_times is not an integer, it is truncated.<br></div>",
+			"Tags": " excel "
+		},
+		"title": "Question in lighter font",
+		"description": "La question doit être écrite en police normale",
+		"face": "verso",
+		"platform": "mobile",
+		"ok": false
+	},
+	{
+		"id": "1lvc0daojxvqr14j",
+		"note": "language::objectProperty",
+		"card": "Type",
+		"locals": {
+			"Object": "Application",
+			"chainSigil": ".",
+			"PropertyName": "ScreenUpdating&nbsp;",
+			"PropertyType": "Boolean",
+			"PropertyDefault": "True",
+			"PropertyDescription": "Etat actif/inactif de la mise à jour de l'écran.",
+			"Extra": "<div>Valeur booléenne accessible en lecture/écriture.</div><div><br /></div><div>Désactiver l’actualisation de l’écran pour accélérer votre code de macro. Vous ne pourrez pas voir ce que fait la macro, mais elle s’exécute plus rapidement.</div><div><br /></div><div>Pensez à définir la propriété ScreenUpdating à True lorsque la fin de la macro.</div>",
+			"Tags": " VBA "
+		},
+		"title": "PropertyDescription",
+		"description": "Affichage de propertyDescription en aside",
+		"face": "verso",
+		"platform": "mobile",
+		"ok": false
+	}
+]

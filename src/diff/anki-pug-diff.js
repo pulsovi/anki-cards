@@ -77,7 +77,7 @@ function manageNote(note) {
   var back = false;
   for (let i = 0; i < templateNames.length; ++i) {
     let template = note.template[templateNames[i]];
-    if (template.actual === template.expected) {
+    if (template.anki === template.pug) {
       if (back === true) i -= 2;
       continue;
     }
@@ -156,7 +156,7 @@ function manageTemplate(note, template) {
         break;
       case 'o':
       case 'O':
-        fs.writeFileSync(template.fullname, template.expected, { encoding: 'utf8' });
+        fs.writeFileSync(template.fullname, template.pug, { encoding: 'utf8' });
         return;
       case 'p':
       case 'P':
@@ -185,7 +185,7 @@ function manageTemplate(note, template) {
     }
     note.reload();
     template = note.template[template.name];
-    if (template.actual === template.expected) {
+    if (template.anki === template.pug) {
       break;
     }
   }
@@ -193,16 +193,16 @@ function manageTemplate(note, template) {
 
 function make_template(template) {
   mkdirp.sync(path.dirname(template.actualPath));
-  fs.writeFileSync(template.actualPath, template.expected, { encoding: 'utf8' });
+  fs.writeFileSync(template.actualPath, template.pug, { encoding: 'utf8' });
   return template.pugFile ? template.pugFile : template.parent.maker.fullname;
 }
 
 function diff_lines(template) {
-  diff.diffLines(template.actual, template.expected).forEach(write_diff);
+  diff.diffLines(template.anki, template.pug).forEach(write_diff);
 }
 
 function diff_words(template){
-  diff.diffWords(template.actual, template.expected).forEach(write_diff);
+  diff.diffWords(template.anki, template.pug).forEach(write_diff);
 }
 
 function write_diff(chunk) {

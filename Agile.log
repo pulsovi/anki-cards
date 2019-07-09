@@ -51,3 +51,12 @@
 			✓ Fonction list_new_cards
 			✓ Ajouter les nouvelles cartes
 		✓ Git
+	✓ Ajouter des test CSS pour empecher les regressions
+		✓ Code
+			✓ Convention de fixture
+			✓ Recuperer le template
+			✓ Recuperer le HTML
+			✓ Convertir en png
+			✓ Comparer les images
+			✓ create-fixture
+			✓ diff.html
