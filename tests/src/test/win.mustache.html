@@ -1,0 +1,29 @@
+<html class=" webkit chrome win js"><head>
+<title>main webview</title>
+
+<style>
+body { zoom: 1.25; background: #f0f0f0; font-size:12px;font-family:"Segoe UI"; }
+button { font-size: 12px; font-family:"Segoe UI"; }
+</style>
+
+<base href="http://127.0.0.1:{{port}}/"><link rel="stylesheet" type="text/css" href="http://127.0.0.1:{{port}}/_anki/webview.css">
+<link rel="stylesheet" type="text/css" href="http://127.0.0.1:{{port}}/_anki/reviewer.css"><script src="http://127.0.0.1:{{port}}/_anki/webview.js"></script>
+<script src="http://127.0.0.1:{{port}}/_anki/jquery.js"></script>
+<script src="http://127.0.0.1:{{port}}/_anki/browsersel.js"></script>
+<script src="http://127.0.0.1:{{port}}/_anki/mathjax/conf.js"></script>
+<script src="http://127.0.0.1:{{port}}/_anki/mathjax/MathJax.js"></script><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1px; bottom: 2px; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style>
+<script src="http://127.0.0.1:{{port}}/_anki/reviewer.js"></script>
+</head>
+
+<body class="card card1"><div id="MathJax_Message" style="display: none;"></div>
+<div id="_mark" style="display: none;">★</div>
+<div id="_flag" style="display: none;">⚑</div>
+<script>qFade=0;</script>
+<div id="qa" style="opacity: 1;"><style>{{{css}}}</style>{{{body}}}
+
+
+</body></html>
