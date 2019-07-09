@@ -21,11 +21,11 @@ class Template {
     this.pugFile = rawTemplate.pugFile;
     this.actualPath = rawTemplate.actualPath || path
       .resolve(__dirname, '../var/', parent.name.replace(/:/g, '/'), path.basename(this.fullname));
-    this.expected = normalizeLineEnding(rawTemplate.content);
+    this.pug = normalizeLineEnding(rawTemplate.content);
     this.parent = parent;
   }
 
-  get actual() {
+  get anki() {
     touch(this.fullname);
     return normalizeLineEnding(fs.readFileSync(this.fullname, { encoding: 'utf8' }));
   }
