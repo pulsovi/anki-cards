@@ -1,0 +1,14 @@
+{
+  "win": {
+    "viewport": {
+      "width": 1920,
+      "height": 860
+    }
+  },
+  "mobile": {
+    "viewport": {
+      "width": 360,
+      "height": 560
+    }
+  }
+}

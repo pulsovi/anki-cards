@@ -51,3 +51,6 @@
 			✓ Fonction list_new_cards
 			✓ Ajouter les nouvelles cartes
 		✓ Git
+	✓ Ajouter des test CSS pour empecher les regressions
+		✓ Code
+			✓ Convention de fixture
