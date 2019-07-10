@@ -1,6 +1,7 @@
-extends ../../hol_recto_layout.pug
+extends ../../coding_recto_layout.pug
+block prototype
+	|{{#ClassName}}{{ClassName}}#[br]  {{/ClassName}}#[i.mk-func-name {{MethodName}}]
 block question
-	include prototype.min.pug
 	section.quest
 		block question-content
 		div.clearfix
