@@ -71,6 +71,29 @@
 		"ok": true
 	},
 	{
+		"id": "1lvc0d4ojxx56qkz",
+		"note": "language::function",
+		"card": "usage",
+		"locals": {
+			"MethodName": "REPT",
+			"Usage": "Repeats text a given number of times.",
+			"Description": "Use REPT to fill a cell with a number of instances of a text string.",
+			"ReturnType": "String",
+			"Param1Name": "Text",
+			"Param1Type": "String",
+			"Param1Desc": "The text you want to repeat.",
+			"Param2Name": "Number_times",
+			"Param2Type": "Integer",
+			"Param2Desc": "A positive number specifying the number of times to repeat text.<div>If number_times is not an integer, it is truncated.<br></div>",
+			"Tags": " excel "
+		},
+		"title": "Simple prototype",
+		"description": "Le prototype doit s'afficher en version simplifiée.",
+		"face": "recto",
+		"platform": "mobile",
+		"ok": true
+	},
+	{
 		"id": "1lvc0daojxvqr14j",
 		"note": "language::objectProperty",
 		"card": "Type",
