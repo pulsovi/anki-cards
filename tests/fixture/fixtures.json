@@ -111,7 +111,7 @@
 		"description": "Affichage de propertyDescription en aside",
 		"face": "verso",
 		"platform": "mobile",
-		"ok": false
+		"ok": true
 	},
 	{
 		"id": "1lvc07dkjxx28ats",
