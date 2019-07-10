@@ -73,11 +73,13 @@ class Fixture {
     this.locals = options.locals;
     this.note = getNote(options.note).parse();
     this.platform = options.platform;
+    this.title = options.title;
 
     this.directory = path.resolve(ROOT, 'tests/out', this.id);
     this.locals.Card = this.card;
     this.locals.Type = this.note.name;
     this.viewport = options.viewport || config.get(this.platform + '.viewport');
+    this.diffTemplate = fs.promises.readFile(path.join(__dirname, 'diff.html'), 'utf8');
 
     mkdirp.sync(this.directory);
   }
@@ -158,12 +160,13 @@ class Fixture {
       .pipe(fs.createWriteStream(_this.directory + '/' + version1 + '-' + version2 + '.png'));
   }
 
-  setHtmlDiff() {
+  async setHtmlDiff() {
     this.htmlDiffFile = path.join(this.directory, 'diff.html');
-    return fs.promises.copyFile(
-      path.join(__dirname, 'diff.html'),
-      this.htmlDiffFile
-    );
+    var html = mustache.render(await this.diffTemplate, {
+      title: this.title,
+      description: this.description
+    });
+    await fs.promises.writeFile(this.htmlDiffFile, html);
   }
 
   async html(version) {
