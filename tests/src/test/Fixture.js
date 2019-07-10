@@ -67,11 +67,14 @@ class Fixture {
   constructor(options) {
     this.card = options.card;
     this.description = options.description;
-    this.diff = !options.ok;
+    if(options.ok === false) {
+      this.diff = { base: false };
+    }
     this.face = options.face;
     this.id = options.id;
     this.locals = options.locals;
     this.note = getNote(options.note).parse();
+    this.ok = options.ok;
     this.platform = options.platform;
     this.title = options.title;
 
@@ -153,17 +156,27 @@ class Fixture {
     var data = await resembleData(file1, file2);
     var diffVal = parseFloat(data.misMatchPercentage);
     this.diffString = (this.diffString || '') + version1 + '-' + version2 + ':' + data.misMatchPercentage + '; ';
-    if (diffVal > 0) this.diff = true;
+    if (diffVal > 0) {
+      this.diff = this.diff || {};
+      this.diff[version1 + '-' + version2] = data.misMatchPercentage;
+    }
+    var resemblePath = _this.directory + '/' + version1 + '-' + version2 + '.png';
     data
       .getDiffImage()
       .pack()
-      .pipe(fs.createWriteStream(_this.directory + '/' + version1 + '-' + version2 + '.png'));
+      .pipe(fs.createWriteStream(resemblePath));
   }
 
   async setHtmlDiff() {
-    this.htmlDiffFile = path.join(this.directory, 'diff.html');
+    this.htmlDiffFile = path.join(this.directory, 'index.html');
     var html = mustache.render(await this.diffTemplate, this);
-    await fs.promises.writeFile(this.htmlDiffFile, html);
+    await Promise.all([
+      fs.promises.writeFile(this.htmlDiffFile, html),
+      fs.promises.writeFile(this.directory + '/package.json', JSON.stringify({
+        main: "index.html",
+        name: this.title
+      })),
+    ]);
   }
 
   async html(version) {

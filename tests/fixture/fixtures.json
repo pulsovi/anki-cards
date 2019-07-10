@@ -45,7 +45,7 @@
 		"description": "Le titre doit être écrit en bleu clair sur bleu foncé",
 		"face": "recto",
 		"platform": "mobile",
-		"ok": false
+		"ok": true
 	},
 	{
 		"id": "1lvc0au4jxvm4nit",
