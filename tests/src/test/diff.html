@@ -75,8 +75,8 @@
   }
 
   .base-ok, .diff-ok {
-font-weight: 600;
-padding: 1em;
+    font-weight: 600;
+    padding: 1em;
   }
   </style>
 </head>
@@ -99,6 +99,7 @@ padding: 1em;
     <div class="anki">
       <img src="./anki.png"></img>
       <i id="anki-as-base" class="btn btn-primary">set as base image</i>
+      <i id="anki-template" class="btn btn-secondary">view the template</i>
     </div>
     <div class="anki-pug">
       <img src="./anki-pug.png"></img>
@@ -117,6 +118,7 @@ padding: 1em;
   const win = ngui.Window.get();
   const fs = require('fs');
   const path = require('path');
+  const child_process = require('child_process');
 
   const ankiPugRoot = process.env.ANKI_PUG_ROOT;
   var runningJobs = [];
@@ -142,10 +144,14 @@ padding: 1em;
     close();
   });
 
+  document.getElementById('anki-template').addEventListener('click', function() {
+    viewTemplate('anki');
+  });
+
   (() => {
     var baseOk = document.getElementById('base-ok');
     var isBaseOk = baseOk.innerText === 'true';
-    if(isBaseOk) document.getElementById('set-base-ok').hidden = true;
+    if (isBaseOk) document.getElementById('set-base-ok').hidden = true;
     baseOk.classList.add(isBaseOk ? 'ok' : 'nok');
     baseOk.innerText = 'BASE';
     var diffOk = document.getElementById('diff-ok');
@@ -169,9 +175,20 @@ padding: 1em;
     document.getElementById('set-base-ok').hidden = true;
   }
 
-  async function close(){
+  async function close() {
     await Promise.all(runningJobs);
     win.close();
+  }
+
+  function viewTemplate(templateName) {
+    var templateFile = path.join(process.cwd(), templateName + '_{{face}}_template.html');
+    child_process.spawn(
+      '"C:\\Program Files\\Sublime Text 3\\sublime_text.exe" "' + templateFile + '"', {
+        detached: true,
+        stdio: 'ignore',
+        shell: true
+      }
+    ).unref();
   }
   </script>
 </body>
