@@ -6,6 +6,8 @@ const path = require('path');
 // local dependancies
 const promiseNoCallback = require('./_promise').noCallBack;
 
+const ROOT = process.env.ANKI_PUG_ROOT;
+
 function normalizeLineEnding(text) {
   return text.replace(/\r\n/g, '\r').replace(/\r/g, '\n').replace(/\s*$/, '\n');
 }
@@ -19,8 +21,9 @@ class Template {
     this.fullname = path.resolve(maker.path, rawTemplate.name);
     this.name = path.basename(this.fullname, '.html');
     this.pugFile = rawTemplate.pugFile;
-    this.renderedPugPath = rawTemplate.actualPath || path
-      .resolve(__dirname, '../var/', parent.name.replace(/:/g, '/'), path.basename(this.fullname));
+    this.renderedPugPath = rawTemplate.actualPath || path.resolve(
+      ROOT, 'var/', parent.name.replace(/::/g, '/'), path.basename(this.fullname)
+    );
     this.pug = normalizeLineEnding(rawTemplate.content);
     this.parent = parent;
   }

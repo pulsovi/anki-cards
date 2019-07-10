@@ -31,7 +31,7 @@ class Tree {
               fileB.path > fileA.path ? -1 : 0;
           })
           .map(function(file) {
-            var name = file.path.slice(_this.root.length + 1).replace(/\\|\//g, ':');
+            var name = file.path.slice(_this.root.length + 1).replace(/\\|\//g, '::');
             return new Note(file, name);
           })
         );
