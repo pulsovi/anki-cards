@@ -162,10 +162,7 @@ class Fixture {
 
   async setHtmlDiff() {
     this.htmlDiffFile = path.join(this.directory, 'diff.html');
-    var html = mustache.render(await this.diffTemplate, {
-      title: this.title,
-      description: this.description
-    });
+    var html = mustache.render(await this.diffTemplate, this);
     await fs.promises.writeFile(this.htmlDiffFile, html);
   }
 
