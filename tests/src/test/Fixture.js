@@ -67,9 +67,6 @@ class Fixture {
   constructor(options) {
     this.card = options.card;
     this.description = options.description;
-    if(options.ok === false) {
-      this.diff = { base: false };
-    }
     this.face = options.face;
     this.id = options.id;
     this.locals = options.locals;

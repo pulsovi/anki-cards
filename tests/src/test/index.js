@@ -26,7 +26,7 @@ async function manage_fixture(options) {
     fixture.setResemble('anki', 'pug'),
   ]);
   await fixture.setHtmlDiff();
-  if (fixture.diff) {
+  if (fixture.diff || !fixture.ok) {
     console.log(fixture.htmlDiffFile, fixture.diffString);
     childProcess.spawn(
       'D:\\ProgrammesPortables\\NW\\nw.exe "' + path.dirname(fixture.htmlDiffFile) + '"', {
