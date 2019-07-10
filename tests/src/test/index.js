@@ -12,8 +12,7 @@ const fixturesPath = path.resolve(ROOT, 'tests/fixture/fixtures.json');
 const fixtures = JSON.parse(fs.readFileSync(fixturesPath, 'utf8'));
 
 // main
-//fixtures.forEach(manage_fixture);
-manage_fixture(fixtures[3]);
+fixtures.forEach(manage_fixture);
 
 async function manage_fixture(options) {
   const fixture = new Fixture(options);
