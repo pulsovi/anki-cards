@@ -143,7 +143,7 @@ function manageTemplate(note, template) {
       case 'Y':
         pugFile = make_template(template);
         child_process.exec(`"${sublime_text}" "${pugFile}"`);
-        child_process.execSync(`meld "${template.actualPath}" "${template.fullname}"`);
+        child_process.execSync(`meld "${template.renderedPugPath}" "${template.fullname}"`);
         break;
       case 'n':
       case 'N':
@@ -192,8 +192,8 @@ function manageTemplate(note, template) {
 }
 
 function make_template(template) {
-  mkdirp.sync(path.dirname(template.actualPath));
-  fs.writeFileSync(template.actualPath, template.pug, { encoding: 'utf8' });
+  mkdirp.sync(path.dirname(template.renderedPugPath));
+  fs.writeFileSync(template.renderedPugPath, template.pug, { encoding: 'utf8' });
   return template.pugFile ? template.pugFile : template.parent.maker.fullname;
 }
 

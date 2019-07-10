@@ -19,7 +19,7 @@ class Template {
     this.fullname = path.resolve(maker.path, rawTemplate.name);
     this.name = path.basename(this.fullname, '.html');
     this.pugFile = rawTemplate.pugFile;
-    this.actualPath = rawTemplate.actualPath || path
+    this.renderedPugPath = rawTemplate.actualPath || path
       .resolve(__dirname, '../var/', parent.name.replace(/:/g, '/'), path.basename(this.fullname));
     this.pug = normalizeLineEnding(rawTemplate.content);
     this.parent = parent;
