@@ -1,13 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<title>{{title}}</title>
-	<style type="text/css">
-		h3 {
-			text-align: center;
-		}
-	</style>
+  <meta charset="UTF-8">
+  <title>{{title}}</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <style type="text/css">
+  header {
+    display: grid;
+    grid-template-columns: 1fr 10fr 1fr;
+  }
+
+  .header-title {
+    background-color: #aeaeae;
+    color: #cbcbcb;
+    grid-column: 2;
+    padding: 0.4em;
+    margin-bottom: 0;
+  }
+
+  body {
+    text-align: center;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  .content {
+    column-gap: 1px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    margin-bottom: 1em;
+  }
+
+  .base {
+    grid-column: 1;
+  }
+
+  .base-anki {
+    grid-column: 2;
+  }
+
+  .anki {
+    grid-column: 3;
+  }
+
+  .anki-pug {
+    grid-column: 4;
+  }
+
+  .pug {
+    grid-column: 5;
+  }
+
+  .base, .base-anki, .anki, .anki-pug, .pug {}
+
+  .ok {
+    background-color: #28a745;
+    color: #5fd87b;
+  }
+
+  .nok {
+    background-color: var(--red);
+    color: #ff9da7;
+  }
+
+  .base-ok {
+    grid-column: 1;
+  }
+
+  .diff-ok {
+    grid-column: 3;
+  }
+
+  .base-ok, .diff-ok {
+font-weight: 600;
+padding: 1em;
+  }
+  </style>
 </head>
-<body><h3>{{description}}</h3><img src="./base.png"><img src="./base-anki.png"><img src="./anki.png"><img src="./anki-pug.png"><img src="./pug.png"><h3>{{note.name}}&gt;{{card}}</h3></body>
+
+<body>
+  <header>
+    <i id="base-ok" class="base-ok">{{ok}}</i>
+    <h3 class="header-title">{{description}}</h3>
+    <i id="diff-ok" class="diff-ok">{{#diff}}false{{/diff}}{{^diff}}true{{/diff}}</i>
+  </header>
+  <div class="content">
+    <div class="base">
+      <img src="./base.png"></img>
+      <i id="set-base-ok" class="btn btn-success">it is OK</i>
+    </div>
+    <div class="base-anki">
+      <img src="./base-anki.png"></img>
+      <p>{{diff.base-anki}}</p>
+    </div>
+    <div class="anki">
+      <img src="./anki.png"></img>
+      <i id="anki-as-base" class="btn btn-primary">set as base image</i>
+    </div>
+    <div class="anki-pug">
+      <img src="./anki-pug.png"></img>
+      <p>{{diff.anki-pug}}</p>
+    </div>
+    <div class="pug">
+      <img src="./pug.png"></img>
+      <i id="pug-as-base" class="btn btn-primary">set as base image</i>
+    </div>
+  </div>
+  <h3>{{note.name}}&gt;{{card}}</h3>
+  <i id="close" class="btn btn-danger">Close</i>
+  <script>
+  //jshint esversion:8
+  const ngui = require('nw.gui');
+  const win = ngui.Window.get();
+  const fs = require('fs');
+  const path = require('path');
+
+  const ankiPugRoot = process.env.ANKI_PUG_ROOT;
+  var runningJobs = [];
+
+  win.on('loaded', function() {
+    win.show();
+    win.maximize();
+  });
+
+  document.getElementById('anki-as-base').addEventListener('click', function() {
+    runningJobs.push(setAsBase('anki.png'));
+  });
+
+  document.getElementById('pug-as-base').addEventListener('click', function() {
+    runningJobs.push(setAsBase('pug.png'));
+  });
+
+  document.getElementById('set-base-ok').addEventListener('click', function() {
+    runningJobs.push(setBaseOk());
+  });
+
+  document.getElementById('close').addEventListener('click', function() {
+    close();
+  });
+
+  (() => {
+    var baseOk = document.getElementById('base-ok');
+    var isBaseOk = baseOk.innerText === 'true';
+    if(isBaseOk) document.getElementById('set-base-ok').hidden = true;
+    baseOk.classList.add(isBaseOk ? 'ok' : 'nok');
+    baseOk.innerText = 'BASE';
+    var diffOk = document.getElementById('diff-ok');
+    diffOk.classList.add(diffOk.innerText === 'true' ? 'ok' : 'nok');
+    diffOk.innerText = 'DIFF';
+  })();
+
+  async function setAsBase(source) {
+    await fs.promises.copyFile(path.join(process.cwd(), source), path.join(process.cwd(), 'base.png'));
+  }
+
+  async function setBaseOk() {
+    var fixturesPath = path.join(ankiPugRoot, 'tests/fixture/fixtures.json');
+    var fixtures = JSON.parse(await fs.promises.readFile(fixturesPath, 'utf8'));
+    var myId = path.basename(process.cwd());
+    var me = fixtures.find(fixture => fixture.id === myId);
+    me.ok = true;
+    console.log(fixturesPath, me, fixtures);
+    await fs.promises.writeFile(fixturesPath, JSON.stringify(fixtures, null, '\t'));
+    document.getElementById('base-ok').classList.replace('nok', 'ok');
+    document.getElementById('set-base-ok').hidden = true;
+  }
+
+  async function close(){
+    await Promise.all(runningJobs);
+    win.close();
+  }
+  </script>
+</body>
+
 </html>

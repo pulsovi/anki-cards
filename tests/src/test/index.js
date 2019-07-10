@@ -1,5 +1,6 @@
 //jshint esversion:8
 // native dependancies
+const childProcess = require('child_process');
 const fs = require('fs');
 const path = require('path');
 // local dependancies
@@ -11,7 +12,8 @@ const fixturesPath = path.resolve(ROOT, 'tests/fixture/fixtures.json');
 const fixtures = JSON.parse(fs.readFileSync(fixturesPath, 'utf8'));
 
 // main
-fixtures.forEach(manage_fixture);
+//fixtures.forEach(manage_fixture);
+manage_fixture(fixtures[3]);
 
 async function manage_fixture(options) {
   const fixture = new Fixture(options);
@@ -24,6 +26,15 @@ async function manage_fixture(options) {
     fixture.setResemble('base', 'anki'),
     fixture.setResemble('anki', 'pug'),
   ]);
-  fixture.setHtmlDiff();
-  if(fixture.diff) console.log(fixture.htmlDiffFile, fixture.diffString);
+  await fixture.setHtmlDiff();
+  if (fixture.diff) {
+    console.log(fixture.htmlDiffFile, fixture.diffString);
+    childProcess.spawn(
+      'D:\\ProgrammesPortables\\NW\\nw.exe "' + path.dirname(fixture.htmlDiffFile) + '"', {
+        detached: true,
+        stdio: 'ignore',
+        shell: true
+      }
+    ).unref();
+  }
 }
