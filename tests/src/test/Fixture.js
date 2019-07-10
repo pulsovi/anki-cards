@@ -145,7 +145,9 @@ class Fixture {
     var file2 = this.directory + '/' + version2 + '.png';
     if (!await fileExist(file1) || !await fileExist(file2)) return;
     var data = await resembleData(file1, file2);
-    if (parseFloat(data.misMatchPercentage) > 0) _this.diff = true;
+    var diffVal = parseFloat(data.misMatchPercentage);
+    this.diffString = (this.diffString || '') + version1 + '-' + version2 + ':' + data.misMatchPercentage + '; ';
+    if (diffVal > 0) this.diff = true;
     data
       .getDiffImage()
       .pack()

@@ -12,7 +12,7 @@
 			"Back": "<img src=\"form-field-parts.svg\" style=\"max-width: 100%;\"/>"
 		},
 		"id": "1lvc0dhgjxsnmeqm",
-		"ok": false
+		"ok": true
 	},
 	{
 		"title": "question padding bottom",
@@ -89,5 +89,20 @@
 		"face": "verso",
 		"platform": "mobile",
 		"ok": false
+	},
+	{
+		"id": "1lvc07dkjxx28ats",
+		"note": "Basic",
+		"card": "Card 1",
+		"locals": {
+			"Front": "<span id=\"test\">Test</span>\n<pre id=\"out\">12px</pre>\n<script>\nvar out = document.getElementById('out');\nvar test = document.getElementById('test');\nsetInterval(function(){\n  out.innerText = getComputedStyle(out)['font-size'];\n}, 200);\n</script>",
+			"Back": "",
+			"Tags": "Test"
+		},
+		"title": "Font size",
+		"description": "La taille affichée doit être de 24px",
+		"face": "recto",
+		"platform": "mobile",
+		"ok": true
 	}
 ]

@@ -25,5 +25,5 @@ async function manage_fixture(options) {
     fixture.setResemble('anki', 'pug'),
   ]);
   fixture.setHtmlDiff();
-  if(fixture.diff) console.log(fixture.htmlDiffFile);
+  if(fixture.diff) console.log(fixture.htmlDiffFile, fixture.diffString);
 }
