@@ -11,12 +11,19 @@
     grid-template-columns: 1fr 10fr 1fr;
   }
 
+  h4 {
+    background: #808080;
+    color:  #aaa;
+    margin: 0 0 1px;
+    padding: 0.5em;
+  }
+
   .header-title {
     background-color: #aeaeae;
     color: #cbcbcb;
     grid-column: 2;
-    padding: 0.4em;
     margin-bottom: 0;
+    padding: 0.4em;
   }
 
   body {
@@ -89,23 +96,28 @@
   </header>
   <div class="content">
     <div class="base">
+      <h4>base</h4>
       <img src="./base.png"></img>
       <i id="set-base-ok" class="btn btn-success">it is OK</i>
     </div>
     <div class="base-anki">
+      <h4>base-anki</h4>
       <img src="./base-anki.png"></img>
       <p>{{diff.base-anki}}</p>
     </div>
     <div class="anki">
+      <h4>anki</h4>
       <img src="./anki.png"></img>
       <i id="anki-as-base" class="btn btn-primary">set as base image</i>
       <i id="anki-template" class="btn btn-secondary">view the template</i>
     </div>
     <div class="anki-pug">
+      <h4>anki-pug</h4>
       <img src="./anki-pug.png"></img>
       <p>{{diff.anki-pug}}</p>
     </div>
     <div class="pug">
+      <h4>pug</h4>
       <img src="./pug.png"></img>
       <i id="pug-as-base" class="btn btn-primary">set as base image</i>
     </div>
