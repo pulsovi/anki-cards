@@ -98,6 +98,10 @@ section .p {
   padding: 0;
 }
 
+section .p aside {
+  margin: 1em 0.3em;
+}
+
 section+pre, header+pre {
   display: block;
 }
@@ -158,7 +162,7 @@ ul, ol, dl, pre {
   width: 4em;
 }
 
-.mk-blue, .mk-var-typ, .typ {
+.mk-blue, .mk-var-typ, .mk-type, .typ {
   color: #66d9ef;
 }
 
@@ -206,7 +210,7 @@ ul, ol, dl, pre {
   padding: 1em;
 }
 
-.mobile section .p+.p {
+.mobile section .p+.p, .mobile section aside+aside {
   padding-top: 0;
 }
 
