@@ -39,6 +39,9 @@
 			✓ Code : reecriture de la fonction write_file
 			✓ Code : ajout de la possibilité d'un word diff
 		✓ Git
+	✓ Exploration : Dans le addon Anki, desactiver le flush des templates si seul le css est modifie
+		✓ Code
+		✓ Git
 
 … Globals missions
 	✓ Need to write card-model_updator in py

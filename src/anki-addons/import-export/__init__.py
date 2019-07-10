@@ -51,6 +51,7 @@ def import_note(note):
     if note["css"] != css:
         message += "\n\tupdate css"
     note["css"] = css
+    tempMessage = message
     cards = note["tmpls"]
     for card in cards:
         message += read_card(folder, card)
@@ -61,7 +62,7 @@ def import_note(note):
         mw.col.genCards(mw.col.models.nids(note))
     if message == "":
         return message
-    mw.col.models.save(note, True)
+    mw.col.models.save(note, tempMessage != message)
     return "\n" + name + " :" + message
 
 
