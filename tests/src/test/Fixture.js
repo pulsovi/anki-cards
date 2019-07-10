@@ -53,10 +53,14 @@ function fileExist(filename) {
   });
 }
 
-function resembleData(file1, file2){
-  return new Promise(resolve=>{
+function resembleData(file1, file2) {
+  return new Promise(resolve => {
     resemble(file1).compareTo(file2).onComplete(resolve);
   });
+}
+
+function parseCondition(template) {
+  return template.replace(/{{([#^/][a-zA-Z0-9]*)}}/g, '{$1}');
 }
 
 class Fixture {
@@ -80,8 +84,8 @@ class Fixture {
 
   getRaw(version) {
     return {
-      recto: this.note.template[this.card + '_recto'][version],
-      verso: this.note.template[this.card + '_verso'][version],
+      recto: parseCondition(this.note.template[this.card + '_recto'][version]),
+      verso: parseCondition(this.note.template[this.card + '_verso'][version]),
       css: this.note.template['style.css'][version]
     };
   }
