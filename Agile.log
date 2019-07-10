@@ -42,7 +42,6 @@
 
 … Globals missions
 	✓ Need to write card-model_updator in py
-	… Creation d'un layout 'daf' pouvant prendre en parametres le nom des champs de l'image et du masque
 	✓ Ajouter un diff simple en console pour l'outil d'import export de modèles
 		✓ Code
 		✓ Git
@@ -60,3 +59,4 @@
 			✓ Comparer les images
 			✓ create-fixture
 			✓ diff.html
+	… Creation d'un layout 'daf' pouvant prendre en parametres le nom des champs de l'image et du masque

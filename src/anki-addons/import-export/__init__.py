@@ -5,6 +5,8 @@ import os
 import pathlib
 import importlib
 from . import coucou
+from anki.hooks import addHook
+from anki.hooks import remHook
 
 
 ROOT_FOLDER = "D:\\MesDonnees\\Dev\\Kodech\\Anki\\cards\\model"
@@ -147,3 +149,15 @@ mw.form.menuTools.addAction(export_action)
 import_notes_action = qt.QAction("Importer les notes", mw)
 import_notes_action.triggered.connect(import_notes)
 mw.form.menuTools.addAction(import_notes_action)
+
+
+def onSync(state):
+    try:
+        if(state == 'findMedia'):
+            print('anki:ready', end='', flush=True)
+            remHook('sync', onSync)
+    except:
+        pass
+
+
+addHook('sync', onSync)
