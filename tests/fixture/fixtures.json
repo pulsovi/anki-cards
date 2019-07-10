@@ -65,10 +65,10 @@
 			"Tags": " excel "
 		},
 		"title": "Question in lighter font",
-		"description": "La question doit être écrite en police normale",
-		"face": "verso",
+		"description": "La question doit être écrite en police normale (pas en gras version <h3>).",
+		"face": "recto",
 		"platform": "mobile",
-		"ok": false
+		"ok": true
 	},
 	{
 		"id": "1lvc0daojxvqr14j",
