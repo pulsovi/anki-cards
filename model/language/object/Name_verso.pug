@@ -1,6 +1,6 @@
 extend ../../hol_verso_layout
 block response-content
-	.p #[code.monokai.class {{Name}}]
+	.p #[code.monokai {{#Parent}}{{Parent}}.{{/Parent}}#[i.mk-class {{Name}}]]
 	|{{#Comment}}#[aside {{Comment}}]{{/Comment}}
 block response-after
 	|{{#Syntax}}#[pre {{Syntax}}]{{/Syntax}}
