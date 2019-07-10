@@ -1,6 +1,8 @@
 extends ../../hol_recto_layout.pug
 block variables
 	- var condition = 'Param' + i + 'Default';
+block append header
+	.subtitle {{ClassName}}
 block question-content
 	h2.p in function <code>{{MethodName}}</code>
 	.p Default <b>value</b> of <code>{{Param#{i}Name}}</code> parameter

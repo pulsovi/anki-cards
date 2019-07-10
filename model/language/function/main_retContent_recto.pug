@@ -1,5 +1,8 @@
 extends main_recto_layout.pug
 block variables
-	-var condition = 'ReturnContent';
+	- var condition = 'ReturnContent';
+	- var withoutFuncType = true;
+block append header
+	.subtitle {{ClassName}}
 block question-content
 	.p #[b return  content]
