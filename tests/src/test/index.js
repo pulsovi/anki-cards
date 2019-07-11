@@ -52,7 +52,7 @@ async function manage_fixture(options) {
       }
     ).unref();
   } else {
-    console.log('Pass:', fixture.note.name, fixture.card, fixture.title);
+    console.log('Pass:', fixture.id, fixture.note.name, fixture.card, fixture.title);
   }
 }
 
