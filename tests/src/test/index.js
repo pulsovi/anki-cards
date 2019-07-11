@@ -24,7 +24,9 @@ async function main() {
     if (!fixture) throw new ReferenceError(`Unable to found ${process.argv[2]} fixture.`);
     await manage_one_fixture(fixture);
   } else {
-    await Promise.all(fixtures.map(manage_fixture));
+    for(let i = 0; i < fixtures.length; ++i){
+      await manage_fixture(fixtures[i]);
+    }
   }
 }
 
@@ -49,6 +51,8 @@ async function manage_fixture(options) {
         shell: true
       }
     ).unref();
+  } else {
+    console.log('Pass:', fixture.title);
   }
 }
 
