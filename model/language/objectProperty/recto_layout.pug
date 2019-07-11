@@ -1,0 +1,10 @@
+extend ../../coding_recto_layout
+block prototype
+	|{{Object}}#[br]#{'  '}
+	i(class="js-colorize color-{{PropertyType}}") {{PropertyName}}
+block question-content
+	.p #[code {{Object}}{{chainSigil}}{{PropertyName}}]
+	h3.p Content
+block scripts
+	script
+		include coloration.js
