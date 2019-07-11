@@ -119,7 +119,6 @@
 		"card": "Card 1",
 		"locals": {
 			"Front": "<span id=\"test\">Test</span>\n<pre id=\"out\">12px</pre>\n<script>\nvar out = document.getElementById('out');\nvar test = document.getElementById('test');\nsetInterval(function(){\n  out.innerText = getComputedStyle(out)['font-size'];\n}, 200);\n</script>",
-			"Back": "",
 			"Tags": "Test"
 		},
 		"title": "Font size",
@@ -134,7 +133,6 @@
 		"card": "Card 1",
 		"locals": {
 			"Front": "<pre id=\"out\">12px</pre>\n<script>\nvar out = document.getElementById('out');\nvar test = document.getElementById('test');\nsetInterval(function(){\n  out.innerText = getComputedStyle(test)['font-size'];\n}, 200);\n</script>",
-			"Back": "",
 			"Tags": "<span id=\"test\">Test</span>"
 		},
 		"title": "Title font size",
@@ -152,8 +150,6 @@
 			"ObjectType": "dictionary",
 			"Parent": "ModelManager",
 			"Description": "a dictionary contains all notes models of the collection linked in the ModelManager",
-			"Comment": "",
-			"Syntax": "",
 			"Tags": " anki-addon "
 		},
 		"title": "Type style",
@@ -168,17 +164,42 @@
 		"card": "Usage",
 		"locals": {
 			"Object": "template (card) structure",
-			"chainSigil": "",
 			"PropertyName": "[\"qfmt\"]",
 			"PropertyType": "string",
-			"PropertyDefault": "",
 			"PropertyDescription": "pystache template of the recto (question)",
-			"Extra": "",
 			"Tags": " anki-addon "
 		},
 		"title": "Tree presentation",
 		"description": "La propriété doit s'afficher dans un bloc sombre avec coloration syntaxique et indentation",
 		"face": "recto",
+		"platform": "mobile",
+		"ok": true
+	},
+	{
+		"id": "1lvc05dgjxytzavo",
+		"note": "language::function",
+		"card": "3def",
+		"locals": {
+			"MethodName": "writeFileSync",
+			"ClassName": "fs",
+			"Usage": "writes synchroniously <code>data</code> in <code>file</code>",
+			"ReturnType": "undefined",
+			"ReturnContent": "no value returned",
+			"Param1Name": "file",
+			"Param1Type": "String<wbr>|<wbr>Buffer<wbr>|<wbr>URL<wbr>|<wbr>Integer",
+			"Param1Desc": "&nbsp;filename or file descriptor",
+			"Param2Name": "data",
+			"Param2Type": "String<wbr>|<wbr>Buffer<wbr>|<wbr>TypedArray<wbr>|<wbr>DataWiew",
+			"Param2Desc": "The encoding option is ignored if data is a buffer.",
+			"Param3Name": "options",
+			"Param3Type": "Object | String",
+			"Param3IsOptional": "y",
+			"Param3Default": "{<br><i class=\"indent\">  </i><i class=\"indent\">  </i>(String<wbr>|<wbr>null) encoding: 'utf8',<br><i class=\"indent\">  </i><i class=\"indent\">  </i>(Integer) mode: 0o666,<br><i class=\"indent\">  </i><i class=\"indent\">  </i>(String) flag: 'w'<br><i class=\"indent\">  </i>}",
+			"Tags": " node.js "
+		},
+		"title": "Coding presentation",
+		"description": "La fonction doit être présentée dans un cadre en coloration syntaxique",
+		"face": "verso",
 		"platform": "mobile",
 		"ok": true
 	}
