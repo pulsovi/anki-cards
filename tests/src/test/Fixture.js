@@ -61,7 +61,7 @@ function resembleData(file1, file2) {
 }
 
 function parseCondition(template) {
-  return template.replace(/{{([#^/][a-zA-Z0-9]*)}}/g, '{$1}');
+  return template.replace(/{{([^/#\^][^}]*)}}/g, '{{{$1}}}');
 }
 
 function getConfig(keyName) {
@@ -108,9 +108,7 @@ class Fixture {
     var template = this.getRaw(version).recto;
     return mustache.render(
       template,
-      this.locals,
-      null,
-      ['{', '}']
+      this.locals
     );
   }
 
@@ -121,9 +119,7 @@ class Fixture {
 
     return mustache.render(
       template,
-      locals,
-      null,
-      ['{', '}']
+      locals
     );
   }
 
