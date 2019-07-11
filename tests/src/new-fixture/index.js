@@ -16,7 +16,10 @@ const AnkiDbManager = require('./AnkiDbManager');
 const ROOT = process.env.ANKI_PUG_ROOT;
 const fixturesPath = path.resolve(ROOT, 'tests/fixture/fixtures.json');
 
-main();
+main()
+  .catch(e => {
+    console.log(e);
+  });
 
 async function main() {
   var JSONfixtures = await fs.promises.readFile(fixturesPath, 'utf8');
@@ -36,7 +39,7 @@ async function createFixture() {
   fixture.ok = false;
   if (file) {
     await setFixtureBase(fixture, file);
-    if(await prompt('is the base image fit well ? y/n (no): ') === 'y')
+    if (await prompt('is the base image fit well ? y/n (no): ') === 'y')
       fixture.ok = true;
   }
   console.log(fixture.id);
@@ -49,7 +52,7 @@ async function createFixtureFromCid(cid) {
   var nid = await AnkiDbManager.getCardNote(cid);
   fixture.note = await AnkiDbManager.getModelName(await AnkiDbManager.getNoteModel(nid));
   fixture.card = await AnkiDbManager.getCardName(cid);
-  fixture.locals = await AnkiDbManager.getNoteFields(nid);
+  fixture.locals = cleanLocals(await AnkiDbManager.getNoteFields(nid));
   fixture.locals.Tags = await AnkiDbManager.getNoteTags(nid);
   fixture.title = await prompt('title : ');
   fixture.description = await prompt('description : ');
@@ -62,14 +65,14 @@ async function setFixtureBase(fixture, image) {
   var dest = path.resolve(ROOT, 'tests/out', fixture.id, 'base.png');
   mkdirp.sync(path.dirname(dest));
   await sharp(image)
-  .extract({
-    width: 1080,
-    height: 1690,
-    top: 72,
-    left: 0
-  })
-  .resize(360, 560)
-  .toFile(dest);
+    .extract({
+      width: 1080,
+      height: 1690,
+      top: 72,
+      left: 0
+    })
+    .resize(360, 560)
+    .toFile(dest);
 }
 
 function prompt(message) {
@@ -84,4 +87,11 @@ function prompt(message) {
       resolve(answer);
     });
   });
+}
+
+function cleanLocals(locals) {
+  Object.keys(locals).forEach(k => {
+    if (locals[k] === '') delete locals[k];
+  });
+  return locals;
 }
