@@ -4,15 +4,16 @@ const fs = require('fs');
 const path = require('path');
 const { promisify } = require('util');
 // npm dependancies
-const config = require('config');
 const mkdirp = require('mkdirp');
 const mustache = require('mustache');
 const puppeteer = require('puppeteer');
 const resemble = require('node-resemble-js');
-const sharp = require('sharp');
+var sharp = null;
+if (!process.send) sharp = require('sharp');
 const sizeOf = promisify(require('image-size'));
 // local dependancies
-const AnkiManager = new(require('./AnkiManager'))();
+
+const AnkiManager = new(require(path.resolve(__dirname, 'AnkiManager')))();
 
 const ROOT = process.env.ANKI_PUG_ROOT;
 const Note = require(path.resolve(ROOT, 'src/diff/anki-pug-note'));
@@ -63,6 +64,17 @@ function parseCondition(template) {
   return template.replace(/{{([#^/][a-zA-Z0-9]*)}}/g, '{$1}');
 }
 
+function getConfig(keyName) {
+  var config = JSON.parse(
+    fs.readFileSync(
+      path.resolve(ROOT, 'config/default.json'), 'utf8'
+    )
+  );
+  var keyValue = config;
+  keyName.split('.').forEach(_ => keyValue = keyValue[_]);
+  return keyValue;
+}
+
 class Fixture {
   constructor(options) {
     this.card = options.card;
@@ -78,7 +90,7 @@ class Fixture {
     this.directory = path.resolve(ROOT, 'tests/out', this.id);
     this.locals.Card = this.card;
     this.locals.Type = this.note.name;
-    this.viewport = options.viewport || config.get(this.platform + '.viewport');
+    this.viewport = options.viewport || getConfig(this.platform + '.viewport');
     this.diffTemplate = fs.promises.readFile(path.join(__dirname, 'diff.html'), 'utf8');
 
     mkdirp.sync(this.directory);

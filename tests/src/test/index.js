@@ -4,8 +4,7 @@ const childProcess = require('child_process');
 const fs = require('fs');
 const path = require('path');
 // local dependancies
-const Fixture = require('./Fixture');
-
+const Fixture = require(path.resolve(__dirname, 'Fixture'));
 const ROOT = process.env.ANKI_PUG_ROOT;
 
 const fixturesPath = path.resolve(ROOT, 'tests/fixture/fixtures.json');
