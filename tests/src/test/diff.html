@@ -13,7 +13,7 @@
 
   h4 {
     background: #808080;
-    color:  #aaa;
+    color: #aaa;
     margin: 0 0 1px;
     padding: 0.5em;
   }
@@ -86,6 +86,7 @@
     padding: 1em;
   }
   </style>
+  <script src="https://kit.fontawesome.com/41610c1ead.js"></script>
 </head>
 
 <body>
@@ -98,7 +99,7 @@
     <div class="base">
       <h4>base</h4>
       <img src="./base.png"></img>
-      <i id="set-base-ok" class="btn btn-success">it is OK</i>
+      <i id="set-base-ok" class="btn btn-block btn-success">it is OK</i>
     </div>
     <div class="base-anki">
       <h4>base-anki</h4>
@@ -108,8 +109,9 @@
     <div class="anki">
       <h4>anki</h4>
       <img src="./anki.png"></img>
-      <i id="anki-as-base" class="btn btn-primary">set as base image</i>
-      <i id="anki-template" class="btn btn-secondary">view the template</i>
+      <i id="anki-as-base" class="btn btn-block btn-primary">set as base image</i>
+      <i id="anki-template" class="btn btn-block btn-secondary">view the template</i>
+      <i id="reload-anki" class="btn btn-block btn-secondary fa fa-refresh"></i>
     </div>
     <div class="anki-pug">
       <h4>anki-pug</h4>
@@ -119,11 +121,12 @@
     <div class="pug">
       <h4>pug</h4>
       <img src="./pug.png"></img>
-      <i id="pug-as-base" class="btn btn-primary">set as base image</i>
+      <i id="pug-as-base" class="btn btn-block btn-primary">set as base image</i>
+      <i id="reload-pug" class="btn btn-block btn-secondary fa fa-refresh"></i>
     </div>
   </div>
   <h3>{{note.name}}&gt;{{card}}</h3>
-  <i id="close" class="btn btn-danger">Close</i>
+  <i id="close" class="btn btn-danger fa fa-times"></i>
   <script>
   //jshint esversion:8
   const ngui = require('nw.gui');
@@ -141,15 +144,15 @@
   });
 
   document.getElementById('anki-as-base').addEventListener('click', function() {
-    runningJobs.push(setAsBase('anki.png'));
+    addJob(setAsBase('anki.png'));
   });
 
   document.getElementById('pug-as-base').addEventListener('click', function() {
-    runningJobs.push(setAsBase('pug.png'));
+    addJob(setAsBase('pug.png'));
   });
 
   document.getElementById('set-base-ok').addEventListener('click', function() {
-    runningJobs.push(setBaseOk());
+    addJob(setBaseOk());
   });
 
   document.getElementById('close').addEventListener('click', function() {
@@ -158,6 +161,14 @@
 
   document.getElementById('anki-template').addEventListener('click', function() {
     viewTemplate('anki');
+  });
+
+  document.getElementById('reload-pug').addEventListener('click', function() {
+    addJob(refreshTemplate('pug'));
+  });
+
+  document.getElementById('reload-anki').addEventListener('click', function() {
+    addJob(refreshTemplate('anki'));
   });
 
   (() => {
@@ -171,8 +182,25 @@
     diffOk.innerText = 'DIFF';
   })();
 
+  async function refreshTemplate(template) {
+    await new Promise((resolve, reject) => {
+      child_process.spawn("node", [
+          path.resolve(ankiPugRoot, 'tests/src/test/index.js'),
+          '{{id}}',
+          template
+        ], {
+          env: { ANKI_PUG_ROOT: ankiPugRoot },
+          shell: true
+        })
+        .once('close', resolve)
+        .once('error', reject);
+    });
+    location.reload();
+  }
+
   async function setAsBase(source) {
     await fs.promises.copyFile(path.join(process.cwd(), source), path.join(process.cwd(), 'base.png'));
+    addJob(refreshTemplate('base'));
   }
 
   async function setBaseOk() {
@@ -182,7 +210,7 @@
     var me = fixtures.find(fixture => fixture.id === myId);
     me.ok = true;
     console.log(fixturesPath, me, fixtures);
-    await fs.promises.writeFile(fixturesPath, JSON.stringify(fixtures, null, '\t'));
+    await fs.promises.writeFile(fixturesPath, JSON.stringify(fixtures, null, '\t') + '\n');
     document.getElementById('base-ok').classList.replace('nok', 'ok');
     document.getElementById('set-base-ok').hidden = true;
   }
@@ -201,6 +229,14 @@
         shell: true
       }
     ).unref();
+  }
+
+  function addJob(job) {
+    job.catch(e => {
+      console.log('Job error:', e);
+      runningJobs.splice(runningJobs.indexOf(job), 1);
+    });
+    runningJobs.push(job);
   }
   </script>
 </body>
