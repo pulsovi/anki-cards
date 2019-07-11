@@ -161,5 +161,25 @@
 		"face": "verso",
 		"platform": "mobile",
 		"ok": true
+	},
+	{
+		"id": "1lvc02l4jxyo0uj2",
+		"note": "language::objectProperty",
+		"card": "Usage",
+		"locals": {
+			"Object": "template (card) structure",
+			"chainSigil": "",
+			"PropertyName": "[\"qfmt\"]",
+			"PropertyType": "string",
+			"PropertyDefault": "",
+			"PropertyDescription": "pystache template of the recto (question)",
+			"Extra": "",
+			"Tags": " anki-addon "
+		},
+		"title": "Tree presentation",
+		"description": "La propriété doit s'afficher dans un bloc sombre avec coloration syntaxique et indentation",
+		"face": "recto",
+		"platform": "mobile",
+		"ok": true
 	}
 ]
