@@ -265,5 +265,22 @@
 		"face": "verso",
 		"platform": "mobile",
 		"ok": true
+	},
+	{
+		"id": "1lvc022kjxyvckrx",
+		"note": "language::function",
+		"card": "nom",
+		"locals": {
+			"MethodName": "cwd",
+			"ClassName": "process",
+			"Usage": "returns the current working directory of the script",
+			"ReturnType": "String",
+			"Tags": " node.js "
+		},
+		"title": "Coding presentation",
+		"description": "La class doit se presenter sous forme de prototype, la methode doit être cachée.",
+		"face": "recto",
+		"platform": "mobile",
+		"ok": true
 	}
 ]
