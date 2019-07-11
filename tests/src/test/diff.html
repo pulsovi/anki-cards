@@ -85,6 +85,10 @@
     font-weight: 600;
     padding: 1em;
   }
+
+  .fa.btn {
+    padding: 10px;
+  }
   </style>
   <script src="https://kit.fontawesome.com/41610c1ead.js"></script>
 </head>
@@ -111,8 +115,11 @@
       <h4>anki</h4>
       <img src="./anki.png"></img>
       <i id="anki-as-base" class="btn btn-block btn-primary">set as base image</i>
-      <i id="anki-template" class="btn btn-block btn-secondary">view the template</i>
-      <i id="reload-anki" class="btn btn-block btn-secondary fa fa-refresh"></i>
+      <div class="btn-group btn-block">
+        <i id="anki-template" class="btn btn-secondary">view the template</i>
+        <i id="anki-html" class="btn btn-secondary">HTML</i>
+        <i id="reload-anki" class="btn btn-secondary fa fa-refresh"></i>
+      </div>
     </div>
     <div class="anki-pug">
       <h4>anki-pug</h4>
@@ -123,7 +130,11 @@
       <h4>pug</h4>
       <img src="./pug.png"></img>
       <i id="pug-as-base" class="btn btn-block btn-primary">set as base image</i>
-      <i id="reload-pug" class="btn btn-block btn-secondary fa fa-refresh"></i>
+      <div class="btn-group btn-block">
+        <i id="pug-template" class="btn btn-secondary">view the template</i>
+        <i id="pug-html" class="btn btn-secondary">HTML</i>
+        <i id="reload-pug" class="btn btn-secondary fa fa-refresh"></i>
+      </div>
     </div>
   </div>
   <h3>{{note.name}}&gt;{{card}}</h3>
@@ -164,6 +175,10 @@
     viewTemplate('anki');
   });
 
+  document.getElementById('pug-template').addEventListener('click', function() {
+    viewTemplate('pug');
+  });
+
   document.getElementById('reload-pug').addEventListener('click', function() {
     addJob(refreshTemplate('pug'));
   });
@@ -174,6 +189,14 @@
 
   document.getElementById('viewJSON').addEventListener('click', function() {
     viewFile(path.resolve('package.json'));
+  });
+
+  document.getElementById('anki-html').addEventListener('click', function() {
+    viewFile(path.resolve('anki.html'));
+  });
+
+  document.getElementById('pug-html').addEventListener('click', function() {
+    viewFile(path.resolve('pug.html'));
   });
 
   (() => {
