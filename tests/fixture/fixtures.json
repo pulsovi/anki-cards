@@ -141,6 +141,6 @@
 		"description": "La taille affichée doit être de 33.6px",
 		"face": "recto",
 		"platform": "mobile",
-		"ok": false
+		"ok": true
 	}
 ]
