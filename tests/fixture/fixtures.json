@@ -142,5 +142,24 @@
 		"face": "recto",
 		"platform": "mobile",
 		"ok": true
+	},
+	{
+		"id": "1lvc089cjxygxteu",
+		"note": "language::object",
+		"card": "Type",
+		"locals": {
+			"Name": "models",
+			"ObjectType": "dictionary",
+			"Parent": "ModelManager",
+			"Description": "a dictionary contains all notes models of the collection linked in the ModelManager",
+			"Comment": "",
+			"Syntax": "",
+			"Tags": " anki-addon "
+		},
+		"title": "Type style",
+		"description": "La réponse doit afficher le type avec la coloration syntaxique de type de variable",
+		"face": "verso",
+		"platform": "mobile",
+		"ok": true
 	}
 ]
