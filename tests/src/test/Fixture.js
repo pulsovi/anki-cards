@@ -170,10 +170,13 @@ class Fixture {
       this.diff[version1 + '-' + version2] = data.misMatchPercentage;
     }
     var resemblePath = _this.directory + '/' + version1 + '-' + version2 + '.png';
-    data
-      .getDiffImage()
-      .pack()
-      .pipe(fs.createWriteStream(resemblePath));
+    await new Promise(resolve => {
+      data
+        .getDiffImage()
+        .pack()
+        .pipe(fs.createWriteStream(resemblePath))
+        .on('close', resolve);
+    });
   }
 
   async setHtmlDiff() {
