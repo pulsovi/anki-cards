@@ -233,5 +233,37 @@
 		"face": "verso",
 		"platform": "mobile",
 		"ok": true
+	},
+	{
+		"id": "1lvc057sjxyux00d",
+		"note": "language::function",
+		"card": "retContent",
+		"locals": {
+			"MethodName": "stop",
+			"ClassName": "(jQuery)",
+			"Usage": "Stop the currently-running animation on the matched elements",
+			"ReturnType": "jQuery",
+			"ReturnContent": "the jQuery set itself",
+			"Param1Name": "queue",
+			"Param1Type": "String",
+			"Param1IsOptional": "y",
+			"Param1Desc": "The name of the queue in which to stop animations.",
+			"Param2Name": "clearQueue",
+			"Param2Type": "Boolean",
+			"Param2IsOptional": "y",
+			"Param2Default": "false",
+			"Param2Desc": "whether to remove queued animation as well.",
+			"Param3Name": "jumpToEnd",
+			"Param3Type": "Boolean",
+			"Param3IsOptional": "y",
+			"Param3Default": "false",
+			"Param3Desc": "whether to complete the current animation immediately.",
+			"Tags": " jquery "
+		},
+		"title": "Prototype presentation",
+		"description": "La fonction doit se présenter dans un bloc de style code avec coloration syntaxique",
+		"face": "verso",
+		"platform": "mobile",
+		"ok": true
 	}
 ]
