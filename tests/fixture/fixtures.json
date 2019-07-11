@@ -282,5 +282,31 @@
 		"face": "recto",
 		"platform": "mobile",
 		"ok": true
+	},
+	{
+		"id": "1lvc07h0jxz4c32w",
+		"note": "language::function",
+		"card": "nom",
+		"locals": {
+			"MethodName": "Resize",
+			"ClassName": "Range",
+			"Usage": "Redimensionne la plage spécifiée.",
+			"ReturnType": "Range",
+			"ReturnContent": "Renvoie un objet Range qui représente la plage redimensionnée.",
+			"Param1Name": "RowSize",
+			"Param1Type": "Long",
+			"Param1IsOptional": "y",
+			"Param1Desc": "Le nombre de lignes dans la nouvelle plage. Si cet argument est omis, le nombre de lignes de la plage reste identique.",
+			"Param2Name": "ColumnSize",
+			"Param2Type": "Long",
+			"Param2IsOptional": "y",
+			"Param2Desc": "Le nombre de colonnes de la nouvelle plage. Si cet argument est omis, le nombre de colonnes de la plage reste identique.",
+			"Tags": " VBA "
+		},
+		"title": "Padding reponse",
+		"description": "Le padding de la réponse doit être raisonnable",
+		"face": "verso",
+		"platform": "mobile",
+		"ok": true
 	}
 ]
