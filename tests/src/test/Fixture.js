@@ -182,8 +182,9 @@ class Fixture {
       fs.promises.writeFile(this.htmlDiffFile, html),
       fs.promises.writeFile(this.directory + '/package.json', JSON.stringify({
         main: "index.html",
-        name: this.title
-      })),
+        name: this.title,
+        fixture: this.asRaw()
+      }, null, '\t')),
     ]);
   }
 
@@ -198,6 +199,17 @@ class Fixture {
       port: await AnkiManager.getPort()
     };
     return mustache.render(template, locals);
+  }
+
+  asRaw() {
+    var raw = {};
+    ["card", "description", "diffTemplate", "directory", "face", "id", "locals",
+      "ok", "platform", "title", "viewport"
+    ].forEach(_ => {
+      raw[_] = this[_];
+    });
+    raw.note = this.note.name;
+    return raw;
   }
 }
 

@@ -100,6 +100,7 @@
       <h4>base</h4>
       <img src="./base.png"></img>
       <i id="set-base-ok" class="btn btn-block btn-success">it is OK</i>
+      <i id="viewJSON" class="btn btn-block btn-secondary">view the JSON</i>
     </div>
     <div class="base-anki">
       <h4>base-anki</h4>
@@ -171,6 +172,10 @@
     addJob(refreshTemplate('anki'));
   });
 
+  document.getElementById('viewJSON').addEventListener('click', function() {
+    viewFile(path.resolve('package.json'));
+  });
+
   (() => {
     var baseOk = document.getElementById('base-ok');
     var isBaseOk = baseOk.innerText === 'true';
@@ -199,7 +204,7 @@
   }
 
   async function setAsBase(source) {
-    await fs.promises.copyFile(path.join(process.cwd(), source), path.join(process.cwd(), 'base.png'));
+    await fs.promises.copyFile(path.resolve(source), path.resolve('base.png'));
     addJob(refreshTemplate('base'));
   }
 
@@ -222,8 +227,12 @@
 
   function viewTemplate(templateName) {
     var templateFile = path.join(process.cwd(), templateName + '_{{face}}_template.html');
+    viewFile(templateFile);
+  }
+
+  function viewFile(filename) {
     child_process.spawn(
-      '"C:\\Program Files\\Sublime Text 3\\sublime_text.exe" "' + templateFile + '"', {
+      '"C:\\Program Files\\Sublime Text 3\\sublime_text.exe" "' + filename + '"', {
         detached: true,
         stdio: 'ignore',
         shell: true
