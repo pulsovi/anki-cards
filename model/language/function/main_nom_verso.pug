@@ -1,6 +1,6 @@
 extends ../../hol_verso_layout.pug
 block response-content
-	.p #[pre #[i.func {{MethodName}}]]
+	.p #[code.mk.mk-func {{MethodName}}]
 	|{{#Description}}<aside>{{Description}}</aside>{{/Description}}
 block response-after
 	include prototype.pug
