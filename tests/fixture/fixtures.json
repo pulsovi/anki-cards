@@ -127,5 +127,20 @@
 		"face": "recto",
 		"platform": "mobile",
 		"ok": true
+	},
+	{
+		"id": "1lvc06w0jxycs7ri",
+		"note": "Basic",
+		"card": "Card 1",
+		"locals": {
+			"Front": "<pre id=\"out\">12px</pre>\n<script>\nvar out = document.getElementById('out');\nvar test = document.getElementById('test');\nsetInterval(function(){\n  out.innerText = getComputedStyle(test)['font-size'];\n}, 200);\n</script>",
+			"Back": "",
+			"Tags": "<span id=\"test\">Test</span>"
+		},
+		"title": "Title font size",
+		"description": "La taille affichée doit être de 33.6px",
+		"face": "recto",
+		"platform": "mobile",
+		"ok": false
 	}
 ]
