@@ -15,7 +15,7 @@
 		"ok": true
 	},
 	{
-		"title": "question padding bottom",
+		"title": "question padding bottom 2",
 		"description": "le bloc de question doit avoir un padding en bas de 1em, attention au margin collapsing",
 		"note": "Basic",
 		"card": "Card 1",
@@ -199,6 +199,37 @@
 		},
 		"title": "Coding presentation",
 		"description": "La fonction doit être présentée dans un cadre en coloration syntaxique",
+		"face": "verso",
+		"platform": "mobile",
+		"ok": true
+	},
+	{
+		"id": "1lvc09a4jxyuorii",
+		"note": "language::function",
+		"card": "retTyp",
+		"locals": {
+			"MethodName": "SUBSTITUTE",
+			"Usage": "Remplace l’argument ancien_texte par nouveau_texte dans une chaîne de texte.",
+			"Description": "Utilisez la fonction SUBSTITUE lorsque vous voulez remplacer un texte spécifique à l’intérieur d’une chaîne de texte. Utilisez la fonction REMPLACER lorsque vous voulez remplacer n’importe quel texte se trouvant à un endroit spécifique d’une chaîne de texte.",
+			"ReturnType": "String",
+			"ReturnContent": "Le texte modifié",
+			"Param1Name": "texte",
+			"Param1Type": "String",
+			"Param1Desc": "Représente le texte ou la référence à une cellule contenant le texte dont vous voulez remplacer certains caractères.",
+			"Param2Name": "ancien_texte",
+			"Param2Type": "String",
+			"Param2Desc": "Représente le texte à remplacer.",
+			"Param3Name": "nouveau_texte",
+			"Param3Type": "String",
+			"Param3Desc": "Représente le texte qui doit remplacer ancien_texte.",
+			"Param4Name": "no_position",
+			"Param4Type": "Integer",
+			"Param4IsOptional": "y",
+			"Param4Desc": "Spécifie quelle occurrence de ancien_texte vous souhaitez remplacer par nouveau_texte. Si vous spécifiez no_position, seule l’occurrence correspondante de ancien_texte est remplacée. Sinon, toutes les occurrences de ancien_texte dans texte sont remplacées par nouveau_texte.",
+			"Tags": " excel "
+		},
+		"title": "Syntax color",
+		"description": "La réponse doit s'afficher avec la coloration syntaxique",
 		"face": "verso",
 		"platform": "mobile",
 		"ok": true
