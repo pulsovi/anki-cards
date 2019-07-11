@@ -177,7 +177,9 @@ class Fixture {
 
   async setHtmlDiff() {
     this.htmlDiffFile = path.join(this.directory, 'index.html');
-    var html = mustache.render(await this.diffTemplate, this);
+    var locals = this.asRaw({__dirname});
+    locals.directory = locals.directory.replace(/\\/g, '\\\\');
+    var html = mustache.render(await this.diffTemplate, locals);
     await Promise.all([
       fs.promises.writeFile(this.htmlDiffFile, html),
       fs.promises.writeFile(this.directory + '/package.json', JSON.stringify({
@@ -201,8 +203,8 @@ class Fixture {
     return mustache.render(template, locals);
   }
 
-  asRaw() {
-    var raw = {};
+  asRaw(from) {
+    var raw = from || {};
     ["card", "description", "diffTemplate", "directory", "face", "id", "locals",
       "ok", "platform", "title", "viewport"
     ].forEach(_ => {

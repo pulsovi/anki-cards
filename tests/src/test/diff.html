@@ -61,8 +61,6 @@
     grid-column: 5;
   }
 
-  .base, .base-anki, .anki, .anki-pug, .pug {}
-
   .ok {
     background-color: #28a745;
     color: #5fd87b;
@@ -86,7 +84,7 @@
     padding: 1em;
   }
 
-  .fa.btn {
+  .fa.btn, .fab.btn {
     padding: 10px;
   }
   </style>
@@ -118,6 +116,7 @@
       <div class="btn-group btn-block">
         <i id="anki-template" class="btn btn-secondary">view the template</i>
         <i id="anki-html" class="btn btn-secondary">HTML</i>
+        <i id="anki-firefox" class="btn btn-secondary firefox fab fa-firefox"></i>
         <i id="reload-anki" class="btn btn-secondary fa fa-refresh"></i>
       </div>
     </div>
@@ -133,11 +132,12 @@
       <div class="btn-group btn-block">
         <i id="pug-template" class="btn btn-secondary">view the template</i>
         <i id="pug-html" class="btn btn-secondary">HTML</i>
+        <i id="pug-firefox" class="btn btn-secondary firefox fab fa-firefox"></i>
         <i id="reload-pug" class="btn btn-secondary fa fa-refresh"></i>
       </div>
     </div>
   </div>
-  <h3>{{note.name}}&gt;{{card}}</h3>
+  <h3>{{note}}&gt;{{card}}</h3>
   <i id="close" class="btn btn-danger fa fa-times"></i>
   <script>
   //jshint esversion:8
@@ -199,6 +199,14 @@
     viewFile(path.resolve('pug.html'));
   });
 
+  document.getElementById('pug-firefox').addEventListener('click', function() {
+    run('{{directory}}\\pug.html');
+  });
+
+  document.getElementById('anki-firefox').addEventListener('click', function() {
+    run('{{directory}}\\anki.html');
+  });
+
   (() => {
     var baseOk = document.getElementById('base-ok');
     var isBaseOk = baseOk.innerText === 'true';
@@ -253,14 +261,12 @@
     viewFile(templateFile);
   }
 
+  function run(command) {
+    child_process.spawn(command, { detached: true, stdio: 'ignore', shell: true }).unref();
+  }
+
   function viewFile(filename) {
-    child_process.spawn(
-      '"C:\\Program Files\\Sublime Text 3\\sublime_text.exe" "' + filename + '"', {
-        detached: true,
-        stdio: 'ignore',
-        shell: true
-      }
-    ).unref();
+    run(`"C:\\Program Files\\Sublime Text 3\\sublime_text.exe" "${filename}"`);
   }
 
   function addJob(job) {
