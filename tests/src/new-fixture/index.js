@@ -28,7 +28,9 @@ async function main() {
 
 async function createFixture() {
   var fixture = {};
-  var cid = await prompt('create from card id ? cid/n (no): ');
+  var cid = '';
+  if (process.argv.length > 2) cid = process.argv[2];
+  else cid = await prompt('create from card id ? cid/n (no): ');
   fixture = await createFixtureFromCid(cid);
   var file = (await prompt('base image file : ')).replace(/"/g, "");
   fixture.ok = false;
@@ -37,6 +39,7 @@ async function createFixture() {
     if(await prompt('is the base image fit well ? y/n (no): ') === 'y')
       fixture.ok = true;
   }
+  console.log(fixture.id);
   return fixture;
 }
 
@@ -65,7 +68,7 @@ async function setFixtureBase(fixture, image) {
     top: 72,
     left: 0
   })
-  .resize(560, 360)
+  .resize(360, 560)
   .toFile(dest);
 }
 
