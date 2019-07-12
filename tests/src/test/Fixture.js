@@ -177,7 +177,12 @@ class Fixture {
 
   async setHtmlDiff() {
     this.htmlDiffFile = path.join(this.directory, 'index.html');
-    var locals = this.asRaw({__dirname});
+    var locals = this.asRaw({
+      __dirname,
+      pugRectoFile: this.note.template[`${this.card}_recto`].pugFile.replace(/\\/g, '\\\\'),
+      pugVersoFile: this.note.template[`${this.card}_verso`].pugFile.replace(/\\/g, '\\\\'),
+      cssFile: this.note.template[`${this.card}_${this.face}`].pugFile.replace(/\\/g, '\\\\'),
+    });
     locals.directory = locals.directory.replace(/\\/g, '\\\\');
     var html = mustache.render(await this.diffTemplate, locals);
     await Promise.all([

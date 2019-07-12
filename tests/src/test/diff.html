@@ -135,6 +135,11 @@
         <i id="pug-firefox" class="btn btn-secondary firefox fab fa-firefox"></i>
         <i id="reload-pug" class="btn btn-secondary fa fa-refresh"></i>
       </div>
+      <div class="btn-group btn-block">
+        <i id="pug-recto" class="btn btn-warning">Recto</i>
+        <i id="pug-verso" class="btn btn-warning">Verso</i>
+        <i id="pug-css" class="btn btn-warning">CSS</i>
+      </div>
     </div>
   </div>
   <h3>{{note}}&gt;{{card}}</h3>
@@ -197,6 +202,18 @@
 
   document.getElementById('pug-html').addEventListener('click', function() {
     viewFile(path.resolve('pug.html'));
+  });
+
+  document.getElementById('pug-recto').addEventListener('click', function() {
+    viewFile("{{pugRectoFile}}");
+  });
+
+  document.getElementById('pug-verso').addEventListener('click', function() {
+    viewFile("{{pugVersoFile}}");
+  });
+
+  document.getElementById('pug-css').addEventListener('click', function() {
+    viewFile("{{cssFile}}");
   });
 
   document.getElementById('pug-firefox').addEventListener('click', function() {
