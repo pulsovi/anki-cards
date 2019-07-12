@@ -308,5 +308,26 @@
 		"face": "verso",
 		"platform": "mobile",
 		"ok": true
+	},
+	{
+		"id": "1lvc0c0ojxz67ylr",
+		"note": "language::function",
+		"card": "nom",
+		"locals": {
+			"MethodName": "header_remove",
+			"Usage": "Supprime un en-tête HTTP",
+			"Description": "Supprime un en-tête HTTP précédemment ajouté avec header().",
+			"ReturnType": "void",
+			"ReturnContent": "aucune valeur n'est retournée",
+			"Param1Name": "$name",
+			"Param1Type": "String",
+			"Param1Desc": "Le nom de l'en-tête à supprimer\n<aside>Note: ce paramètre est insensible à la casse.</aside>",
+			"Tags": " php "
+		},
+		"title": "Hidden presentation",
+		"description": "Le bloc \"prototype\" doit être caché quand la classe est vide",
+		"face": "recto",
+		"platform": "mobile",
+		"ok": true
 	}
 ]
