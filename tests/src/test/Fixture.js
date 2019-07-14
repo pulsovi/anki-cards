@@ -18,6 +18,10 @@ const AnkiManager = new(require(path.resolve(__dirname, 'AnkiManager')))();
 const ROOT = process.env.ANKI_PUG_ROOT;
 const Note = require(path.resolve(ROOT, 'src/diff/anki-pug-note'));
 
+// model types
+const MODEL_STD = 0;
+const MODEL_CLOZE = 1;
+
 function mkdirpPromise(path) {
   return new Promise(function(resolve, reject) {
     mkdirp(path, undefined, (a) => resolve(a));
@@ -86,8 +90,10 @@ class Fixture {
     this.locals = options.locals;
     this.note = getNote(options.note).parse();
     this.ok = options.ok;
+    this.ord = options.ord;
     this.platform = options.platform;
     this.title = options.title;
+    this.type = options.type;
 
     this.directory = path.resolve(ROOT, 'tests/out', this.id);
     this.locals.Card = this.card;
@@ -100,8 +106,8 @@ class Fixture {
 
   getRaw(version) {
     return {
-      recto: parseCondition(this.note.template[this.card + '_recto'][version]),
-      verso: parseCondition(this.note.template[this.card + '_verso'][version]),
+      recto: this.parse(this.note.template[this.card + '_recto'][version], 'recto'),
+      verso: this.parse(this.note.template[this.card + '_verso'][version], 'verso'),
       css: this.note.template['style.css'][version]
     };
   }
@@ -123,6 +129,23 @@ class Fixture {
       template,
       locals
     );
+  }
+
+  parse(template, face) {
+    if (this.type === MODEL_STD) return parseCondition(template);
+    else return parseCondition(this.parseCloze(template, face));
+  }
+
+  parseCloze(template, face) {
+    return template.replace(/{{cloze:([^}]*)}}/g, (match, field) => {
+      var source = this.locals[field];
+      if (face === 'verso') return source
+        .replace(RegExp(`{{c${this.ord + 1}::([^:}]*)(::[^}]*)?}}`, 'g'), '<span class="cloze">$1</span>')
+        .replace(/{{c\d+::([^}:]*)(::[^}]*)?}}/g, '$1');
+      else return source
+        .replace(RegExp(`{{c${this.ord + 1}::([^}]*)}}`, 'g'), '<span class="cloze">[...]</span>')
+        .replace(/{{c\d+::([^}:]*)(::[^}]*)?}}/g, '$1');
+    });
   }
 
   async setVersion(version) {
@@ -221,7 +244,7 @@ class Fixture {
     return raw;
   }
 
-  static async close(){
+  static async close() {
     (await puppeteer).close();
   }
 }

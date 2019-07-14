@@ -5,6 +5,7 @@
 		"note": "Basic",
 		"card": "Card 1",
 		"face": "verso",
+		"type": 0,
 		"platform": "mobile",
 		"locals": {
 			"Tags": "symfony",
@@ -20,6 +21,7 @@
 		"note": "Basic",
 		"card": "Card 1",
 		"face": "verso",
+		"type": 0,
 		"platform": "mobile",
 		"locals": {
 			"Tags": "symfony",
@@ -44,6 +46,7 @@
 		"title": "Title color",
 		"description": "Le titre doit être écrit en bleu clair sur bleu foncé",
 		"face": "recto",
+		"type": 0,
 		"platform": "mobile",
 		"ok": true
 	},
@@ -67,6 +70,7 @@
 		"title": "Question in lighter font",
 		"description": "La question doit être écrite en police normale (pas en gras version <h3>).",
 		"face": "recto",
+		"type": 0,
 		"platform": "mobile",
 		"ok": true
 	},
@@ -90,6 +94,7 @@
 		"title": "Simple prototype",
 		"description": "Le prototype doit s'afficher en version simplifiée.",
 		"face": "recto",
+		"type": 0,
 		"platform": "mobile",
 		"ok": true
 	},
@@ -110,6 +115,7 @@
 		"title": "PropertyDescription",
 		"description": "Affichage de propertyDescription en aside",
 		"face": "verso",
+		"type": 0,
 		"platform": "mobile",
 		"ok": true
 	},
@@ -124,6 +130,7 @@
 		"title": "Font size",
 		"description": "La taille affichée doit être de 24px",
 		"face": "recto",
+		"type": 0,
 		"platform": "mobile",
 		"ok": true
 	},
@@ -138,6 +145,7 @@
 		"title": "Title font size",
 		"description": "La taille affichée doit être de 38.4px",
 		"face": "recto",
+		"type": 0,
 		"platform": "mobile",
 		"ok": true
 	},
@@ -155,6 +163,7 @@
 		"title": "Type style",
 		"description": "La réponse doit afficher le type avec la coloration syntaxique de type de variable",
 		"face": "verso",
+		"type": 0,
 		"platform": "mobile",
 		"ok": true
 	},
@@ -172,6 +181,7 @@
 		"title": "Tree presentation",
 		"description": "La propriété doit s'afficher dans un bloc sombre avec coloration syntaxique et indentation",
 		"face": "recto",
+		"type": 0,
 		"platform": "mobile",
 		"ok": true
 	},
@@ -200,6 +210,7 @@
 		"title": "Coding presentation",
 		"description": "La fonction doit être présentée dans un cadre en coloration syntaxique",
 		"face": "verso",
+		"type": 0,
 		"platform": "mobile",
 		"ok": true
 	},
@@ -231,6 +242,7 @@
 		"title": "Syntax color",
 		"description": "La réponse doit s'afficher avec la coloration syntaxique",
 		"face": "verso",
+		"type": 0,
 		"platform": "mobile",
 		"ok": true
 	},
@@ -263,6 +275,7 @@
 		"title": "Prototype presentation",
 		"description": "La fonction doit se présenter dans un bloc de style code avec coloration syntaxique",
 		"face": "verso",
+		"type": 0,
 		"platform": "mobile",
 		"ok": true
 	},
@@ -280,6 +293,7 @@
 		"title": "Coding presentation",
 		"description": "La class doit se presenter sous forme de prototype, la methode doit être cachée.",
 		"face": "recto",
+		"type": 0,
 		"platform": "mobile",
 		"ok": true
 	},
@@ -306,6 +320,7 @@
 		"title": "Padding reponse",
 		"description": "Le padding de la réponse doit être raisonnable",
 		"face": "verso",
+		"type": 0,
 		"platform": "mobile",
 		"ok": true
 	},
@@ -327,6 +342,7 @@
 		"title": "Hidden presentation",
 		"description": "Le bloc \"prototype\" doit être caché quand la classe est vide",
 		"face": "recto",
+		"type": 0,
 		"platform": "mobile",
 		"ok": true
 	}

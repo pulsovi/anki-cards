@@ -53,6 +53,11 @@ class AnkiDbManager {
     return card.nid;
   }
 
+  async getCardOrd(cid) {
+    var card = await this.getCard(cid);
+    return card.ord;
+  }
+
   async getModel(mid) {
     var models = await this.models;
     var model = models[mid];
@@ -61,6 +66,11 @@ class AnkiDbManager {
 
   async getModelName(mid) {
     return (await this.getModel(mid)).name;
+  }
+
+  async getModelType(mid){
+    var model = await this.getModel(mid);
+    return model.type;
   }
 
   async getNote(nid) {
