@@ -12,9 +12,12 @@ const fixtures = JSON.parse(fs.readFileSync(fixturesPath, 'utf8'));
 
 // main
 main()
-  .then(_ => {})
+  .then(_ => {
+    Fixture.close();
+  })
   .catch(e => {
     console.log('Main error:', e);
+    Fixture.close();
   });
 
 
@@ -24,7 +27,7 @@ async function main() {
     if (!fixture) throw new ReferenceError(`Unable to found ${process.argv[2]} fixture.`);
     await manage_one_fixture(fixture);
   } else {
-    for(let i = 0; i < fixtures.length; ++i){
+    for (let i = 0; i < fixtures.length; ++i) {
       await manage_fixture(fixtures[i]);
     }
   }

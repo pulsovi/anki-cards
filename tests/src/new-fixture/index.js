@@ -26,7 +26,7 @@ async function main() {
   var fixtures = JSON.parse(JSONfixtures);
   var fixture = await createFixture();
   fixtures.push(fixture);
-  fs.writeFile(fixturesPath, JSON.stringify(fixtures, null, '\t'), () => {});
+  fs.writeFile(fixturesPath, JSON.stringify(fixtures, null, '\t') + '\n', () => {});
 }
 
 async function createFixture() {

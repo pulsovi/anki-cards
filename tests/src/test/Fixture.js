@@ -6,7 +6,7 @@ const { promisify } = require('util');
 // npm dependancies
 const mkdirp = require('mkdirp');
 const mustache = require('mustache');
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer').launch();
 const resemble = require('node-resemble-js');
 var sharp = null;
 if (!process.send) sharp = require('sharp');
@@ -25,13 +25,15 @@ function mkdirpPromise(path) {
 }
 
 async function shot(html, dest, viewport) {
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer;
   const page = await browser.newPage();
   await page.setViewport(viewport);
   await page.setContent(html);
   await mkdirpPromise(path.dirname(dest));
   await page.screenshot({ path: dest });
-  await browser.close();
+  setImmediate(function() {
+    page.close();
+  });
 }
 
 function getNote(noteName) {
@@ -196,7 +198,7 @@ class Fixture {
   }
 
   async html(version) {
-    var template = fs.readFileSync(
+    var template = await promisify(fs.readFile)(
       path.resolve(__dirname, this.platform + '.mustache.html'), { encoding: 'utf8' }
     );
     var body = this.face === 'recto' ? this.getRecto(version) : this.getVerso(version);
@@ -217,6 +219,10 @@ class Fixture {
     });
     raw.note = this.note.name;
     return raw;
+  }
+
+  static async close(){
+    (await puppeteer).close();
   }
 }
 

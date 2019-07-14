@@ -3,8 +3,30 @@ const find_process = require('find-process');
 const netstat = require('node-netstat');
 const child_process = require('child_process');
 
+const cache = {
+  port: null,
+};
+
+function getPort(pid) {
+  return new Promise((resolve, reject) => {
+    var ntret = netstat({
+      filter: {
+        pid,
+        state: 'LISTENING'
+      }
+    }, stat => {
+      resolve(stat.local.port);
+    });
+  });
+}
+
+function toCache(keyName, keyValue) {
+  cache[keyName] = keyValue;
+  return keyValue;
+}
+
 class AnkiManager {
-  async getPid(){
+  async getPid() {
     if (!await this.isRunning()) {
       await this.start();
     }
@@ -14,7 +36,8 @@ class AnkiManager {
   }
 
   async getPort() {
-    return await getPort(await this.getPid());
+    if (cache.port !== null) return cache.port;
+    return toCache('port', await getPort(await this.getPid()));
   }
 
   async isRunning() {
@@ -41,19 +64,6 @@ class AnkiManager {
       });
     });
   }
-}
-
-function getPort(pid) {
-  return new Promise((resolve, reject) => {
-    var ntret = netstat({
-      filter: {
-        pid,
-        state: 'LISTENING'
-      }
-    }, stat => {
-      resolve(stat.local.port);
-    });
-  });
 }
 
 module.exports = AnkiManager;
