@@ -59,10 +59,6 @@ i {
   font-style: normal;
 }
 
-section {
-  padding: 0 0 1px;
-}
-
 section aside, section .p {
   margin: 1em;
 }
@@ -99,8 +95,8 @@ ul ul, ul ol, ol ul, ol ol {
 .cloze-ref {
   color: #0ea529;
   font-size: 1.1em;
-  font-weight: bold;
   margin-top: 10px;
+  text-decoration: underline;
 }
 
 .context b {
@@ -110,6 +106,7 @@ ul ul, ul ol, ol ul, ol ol {
 
 .context {
   background-color: #eeb;
+  border-top: solid 1px #81930e;
   color: #81930e;
   font-size: 0.65em;
   padding: 1em;
@@ -168,27 +165,20 @@ ul ul, ul ol, ol ul, ol ol {
 
 .resp {
   background-color: #3d9946;
-  color: white;
-  padding-top: 1px;
+  color: #fff;
 }
 
 .resp .p .cloze {
-  color: lime;
+  color: #00b1ff;
 }
 
 .resp .p .cloze-ref {
-  color: #e7ca70;
+  color: #000;
 }
 
 .resp .ref {
   color: lime;
 }
-
-/**
-.resp .sic {
-  color: wheat;
-}
-/**/
 
 .sibling {
   background: #185d1f;
