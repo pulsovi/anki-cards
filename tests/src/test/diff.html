@@ -6,9 +6,8 @@
   <title>{{id}}-{{title}}</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <style type="text/css">
-  header {
-    display: grid;
-    grid-template-columns: 1fr 10fr 1fr;
+  body {
+    text-align: center;
   }
 
   h4 {
@@ -16,6 +15,51 @@
     color: #aaa;
     margin: 0 0 1px;
     padding: 0.5em;
+  }
+
+  header {
+    display: grid;
+    grid-template-columns: 1fr 10fr 1fr .5fr;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  .anki {
+    grid-column: 5;
+  }
+
+  .base {
+    grid-column: 1;
+  }
+
+  .base-ok {
+    grid-column: 1;
+  }
+
+  .base-ok, .diff-ok {
+    font-weight: 600;
+    padding: 1em;
+  }
+
+  .base-pug {
+    grid-column: 2;
+  }
+
+  .content {
+    column-gap: 1px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    margin-bottom: 1em;
+  }
+
+  .diff-ok {
+    grid-column: 3;
+  }
+
+  .fa.btn, .fab.btn {
+    padding: 10px;
   }
 
   .header-title {
@@ -26,27 +70,14 @@
     padding: 0.4em;
   }
 
-  body {
-    text-align: center;
+  .nok {
+    background-color: #dc3545;
+    color: #ff9da7;
   }
 
-  img {
-    max-width: 100%;
-  }
-
-  .content {
-    column-gap: 1px;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    margin-bottom: 1em;
-  }
-
-  .base {
-    grid-column: 1;
-  }
-
-  .base-pug {
-    grid-column: 2;
+  .ok {
+    background-color: #28a745;
+    color: #5fd87b;
   }
 
   .pug {
@@ -55,37 +86,6 @@
 
   .pug-anki {
     grid-column: 4;
-  }
-
-  .anki {
-    grid-column: 5;
-  }
-
-  .ok {
-    background-color: #28a745;
-    color: #5fd87b;
-  }
-
-  .nok {
-    background-color: #dc3545;
-    color: #ff9da7;
-  }
-
-  .base-ok {
-    grid-column: 1;
-  }
-
-  .diff-ok {
-    grid-column: 3;
-  }
-
-  .base-ok, .diff-ok {
-    font-weight: 600;
-    padding: 1em;
-  }
-
-  .fa.btn, .fab.btn {
-    padding: 10px;
   }
   </style>
   <script src="https://kit.fontawesome.com/41610c1ead.js"></script>
