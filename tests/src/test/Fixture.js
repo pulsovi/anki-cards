@@ -206,7 +206,7 @@ class Fixture {
       __dirname,
       pugRectoFile: this.note.template[`${this.card}_recto`].pugFile.replace(/\\/g, '\\\\'),
       pugVersoFile: this.note.template[`${this.card}_verso`].pugFile.replace(/\\/g, '\\\\'),
-      cssFile: this.note.template[`${this.card}_${this.face}`].pugFile.replace(/\\/g, '\\\\'),
+      cssFile: this.note.template['style.css'].pugFile.replace(/\\/g, '\\\\'),
     });
     locals.directory = locals.directory.replace(/\\/g, '\\\\');
     var html = mustache.render(await this.diffTemplate, locals);
