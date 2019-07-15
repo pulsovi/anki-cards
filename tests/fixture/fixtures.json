@@ -443,5 +443,36 @@
 		"face": "verso",
 		"platform": "mobile",
 		"ok": true
+	},
+	{
+		"card": "2desc",
+		"cid": "1539112290627",
+		"id": "1lvc01ygjy4isaf8",
+		"locals": {
+			"MethodName": "max",
+			"Usage": "La plus grande valeur",
+			"Description": "Si le premier <b>et unique</b> paramètre est un tableau, <code>max()</code> retourne la valeur la plus haute du tableau.<div>Si au moins deux paramètres sont fournis, <code>max()</code> retourne la plus grosse de ces valeurs.</div>",
+			"ReturnType": "mixed",
+			"ReturnContent": "<div>La fonction <code>max()</code> retourne la valeur du paramètre considéré comme \"supérieure\" suivant la comparaison standard. Si plusieurs valeurs de types différents sont évaluées comme étant égales (i.e. <code>0</code> et <code>'abc'</code>), la première fournie à la fonction sera retournée.</div><div>Si un tableau vide est passé, alors <code>FALSE</code> sera retourné et une erreur <code>E_WARNING</code> sera émise.</div>",
+			"Param1Name": "$value1",
+			"Param1Type": "mixed",
+			"Param1Desc": "<div>Toutes comparables value.</div><div>OU</div><div>Un tableau contenant les valeurs. (appel avec un seul parametre)</div>",
+			"Param2Name": "$value2",
+			"Param2Type": "mixed",
+			"Param2IsOptional": "y",
+			"Param2Desc": "Toutes comparables value.<aside>Si ce parametre est manquant, le premier parametre DOIT etre un tableau</aside>",
+			"Param3Name": "$...",
+			"Param3Type": "mixed",
+			"Param3IsOptional": "y",
+			"Tags": " php "
+		},
+		"note": "language::function",
+		"ord": 10,
+		"type": 0,
+		"title": "Space between blocks",
+		"description": "le bloc aside doit être séparé du texte natif par une ligne bleue de 1em",
+		"face": "verso",
+		"platform": "mobile",
+		"ok": true
 	}
 ]
