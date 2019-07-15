@@ -180,6 +180,12 @@ ul ul, ul ol, ol ul, ol ol {
   color: lime;
 }
 
+.resp .why, .resp .p+.p.why {
+  background-color: #b870c2;
+  color: #dcb8e0;
+  padding: 1em;
+}
+
 .sibling {
   background: #185d1f;
 }
