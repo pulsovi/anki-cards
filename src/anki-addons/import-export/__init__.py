@@ -14,14 +14,14 @@ ROOT_FOLDER = "D:\\MesDonnees\\Dev\\Kodech\\Anki\\cards\\model"
 
 def export():
     for key in mw.col.models.models:
-        export_note(mw.col.models.models[key])
+        export_model(mw.col.models.models[key])
 
 
-def export_note(note):
-    name = note["name"]
-    folder = get_note_folder(name)
-    print_css(folder, note["css"])
-    cards = note["tmpls"]
+def export_model(model):
+    name = model["name"]
+    folder = get_model_folder(name)
+    print_css(folder, model["css"])
+    cards = model["tmpls"]
     for card in cards:
         print_card(folder, card)
 
@@ -34,39 +34,39 @@ def print_card(folder, card):
     write_file(os.path.join(folder, name + "_verso.html"), verso)
 
 
-def import_notes():
+def import_models():
     ShowCardCount()
     message = ""
     for key in mw.col.models.models:
-        message += import_note(mw.col.models.models[key])
+        message += import_model(mw.col.models.models[key])
     mw.col.models.flush()
     ShowCardCount(message)
 
 
-def import_note(note):
-    name = note["name"]
+def import_model(model):
+    name = model["name"]
     message = ""
-    folder = get_note_folder(name)
+    folder = get_model_folder(name)
     css = read_css(folder)
-    if note["css"] != css:
+    if model["css"] != css:
         message += "\n\tupdate css"
-    note["css"] = css
+    model["css"] = css
     tempMessage = message
-    cards = note["tmpls"]
+    cards = model["tmpls"]
     for card in cards:
         message += read_card(folder, card)
-    new_cards = list_new_cards(note)
+    new_cards = list_new_cards(model)
     if len(new_cards):
         for new_card in new_cards:
-            message += add_template(note, new_card, folder)
-        mw.col.genCards(mw.col.models.nids(note))
+            message += add_template(model, new_card, folder)
+        mw.col.genCards(mw.col.models.nids(model))
     if message == "":
         return message
-    mw.col.models.save(note, tempMessage != message)
+    mw.col.models.save(model, tempMessage != message)
     return "\n" + name + " :" + message
 
 
-def add_template(note, name, folder):
+def add_template(model, name, folder):
     model_manager = mw.col.models
     template = model_manager.newTemplate(name)
     file = os.path.join(folder, name)
@@ -74,11 +74,11 @@ def add_template(note, name, folder):
     verso = read_file(file + "_verso.html")  # verso
     template["qfmt"] = recto
     template["afmt"] = verso
-    model_manager.addTemplate(note, template)
+    model_manager.addTemplate(model, template)
     return "\n\tadded " + name
 
 
-def get_note_folder(name):
+def get_model_folder(name):
     return os.path.join(ROOT_FOLDER, *(name.split("::")), "out")
 
 
@@ -97,9 +97,9 @@ def read_card(folder, card):
     return message
 
 
-def list_new_cards(note):
-    files = list(os.walk(get_note_folder(note["name"])))[0][2]
-    old_cards = [i["name"] for i in note["tmpls"]]
+def list_new_cards(model):
+    files = list(os.walk(get_model_folder(model["name"])))[0][2]
+    old_cards = [i["name"] for i in model["tmpls"]]
     new_cards = [i.replace('_recto.html', '') for i in files if
                  i.endswith('_recto.html') and
                  i.replace('recto', 'verso') in files and
@@ -118,7 +118,7 @@ def read_css(folder):
 def write_file(filename, data):
     pathlib.Path(os.path.dirname(filename)).mkdir(parents=True, exist_ok=True)
     f = open(filename, 'wb')
-    f.write(normalize(data))
+    f.write(normalize(data if data else ""))
     f.close()
 
 
@@ -142,14 +142,14 @@ def ShowCardCount(message=""):
     showInfo(("Card count: %d" % cardCount) + message)
 
 
-export_action = qt.QAction("Exporter les notes", mw)
+export_action = qt.QAction("Exporter les models", mw)
 export_action.triggered.connect(export)
 mw.form.menuTools.addAction(export_action)
 
 
-import_notes_action = qt.QAction("Importer les notes", mw)
-import_notes_action.triggered.connect(import_notes)
-mw.form.menuTools.addAction(import_notes_action)
+import_models_action = qt.QAction("Importer les models", mw)
+import_models_action.triggered.connect(import_models)
+mw.form.menuTools.addAction(import_models_action)
 
 
 def onSync(state):
