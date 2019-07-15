@@ -45,19 +45,19 @@
     grid-column: 1;
   }
 
-  .base-anki {
+  .base-pug {
     grid-column: 2;
   }
 
-  .anki {
+  .pug {
     grid-column: 3;
   }
 
-  .anki-pug {
+  .pug-anki {
     grid-column: 4;
   }
 
-  .pug {
+  .anki {
     grid-column: 5;
   }
 
@@ -67,7 +67,7 @@
   }
 
   .nok {
-    background-color: var(--red);
+    background-color: #dc3545;
     color: #ff9da7;
   }
 
@@ -104,26 +104,10 @@
       <i id="set-base-ok" class="btn btn-block btn-success">it is OK</i>
       <i id="viewJSON" class="btn btn-block btn-secondary">view the JSON</i>
     </div>
-    <div class="base-anki">
-      <h4>base-anki</h4>
-      <img src="./base-anki.png"></img>
-      <p>{{diff.base-anki}}</p>
-    </div>
-    <div class="anki">
-      <h4>anki</h4>
-      <img src="./anki.png"></img>
-      <i id="anki-as-base" class="btn btn-block btn-primary">set as base image</i>
-      <div class="btn-group btn-block">
-        <i id="anki-template" class="btn btn-secondary">view the template</i>
-        <i id="anki-html" class="btn btn-secondary">HTML</i>
-        <i id="anki-firefox" class="btn btn-secondary firefox fab fa-firefox"></i>
-        <i id="reload-anki" class="btn btn-secondary fa fa-refresh"></i>
-      </div>
-    </div>
-    <div class="anki-pug">
-      <h4>anki-pug</h4>
-      <img src="./anki-pug.png"></img>
-      <p>{{diff.anki-pug}}</p>
+    <div class="base-pug">
+      <h4>base-pug</h4>
+      <img src="./base-pug.png"></img>
+      <p>{{diff.base-pug}}</p>
     </div>
     <div class="pug">
       <h4>pug</h4>
@@ -139,6 +123,22 @@
         <i id="pug-recto" class="btn btn-warning">Recto</i>
         <i id="pug-verso" class="btn btn-warning">Verso</i>
         <i id="pug-css" class="btn btn-warning">CSS</i>
+      </div>
+    </div>
+    <div class="pug-anki">
+      <h4>pug-anki</h4>
+      <img src="./pug-anki.png"></img>
+      <p>{{diff.pug-anki}}</p>
+    </div>
+    <div class="anki">
+      <h4>anki</h4>
+      <img src="./anki.png"></img>
+      <i id="anki-as-base" class="btn btn-block btn-primary">set as base image</i>
+      <div class="btn-group btn-block">
+        <i id="anki-template" class="btn btn-secondary">view the template</i>
+        <i id="anki-html" class="btn btn-secondary">HTML</i>
+        <i id="anki-firefox" class="btn btn-secondary firefox fab fa-firefox"></i>
+        <i id="reload-anki" class="btn btn-secondary fa fa-refresh"></i>
       </div>
     </div>
   </div>

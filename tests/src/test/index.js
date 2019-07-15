@@ -41,8 +41,8 @@ async function manage_fixture(options) {
     fixture.setBase(),
   ]);
   await Promise.all([
-    fixture.setResemble('base', 'anki'),
-    fixture.setResemble('anki', 'pug'),
+    fixture.setResemble('base', 'pug'),
+    fixture.setResemble('pug', 'anki'),
   ]);
   await fixture.setHtmlDiff();
   if (fixture.diff || !fixture.ok) {
@@ -84,23 +84,23 @@ async function manage_one_version(options, version) {
 
 async function reload_base(options) {
   var fixture = new Fixture(options);
-  await fixture.setResemble('base', 'anki');
+  await fixture.setResemble('base', 'pug');
   await fixture.setHtmlDiff();
 }
 
 async function reload_anki(options) {
   var fixture = new Fixture(options);
   await fixture.setAnki();
-  await Promise.all([
-    fixture.setResemble('base', 'anki'),
-    fixture.setResemble('anki', 'pug'),
-  ]);
+  await fixture.setResemble('pug', 'anki');
   await fixture.setHtmlDiff();
 }
 
 async function reload_pug(options) {
   var fixture = new Fixture(options);
   await fixture.setPug();
-  await fixture.setResemble('anki', 'pug');
+  await Promise.all([
+    fixture.setResemble('base', 'pug'),
+    fixture.setResemble('pug', 'anki'),
+  ]);
   await fixture.setHtmlDiff();
 }
