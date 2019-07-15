@@ -1,0 +1,7 @@
+extends ../kodech_recto_layout.pug
+block header
+	header(dir='rtl') פרקים
+block question-content
+	.p פרק #[i(context-data="{{contextRef}}.title")]#[br]מה שם הפרק הקודם ?
+block scripts
+	script(src="_context-bootstrap.js")

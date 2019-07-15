@@ -1,14 +1,15 @@
--
-	var context_list = {
-		'{{contextRef}}.previousSibling.previousSibling.previousSibling': 'sibling',
-		'{{contextRef}}.previousSibling.previousSibling': 'sibling',
-		'{{contextRef}}.previousSibling': 'sibling',
-		'{{contextRef}}': 'itself',
-		'{{contextRef}}.nextSibling': 'sibling',
-		'{{contextRef}}.nextSibling.nextSibling': 'sibling',
-		'{{contextRef}}.nextSibling.nextSibling.nextSibling': 'sibling'
-	};
-.parent
-	h4 מסכת #[i(context-data="{{contextRef}}.parent.title")]
-	each className, ref in context_list
-		div(class=className context-show=ref) #[i(context-data=ref+".id")] : #[i(context-data=ref+".title")]
+mixin context(before, after, highlight)
+	-
+		var context_list = {};
+		for(var i = before; i > 0; --i){
+			context_list['{{contextRef}}' + '.previousSibling'.repeat(i)] = i === -highlight ? 'itself' : 'sibling';
+		}
+		context_list['{{contextRef}}'] = highlight === 0 ? 'itself' :'sibling'
+		for(var i = 1; i <= after; ++i){
+			context_list['{{contextRef}}' + '.nextSibling'.repeat(i)] = i === highlight ? 'itself' : 'sibling';
+		}
+	.parent
+		//-pre #{before} #{after} #{highlight} #{typeof highlight} #{JSON.stringify(context_list, null, '\t')}
+		h4 מסכת #[i(context-data="{{contextRef}}.parent.title")]
+		each className, ref in context_list
+			div(class=className context-show=ref) #[i(context-data=ref+".id")] : #[i(context-data=ref+".title")]

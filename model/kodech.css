@@ -144,7 +144,7 @@ ul ul, ul ol, ol ul, ol ol {
 .parent {
   background: #8bcb91;
   display: table;
-  margin: 1em auto;
+  margin: 1em auto 0;
 }
 
 .parent h4 {

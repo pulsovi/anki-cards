@@ -1,4 +1,5 @@
 extends ../kodech_verso_layout.pug
+include context.pug
 block response-content
-	h3.p(context-data="{{contextRef}}.title")
-	include context.pug
+	.p(context-data="{{contextRef}}.title")
+		+context(3,3,0)
