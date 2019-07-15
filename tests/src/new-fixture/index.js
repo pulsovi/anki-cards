@@ -48,19 +48,21 @@ async function createFixture() {
 
 async function createFixtureFromCid(cid) {
   var fixture = {};
-  fixture.id = uniqid();
   var nid = await AnkiDbManager.getCardNote(cid);
   var mid = await AnkiDbManager.getNoteModel(nid);
-  fixture.note = await AnkiDbManager.getModelName(mid);
   fixture.card = await AnkiDbManager.getCardName(cid);
-  fixture.ord = await AnkiDbManager.getCardOrd(cid);
+  fixture.cid = cid;
+  fixture.id = uniqid();
   fixture.locals = cleanLocals(await AnkiDbManager.getNoteFields(nid));
   fixture.locals.Tags = await AnkiDbManager.getNoteTags(nid);
+  fixture.note = await AnkiDbManager.getModelName(mid);
+  fixture.ord = await AnkiDbManager.getCardOrd(cid);
+  fixture.type = await AnkiDbManager.getModelType(mid);
+
   fixture.title = await prompt('title : ');
   fixture.description = await prompt('description : ');
   fixture.face = await prompt('face ? recto/verso : ');
   fixture.platform = await prompt('platform ? mobile/win : ');
-  fixture.type = await AnkiDbManager.getModelType(mid);
   return fixture;
 }
 
