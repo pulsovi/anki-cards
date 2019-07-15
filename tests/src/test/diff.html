@@ -47,6 +47,17 @@
     grid-column: 2;
   }
 
+  .close-btn {
+    background-color: #dc3545;
+    color:  #fff;
+    cursor: default;
+    font-size: 2em;
+  }
+
+  .close-btn:hover {
+    background-color: #c82333;
+  }
+
   .content {
     column-gap: 1px;
     display: grid;
@@ -96,6 +107,7 @@
     <i id="base-ok" class="base-ok">{{ok}}</i>
     <h3 class="header-title">{{description}}</h3>
     <i id="diff-ok" class="diff-ok">{{#diff}}false{{/diff}}{{^diff}}true{{/diff}}</i>
+    <i id="close" class="close-btn">&times;</i>
   </header>
   <div class="content">
     <div class="base">
@@ -143,7 +155,6 @@
     </div>
   </div>
   <h3>{{note}}&gt;{{card}}</h3>
-  <i id="close" class="btn btn-danger fa fa-times"></i>
   <script>
   //jshint esversion:8
   const ngui = require('nw.gui');
@@ -231,7 +242,7 @@
     baseOk.classList.add(isBaseOk ? 'ok' : 'nok');
     baseOk.innerText = 'BASE';
     var diffOk = document.getElementById('diff-ok');
-    diffOk.classList.add(diffOk.innerText === 'true' ? 'ok' : 'nok');
+    diffOk.classList.add(diffOk.innerText === 'true' ? 'nok' : 'ok');
     diffOk.innerText = 'DIFF';
   })();
 
