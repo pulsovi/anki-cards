@@ -383,5 +383,22 @@
 		"face": "verso",
 		"platform": "mobile",
 		"ok": true
+	},
+	{
+		"card": "Suivant",
+		"cid": "1563117263233",
+		"id": "1lvc0c30jy480ra8",
+		"locals": {
+			"contextRef": "chass.michnah.beitsa.5",
+			"Tags": ""
+		},
+		"note": "Limoud::prakim",
+		"ord": 2,
+		"type": 0,
+		"title": "Next perek",
+		"description": "Lorsque le Perek de référence est le dernier de la Massekhet, un message doit le dire",
+		"face": "verso",
+		"platform": "mobile",
+		"ok": true
 	}
 ]
