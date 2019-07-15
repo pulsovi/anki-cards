@@ -362,5 +362,26 @@
 		"type": 1,
 		"platform": "mobile",
 		"ok": true
+	},
+	{
+		"card": "Pourquoi",
+		"cid": "1552475345291",
+		"id": "1lvc02ycjy42yo8f",
+		"locals": {
+			"Auteur": "פתחי תשובה",
+			"Ou": "אבן העזר מב (א) בע״כ אינה מקודשת",
+			"Question": "שנים אומרים שנתקדשה מרצונה ושנים אומרים מאונס פחד, האם מותרת לבעלה",
+			"Reponse": "ספק ספיקא והיא מקודשת ודאית",
+			"Pourquoi": "ספק אם נתקדשה מאונס פחד וספק אם אונס פחד מקרי אונס ובכל ספק ספיקא להחמיר הרי היא מקודשת ודאית",
+			"Tags": " הלכות_קידושין "
+		},
+		"note": "Limoud::psakim",
+		"ord": 0,
+		"type": 0,
+		"title": "Why color",
+		"description": "Le bloc Pourquoi doit avoir une couleur dédiée",
+		"face": "verso",
+		"platform": "mobile",
+		"ok": true
 	}
 ]
