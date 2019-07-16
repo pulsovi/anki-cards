@@ -615,5 +615,26 @@
 		"face": "recto",
 		"platform": "mobile",
 		"ok": true
+	},
+	{
+		"card": "Pourquoi",
+		"cid": "1552899503049",
+		"id": "1lvc08fsjy5oa2fz",
+		"locals": {
+			"Auteur": "פתחי תשובה",
+			"Ou": "אבן העזר מב (יא) אפילו לא אמר אתם עדים 1",
+			"Question": "נתקדשה בפני עדים שלא הייתה כוונתם להעיד על הקידושים, האם היא מקודשת",
+			"Reponse": "מחלוקת",
+			"Pourquoi": "<div>תלוי אם פוסקים להלכה ש\"לא נתכוונו להעיד אינה מקודשת\" ואם באו מיד אחר המעשה לב״ד להעיד</div>",
+			"Tags": "הלכות_קידושין "
+		},
+		"note": "Limoud::psakim",
+		"ord": 0,
+		"type": 0,
+		"title": "Ajout ou",
+		"description": "La carte pourquoi doit afficher le champ Où",
+		"face": "verso",
+		"platform": "mobile",
+		"ok": true
 	}
 ]
