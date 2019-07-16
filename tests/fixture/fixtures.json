@@ -520,5 +520,43 @@
 		"face": "verso",
 		"platform": "mobile",
 		"ok": true
+	},
+	{
+		"card": "retTyp",
+		"cid": "1555040122486",
+		"id": "1lvc07y8jy5kxi01",
+		"locals": {
+			"MethodName": "animate",
+			"ClassName": "(jQuery)",
+			"Usage": "Perform a custom animation of a set of CSS properties.",
+			"ReturnType": "jQuery",
+			"ReturnContent": "The jQuery object itself",
+			"Param1Name": "properties",
+			"Param1Type": "PlainObject",
+			"Param1Desc": "An object of CSS properties and values that the animation will move toward.",
+			"Param2Name": "duration",
+			"Param2Type": "Number<wbr>|<wbr>String",
+			"Param2IsOptional": "y",
+			"Param2Default": "400",
+			"Param2Desc": "A string or number determining how long the animation will run.",
+			"Param3Name": "easing",
+			"Param3Type": "String",
+			"Param3IsOptional": "y",
+			"Param3Default": "\"swing\"",
+			"Param3Desc": "A string indicating which easing function to use for the transition.",
+			"Param4Name": "complete",
+			"Param4Type": "Function",
+			"Param4IsOptional": "y",
+			"Param4Desc": "A function to call once the animation is complete, called once per matched element.",
+			"Tags": " jquery "
+		},
+		"note": "language::function",
+		"ord": 3,
+		"type": 0,
+		"title": "Clean prototype",
+		"description": "La présentation de la fonction doit être propre",
+		"face": "verso",
+		"platform": "mobile",
+		"ok": true
 	}
 ]
