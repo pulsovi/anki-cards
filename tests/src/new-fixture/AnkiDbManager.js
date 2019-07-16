@@ -6,6 +6,10 @@ const sqlite3 = require('sqlite3').verbose();
 
 const AnkiDB = path.resolve(process.env.APPDATA, 'Anki2/David/collection.anki2');
 
+// model types
+const MODEL_STD = 0;
+const MODEL_CLOZE = 1;
+
 function GetAnkiDb() {
   return new Promise((resolve, reject) => {
     var Db = new sqlite3.Database(AnkiDB, sqlite3.OPEN_READONLY, (err) => {
@@ -45,7 +49,8 @@ class AnkiDbManager {
     var mid = await this.getNoteModel(nid);
     var model = await this.getModel(mid);
     var pos = (await this.getCard(cid)).ord;
-    return model.tmpls[pos].name;
+    var typ = await this.getModelType(mid);
+    return (typ === MODEL_STD && model.tmpls[pos].name) || model.tmpls[0].name;
   }
 
   async getCardNote(cid) {
