@@ -95,7 +95,7 @@ section aside, section .p {
 }
 
 section .p {
-  padding: 0;
+  padding: 0 1em;
 }
 
 section .p aside {
