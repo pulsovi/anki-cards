@@ -1,8 +1,8 @@
 extends ../kodech_verso_layout.pug
 block response-content
 	.p {{Reponse}}
-	.p.coord {{Ou}}
 	|{{#Lachon}}#[aside {{Lachon}}]{{/Lachon}}
 	|{{#Pourquoi}}#[.p.why {{Pourquoi}}]{{/Pourquoi}}
+	.where.coord {{Ou}}
 block response-after
 	include daf.pug

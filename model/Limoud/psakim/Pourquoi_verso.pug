@@ -1,6 +1,7 @@
 extends ../kodech_verso_layout.pug
 block response-content
-	.p.why {{Pourquoi}}
+	.why {{Pourquoi}}
+	|{{#Ou}}#[.where {{Ou}}]{{/Ou}}
 	|{{#PourquoiLachon}}#[aside {{PourquoiLachon}}]{{/PourquoiLachon}}
 	|{{^PourquoiLachon}}{{#Lachon}}#[aside {{Lachon}}]{{/Lachon}}{{/PourquoiLachon}}
 block response-after
