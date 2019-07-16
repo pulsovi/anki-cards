@@ -90,6 +90,7 @@ ul ul, ul ol, ol ul, ol ol {
 .cloze {
   color: #00f;
   font-weight: bold;
+  text-decoration: inherit;
 }
 
 .cloze-ref {
