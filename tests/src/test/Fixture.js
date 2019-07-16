@@ -139,11 +139,11 @@ class Fixture {
   parseCloze(template, face) {
     return template.replace(/{{cloze:([^}]*)}}/g, (match, field) => {
       var source = this.locals[field];
-      if (face === 'verso') return source
-        .replace(RegExp(`{{c${this.ord + 1}::([^:}]*)(::[^}]*)?}}`, 'g'), '<span class="cloze">$1</span>')
-        .replace(/{{c\d+::([^}:]*)(::[^}]*)?}}/g, '$1');
-      else return source
-        .replace(RegExp(`{{c${this.ord + 1}::([^}]*)}}`, 'g'), '<span class="cloze">[...]</span>')
+      return source
+        .replace(
+          RegExp(`{{c${this.ord + 1}::([^:}]*)(?:::([^}]*))?}}`, 'g'),
+          (_, text, clue) => `<span class="cloze">${face === 'recto' ? '[' + (clue || '…') + ']' : text}</span>`
+        )
         .replace(/{{c\d+::([^}:]*)(::[^}]*)?}}/g, '$1');
     });
   }
