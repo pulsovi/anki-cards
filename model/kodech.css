@@ -170,6 +170,7 @@ ul ul, ul ol, ol ul, ol ol {
 
 .resp .p .cloze {
   color: #00b1ff;
+  text-decoration: inherit;
 }
 
 .resp .p .cloze-ref {
