@@ -27,6 +27,7 @@ async function main() {
   var fixture = await createFixture();
   fixtures.push(fixture);
   fs.writeFile(fixturesPath, JSON.stringify(fixtures, null, '\t') + '\n', () => {});
+  console.log('tests/bin/test.sh', fixture.id);
 }
 
 async function createFixture() {
@@ -42,7 +43,6 @@ async function createFixture() {
     if (await prompt('is the base image fit well ? y/n (no): ') === 'y')
       fixture.ok = true;
   }
-  console.log(fixture.id);
   return fixture;
 }
 

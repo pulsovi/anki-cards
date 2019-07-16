@@ -210,17 +210,24 @@ ul,
   padding: 0;
 }
 
+.mobile section aside+aside {
+  border-top: solid 1px;
+}
+
+.mobile section .p {
+  padding: 1em;
+}
+
 .mobile section>.p,
 .mobile section>aside,
 .mobile section>pre {
-  margin-left: 0;
-  margin-right: 0;
+  margin: 0;
 }
 
-.mobile section .p+.p,
-.mobile section aside+aside {
+.mobile section .p+.p {
   padding-top: 0;
 }
+
 
 .mobile section>:first-child {
   margin-top: 0;
