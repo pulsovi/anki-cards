@@ -558,5 +558,26 @@
 		"face": "verso",
 		"platform": "mobile",
 		"ok": true
+	},
+	{
+		"card": "-ShortAlias",
+		"cid": "1551303064491",
+		"id": "1lvc07x0jy5ldejo",
+		"locals": {
+			"CommandName": "git cherry-pick",
+			"Arg": "--no-commit",
+			"ShortAlias": "-n",
+			"Usage": "Applies the changes necessary to cherry-pick each named <code>&lt;commit&gt;</code> to your working tree and the index, without making any commit.",
+			"Comment": "<div>Usually the command automatically creates a sequence of commits. This flag applies the changes necessary to cherry-pick each named commit to your working tree and the index, without making any commit.</div><div>In addition, when this option is used, your index does not have to match the HEAD commit. The cherry-pick is done against the beginning state of your index.</div><div>This is useful when cherry-picking more than one commits' effect to your index in a row.<pre>git cherry-pick [--edit] <b>[-n]</b> [-m parent-number] [-s] [-x] [--ff]&nbsp;[-S[&lt;keyid&gt;]] &lt;commit&gt;…​</pre></div>",
+			"Tags": " git "
+		},
+		"note": "command::arg",
+		"ord": 4,
+		"type": 0,
+		"title": "Two asides",
+		"description": "Les deux aside doivent avoir leur padding haut et bas de 1em, et être séparés par un border de 1px",
+		"face": "verso",
+		"platform": "mobile",
+		"ok": true
 	}
 ]
