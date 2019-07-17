@@ -35,9 +35,7 @@ async function shot(html, dest, viewport) {
   await page.setContent(html);
   await mkdirpPromise(path.dirname(dest));
   await page.screenshot({ path: dest });
-  setImmediate(function() {
-    page.close();
-  });
+  setImmediate(_=>page.close());
 }
 
 function getNote(noteName) {
