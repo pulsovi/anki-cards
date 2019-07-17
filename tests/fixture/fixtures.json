@@ -810,5 +810,24 @@
 		"face": "verso",
 		"platform": "mobile",
 		"ok": true
+	},
+	{
+		"card": "Form",
+		"cid": "1541598893717",
+		"id": "1lvc0fewjy7o4mv0",
+		"locals": {
+			"CommandName": "fsutil",
+			"Form": "fsutil file setshortname &lt;PathName&gt; &lt;shortname&gt;",
+			"Usage": "definit un nom court pour un fichier donné",
+			"Tags": " DOS "
+		},
+		"note": "command::form",
+		"ord": 1,
+		"type": 0,
+		"title": "command form Form",
+		"description": "Apparence de la carte command::form>Form",
+		"face": "verso",
+		"platform": "mobile",
+		"ok": true
 	}
 ]
