@@ -1,3 +1,7 @@
 extends ../../../coding_recto_layout.pug
 block prototype
-	|{{#ClassName}}{{ClassName}}#[br]  {{/ClassName}}#[i.mk-func-name {{MethodName}}]#[br]    #[i.mk-func-param {{ParamName}}]
+	|{{#ClassName}}{{ClassName}}#[br]  {{/ClassName}}#[i.mk-func-name {{MethodName}}](#[wbr]#[i.mk-func-param {{ParamName}}]#[i.mk-operator =]{#[br]#{'      '}
+	b
+		block prototype-name
+		|: …
+	|#[br]  })

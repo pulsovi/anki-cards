@@ -198,7 +198,7 @@ ul,
   color: #fd971f;
 }
 
-.mk-red, .mk-keyword, .oper, .keyword {
+.mk-red, .mk-keyword, .mk-operator, .oper, .keyword {
   color: #f92672;
 }
 
