@@ -677,5 +677,25 @@
 		"face": "verso",
 		"platform": "mobile",
 		"ok": true
+	},
+	{
+		"card": "am_he",
+		"cid": "1535271616121",
+		"id": "1lvc0d9ojy74qmvi",
+		"locals": {
+			"Francais": "utile",
+			"Anglais": "useful",
+			"Hebreu": "מועיל",
+			"Arameen": "מהני",
+			"Tags": ""
+		},
+		"note": "langue",
+		"ord": 7,
+		"type": 0,
+		"title": "Background color",
+		"description": "L'arrière plan de la question doit être coloré selon la langue de destination",
+		"face": "recto",
+		"platform": "mobile",
+		"ok": true
 	}
 ]
