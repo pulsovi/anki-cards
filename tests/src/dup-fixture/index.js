@@ -19,8 +19,9 @@ async function main() {
   }
   var to = Object.assign({}, from);
   to.id = uniqid();
+  to.ok = false;
   fixtures.push(to);
-  fs.writeFile(fixturesPath, JSON.stringify(fixtures, null, '\t'), err => { if (err) throw err; });
+  fs.writeFile(fixturesPath, JSON.stringify(fixtures, null, '\t') + '\n', err => { if (err) throw err; });
   await promisify(fs.mkdir)(path.resolve(ROOT, `tests/out/${to.id}`));
   fs.copyFile(
     path.resolve(ROOT, `tests/out/${fixtureToDup}/base.png`),
