@@ -9,7 +9,6 @@ mixin context(before, after, highlight)
 			context_list['{{contextRef}}' + '.nextSibling'.repeat(i)] = i === highlight ? 'itself' : 'sibling';
 		}
 	.parent
-		//-pre #{before} #{after} #{highlight} #{typeof highlight} #{JSON.stringify(context_list, null, '\t')}
-		h4 מסכת #[i(context-data="{{contextRef}}.parent.title")]
+		h4.title מסכת #[i(context-data="{{contextRef}}.parent.title")]
 		each className, ref in context_list
 			div(class=className context-show=ref) #[i(context-data=ref+".id")] : #[i(context-data=ref+".title")]

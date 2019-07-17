@@ -41,7 +41,7 @@ body {
 }
 
 footer {
-  background-color: darkgray;
+  background-color: #a9a9a9;
   color: #fff;
   font-size: .5em;
   padding: 2em 0;
@@ -148,7 +148,7 @@ ul ul, ul ol, ol ul, ol ol {
   margin: 1em auto 0;
 }
 
-.parent h4 {
+.parent .title {
   margin: 0.5em;
 }
 
@@ -179,7 +179,11 @@ ul ul, ul ol, ol ul, ol ol {
 }
 
 .resp .ref {
-  color: lime;
+  color: #0f0;
+}
+
+.resp .sic {
+  color: #f5deb3;
 }
 
 .resp .why {
