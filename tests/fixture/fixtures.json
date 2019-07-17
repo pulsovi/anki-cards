@@ -763,5 +763,28 @@
 		"face": "verso",
 		"platform": "mobile",
 		"ok": true
+	},
+	{
+		"card": "Type",
+		"cid": "1563379794149",
+		"id": "1lvc0bp8jy7mcarf",
+		"locals": {
+			"MethodName": "screenshot",
+			"ClassName": "(Page)",
+			"ParamName": "options",
+			"PropertyName": "path",
+			"PropertyType": "String",
+			"PropertyDefault": "null",
+			"PropertyDescription": "The file path to save the image to.<br>",
+			"Comment": "The screenshot type will be inferred from file extension. If path is a relative path, then it is resolved relative to current working directory. If no path is provided, the image won't be saved to the disk.<br>",
+			"Tags": " puppeteer "
+		},
+		"note": "language::function::parameterProperty",
+		"type": 0,
+		"title": "Parameter property Type",
+		"description": "Apparence de la carte Parameter property Type",
+		"face": "verso",
+		"platform": "mobile",
+		"ok": true
 	}
 ]
