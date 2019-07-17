@@ -15,12 +15,32 @@ var isInline = function IIFE() {
   };
 }();
 
+var isBlock = function IIFE() {
+  var blockTagList = [
+    'aside',
+    'pre',
+    'script',
+  ];
+  var blockClassList = [
+    'p',
+    'where',
+    'why',
+  ];
+
+  return function isBlock(element){
+    return !!~blockTagList.indexOf(element.tagName.toLowerCase()) ||
+      blockClassList.some(function(className){return element.classList.contains(className);});
+  };
+}();
+
 function parseContentType(a, b) {
   if (isInline(b)) {
     if (a === 'inline' || a === null) return 'inline';
     return 'mixed';
-  } else {
+  } else if(isBlock(b)) {
     if (a === 'block' || a === null) return 'block';
+    return 'mixed';
+  } else {
     return 'mixed';
   }
 }
@@ -37,9 +57,10 @@ function blockInP() {
         p.parentElement.insertBefore(e, p);
       });
       p.parentElement.removeChild(p);
-    } else {
+    } else /*mixed*/ {
       var inlineList = [];
       var divp = null;
+      var dive = null;
       var inlineElement = null;
       children.forEach(function(child) {
         if (isInline(child)) inlineList.push(child);
@@ -50,7 +71,13 @@ function blockInP() {
             while ((inlineElement = inlineList.shift())) divp.appendChild(inlineElement);
             divp.appendChild(document.createElement('div')).className = 'clearfix';
           }
-          p.parentElement.insertBefore(child, p);
+          if (isBlock(child)){
+            p.parentElement.insertBefore(child, p);
+          } else {
+            dive = p.parentElement.insertBefore(document.createElement('div'), p);
+            dive.className = 'error-unknown-block';
+            dive.appendChild(child);
+          }
         }
       });
       if (inlineList.length) {
