@@ -97,7 +97,7 @@ class Fixture {
     this.locals.Card = this.card;
     this.locals.Type = this.note.name;
     this.viewport = options.viewport || getConfig(this.platform + '.viewport');
-    this.diffTemplate = fs.promises.readFile(path.join(__dirname, 'diff.html'), 'utf8');
+    this.diffTemplate = promisify(fs.readFile)(path.join(__dirname, 'diff.html'), 'utf8');
 
     mkdirp.sync(this.directory);
   }
@@ -151,7 +151,7 @@ class Fixture {
     var dest = path.resolve(this.directory, version + '.png');
     await Promise.all([
       shot(html, dest, this.viewport),
-      fs.promises.writeFile(path.resolve(this.directory, version + '.html'), html),
+      promisify(fs.writeFile)(path.resolve(this.directory, version + '.html'), html),
     ]);
     fs.writeFile(this.directory + '/' + version + '_recto_template.html', this.getRaw(version).recto, () => {});
     fs.writeFile(this.directory + '/' + version + '_verso_template.html', this.getRaw(version).verso, () => {});
@@ -171,7 +171,7 @@ class Fixture {
     if (!await fileExist(filename)) return;
     var size = await sizeOf(filename);
     if (size.width !== this.viewport.width || size.height !== this.viewport.height) {
-      await fs.promises.copyFile(filename, filename + '.old');
+      await promisify(fs.copyFile)(filename, filename + '.old');
       await sharp(filename + '.old').resize(this.viewport.width, this.viewport.height).toFile(filename);
     }
   }
@@ -209,8 +209,8 @@ class Fixture {
     locals.directory = locals.directory.replace(/\\/g, '\\\\');
     var html = mustache.render(await this.diffTemplate, locals);
     await Promise.all([
-      fs.promises.writeFile(this.htmlDiffFile, html),
-      fs.promises.writeFile(this.directory + '/package.json', JSON.stringify({
+      promisify(fs.writeFile)(this.htmlDiffFile, html),
+      promisify(fs.writeFile)(this.directory + '/package.json', JSON.stringify({
         main: "index.html",
         name: this.title,
         fixture: this.asRaw()

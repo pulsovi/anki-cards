@@ -3,6 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const readline = require('readline');
+const { promisify } = require('util');
 // npm dependancies
 const config = require('config');
 const mkdirp = require('mkdirp');
@@ -22,7 +23,7 @@ main()
   });
 
 async function main() {
-  var JSONfixtures = await fs.promises.readFile(fixturesPath, 'utf8');
+  var JSONfixtures = await promisify(fs.readFile)(fixturesPath, 'utf8');
   var fixtures = JSON.parse(JSONfixtures);
   var fixture = await createFixture();
   fixtures.push(fixture);
@@ -59,10 +60,10 @@ async function createFixtureFromCid(cid) {
   fixture.ord = await AnkiDbManager.getCardOrd(cid);
   fixture.type = await AnkiDbManager.getModelType(mid);
 
-  fixture.title = await prompt('title : ');
-  fixture.description = await prompt('description : ');
-  fixture.face = await prompt('face ? recto/verso : ');
-  fixture.platform = await prompt('platform ? mobile/win : ');
+  fixture.title = await prompt('title (Title): ', 'Title');
+  fixture.description = await prompt('description (Description): ', 'Description');
+  fixture.face = await prompt('face ? recto/verso (verso): ', 'verso');
+  fixture.platform = await prompt('platform ? mobile/win (mobile): ', 'mobile');
   return fixture;
 }
 
@@ -80,7 +81,7 @@ async function setFixtureBase(fixture, image) {
     .toFile(dest);
 }
 
-function prompt(message) {
+function prompt(message, defaultValue) {
   return new Promise((resolve) => {
     const rl = readline.createInterface({
       input: process.stdin,
@@ -89,7 +90,7 @@ function prompt(message) {
 
     rl.question(message, (answer) => {
       rl.close();
-      resolve(answer);
+      resolve(answer || defaultValue);
     });
   });
 }
