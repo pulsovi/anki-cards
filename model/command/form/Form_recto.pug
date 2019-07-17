@@ -1,6 +1,6 @@
-extends ../../hol_recto_layout
+extends ../../coding_recto_layout
+block prototype
+	|&gt; {{CommandName}} #[b …]_
 block question-content
-	h2.p <code>{{CommandName}}</code> form</h2>
-	|{{#Usage}}
-	.p {{Usage}}
-	|{{/Usage}}
+	.p Syntax
+	|{{#Usage}}#[.p {{Usage}}]{{/Usage}}
