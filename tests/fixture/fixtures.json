@@ -636,5 +636,24 @@
 		"face": "verso",
 		"platform": "mobile",
 		"ok": true
+	},
+	{
+		"card": "Forward",
+		"cid": "1539916930056",
+		"id": "1lvc0cjgjy6x5iea",
+		"locals": {
+			"Front": "Easy Window Switcher",
+			"Back": "switching between different windows&nbsp;of the same program as easy as <kbd>alt</kbd> + <kbd>`</kbd>",
+			"Comment": "de&nbsp;NeoSmart Technologies",
+			"Tags": " software "
+		},
+		"note": "Basic (cs_cards) #",
+		"ord": 0,
+		"type": 0,
+		"title": "kbd display",
+		"description": "Les balises kbd (touches de clavier) doivent s'afficher correctement",
+		"face": "verso",
+		"platform": "mobile",
+		"ok": true
 	}
 ]
