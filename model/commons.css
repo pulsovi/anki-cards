@@ -23,14 +23,14 @@ body {
 
 code {
   background-color: #ccc;
-  color: brown;
+  color: #a52a2a;
   padding: 0 .5em;
   white-space: nowrap;
 }
 
 footer {
-  background-color: darkgray;
-  color: white;
+  background-color: #a9a9a9;
+  color: #fff;
   font-size: .5em;
   padding: 2em 0;
 }
@@ -47,7 +47,7 @@ i {
   font-style: normal;
 }
 
-i.proto-indent, .indent {
+.proto-indent, .indent {
   background: #555;
   border-left: solid 1px #888;
 }
@@ -60,7 +60,7 @@ kbd {
   background-color: #ddd;
   border: solid 2px #aaa;
   border-radius: 5px;
-  color: black;
+  color: #000;
   display: inline-block;
   font-size: .7em;
   padding: 2px 15px;
@@ -117,8 +117,8 @@ ul,
 }
 
 .card {
-  background-color: white;
-  color: black;
+  background-color: #fff;
+  color: #000;
   font-family: arial;
   margin: auto;
   max-width: 120vh;
@@ -131,14 +131,14 @@ ul,
 }
 
 .cloze {
-  color: blue;
+  color: #00f;
   font-weight: bold;
 }
 
 .error-unknown-block::before {
   background: #f00;
   color: #faa;
-  content: "error: block balise without class style (please revise the field content).";
+  content: "error: block balise without class style (please check the field content).";
   font-size: 0.5em;
   padding: 0 0.3em;
 }
@@ -165,14 +165,14 @@ ul,
 }
 
 .lang-he {
-  color: cyan;
+  color: #0ff;
 }
 
 .lang-title {
   background-color: #fff;
   background-color: rgba(128, 128, 128, 0.8);
   box-shadow: rgba(128, 128, 128, 0.8) 0 0 0.5em 0.3em;
-  color: black;
+  color: #000;
   color: rgba(0, 0, 0, 0.7);
   margin: 1em auto;
   width: 4em;
@@ -285,7 +285,7 @@ ul,
 }
 
 .tohe {
-  background-color: cyan;
+  background-color: #0ff;
 }
 
 .win {
