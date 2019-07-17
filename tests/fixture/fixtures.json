@@ -745,5 +745,23 @@
 		"face": "verso",
 		"platform": "mobile",
 		"ok": true
+	},
+	{
+		"card": "Command",
+		"cid": "1535554329396",
+		"id": "1lvc01isjy7m1xz6",
+		"locals": {
+			"CommandName": "git tag",
+			"Usage": "Create, list, delete or verify a tag object signed with GPG",
+			"Tags": " git "
+		},
+		"note": "command",
+		"ord": 1,
+		"type": 0,
+		"title": "command Command",
+		"description": "Apparence de la carte command>Command",
+		"face": "verso",
+		"platform": "mobile",
+		"ok": true
 	}
 ]
