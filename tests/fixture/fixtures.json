@@ -655,5 +655,27 @@
 		"face": "verso",
 		"platform": "mobile",
 		"ok": true
+	},
+	{
+		"card": "Usage",
+		"cid": "1563288650125",
+		"id": "1lvc08q4jy6xjnwu",
+		"locals": {
+			"Name": "__filename",
+			"ObjectType": "String",
+			"Parent": "module scope",
+			"Description": "<div>The file name of the current module.</div>",
+			"Comment": "<div>This is the current module file's absolute path with symlinks resolved.</div><div>For a main program this is not necessarily the same as the file name used in the command line.</div>",
+			"Syntax": "__filename",
+			"Tags": " node.js "
+		},
+		"note": "language::object",
+		"ord": 0,
+		"type": 0,
+		"title": "Trailing block balise",
+		"description": "Un message d'erreur doit s'afficher pour indiquer qu'un block sans style est défini dans un champ.",
+		"face": "verso",
+		"platform": "mobile",
+		"ok": true
 	}
 ]
