@@ -5,6 +5,7 @@ window.setImmediate = window.setImmediate || function(cb) {
 var isInline = function IIFE() {
   var inlineList = [
     'inline',
+    'inline-block',
     'table',
   ];
   return function isInline(element) {
