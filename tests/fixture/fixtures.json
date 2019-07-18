@@ -863,5 +863,32 @@
 		"face": "verso",
 		"platform": "mobile",
 		"ok": true
+	},
+	{
+		"card": "usage",
+		"cid": "1563379117416",
+		"id": "1lvc07lsjy8md16e",
+		"locals": {
+			"MethodName": "setViewport",
+			"ClassName": "(Page)",
+			"Usage": "will resize the page.",
+			"Description": "In the case of multiple pages in a single browser, each page can have its own viewport size.\n\npage.setViewport will resize the page. A lot of websites don't expect phones to change size, so you should set the viewport before navigating to the page.\n<aside><strong>NOTE</strong> in certain cases, setting viewport will reload the page in order to set the isMobile or hasTouch properties.</aside>",
+			"ReturnType": "Promise",
+			"Param1Name": "viewport",
+			"Param1Type": "Object",
+			"Param1Desc": "set of viewport properties",
+			"Tags": " puppeteer "
+		},
+		"note": "language::function",
+		"ord": 0,
+		"type": 0,
+		"title": "Nested aside",
+		"description": "L'aside imbriqué doit avoir une indentation minimale et aucune marge ou padding supplémentaires",
+		"face": "verso",
+		"platform": "mobile",
+		"ok": true,
+		"screenshot": {
+			"fullPage": true
+		}
 	}
 ]
