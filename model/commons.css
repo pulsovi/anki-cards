@@ -12,6 +12,11 @@ aside {
   text-align: justify;
 }
 
+aside>aside {
+  margin: 0 !important;
+  padding: 0.5em 0 0 0.5em !important;
+}
+
 aside pre {
   margin-bottom: 1em;
   margin-top: 1em;
