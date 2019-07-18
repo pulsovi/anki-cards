@@ -252,6 +252,10 @@ ul,
   padding-bottom: 1em;
 }
 
+.no-break {
+  white-space: nowrap;
+}
+
 .outline {
   border: solid 0.1em;
   border-radius: 0.5em;
