@@ -846,5 +846,22 @@
 		"face": "verso",
 		"platform": "mobile",
 		"ok": true
+	},
+	{
+		"card": "Precedent",
+		"cid": "1563183213750",
+		"id": "1lvc075wjy8loeoa",
+		"locals": {
+			"contextRef": "chass.michnah.beitsa.5",
+			"Tags": ""
+		},
+		"note": "Limoud::prakim",
+		"ord": 3,
+		"type": 0,
+		"title": "Padding top",
+		"description": "La réponse doit être précédée d'un padding de 1em",
+		"face": "verso",
+		"platform": "mobile",
+		"ok": true
 	}
 ]
