@@ -829,5 +829,22 @@
 		"face": "verso",
 		"platform": "mobile",
 		"ok": true
+	},
+	{
+		"card": "Nom",
+		"cid": "1547637709465",
+		"id": "1lvc07swjy8kif8p",
+		"locals": {
+			"contextRef": "chass.michnah.yebamot.4",
+			"Tags": ""
+		},
+		"note": "Limoud::prakim",
+		"ord": 0,
+		"type": 0,
+		"title": "Prakim Nom",
+		"description": "La liste des noms des Prakim précédents et suivants doit s'afficher",
+		"face": "verso",
+		"platform": "mobile",
+		"ok": true
 	}
 ]
