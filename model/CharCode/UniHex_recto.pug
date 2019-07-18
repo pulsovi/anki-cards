@@ -1,0 +1,5 @@
+extends charcode_recto_layout
+block variables
+	- var condition = "UnicodeHex";
+block question-content
+	.p Unicode #[b HEX] value of #[i.outline.outline-red {{Name}}] {{#Raw}}(#[code {{Raw}}]){{/Raw}}

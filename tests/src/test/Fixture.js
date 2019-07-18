@@ -104,6 +104,8 @@ class Fixture {
   }
 
   getRaw(version) {
+    if(!this.note.templateNames.find(name=>name.indexOf(this.card)===0))
+      throw new ReferenceError(`Carte ${this.card} introuvable.`);
     return {
       recto: this.parse(this.note.template[this.card + '_recto'][version], 'recto'),
       verso: this.parse(this.note.template[this.card + '_verso'][version], 'verso'),
