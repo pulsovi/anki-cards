@@ -90,7 +90,7 @@ function prompt(message, defaultValue) {
 
     rl.question(message, (answer) => {
       rl.close();
-      resolve(answer || defaultValue);
+      resolve(answer || defaultValue || '');
     });
   });
 }
