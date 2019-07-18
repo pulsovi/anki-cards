@@ -1,7 +1,9 @@
 extends ../kodech_verso_layout.pug
 include context.pug
 block response-content
-	.p(context-hide="{{contextRef}}.previousSibling") זה הפרק הראשון של המסכת
+	.p(context-hide="{{contextRef}}.previousSibling")
+		|זה הפרק הראשון של המסכת
 		+context(3,3,0)
-	.p(context-show="{{contextRef}}.previousSibling") #[i(context-data="{{contextRef}}.previousSibling.title")]
+	.p(context-show="{{contextRef}}.previousSibling")
+		i(context-data="{{contextRef}}.previousSibling.title")
 		+context(3,3,-1)

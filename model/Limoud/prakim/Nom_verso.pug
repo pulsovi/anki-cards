@@ -1,5 +1,6 @@
 extends ../kodech_verso_layout.pug
 include context.pug
 block response-content
-	.p(context-data="{{contextRef}}.title")
+	.p
+		i(context-data="{{contextRef}}.title")
 		+context(3,3,0)

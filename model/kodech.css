@@ -149,6 +149,7 @@ ul ul, ul ol, ol ul, ol ol {
 }
 
 .parent .title {
+  color: #185d1f;
   margin: 0.5em;
 }
 
@@ -166,7 +167,7 @@ ul ul, ul ol, ol ul, ol ol {
 
 .resp {
   background-color: #3d9946;
-  color: #fff;
+  color: #8bcb91;
 }
 
 .resp .p .cloze {
@@ -199,14 +200,17 @@ ul ul, ul ol, ol ul, ol ol {
   padding: 0.5em 1em;
 }
 
-.sibling {
-  background: #185d1f;
-}
-
 .sibling, .itself {
   margin: 0.1em;
-  padding: 0 0.5em;
+  padding: 0 0.3em;
   text-align: right;
+}
+
+.sibling {
+  /* MUST to be after '.sibling, .itself' to override padding-bottom */
+  background: #185d1f;
+  color: #8bcb91;
+  padding-bottom: 0.25em;
 }
 
 .sic {
