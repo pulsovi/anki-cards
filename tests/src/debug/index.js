@@ -22,18 +22,21 @@ main()
     Fixture.close();
   });
 
+var page = null;
+var fixture = null;
+var version = null;
 
 async function main() {
   var cid = process.argv[2];
   var options = await createFixtureFromCid(cid);
-  var fixture = new Fixture(options);
-  var version = await prompt('version ? anki/pug (pug): ');
-  version = version || 'pug';
+  fixture = new Fixture(options);
+  version = await prompt('version ? anki/pug (pug): ', 'pug');
   var html = await fixture.html(version);
   var browser = await puppeteer.launch({ headless: false });
-  var page = await browser.newPage();
+  page = await browser.newPage();
   await page.setViewport({ height: 560, width: 360 });
   await page.setContent(html);
+  watch(fixture, version);
 }
 
 async function createFixtureFromCid(cid) {
@@ -63,7 +66,29 @@ function prompt(message, defaultValue) {
 
     rl.question(message, (answer) => {
       rl.close();
-      resolve(answer || defaultValue);
+      resolve(answer || defaultValue || '');
     });
   });
+}
+
+async function reload(){
+  fixture.note.reload();
+  page.setContent(await fixture.html(version));
+}
+
+function watch(fixture, version){
+  var filesToWatch = [];
+  if(version === 'pug'){
+    filesToWatch.push(fixture.note.template[fixture.card + '_recto'].pugFile);
+    filesToWatch.push(fixture.note.template['style.css'].pugFile);
+    if(fixture.face === 'verso')
+      filesToWatch.push(fixture.note.template[fixture.card + '_verso'].pugFile);
+  } else {
+    filesToWatch.push(fixture.note.template[fixture.card + '_recto'].fullname);
+    filesToWatch.push(fixture.note.template['style.css'].fullname);
+    if(fixture.face === 'verso')
+      filesToWatch.push(fixture.note.template[fixture.card + '_verso'].fullname);
+  }
+  filesToWatch.forEach(filename=>fs.watchFile(filename, reload));
+  page.on('close', _=>filesToWatch.forEach(filename=>fs.unwatchFile(filename)));
 }
