@@ -7,19 +7,38 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <style type="text/css">
   body {
+    display: grid;
+    grid-template-rows: 5em 1fr 2em;
+    height: 100%;
     text-align: center;
+  }
+
+  h3 {
+    background-color: #aeaeae;
+    color: #cbcbcb;
+    font-size: 1em;
+    grid-row: 3;
+    margin: 0.2em 0 0;
+    padding: 0.2em;
   }
 
   h4 {
     background: #808080;
     color: #aaa;
+    grid-row: 1;
     margin: 0 0 1px;
     padding: 0.5em;
   }
 
   header {
     display: grid;
+    grid-row: 1;
     grid-template-columns: 1fr 10fr 1fr .5fr;
+  }
+
+  html {
+    height: 100%;
+    overflow: hidden;
   }
 
   img {
@@ -61,8 +80,20 @@
   .content {
     column-gap: 1px;
     display: grid;
+    grid-row: 2;
     grid-template-columns: repeat(5, 1fr);
-    margin-bottom: 1em;
+    overflow: auto;
+  }
+
+  .img-block {
+    display: grid;
+    grid-template-rows: 3em 1fr repeat(3, 3em);
+  }
+
+  .img-block .img {
+    grid-row: 2;
+    margin-bottom: 0.5em;
+    overflow: auto;
   }
 
   .diff-ok {
@@ -76,6 +107,7 @@
   .header-title {
     background-color: #aeaeae;
     color: #cbcbcb;
+    font-size: 1.5rem;
     grid-column: 2;
     margin-bottom: 0;
     padding: 0.4em;
@@ -105,28 +137,28 @@
 <body>
   <header>
     <i id="base-ok" class="base-ok">{{ok}}</i>
-    <h3 class="header-title">{{description}}</h3>
+    <h1 class="header-title">{{description}}</h1>
     <i id="diff-ok" class="diff-ok">{{#diff}}false{{/diff}}{{^diff}}true{{/diff}}</i>
     <i id="close" class="close-btn">&times;</i>
   </header>
   <div class="content">
-    <div class="base">
+    <div class="img-block base">
       <h4>base</h4>
-      <img src="./base.png"></img>
-      <i id="set-base-ok" class="btn btn-block btn-success">it is OK</i>
+      <div class="img"><img src="./base.png"></img></div>
+      <i id="set-base-ok" class="btn btn-block btn-success">it's OK</i>
       <div class="btn-group btn-block">
-        <i id="viewJSON" class="btn btn-secondary">pqckqge.json</i>
+        <i id="viewJSON" class="btn btn-secondary">package.json</i>
         <i id="view-fixtures" class="btn btn-secondary">fixtures.json</i>
       </div>
     </div>
-    <div class="base-pug">
+    <div class="img-block base-pug">
       <h4>base-pug</h4>
-      <img src="./base-pug.png"></img>
+      <div class="img"><img src="./base-pug.png"></img></div>
       <p>{{diff.base-pug}}</p>
     </div>
-    <div class="pug">
+    <div class="img-block pug">
       <h4>pug</h4>
-      <img src="./pug.png"></img>
+      <div class="img"><img src="./pug.png"></img></div>
       <i id="pug-as-base" class="btn btn-block btn-primary">set as base image</i>
       <div class="btn-group btn-block">
         <i id="pug-template" class="btn btn-secondary">view the template</i>
@@ -140,14 +172,14 @@
         <i id="pug-css" class="btn btn-warning">CSS</i>
       </div>
     </div>
-    <div class="pug-anki">
+    <div class="img-block pug-anki">
       <h4>pug-anki</h4>
-      <img src="./pug-anki.png"></img>
+      <div class="img"><img src="./pug-anki.png"></img></div>
       <p>{{diff.pug-anki}}</p>
     </div>
-    <div class="anki">
+    <div class="img-block anki">
       <h4>anki</h4>
-      <img src="./anki.png"></img>
+      <div class="img"><img src="./anki.png"></img></div>
       <i id="anki-as-base" class="btn btn-block btn-primary">set as base image</i>
       <div class="btn-group btn-block">
         <i id="anki-template" class="btn btn-secondary">view the template</i>

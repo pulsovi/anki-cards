@@ -28,14 +28,14 @@ function mkdirpPromise(path) {
   });
 }
 
-async function shot(html, dest, viewport) {
+async function shot(html, viewport, screenshot) {
   const browser = await puppeteer;
   const page = await browser.newPage();
   await page.setViewport(viewport);
   await page.setContent(html);
-  await mkdirpPromise(path.dirname(dest));
-  await page.screenshot({ path: dest });
-  setImmediate(_=>page.close());
+  await mkdirpPromise(path.dirname(screenshot.path));
+  await page.screenshot(screenshot);
+  setImmediate(_ => page.close());
 }
 
 function getNote(noteName) {
@@ -96,7 +96,8 @@ class Fixture {
     this.directory = path.resolve(ROOT, 'tests/out', this.id);
     this.locals.Card = this.card;
     this.locals.Type = this.note.name;
-    this.viewport = options.viewport || getConfig(this.platform + '.viewport');
+    this.viewport = Object.assign(getConfig(this.platform + '.viewport'), options.viewport);
+    this.screenshot = options.screenshot || {};
     this.diffTemplate = promisify(fs.readFile)(path.join(__dirname, 'diff.html'), 'utf8');
 
     mkdirp.sync(this.directory);
@@ -149,8 +150,9 @@ class Fixture {
   async setVersion(version) {
     var html = await this.html(version);
     var dest = path.resolve(this.directory, version + '.png');
+    var screenshot = Object.assign(this.screenshot, { path: dest });
     await Promise.all([
-      shot(html, dest, this.viewport),
+      shot(html, this.viewport, screenshot),
       promisify(fs.writeFile)(path.resolve(this.directory, version + '.html'), html),
     ]);
     fs.writeFile(this.directory + '/' + version + '_recto_template.html', this.getRaw(version).recto, () => {});
@@ -170,9 +172,14 @@ class Fixture {
     var filename = path.join(this.directory, 'base.png');
     if (!await fileExist(filename)) return;
     var size = await sizeOf(filename);
-    if (size.width !== this.viewport.width || size.height !== this.viewport.height) {
+    if (
+      size.width !== this.viewport.width ||
+      size.height !== this.viewport.height &&
+      !this.screenshot.fullPage
+    ) {
       await promisify(fs.copyFile)(filename, filename + '.old');
-      await sharp(filename + '.old').resize(this.viewport.width, this.viewport.height).toFile(filename);
+      var height = this.screenshot.fullPage ? size.height : this.viewport.height;
+      await sharp(filename + '.old').resize(this.viewport.width, height).toFile(filename);
     }
   }
 
