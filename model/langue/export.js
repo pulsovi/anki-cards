@@ -17,6 +17,13 @@ const __ = {
   "he": "Hebreu",
 };
 
+const dir = {
+  "am": "rtl",
+  "en": "ltr",
+  "fr": "ltr",
+  "he": "rtl",
+};
+
 const outputList = [];
 const model = {
   "recto": pug.compileFile(path.resolve(__dirname, 'langue_recto.pug')),
@@ -31,7 +38,14 @@ Object.keys(langTo).forEach(function(from) {
   langTo[from].forEach(function(to) {
     Object.keys(model).forEach(function(face) {
       outputList.push({
-        content: model[face]({ from, to, fullFrom: __[from], fullTo: __[to] }),
+        content: model[face]({
+          dirFrom: dir[from],
+          dirTo: dir[to],
+          from,
+          fullFrom: __[from],
+          fullTo: __[to],
+          to,
+        }),
         name: 'out/' + [from, to, face].join('_') + '.html',
         pugFile: path.resolve(__dirname, 'langue_' + face + '.pug'),
       });
