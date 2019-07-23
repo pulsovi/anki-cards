@@ -252,7 +252,7 @@ ul,
   padding-bottom: 1em;
 }
 
-.no-break {
+.no-break, .nobreak {
   white-space: nowrap;
 }
 

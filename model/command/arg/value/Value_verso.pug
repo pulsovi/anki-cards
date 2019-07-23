@@ -1,6 +1,6 @@
-extends ../hol_verso_layout
+extends ../../../hol_verso_layout
 block response-content
-	.p #[code {{Arg}}={{Value}}]
+	.p #[pre {{Value}}]
 	|{{#Comment}}#[aside {{Comment}}]{{/Comment}}
 block response-after
 	|{{#Example}}#[pre {{Example}}]{{/Example}}
