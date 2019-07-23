@@ -33,7 +33,7 @@
 	},
 	{
 		"id": "1lvc0ersjxvjyfj7",
-		"note": "language::objectProperty",
+		"note": "language::object::property",
 		"card": "Usage",
 		"locals": {
 			"Object": "note type structure",
@@ -100,7 +100,7 @@
 	},
 	{
 		"id": "1lvc0daojxvqr14j",
-		"note": "language::objectProperty",
+		"note": "language::object::property",
 		"card": "Type",
 		"locals": {
 			"Object": "Application",
@@ -169,7 +169,7 @@
 	},
 	{
 		"id": "1lvc02l4jxyo0uj2",
-		"note": "language::objectProperty",
+		"note": "language::object::property",
 		"card": "Usage",
 		"locals": {
 			"Object": "template (card) structure",
@@ -713,7 +713,7 @@
 			"Comment": "The screenshot type will be inferred from file extension. If path is a relative path, then it is resolved relative to current working directory. If no path is provided, the image won't be saved to the disk.<br>",
 			"Tags": " puppeteer "
 		},
-		"note": "language::function::parameterProperty",
+		"note": "language::function::parameter::property",
 		"ord": 0,
 		"type": 0,
 		"title": "Parameter property Usage",
@@ -737,7 +737,7 @@
 			"Comment": "The screenshot type will be inferred from file extension. If path is a relative path, then it is resolved relative to current working directory. If no path is provided, the image won't be saved to the disk.<br>",
 			"Tags": " puppeteer "
 		},
-		"note": "language::function::parameterProperty",
+		"note": "language::function::parameter::property",
 		"ord": 0,
 		"type": 0,
 		"title": "Parameter property Name",
@@ -779,7 +779,7 @@
 			"Comment": "The screenshot type will be inferred from file extension. If path is a relative path, then it is resolved relative to current working directory. If no path is provided, the image won't be saved to the disk.<br>",
 			"Tags": " puppeteer "
 		},
-		"note": "language::function::parameterProperty",
+		"note": "language::function::parameter::property",
 		"type": 0,
 		"title": "Parameter property Type",
 		"description": "Apparence de la carte Parameter property Type",
@@ -802,7 +802,7 @@
 			"Comment": "The screenshot type will be inferred from file extension. If path is a relative path, then it is resolved relative to current working directory. If no path is provided, the image won't be saved to the disk.<br>",
 			"Tags": " puppeteer "
 		},
-		"note": "language::function::parameterProperty",
+		"note": "language::function::parameter::property",
 		"ord": 0,
 		"type": 0,
 		"title": "Parameter property Default",
