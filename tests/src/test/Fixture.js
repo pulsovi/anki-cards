@@ -93,14 +93,14 @@ class Fixture {
     this.title = options.title;
     this.type = options.type;
 
-    this.directory = path.resolve(ROOT, 'tests/out', this.id);
+    if(this.id) this.directory = path.resolve(ROOT, 'tests/out', this.id);
     this.locals.Card = this.card;
     this.locals.Type = this.note.name;
     this.viewport = Object.assign(getConfig(this.platform + '.viewport'), options.viewport);
     this.screenshot = options.screenshot || {};
     this.diffTemplate = promisify(fs.readFile)(path.join(__dirname, 'diff.html'), 'utf8');
 
-    mkdirp.sync(this.directory);
+    if(this.directory) mkdirp.sync(this.directory);
   }
 
   getRaw(version) {
