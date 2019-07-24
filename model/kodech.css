@@ -71,6 +71,10 @@ section .p {
   padding: 0;
 }
 
+section .sic {
+  border-radius: unset;
+}
+
 ul, ol {
   display: table;
   margin: 0 auto;
@@ -219,11 +223,10 @@ ul ul, ul ol, ol ul, ol ol {
 
 .sic {
   background-color: #f5deb3;
-  color: #774508;
-  padding: 0.5em;
   border-radius: 1em;
-  font-size: 0.8em;
+  color: #774508;
   font-weight: normal;
+  padding: 0.5em;
 }
 
 .sic b {

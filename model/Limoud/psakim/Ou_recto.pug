@@ -3,7 +3,6 @@ block variables
 	- var condition = "Ou";
 block question-content
 	|{{#Auteur}}#[h1.subheader {{Auteur}}]{{/Auteur}}
-	h2.p איפא
-	.p אמר
-		|{{#Psak}} {{Psak}}{{/Psak}}
+	.p איפא אמר
+	.sic {{#Psak}} {{Psak}}{{/Psak}}
 		|{{^Psak}} {{Question}} =&gt; {{Reponse}}{{/Psak}}
