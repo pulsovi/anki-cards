@@ -59,6 +59,10 @@ i {
   font-style: normal;
 }
 
+img {
+  max-width: 100%;
+}
+
 section aside, section .p {
   margin: 1em;
 }
@@ -214,9 +218,16 @@ ul ul, ul ol, ol ul, ol ol {
 }
 
 .sic {
-  color: #00f;
+  background-color: #f5deb3;
+  color: #774508;
+  padding: 0.5em;
+  border-radius: 1em;
   font-size: 0.8em;
   font-weight: normal;
+}
+
+.sic b {
+  color: #ad4800;
 }
 
 .tzurah img {
