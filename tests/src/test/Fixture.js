@@ -157,9 +157,9 @@ class Fixture {
       shot(html, this.viewport, screenshot),
       promisify(fs.writeFile)(path.resolve(this.directory, version + '.html'), html),
     ]);
-    fs.writeFile(this.directory + '/' + version + '_recto_template.html', this.getRaw(version).recto, () => {});
-    fs.writeFile(this.directory + '/' + version + '_verso_template.html', this.getRaw(version).verso, () => {});
-    fs.writeFile(this.directory + '/' + version + '_css_template.html', this.getRaw(version).css, () => {});
+    fs.writeFile(this.directory + '/' + version + '_recto_template.html', this.recto[version].content, () => {});
+    fs.writeFile(this.directory + '/' + version + '_verso_template.html', this.verso[version].content, () => {});
+    fs.writeFile(this.directory + '/' + version + '_css_template.html', this.css[version].content, () => {});
   }
 
   async setPug() {
