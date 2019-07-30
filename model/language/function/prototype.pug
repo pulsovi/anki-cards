@@ -3,5 +3,5 @@
 pre
 	|{{#ReturnType}}#[i.typ {{ReturnType}} ]{{/ReturnType}}#[i.func {{MethodName}} ](
 	while j <= max
-		|{{#Param#{j}Name}} #[br.proto-indent]#[i.proto-indent   ]{{#Param#{j}IsOptional}}[{{/Param#{j}IsOptional}}{{#Param#{j}Type}}#[i.typ {{Param#{j}Type}} ]{{/Param#{j}Type}}#[i.nam {{Param#{j}Name}}]{{#Param#{j}Default}}#[i.oper =]{{Param#{j}Default}}{{/Param#{j}Default}}{{#Param#{j}IsOptional}}]{{/Param#{j}IsOptional}}{{/Param#{j}Name}}{{#Param#{++j}Name}},{{/Param#{j}Name}}
+		|{{#Param#{j}Name}} #[br.proto-indent]#[i.proto-indent   ]{{#Param#{j}IsOptional}}[{{/Param#{j}IsOptional}}{{#Param#{j}Type}}#[i.typ {{Param#{j}Type}} ]{{/Param#{j}Type}}#[i.nam {{Param#{j}Name}}]{{#Param#{j}Default}}#[i.oper =]#[i.syntax-color {{Param#{j}Default}}]{{/Param#{j}Default}}{{#Param#{j}IsOptional}}]{{/Param#{j}IsOptional}}{{/Param#{j}Name}}{{#Param#{++j}Name}},{{/Param#{j}Name}}
 	|  #[br.proto-indent])

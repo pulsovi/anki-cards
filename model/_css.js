@@ -90,8 +90,23 @@ function blockInP() {
   });
 }
 
+function colorize(){
+  var elems = Array.from(document.getElementsByClassName('syntax-color'));
+  elems.forEach(syntaxColorize);
+}
+
+function syntaxColorize(element){
+  var content = element.innerText;
+  if(/^(-?[0-9.]+|(t|T)rue|(f|F)alse|null|None)$/.test(content)){
+    element.classList.add('mk-violet');
+  } else if (/^("|').*\1$/.test(content)){
+    element.classList.add('mk-yellow');
+  }
+}
+
 function main() {
   setImmediate(blockInP);
+  setImmediate(colorize);
 }
 
 main();

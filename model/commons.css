@@ -207,7 +207,7 @@ ul,
   color: #f92672;
 }
 
-.mk-violet, .num, .number {
+.mk-violet, .mk-number, .mk-boolean, .num, .number {
   color: #ae81ff;
 }
 
