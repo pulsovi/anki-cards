@@ -47,6 +47,9 @@ class DiffManager {
       }
       if (this.quit === true) return;
     }
+    if(this.manageModel === null){
+      console.log(chalk.green(model.name));
+    }
   }
 
   async processTemplate(template) {
