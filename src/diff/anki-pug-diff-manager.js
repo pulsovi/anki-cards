@@ -58,7 +58,7 @@ class DiffManager {
     if (this.manageModel === false || this.quit === true) return;
 
     if (this.listOnly === true) {
-      console.log(chalk.blueBright(this.currentTemplate.name));
+      console.log(chalk.blueBright('  ' + template.name));
       return;
     }
 
