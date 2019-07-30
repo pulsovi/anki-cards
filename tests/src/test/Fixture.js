@@ -16,7 +16,7 @@ const sizeOf = promisify(require('image-size'));
 const AnkiManager = new(require(path.resolve(__dirname, 'AnkiManager')))();
 
 const ROOT = process.env.ANKI_PUG_ROOT;
-const Note = require(path.resolve(ROOT, 'src/diff/anki-pug-note'));
+const Model = require(path.resolve(ROOT, 'src/diff/anki-pug-model'));
 
 // model types
 const MODEL_STD = 0;
@@ -24,7 +24,7 @@ const MODEL_CLOZE = 1;
 
 function mkdirpPromise(path) {
   return new Promise(function(resolve, reject) {
-    mkdirp(path, undefined, (a) => resolve(a));
+    mkdirp(path, undefined, resolve);
   });
 }
 
@@ -38,14 +38,9 @@ async function shot(html, viewport, screenshot) {
   setImmediate(_ => page.close());
 }
 
-function getNote(noteName) {
-  var fullname = path.resolve(ROOT, 'model', noteName.replace(/:/g, path.sep), 'export.js');
-  var maker = {
-    fullname,
-    name: path.basename(fullname),
-    path: path.dirname(fullname)
-  };
-  return new Note(maker, noteName);
+function getModel(modelName) {
+  var fullname = path.resolve(ROOT, 'model', modelName.replace(/:/g, path.sep), 'export.js');
+  return new Model(fullname, modelName);
 }
 
 function fileExist(filename) {
@@ -86,46 +81,51 @@ class Fixture {
     this.face = options.face;
     this.id = options.id;
     this.locals = options.locals;
-    this.note = getNote(options.note).parse();
+    this.model = getModel(options.model);
     this.ok = options.ok;
     this.ord = options.ord;
     this.platform = options.platform;
     this.title = options.title;
     this.type = options.type;
 
-    if(this.id) this.directory = path.resolve(ROOT, 'tests/out', this.id);
+    if (this.id) this.directory = path.resolve(ROOT, 'tests/out', this.id);
     this.locals.Card = this.card;
-    this.locals.Type = this.note.name;
+    this.locals.Type = this.model.name;
     this.viewport = Object.assign(getConfig(this.platform + '.viewport'), options.viewport);
     this.screenshot = options.screenshot || {};
     this.diffTemplate = promisify(fs.readFile)(path.join(__dirname, 'diff.html'), 'utf8');
 
-    if(this.directory) mkdirp.sync(this.directory);
+    if (this.directory) mkdirp.sync(this.directory);
+    this.ready = this.getRaw();
   }
 
-  getRaw(version) {
-    if(!this.note.templateNames.find(name=>name.indexOf(this.card)===0))
-      throw new ReferenceError(`Carte ${this.card} introuvable.`);
-    return {
-      recto: this.parse(this.note.template[this.card + '_recto'][version], 'recto'),
-      verso: this.parse(this.note.template[this.card + '_verso'][version], 'verso'),
-      css: this.note.template['style.css'][version]
-    };
+  async getRaw() {
+    await Promise.all([
+      this.model.getTemplate(this.card + '_recto').assign(this, 'recto'),
+      this.model.getTemplate(this.card + '_verso').assign(this, 'verso'),
+      this.model.getTemplate('style').assign(this, 'css')
+    ]);
+    ['recto', 'verso'].forEach(
+      f => ['pug', 'anki'].forEach(
+        v => this[f][v].content = this.parse(this[f][v].content, f)
+      )
+    );
+    return this;
   }
 
-  getRecto(version) {
-    var template = this.getRaw(version).recto;
+  async getRecto(version) {
+    await this.ready;
+    var template = this.recto[version].content;
     return mustache.render(
       template,
       this.locals
     );
   }
 
-  getVerso(version) {
-    var template = this.getRaw(version).verso;
+  async getVerso(version) {
     var locals = Object.assign({}, this.locals);
-    locals.FrontSide = this.getRecto(version);
-
+    locals.FrontSide = await this.getRecto(version);
+    var template = this.verso[version].content;
     return mustache.render(
       template,
       locals
@@ -211,9 +211,9 @@ class Fixture {
     this.htmlDiffFile = path.join(this.directory, 'index.html');
     var locals = this.asRaw({
       __dirname,
-      pugRectoFile: this.note.template[`${this.card}_recto`].pugFile.replace(/\\/g, '\\\\'),
-      pugVersoFile: this.note.template[`${this.card}_verso`].pugFile.replace(/\\/g, '\\\\'),
-      cssFile: this.note.template['style.css'].pugFile.replace(/\\/g, '\\\\'),
+      pugRectoFile: this.recto.pug.file.replace(/\\/g, '\\\\'),
+      pugVersoFile: this.verso.pug.file.replace(/\\/g, '\\\\'),
+      cssFile: this.css.pug.file.replace(/\\/g, '\\\\'),
     });
     locals.directory = locals.directory.replace(/\\/g, '\\\\');
     var html = mustache.render(await this.diffTemplate, locals);
@@ -231,9 +231,9 @@ class Fixture {
     var template = await promisify(fs.readFile)(
       path.resolve(__dirname, this.platform + '.mustache.html'), { encoding: 'utf8' }
     );
-    var body = this.face === 'recto' ? this.getRecto(version) : this.getVerso(version);
+    var body = await (this.face === 'recto' ? this.getRecto(version) : this.getVerso(version));
     var locals = {
-      css: this.note.template['style.css'][version],
+      css: this.css[version].content,
       body,
       port: await AnkiManager.getPort()
     };
@@ -247,7 +247,7 @@ class Fixture {
     ].forEach(_ => {
       raw[_] = this[_];
     });
-    raw.note = this.note.name;
+    raw.model = this.model.name;
     return raw;
   }
 

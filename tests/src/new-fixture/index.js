@@ -56,7 +56,7 @@ async function createFixtureFromCid(cid) {
   fixture.id = uniqid();
   fixture.locals = cleanLocals(await AnkiDbManager.getNoteFields(nid));
   fixture.locals.Tags = await AnkiDbManager.getNoteTags(nid);
-  fixture.note = await AnkiDbManager.getModelName(mid);
+  fixture.model = await AnkiDbManager.getModelName(mid);
   fixture.ord = await AnkiDbManager.getCardOrd(cid);
   fixture.type = await AnkiDbManager.getModelType(mid);
 

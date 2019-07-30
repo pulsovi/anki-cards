@@ -1,36 +1,58 @@
-//jshint esversion: 6
-// native dependancies
-const fs = require('fs');
-const path = require('path');
-
-// local dependancies
-const promiseNoCallback = require('./_promise').noCallBack;
-
-const ROOT = process.env.ANKI_PUG_ROOT;
-
-function normalizeLineEnding(text) {
-  return text.replace(/\r\n/g, '\r').replace(/\r/g, '\n').replace(/\s*$/, '\n');
-}
-
-function touch(path) {
-  fs.closeSync(fs.openSync(path, 'a'));
-}
+// jshint esversion: 8
+const MustacheTemplate = require('./anki-pug-mustache-template');
+const FileManager = require('./file_manager');
+const chalk = require('chalk');
 
 class Template {
-  constructor(maker, rawTemplate, parent) {
-    this.fullname = path.resolve(maker.path, rawTemplate.name);
-    this.name = path.basename(this.fullname, '.html');
-    this.pugFile = rawTemplate.pugFile;
-    this.renderedPugPath = rawTemplate.actualPath || path.resolve(
-      ROOT, 'var/', parent.name.replace(/::/g, '/'), path.basename(this.fullname)
-    );
-    this.pug = normalizeLineEnding(rawTemplate.content);
-    this.parent = parent;
+  constructor(pugMakefile, name, model) {
+    this.parent = this.model = model;
+    this.name = name;
+    this.makefile = pugMakefile;
+    this.ready = this.parse();
   }
 
-  get anki() {
-    touch(this.fullname);
-    return normalizeLineEnding(fs.readFileSync(this.fullname, { encoding: 'utf8' }));
+  async parse() {
+    var templates;
+    delete require.cache[require.resolve(this.makefile)];
+    try {
+      templates = require(this.makefile);
+    } catch (e) {
+      if (e.filename)
+        return this.waitForReload(e.message, e.filename);
+      return this.waitForReload(e.message);
+    }
+    var template = templates.find(t => t.name === this.name);
+    if (!template)
+      return this.waitForReload(`Impossible de trouver le template ${this.name}.`);
+    Object.assign(this, template);
+    await this.check();
+    return this;
+  }
+
+  async waitForReload(message, ...files) {
+    if (!files.length) files.push(this.makefile);
+    console.log(chalk.bgRed.yellow(message, `\n${this.model.name} _ ${this.name}`));
+    delete require.cache[require.resolve(this.makefile)];
+    FileManager.open(files);
+    await FileManager.waitOnce(...files);
+    return this.parse();
+  }
+
+  async check() {
+    if (!this.pug || !this.pug.content || !this.pug.file || !this.pug.path) {
+      return await this.waitForReload(
+        'Le template doit contenir une propriété pug avec les éléments path, file et content'
+      );
+    }
+  }
+
+  async assign(object, child) {
+    await this.ready;
+    object[child] = {
+      name: this.name,
+      pug: Object.assign({}, this.pug),
+      anki: Object.assign({}, this.anki)
+    };
   }
 }
 

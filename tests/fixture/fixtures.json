@@ -2,7 +2,7 @@
 	{
 		"title": "question padding bottom",
 		"description": "le bloc de question doit avoir un padding en bas de 1em, attention au margin collapsing",
-		"note": "Basic",
+		"model": "Basic",
 		"card": "Card 1",
 		"face": "verso",
 		"type": 0,
@@ -18,7 +18,7 @@
 	{
 		"title": "question padding bottom 2",
 		"description": "le bloc de question doit avoir un padding en bas de 1em, attention au margin collapsing",
-		"note": "Basic",
+		"model": "Basic",
 		"card": "Card 1",
 		"face": "verso",
 		"type": 0,
@@ -33,7 +33,7 @@
 	},
 	{
 		"id": "1lvc0ersjxvjyfj7",
-		"note": "language::object::property",
+		"model": "language::object::property",
 		"card": "Usage",
 		"locals": {
 			"Object": "note type structure",
@@ -52,7 +52,7 @@
 	},
 	{
 		"id": "1lvc0au4jxvm4nit",
-		"note": "language::function",
+		"model": "language::function",
 		"card": "usage",
 		"locals": {
 			"MethodName": "REPT",
@@ -76,7 +76,7 @@
 	},
 	{
 		"id": "1lvc0d4ojxx56qkz",
-		"note": "language::function",
+		"model": "language::function",
 		"card": "usage",
 		"locals": {
 			"MethodName": "REPT",
@@ -100,7 +100,7 @@
 	},
 	{
 		"id": "1lvc0daojxvqr14j",
-		"note": "language::object::property",
+		"model": "language::object::property",
 		"card": "Type",
 		"locals": {
 			"Object": "Application",
@@ -121,7 +121,7 @@
 	},
 	{
 		"id": "1lvc07dkjxx28ats",
-		"note": "Basic",
+		"model": "Basic",
 		"card": "Card 1",
 		"locals": {
 			"Front": "<span id=\"test\">Test</span>\n<pre id=\"out\">12px</pre>\n<script>\nvar out = document.getElementById('out');\nvar test = document.getElementById('test');\nsetInterval(function(){\n  out.innerText = getComputedStyle(out)['font-size'];\n}, 200);\n</script>",
@@ -136,7 +136,7 @@
 	},
 	{
 		"id": "1lvc06w0jxycs7ri",
-		"note": "Basic",
+		"model": "Basic",
 		"card": "Card 1",
 		"locals": {
 			"Front": "<pre id=\"out\">12px</pre>\n<script>\nvar out = document.getElementById('out');\nvar test = document.getElementById('test');\nsetInterval(function(){\n  out.innerText = getComputedStyle(test)['font-size'];\n}, 200);\n</script>",
@@ -151,7 +151,7 @@
 	},
 	{
 		"id": "1lvc089cjxygxteu",
-		"note": "language::object",
+		"model": "language::object",
 		"card": "Type",
 		"locals": {
 			"Name": "models",
@@ -169,7 +169,7 @@
 	},
 	{
 		"id": "1lvc02l4jxyo0uj2",
-		"note": "language::object::property",
+		"model": "language::object::property",
 		"card": "Usage",
 		"locals": {
 			"Object": "template (card) structure",
@@ -187,7 +187,7 @@
 	},
 	{
 		"id": "1lvc05dgjxytzavo",
-		"note": "language::function",
+		"model": "language::function",
 		"card": "3def",
 		"locals": {
 			"MethodName": "writeFileSync",
@@ -216,7 +216,7 @@
 	},
 	{
 		"id": "1lvc09a4jxyuorii",
-		"note": "language::function",
+		"model": "language::function",
 		"card": "retTyp",
 		"locals": {
 			"MethodName": "SUBSTITUTE",
@@ -248,7 +248,7 @@
 	},
 	{
 		"id": "1lvc057sjxyux00d",
-		"note": "language::function",
+		"model": "language::function",
 		"card": "retContent",
 		"locals": {
 			"MethodName": "stop",
@@ -281,7 +281,7 @@
 	},
 	{
 		"id": "1lvc022kjxyvckrx",
-		"note": "language::function",
+		"model": "language::function",
 		"card": "nom",
 		"locals": {
 			"MethodName": "cwd",
@@ -299,7 +299,7 @@
 	},
 	{
 		"id": "1lvc07h0jxz4c32w",
-		"note": "language::function",
+		"model": "language::function",
 		"card": "nom",
 		"locals": {
 			"MethodName": "Resize",
@@ -326,7 +326,7 @@
 	},
 	{
 		"id": "1lvc0c0ojxz67ylr",
-		"note": "language::function",
+		"model": "language::function",
 		"card": "nom",
 		"locals": {
 			"MethodName": "header_remove",
@@ -348,7 +348,7 @@
 	},
 	{
 		"id": "1lvc0b9ojxzrc3ey",
-		"note": "Limoud::Trous",
+		"model": "Limoud::Trous",
 		"card": "Texte à trous",
 		"ord": 0,
 		"locals": {
@@ -375,7 +375,7 @@
 			"Pourquoi": "ספק אם נתקדשה מאונס פחד וספק אם אונס פחד מקרי אונס ובכל ספק ספיקא להחמיר הרי היא מקודשת ודאית",
 			"Tags": " הלכות_קידושין "
 		},
-		"note": "Limoud::psakim",
+		"model": "Limoud::psakim",
 		"ord": 0,
 		"type": 0,
 		"title": "Why color",
@@ -392,7 +392,7 @@
 			"contextRef": "chass.michnah.beitsa.5",
 			"Tags": ""
 		},
-		"note": "Limoud::prakim",
+		"model": "Limoud::prakim",
 		"ord": 2,
 		"type": 0,
 		"title": "Next perek",
@@ -435,7 +435,7 @@
 			"Param5Desc": "The optional password to use for authentication purposes; by default, this is the null value.",
 			"Tags": " javascript "
 		},
-		"note": "language::function",
+		"model": "language::function",
 		"ord": 19,
 		"type": 0,
 		"title": "Normal padding",
@@ -466,7 +466,7 @@
 			"Param3IsOptional": "y",
 			"Tags": " php "
 		},
-		"note": "language::function",
+		"model": "language::function",
 		"ord": 10,
 		"type": 0,
 		"title": "Space between blocks",
@@ -512,7 +512,7 @@
 			"Param5Desc": "<div>Whether output is buffered is usually determined by file, but if the flush keyword argument is true, the stream is forcibly flushed.</div><div><br></div><div>Changed in version 3.3: Added the flush keyword argument.</div>",
 			"Tags": " python "
 		},
-		"note": "language::function",
+		"model": "language::function",
 		"ord": 14,
 		"type": 0,
 		"title": ".p padding",
@@ -550,7 +550,7 @@
 			"Param4Desc": "A function to call once the animation is complete, called once per matched element.",
 			"Tags": " jquery "
 		},
-		"note": "language::function",
+		"model": "language::function",
 		"ord": 3,
 		"type": 0,
 		"title": "Clean prototype",
@@ -571,7 +571,7 @@
 			"Comment": "<div>Usually the command automatically creates a sequence of commits. This flag applies the changes necessary to cherry-pick each named commit to your working tree and the index, without making any commit.</div><div>In addition, when this option is used, your index does not have to match the HEAD commit. The cherry-pick is done against the beginning state of your index.</div><div>This is useful when cherry-picking more than one commits' effect to your index in a row.<pre>git cherry-pick [--edit] <b>[-n]</b> [-m parent-number] [-s] [-x] [--ff]&nbsp;[-S[&lt;keyid&gt;]] &lt;commit&gt;…​</pre></div>",
 			"Tags": " git "
 		},
-		"note": "command::arg",
+		"model": "command::arg",
 		"ord": 4,
 		"type": 0,
 		"title": "Two asides",
@@ -589,7 +589,7 @@
 			"Context": "א וַיֵּאָסְפוּ כָל הָעָם כְּאִישׁ אֶחָד אֶל הָרְחוֹב אֲשֶׁר לִפְנֵי שַׁעַר הַמָּיִם וַיֹּאמְרוּ לְעֶזְרָא הַסֹּפֵר לְהָבִיא אֶת סֵפֶר תּוֹרַת מֹשֶׁה אֲשֶׁר צִוָּה יְהוָה אֶת יִשְׂרָאֵל. ב וַיָּבִיא עֶזְרָא הַכֹּהֵן אֶת הַתּוֹרָה לִפְנֵי הַקָּהָל מֵאִישׁ וְעַד אִשָּׁה וְכֹל מֵבִין לִשְׁמֹעַ בְּיוֹם אֶחָד לַחֹדֶשׁ הַשְּׁבִיעִי. ג וַיִּקְרָא בוֹ לִפְנֵי הָרְחוֹב אֲשֶׁר לִפְנֵי שַׁעַר הַמַּיִם מִן הָאוֹר עַד מַחֲצִית הַיּוֹם נֶגֶד הָאֲנָשִׁים וְהַנָּשִׁים וְהַמְּבִינִים וְאָזְנֵי כָל הָעָם אֶל סֵפֶר הַתּוֹרָה. ד וַיַּעֲמֹד עֶזְרָא הַסֹּפֵר עַל מִגְדַּל עֵץ אֲשֶׁר עָשׂוּ לַדָּבָר וַיַּעֲמֹד אֶצְלוֹ מַתִּתְיָה וְשֶׁמַע וַעֲנָיָה וְאוּרִיָּה וְחִלְקִיָּה וּמַעֲשֵׂיָה עַל יְמִינוֹ וּמִשְּׂמֹאלוֹ פְּדָיָה וּמִישָׁאֵל וּמַלְכִּיָּה וְחָשֻׁם וְחַשְׁבַּדָּנָה זְכַרְיָה מְשֻׁלָּם. ה וַיִּפְתַּח עֶזְרָא הַסֵּפֶר לְעֵינֵי כָל הָעָם כִּי מֵעַל כָּל הָעָם הָיָה וּכְפִתְחוֹ עָמְדוּ כָל הָעָם. ו וַיְבָרֶךְ עֶזְרָא אֶת יְהוָה הָאֱלֹהִים הַגָּדוֹל וַיַּעֲנוּ כָל הָעָם אָמֵן אָמֵן בְּמֹעַל יְדֵיהֶם וַיִּקְּדוּ וַיִּשְׁתַּחֲוֻּ לַיהוָה אַפַּיִם אָרְצָה. ז וְיֵשׁוּעַ וּבָנִי וְשֵׁרֵבְיָה יָמִין עַקּוּב שַׁבְּתַי הוֹדִיָּה מַעֲשֵׂיָה קְלִיטָא עֲזַרְיָה יוֹזָבָד חָנָן פְּלָאיָה וְהַלְוִיִּם מְבִינִים אֶת הָעָם לַתּוֹרָה וְהָעָם עַל עָמְדָם. ח וַיִּקְרְאוּ בַסֵּפֶר בְּתוֹרַת הָאֱלֹהִים מְפֹרָשׁ וְשׂוֹם שֶׂכֶל וַיָּבִינוּ בַּמִּקְרָא. ט וַיֹּאמֶר נְחֶמְיָה הוּא הַתִּרְשָׁתָא וְעֶזְרָא הַכֹּהֵן הַסֹּפֵר וְהַלְוִיִּם הַמְּבִינִים אֶת הָעָם לְכָל הָעָם הַיּוֹם קָדֹשׁ הוּא לַיהוָה אֱלֹהֵיכֶם אַל תִּתְאַבְּלוּ וְאַל תִּבְכּוּ כִּי בוֹכִים כָּל הָעָם כְּשָׁמְעָם אֶת דִּבְרֵי הַתּוֹרָה. <b>י וַיֹּאמֶר לָהֶם לְכוּ אִכְלוּ מַשְׁמַנִּים וּשְׁתוּ מַמְתַקִּים וְשִׁלְחוּ מָנוֹת לְאֵין נָכוֹן לוֹ כִּי קָדוֹשׁ הַיּוֹם לַאֲדֹנֵינוּ וְאַל תֵּעָצֵבוּ כִּי חֶדְוַת יְהוָה הִיא מָעֻזְּכֶם.</b> יא וְהַלְוִיִּם מַחְשִׁים לְכָל הָעָם לֵאמֹר הַסּוּ כִּי הַיּוֹם קָדֹשׁ וְאַל תֵּעָצֵבוּ. יב וַיֵּלְכוּ כָל הָעָם לֶאֱכֹל וְלִשְׁתּוֹת וּלְשַׁלַּח מָנוֹת וְלַעֲשׂוֹת שִׂמְחָה גְדוֹלָה כִּי הֵבִינוּ בַּדְּבָרִים אֲשֶׁר הוֹדִיעוּ לָהֶם. יג וּבַיּוֹם הַשֵּׁנִי נֶאֶסְפוּ רָאשֵׁי הָאָבוֹת לְכָל הָעָם הַכֹּהֲנִים וְהַלְוִיִּם אֶל עֶזְרָא הַסֹּפֵר וּלְהַשְׂכִּיל אֶל דִּבְרֵי הַתּוֹרָה. יד וַיִּמְצְאוּ כָּתוּב בַּתּוֹרָה אֲשֶׁר צִוָּה יְהוָה בְּיַד מֹשֶׁה אֲשֶׁר יֵשְׁבוּ בְנֵי יִשְׂרָאֵל בַּסֻּכּוֹת בֶּחָג בַּחֹדֶשׁ הַשְּׁבִיעִי. טו וַאֲשֶׁר יַשְׁמִיעוּ וְיַעֲבִירוּ קוֹל בְּכָל עָרֵיהֶם וּבִירוּשָׁלַ‍ִם לֵאמֹר צְאוּ הָהָר וְהָבִיאוּ עֲלֵי זַיִת וַעֲלֵי עֵץ שֶׁמֶן וַעֲלֵי הֲדַס וַעֲלֵי תְמָרִים וַעֲלֵי עֵץ עָבֹת לַעֲשֹׂת סֻכֹּת כַּכָּתוּב. טז וַיֵּצְאוּ הָעָם וַיָּבִיאוּ וַיַּעֲשׂוּ לָהֶם סֻכּוֹת אִישׁ עַל גַּגּוֹ וּבְחַצְרֹתֵיהֶם וּבְחַצְרוֹת בֵּית הָאֱלֹהִים וּבִרְחוֹב שַׁעַר הַמַּיִם וּבִרְחוֹב שַׁעַר אֶפְרָיִם. יז וַיַּעֲשׂוּ כָל הַקָּהָל הַשָּׁבִים מִן הַשְּׁבִי סֻכּוֹת וַיֵּשְׁבוּ בַסֻּכּוֹת כִּי לֹא עָשׂוּ מִימֵי יֵשׁוּעַ בִּן נוּן כֵּן בְּנֵי יִשְׂרָאֵל עַד הַיּוֹם הַהוּא וַתְּהִי שִׂמְחָה גְּדוֹלָה מְאֹד. יח וַיִּקְרָא בְּסֵפֶר תּוֹרַת הָאֱלֹהִים יוֹם בְּיוֹם מִן הַיּוֹם הָרִאשׁוֹן עַד הַיּוֹם הָאַחֲרוֹן וַיַּעֲשׂוּ חָג שִׁבְעַת יָמִים וּבַיּוֹם הַשְּׁמִינִי עֲצֶרֶת כַּמִּשְׁפָּט.",
 			"Tags": " תנך::כתובים "
 		},
-		"note": "Limoud::Trous",
+		"model": "Limoud::Trous",
 		"ord": 2,
 		"type": 1,
 		"title": "Underline color",
@@ -607,7 +607,7 @@
 			"Context": "א וַיֵּאָסְפוּ כָל הָעָם כְּאִישׁ אֶחָד אֶל הָרְחוֹב אֲשֶׁר לִפְנֵי שַׁעַר הַמָּיִם וַיֹּאמְרוּ לְעֶזְרָא הַסֹּפֵר לְהָבִיא אֶת סֵפֶר תּוֹרַת מֹשֶׁה אֲשֶׁר צִוָּה יְהוָה אֶת יִשְׂרָאֵל. ב וַיָּבִיא עֶזְרָא הַכֹּהֵן אֶת הַתּוֹרָה לִפְנֵי הַקָּהָל מֵאִישׁ וְעַד אִשָּׁה וְכֹל מֵבִין לִשְׁמֹעַ בְּיוֹם אֶחָד לַחֹדֶשׁ הַשְּׁבִיעִי. ג וַיִּקְרָא בוֹ לִפְנֵי הָרְחוֹב אֲשֶׁר לִפְנֵי שַׁעַר הַמַּיִם מִן הָאוֹר עַד מַחֲצִית הַיּוֹם נֶגֶד הָאֲנָשִׁים וְהַנָּשִׁים וְהַמְּבִינִים וְאָזְנֵי כָל הָעָם אֶל סֵפֶר הַתּוֹרָה. ד וַיַּעֲמֹד עֶזְרָא הַסֹּפֵר עַל מִגְדַּל עֵץ אֲשֶׁר עָשׂוּ לַדָּבָר וַיַּעֲמֹד אֶצְלוֹ מַתִּתְיָה וְשֶׁמַע וַעֲנָיָה וְאוּרִיָּה וְחִלְקִיָּה וּמַעֲשֵׂיָה עַל יְמִינוֹ וּמִשְּׂמֹאלוֹ פְּדָיָה וּמִישָׁאֵל וּמַלְכִּיָּה וְחָשֻׁם וְחַשְׁבַּדָּנָה זְכַרְיָה מְשֻׁלָּם. ה וַיִּפְתַּח עֶזְרָא הַסֵּפֶר לְעֵינֵי כָל הָעָם כִּי מֵעַל כָּל הָעָם הָיָה וּכְפִתְחוֹ עָמְדוּ כָל הָעָם. ו וַיְבָרֶךְ עֶזְרָא אֶת יְהוָה הָאֱלֹהִים הַגָּדוֹל וַיַּעֲנוּ כָל הָעָם אָמֵן אָמֵן בְּמֹעַל יְדֵיהֶם וַיִּקְּדוּ וַיִּשְׁתַּחֲוֻּ לַיהוָה אַפַּיִם אָרְצָה. ז וְיֵשׁוּעַ וּבָנִי וְשֵׁרֵבְיָה יָמִין עַקּוּב שַׁבְּתַי הוֹדִיָּה מַעֲשֵׂיָה קְלִיטָא עֲזַרְיָה יוֹזָבָד חָנָן פְּלָאיָה וְהַלְוִיִּם מְבִינִים אֶת הָעָם לַתּוֹרָה וְהָעָם עַל עָמְדָם. ח וַיִּקְרְאוּ בַסֵּפֶר בְּתוֹרַת הָאֱלֹהִים מְפֹרָשׁ וְשׂוֹם שֶׂכֶל וַיָּבִינוּ בַּמִּקְרָא. ט וַיֹּאמֶר נְחֶמְיָה הוּא הַתִּרְשָׁתָא וְעֶזְרָא הַכֹּהֵן הַסֹּפֵר וְהַלְוִיִּם הַמְּבִינִים אֶת הָעָם לְכָל הָעָם הַיּוֹם קָדֹשׁ הוּא לַיהוָה אֱלֹהֵיכֶם אַל תִּתְאַבְּלוּ וְאַל תִּבְכּוּ כִּי בוֹכִים כָּל הָעָם כְּשָׁמְעָם אֶת דִּבְרֵי הַתּוֹרָה. <b>י וַיֹּאמֶר לָהֶם לְכוּ אִכְלוּ מַשְׁמַנִּים וּשְׁתוּ מַמְתַקִּים וְשִׁלְחוּ מָנוֹת לְאֵין נָכוֹן לוֹ כִּי קָדוֹשׁ הַיּוֹם לַאֲדֹנֵינוּ וְאַל תֵּעָצֵבוּ כִּי חֶדְוַת יְהוָה הִיא מָעֻזְּכֶם.</b> יא וְהַלְוִיִּם מַחְשִׁים לְכָל הָעָם לֵאמֹר הַסּוּ כִּי הַיּוֹם קָדֹשׁ וְאַל תֵּעָצֵבוּ. יב וַיֵּלְכוּ כָל הָעָם לֶאֱכֹל וְלִשְׁתּוֹת וּלְשַׁלַּח מָנוֹת וְלַעֲשׂוֹת שִׂמְחָה גְדוֹלָה כִּי הֵבִינוּ בַּדְּבָרִים אֲשֶׁר הוֹדִיעוּ לָהֶם. יג וּבַיּוֹם הַשֵּׁנִי נֶאֶסְפוּ רָאשֵׁי הָאָבוֹת לְכָל הָעָם הַכֹּהֲנִים וְהַלְוִיִּם אֶל עֶזְרָא הַסֹּפֵר וּלְהַשְׂכִּיל אֶל דִּבְרֵי הַתּוֹרָה. יד וַיִּמְצְאוּ כָּתוּב בַּתּוֹרָה אֲשֶׁר צִוָּה יְהוָה בְּיַד מֹשֶׁה אֲשֶׁר יֵשְׁבוּ בְנֵי יִשְׂרָאֵל בַּסֻּכּוֹת בֶּחָג בַּחֹדֶשׁ הַשְּׁבִיעִי. טו וַאֲשֶׁר יַשְׁמִיעוּ וְיַעֲבִירוּ קוֹל בְּכָל עָרֵיהֶם וּבִירוּשָׁלַ‍ִם לֵאמֹר צְאוּ הָהָר וְהָבִיאוּ עֲלֵי זַיִת וַעֲלֵי עֵץ שֶׁמֶן וַעֲלֵי הֲדַס וַעֲלֵי תְמָרִים וַעֲלֵי עֵץ עָבֹת לַעֲשֹׂת סֻכֹּת כַּכָּתוּב. טז וַיֵּצְאוּ הָעָם וַיָּבִיאוּ וַיַּעֲשׂוּ לָהֶם סֻכּוֹת אִישׁ עַל גַּגּוֹ וּבְחַצְרֹתֵיהֶם וּבְחַצְרוֹת בֵּית הָאֱלֹהִים וּבִרְחוֹב שַׁעַר הַמַּיִם וּבִרְחוֹב שַׁעַר אֶפְרָיִם. יז וַיַּעֲשׂוּ כָל הַקָּהָל הַשָּׁבִים מִן הַשְּׁבִי סֻכּוֹת וַיֵּשְׁבוּ בַסֻּכּוֹת כִּי לֹא עָשׂוּ מִימֵי יֵשׁוּעַ בִּן נוּן כֵּן בְּנֵי יִשְׂרָאֵל עַד הַיּוֹם הַהוּא וַתְּהִי שִׂמְחָה גְּדוֹלָה מְאֹד. יח וַיִּקְרָא בְּסֵפֶר תּוֹרַת הָאֱלֹהִים יוֹם בְּיוֹם מִן הַיּוֹם הָרִאשׁוֹן עַד הַיּוֹם הָאַחֲרוֹן וַיַּעֲשׂוּ חָג שִׁבְעַת יָמִים וּבַיּוֹם הַשְּׁמִינִי עֲצֶרֶת כַּמִּשְׁפָּט.",
 			"Tags": " תנך::כתובים "
 		},
-		"note": "Limoud::Trous",
+		"model": "Limoud::Trous",
 		"ord": 2,
 		"type": 1,
 		"title": "Underline color 2",
@@ -628,7 +628,7 @@
 			"Pourquoi": "<div>תלוי אם פוסקים להלכה ש\"לא נתכוונו להעיד אינה מקודשת\" ואם באו מיד אחר המעשה לב״ד להעיד</div>",
 			"Tags": "הלכות_קידושין "
 		},
-		"note": "Limoud::psakim",
+		"model": "Limoud::psakim",
 		"ord": 0,
 		"type": 0,
 		"title": "Ajout ou",
@@ -647,7 +647,7 @@
 			"Comment": "de&nbsp;NeoSmart Technologies",
 			"Tags": " software "
 		},
-		"note": "Basic (cs_cards) #",
+		"model": "Basic (cs_cards) #",
 		"ord": 0,
 		"type": 0,
 		"title": "kbd display",
@@ -669,7 +669,7 @@
 			"Syntax": "__filename",
 			"Tags": " node.js "
 		},
-		"note": "language::object",
+		"model": "language::object",
 		"ord": 0,
 		"type": 0,
 		"title": "Trailing block balise",
@@ -689,7 +689,7 @@
 			"Arameen": "מהני",
 			"Tags": ""
 		},
-		"note": "langue",
+		"model": "langue",
 		"ord": 7,
 		"type": 0,
 		"title": "Background color",
@@ -713,7 +713,7 @@
 			"Comment": "The screenshot type will be inferred from file extension. If path is a relative path, then it is resolved relative to current working directory. If no path is provided, the image won't be saved to the disk.<br>",
 			"Tags": " puppeteer "
 		},
-		"note": "language::function::parameter::property",
+		"model": "language::function::parameter::property",
 		"ord": 0,
 		"type": 0,
 		"title": "Parameter property Usage",
@@ -737,7 +737,7 @@
 			"Comment": "The screenshot type will be inferred from file extension. If path is a relative path, then it is resolved relative to current working directory. If no path is provided, the image won't be saved to the disk.<br>",
 			"Tags": " puppeteer "
 		},
-		"note": "language::function::parameter::property",
+		"model": "language::function::parameter::property",
 		"ord": 0,
 		"type": 0,
 		"title": "Parameter property Name",
@@ -755,7 +755,7 @@
 			"Usage": "Create, list, delete or verify a tag object signed with GPG",
 			"Tags": " git "
 		},
-		"note": "command",
+		"model": "command",
 		"ord": 1,
 		"type": 0,
 		"title": "command Command",
@@ -779,7 +779,7 @@
 			"Comment": "The screenshot type will be inferred from file extension. If path is a relative path, then it is resolved relative to current working directory. If no path is provided, the image won't be saved to the disk.<br>",
 			"Tags": " puppeteer "
 		},
-		"note": "language::function::parameter::property",
+		"model": "language::function::parameter::property",
 		"type": 0,
 		"title": "Parameter property Type",
 		"description": "Apparence de la carte Parameter property Type",
@@ -802,7 +802,7 @@
 			"Comment": "The screenshot type will be inferred from file extension. If path is a relative path, then it is resolved relative to current working directory. If no path is provided, the image won't be saved to the disk.<br>",
 			"Tags": " puppeteer "
 		},
-		"note": "language::function::parameter::property",
+		"model": "language::function::parameter::property",
 		"ord": 0,
 		"type": 0,
 		"title": "Parameter property Default",
@@ -821,7 +821,7 @@
 			"Usage": "definit un nom court pour un fichier donné",
 			"Tags": " DOS "
 		},
-		"note": "command::form",
+		"model": "command::form",
 		"ord": 1,
 		"type": 0,
 		"title": "command form Form",
@@ -838,7 +838,7 @@
 			"contextRef": "chass.michnah.yebamot.4",
 			"Tags": ""
 		},
-		"note": "Limoud::prakim",
+		"model": "Limoud::prakim",
 		"ord": 0,
 		"type": 0,
 		"title": "Prakim Nom",
@@ -855,7 +855,7 @@
 			"contextRef": "chass.michnah.beitsa.5",
 			"Tags": ""
 		},
-		"note": "Limoud::prakim",
+		"model": "Limoud::prakim",
 		"ord": 3,
 		"type": 0,
 		"title": "Padding top",
@@ -879,7 +879,7 @@
 			"Param1Desc": "set of viewport properties",
 			"Tags": " puppeteer "
 		},
-		"note": "language::function",
+		"model": "language::function",
 		"ord": 0,
 		"type": 0,
 		"title": "Nested aside",

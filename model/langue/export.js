@@ -3,6 +3,11 @@ const fs = require('fs');
 const path = require('path');
 const pug = require('pug');
 
+const ROOT = process.env.ANKI_PUG_ROOT;
+pugFileDir = path.join(ROOT, 'var', path.relative(path.join(ROOT, 'model'), __dirname));
+
+const FileManager = require(path.resolve(ROOT, 'src/diff/file_manager'));
+
 const langTo = {
   "am": ["fr", "he"],
   "en": ["fr"],
@@ -38,16 +43,25 @@ Object.keys(langTo).forEach(function(from) {
   langTo[from].forEach(function(to) {
     Object.keys(model).forEach(function(face) {
       outputList.push({
-        content: model[face]({
-          dirFrom: dir[from],
-          dirTo: dir[to],
-          from,
-          fullFrom: __[from],
-          fullTo: __[to],
-          to,
-        }),
-        name: 'out/' + [from, to, face].join('_') + '.html',
-        pugFile: path.resolve(__dirname, 'langue_' + face + '.pug'),
+        pug: {
+          path: path.resolve(__dirname, 'langue_' + face + '.pug'),
+          file: path.join(pugFileDir, [from, to, face].join('_') + '.pug'),
+
+          content: FileManager.normalizeEnding(model[face]({
+            dirFrom: dir[from],
+            dirTo: dir[to],
+            from,
+            fullFrom: __[from],
+            fullTo: __[to],
+            to,
+          })),
+        },
+        anki: {
+          path: path.resolve(__dirname, 'out/' + [from, to, face].join('_') + '.html'),
+          file: path.resolve(__dirname, 'out/' + [from, to, face].join('_') + '.html'),
+          get content() { return FileManager.fileNormalized(this.path); }
+        },
+        name: [from, to, face].join('_'),
       });
     });
   });
@@ -55,10 +69,17 @@ Object.keys(langTo).forEach(function(from) {
 
 const css = path.resolve(__dirname, '../commons.css');
 outputList.push({
-  actualPath: css,
-  content: fs.readFileSync(css, { encoding: 'utf8' }),
-  name: 'out/style.css',
-  pugFile: css,
+  pug: {
+    path: css,
+    file: css,
+    get content() { return FileManager.fileNormalized(this.path); }
+  },
+  anki: {
+    path: path.resolve(__dirname, 'out/style.css'),
+    file: path.resolve(__dirname, 'out/style.css'),
+    get content() { return FileManager.fileNormalized(this.path); }
+  },
+  name: 'style'
 });
 
 module.exports = outputList;

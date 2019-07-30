@@ -1,44 +1,41 @@
-//jshint esversion:6
+//jshint esversion:8
 // native dependancies
 const path = require('path');
-
 // npm dependancies
 const rra = require('recursive-readdir-async');
-
 // local dependancies
 const promiseNoCallback = require('./_promise').noCallBack;
-const Note = require('./anki-pug-note');
+const Model = require('./anki-pug-model');
 
 class Tree {
   constructor(root) {
     this.root = path.resolve(root);
   }
 
-  getNotes() {
-    var { promise, resolve, reject } = promiseNoCallback();
-    var _this = this;
+  async parseModels(){
+  }
 
-    rra
-      .list(this.root)
-      .then(function(list) {
-        resolve(
-          list
-          .filter(function(file) {
-            return file.name === 'export.js';
-          })
-          .sort(function(fileA, fileB) {
-            return fileA.path > fileB.path ? 1 :
-              fileB.path > fileA.path ? -1 : 0;
-          })
-          .map(function(file) {
-            var name = file.path.slice(_this.root.length + 1).replace(/\\|\//g, '::');
-            return new Note(file, name);
-          })
-        );
-      })
-      .catch(reject);
+  async modelsList(){
+    var files = await rra.list(this.root);
+    var makers = files.filter(file => file.name === 'export.js');
+    var modelNames = makers.map(file=>path.relative(this.root, file.path).replace(/\\|\//g, '::'));
+    return modelNames.sort();
+  }
 
-    return promise;
+  getModel(name){
+    var makefile = path.resolve(this.root, name.replace(/::/g, path.sep), 'export.js');
+    return new Model(makefile, name);
+  }
+
+  async getModels() {
+    return list
+      .sort((fileA, fileB) =>
+        fileA.path > fileB.path ? 1 :
+        fileB.path > fileA.path ? -1 : 0)
+      .map(file=> {
+        var name = path.relative(this.root, file.path).replace(/\\|\//g, '::');
+        return new Model(file.fullname, name);
+      });
   }
 }
 

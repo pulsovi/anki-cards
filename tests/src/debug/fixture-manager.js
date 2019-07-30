@@ -8,6 +8,9 @@ const puppeteer = require('puppeteer');
 const readline = require('readline');
 const { promisify } = require('util');
 
+const ROOT = process.env.ANKI_PUG_ROOT;
+const FileManager = require(path.resolve(ROOT, 'src/diff/file_manager'));
+
 
 function prompt(message, defaultValue) {
   return new Promise((resolve) => {
@@ -23,18 +26,19 @@ function prompt(message, defaultValue) {
   });
 }
 
-function watchFor(fixture, version) {
+async function watchFor(fixture, version) {
+  await fixture.ready;
   var files = [];
   if (version === 'pug') {
-    files.push(fixture.note.template[fixture.card + '_recto'].pugFile);
-    files.push(fixture.note.template['style.css'].pugFile);
+    files.push(fixture.recto.pug.path);
+    files.push(fixture.css.pug.path);
     if (fixture.face === 'verso')
-      files.push(fixture.note.template[fixture.card + '_verso'].pugFile);
+      files.push(fixture.verso.pug.path);
   } else {
-    files.push(fixture.note.template[fixture.card + '_recto'].fullname);
-    files.push(fixture.note.template['style.css'].fullname);
+    files.push(fixture.recto.anki.path);
+    files.push(fixture.css.anki.path);
     if (fixture.face === 'verso')
-      files.push(fixture.note.template[fixture.card + '_verso'].fullname);
+      files.push(fixture.verso.anki.path);
   }
   return files;
 }
@@ -65,6 +69,34 @@ function viewFile(filename) {
   run(`"C:\\Program Files\\Sublime Text 3\\sublime_text.exe" "${filename}"`);
 }
 
+function waitFile(filename) {
+  console.log('wait file:<' + filename + '>');
+  var directory = path.dirname(filename);
+  var basename = path.basename(filename);
+  return new Promise((resolve, reject) => {
+    var watcher = fs.watch(directory, (_, name) => {
+      if (name === basename) {
+        watcher.close();
+        resolve(filename);
+      }
+    });
+  });
+}
+
+async function getFixture(options) {
+  var fixture;
+  try {
+    fixture = new Fixture(options);
+  } catch (e) {
+    if (!e.message.indexOf('Cannot find module')) {
+      fixture = await waitFile(e.message.split("'")[1]);
+      return getFixture(options);
+    }
+    throw e;
+  }
+  return fixture;
+}
+
 class FixtureManager {
   constructor(cid) {
     this.ready = this.construct(cid);
@@ -78,19 +110,19 @@ class FixtureManager {
     options.card = await AnkiDbManager.getCardName(cid);
     options.locals = await AnkiDbManager.getNoteFields(nid);
     options.locals.Tags = await AnkiDbManager.getNoteTags(nid);
-    options.note = await AnkiDbManager.getModelName(mid);
+    options.model = await AnkiDbManager.getModelName(mid);
     options.ord = await AnkiDbManager.getCardOrd(cid);
     options.type = await AnkiDbManager.getModelType(mid);
 
     options.face = await prompt('face ? recto/verso (verso): ', 'verso');
     options.platform = await prompt('platform ? mobile/win (mobile): ', 'mobile');
+    this.options = options;
     this.version = await prompt('version ? anki/pug (pug): ', 'pug');
-    this.fixture = new Fixture(options);
+    this.fixture = await getFixture(options);
   }
 
   async show(watch) {
     await this.ready;
-    this.html = await this.fixture.html(this.version);
     this.browser = await puppeteer.launch({ headless: false });
     this.page = await this.browser.newPage();
     await this.page.setViewport({ height: 560, width: 360 });
@@ -103,8 +135,28 @@ class FixtureManager {
     });
   }
 
+  get html() {
+    return (async _ => {
+      var content = null;
+      while (!content) {
+        try {
+          content = await this.fixture.html(this.version);
+        } catch (e) {
+          if(e.message === `Carte ${this.fixture.card} introuvable.`){
+            console.log(e.message);
+            await waitFile(this.fixture.model.maker.fullname);
+            this.fixture = await getFixture(this.options);
+            continue;
+          }
+          throw e;
+        }
+      }
+      return content;
+    })();
+  }
+
   async fill() {
-    await this.page.setContent(this.html);
+    await this.page.setContent(await this.html);
   }
 
   async parseLayouts() {
@@ -116,7 +168,7 @@ class FixtureManager {
   }
 
   async watch() {
-    this.fromFiles = watchFor(this.fixture, this.version);
+    this.fromFiles = await watchFor(this.fixture, this.version);
     var i;
     try {
       await this.parseLayouts();
@@ -130,7 +182,7 @@ class FixtureManager {
     }
     try {
       for (i = 0; i < this.filesToWatch.length; ++i) {
-        fs.watchFile(this.filesToWatch[i], _ => this.reload());
+        fs.watchFile(this.filesToWatch[i], this.reload.bind(this, this.filesToWatch[i]));
         this.showFile(this.filesToWatch[i]);
       }
     } catch (e) {
@@ -138,18 +190,17 @@ class FixtureManager {
     }
   }
 
-  showFile(filename){
-    if(!~this.openedFiles.indexOf(filename)) {
+  showFile(filename) {
+    if (!~this.openedFiles.indexOf(filename)) {
       this.openedFiles.push(filename);
       viewFile(filename);
     }
   }
 
-  async reload() {
-    console.log('file modified');
+  async reload(filename) {
+    console.log('file modified:', filename);
     this.unwatch();
-    this.fixture.note.reload();
-    this.html = await this.fixture.html(this.version);
+    this.fixture = await getFixture(this.options);
     this.fill();
     this.watch();
   }

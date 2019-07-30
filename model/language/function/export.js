@@ -3,6 +3,11 @@ const fs = require('fs');
 const path = require('path');
 const pug = require('pug');
 
+const ROOT = process.env.ANKI_PUG_ROOT;
+var pugFileDir = path.resolve(ROOT, 'var', path.relative(path.join(ROOT, 'model'), __dirname));
+
+const FileManager = require(path.resolve(ROOT, 'src/diff/file_manager'));
+
 String.prototype.toCapitalisationCase = function toCapitalisationCase() {
   return this.charAt(0).toUpperCase() + this.substring(1);
 };
@@ -56,9 +61,17 @@ function export_param_field(card_name, field) {
   var model = pug.compileFile(pugFile);
   for (let i = 1; i <= max; ++i) {
     outputList.push({
-      content: model({ th: th[i - 1], i: i, max: max }),
-      name: 'out/' + i + card_name + field + '.html',
-      pugFile,
+      pug: {
+        path: pugFile,
+        file: path.join(pugFileDir, path.basename(pugFile)),
+        content: FileManager.normalizeEnding(model({ th: th[i - 1], i: i, max: max }))
+      },
+      anki: {
+        path: path.resolve(__dirname, 'out/' + i + card_name + field + '.html'),
+        file: path.resolve(__dirname, 'out/' + i + card_name + field + '.html'),
+        get content() { return FileManager.fileNormalized(this.path); }
+      },
+      name: i + card_name + field
     });
   }
 }
@@ -68,18 +81,33 @@ Object.keys(single).forEach(function(pugName) {
   fields.forEach(function(field) {
     var pugFile = path.resolve(__dirname, pugName + field + '.pug');
     outputList.push({
-      content: pug.renderFile(pugFile, { max: max }),
-      name: 'out/' + htmlName + field + '.html',
-      pugFile,
+      pug: {
+        path: pugFile,
+        file: path.join(pugFileDir, path.basename(pugFile)),
+        content: FileManager.normalizeEnding(pug.renderFile(pugFile, { max: max }))
+      },
+      anki: {
+        path: path.resolve(__dirname, 'out/' + htmlName + field + '.html'),
+        file: path.resolve(__dirname, 'out/' + htmlName + field + '.html'),
+        get content() { return FileManager.fileNormalized(this.path); }
+      },
+      name: htmlName + field
     });
   });
 });
 
 outputList.push({
-  actualPath: path.resolve(__dirname, '../../commons.css'),
-  content: fs.readFileSync(path.resolve(__dirname, '../../commons.css'), { encoding: 'utf8' }),
-  name: 'out/style.css',
-  pugFile: path.resolve(__dirname, '../../commons.css'),
+  pug: {
+    file: path.resolve(__dirname, '../../commons.css'),
+    path: path.resolve(__dirname, '../../commons.css'),
+    get content() { return FileManager.fileNormalized(this.path); }
+  },
+  anki: {
+    file: path.resolve(__dirname, 'out/style.css'),
+    path: path.resolve(__dirname, 'out/style.css'),
+    get content() { return FileManager.fileNormalized(this.path); }
+  },
+  name: 'style'
 });
 
 module.exports = outputList;
