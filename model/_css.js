@@ -97,7 +97,7 @@ function colorize(){
 
 function syntaxColorize(element){
   var content = element.innerText;
-  if(/^(-?[0-9.]+|(t|T)rue|(f|F)alse|null|None)$/.test(content)){
+  if(/^(-?[0-9.]+|(t|T)rue|(f|F)alse|null|None|undefined)$/.test(content)){
     element.classList.add('mk-violet');
   } else if (/^("|').*\1$/.test(content)){
     element.classList.add('mk-yellow');
