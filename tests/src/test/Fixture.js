@@ -152,7 +152,7 @@ class Fixture {
   async setVersion(version) {
     var html = await this.html(version);
     var dest = path.resolve(this.directory, version + '.png');
-    var screenshot = Object.assign(this.screenshot, { path: dest });
+    var screenshot = Object.assign({ path: dest }, this.screenshot);
     await Promise.all([
       shot(html, this.viewport, screenshot),
       promisify(fs.writeFile)(path.resolve(this.directory, version + '.html'), html),

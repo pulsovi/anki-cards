@@ -76,7 +76,7 @@ class DiffManager {
         this.diff_lines(template);
         break;
       case 'o':
-        fs.writeFile(template.anki.path, template.pug.content, 'utf8', _ => _);
+        fs.writeFile(template.anki.path, template.pug.content, _ => _);
         return;
       case 'p':
         return { command: 'previous' };
