@@ -1,4 +1,7 @@
 // jshint esversion: 8
+const fs = require('fs');
+const path = require('path');
+const readline = require('readline');
 const MustacheTemplate = require('./anki-pug-mustache-template');
 const FileManager = require('./file_manager');
 const chalk = require('chalk');
@@ -53,6 +56,19 @@ class Template {
       pug: Object.assign({}, this.pug),
       anki: Object.assign({}, this.anki)
     };
+  }
+
+  watch(){
+    this.close();
+    var dirname = path.dirname(this.makefile);
+    this.watcher = fs.watch(dirname, (event, file)=>{
+      console.log(chalk.yellow(`\nfile ${event}: ${path.resolve(dirname, file)}`));
+      this.ready = this.parse();
+    });
+  }
+
+  close(){
+    if(this.watcher) this.watcher.close();
   }
 }
 
