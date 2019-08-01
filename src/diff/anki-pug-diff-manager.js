@@ -34,26 +34,31 @@ class DiffManager {
     this.manageModel = null;
     this.listOnly = null;
     var templateNames = await model.templatesList();
+    var previous = null;
     for (let i = 0; i < templateNames.length; ++i) {
       var name = templateNames[i];
       var template = await model.getTemplate(name);
-      var response = await this.processTemplate(template);
+      template.watch();
+      var response = await this.processTemplate(template, previous);
+      template.close();
       if (response && response.command && response.command === 'previous') {
         if (i > 0) {
           i -= 2;
+          previous = true;
         } else {
           console.log(chalk.bgRed("It's the first template in the current model."));
         }
       }
       if (this.quit === true) return;
     }
-    if(this.manageModel === null){
+    if (this.manageModel === null) {
       console.log(chalk.green(model.name));
     }
   }
 
-  async processTemplate(template) {
-    if (template.pug.content === template.anki.content) return;
+  async processTemplate(template, toPrevious) {
+    if (template.pug.content === template.anki.content)
+      return toPrevious ? { command: 'previous' } : null;
     if (this.manageModel === null) await this.promptModel();
     if (this.manageModel === false || this.quit === true) return;
 
