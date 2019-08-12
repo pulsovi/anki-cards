@@ -891,5 +891,23 @@
 		"screenshot": {
 			"fullPage": true
 		}
+	},
+	{
+		"card": "fr_en",
+		"cid": "1531304137663",
+		"id": "1lvc0hxwjz8sa9ca",
+		"locals": {
+			"Francais": "plus loin, au delà",
+			"Anglais": "further",
+			"Tags": ""
+		},
+		"model": "langue",
+		"ord": 1,
+		"type": 0,
+		"title": "Lang Card",
+		"description": "Apparence de la carte langue",
+		"face": "verso",
+		"platform": "mobile",
+		"ok": true
 	}
 ]
