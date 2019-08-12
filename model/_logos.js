@@ -30,6 +30,7 @@
     'python':'_python.svg',
     'python2':'_python.svg',
     'react':'_reactjs.svg',
+    'sql': '_mariadb.svg',
     'unix': '_terminal.svg',
     'vba':'_vb.svg',
   };
