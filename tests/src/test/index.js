@@ -3,6 +3,7 @@
 const childProcess = require('child_process');
 const fs = require('fs');
 const path = require('path');
+const util = require('util');
 // local dependancies
 const Fixture = require(path.resolve(__dirname, 'Fixture'));
 const ROOT = process.env.ANKI_PUG_ROOT;
@@ -20,11 +21,24 @@ main()
     Fixture.close();
   });
 
+async function extendFixture(options){
+  var jsonFile = path.resolve(ROOT, 'tests/out', options.id, 'package.json');
+  var moreOptions = null;
+  try {
+    var json = await util.promisify(fs.readFile)(jsonFile, 'utf8');
+    moreOptions = JSON.parse(json).fixture;
+  } catch (e){
+    console.error('Erreur non attrapée :' + e.message);
+    throw e;
+  }
+  return Object.assign(moreOptions, options);
+}
 
 async function main() {
   if (process.argv.length > 2) {
     var fixture = fixtures.find(f => f.id === process.argv[2]);
     if (!fixture) throw new ReferenceError(`Unable to found ${process.argv[2]} fixture.`);
+    fixture = await extendFixture(fixture);
     await manage_one_fixture(fixture);
   } else {
     for (let i = 0; i < fixtures.length; ++i) {

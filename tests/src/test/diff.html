@@ -138,7 +138,7 @@
   <header>
     <i id="base-ok" class="base-ok">{{ok}}</i>
     <h1 class="header-title">{{description}}</h1>
-    <i id="diff-ok" class="diff-ok">{{#diff}}false{{/diff}}{{^diff}}true{{/diff}}</i>
+    <i id="diff-ok" class="diff-ok">{{diff.ok}}</i>
     <i id="close" class="close-btn">&times;</i>
   </header>
   <div class="content">
@@ -281,7 +281,7 @@
     baseOk.classList.add(isBaseOk ? 'ok' : 'nok');
     baseOk.innerText = 'BASE';
     var diffOk = document.getElementById('diff-ok');
-    diffOk.classList.add(diffOk.innerText === 'true' ? 'nok' : 'ok');
+    diffOk.classList.add(diffOk.innerText === 'true' ? 'ok' : 'nok');
     diffOk.innerText = 'DIFF';
   })();
 

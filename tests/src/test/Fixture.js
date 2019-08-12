@@ -76,17 +76,20 @@ function getConfig(keyName) {
 
 class Fixture {
   constructor(options) {
-    this.card = options.card;
-    this.description = options.description;
-    this.face = options.face;
-    this.id = options.id;
-    this.locals = options.locals;
+    [
+      'card',
+      'description',
+      'diff',
+      'face',
+      'id',
+      'locals',
+      'ok',
+      'ord',
+      'platform',
+      'title',
+      'type',
+    ].forEach(_ => { this[_] = options[_]; });
     this.model = getModel(options.model);
-    this.ok = options.ok;
-    this.ord = options.ord;
-    this.platform = options.platform;
-    this.title = options.title;
-    this.type = options.type;
 
     if (this.id) this.directory = path.resolve(ROOT, 'tests/out', this.id);
     this.locals.Card = this.card;
@@ -193,10 +196,8 @@ class Fixture {
     var data = await resembleData(file1, file2);
     var diffVal = parseFloat(data.misMatchPercentage);
     this.diffString = (this.diffString || '') + version1 + '-' + version2 + ':' + data.misMatchPercentage + '; ';
-    if (diffVal > 0) {
-      this.diff = this.diff || {};
-      this.diff[version1 + '-' + version2] = data.misMatchPercentage;
-    }
+    this.diff = this.diff || {};
+    this.diff[version1 + '-' + version2] = data.misMatchPercentage;
     var resemblePath = _this.directory + '/' + version1 + '-' + version2 + '.png';
     await new Promise(resolve => {
       data
@@ -208,6 +209,8 @@ class Fixture {
   }
 
   async setHtmlDiff() {
+    this.diff = this.diff || {};
+    this.diff.ok = parseFloat(this.diff['base-pug']) == 0 && parseFloat(this.diff['pug-anki']) == 0;
     this.htmlDiffFile = path.join(this.directory, 'index.html');
     var locals = this.asRaw({
       __dirname,
@@ -243,7 +246,7 @@ class Fixture {
   asRaw(from) {
     var raw = from || {};
     ["card", "description", "diffTemplate", "directory", "face", "id", "locals",
-      "ok", "platform", "title", "viewport"
+      "ok", "platform", "title", "viewport", "diff"
     ].forEach(_ => {
       raw[_] = this[_];
     });
