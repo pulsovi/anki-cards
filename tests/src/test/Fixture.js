@@ -211,9 +211,9 @@ class Fixture {
     this.htmlDiffFile = path.join(this.directory, 'index.html');
     var locals = this.asRaw({
       __dirname,
-      pugRectoFile: this.recto.pug.file.replace(/\\/g, '\\\\'),
-      pugVersoFile: this.verso.pug.file.replace(/\\/g, '\\\\'),
-      cssFile: this.css.pug.file.replace(/\\/g, '\\\\'),
+      pugRectoFile: this.recto.pug.path.replace(/\\/g, '\\\\'),
+      pugVersoFile: this.verso.pug.path.replace(/\\/g, '\\\\'),
+      cssFile: this.css.pug.path.replace(/\\/g, '\\\\'),
     });
     locals.directory = locals.directory.replace(/\\/g, '\\\\');
     var html = mustache.render(await this.diffTemplate, locals);
