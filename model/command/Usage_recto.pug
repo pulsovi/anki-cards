@@ -1,5 +1,5 @@
 extends command_recto_layout
 block command-present
-	|#{' '}{{CommandName}} _
+	|#{' '}{{#ParentCommand}}{{ParentCommand}} {{/ParentCommand}}{{CommandName}} _
 block question-content
 	.p Usage
