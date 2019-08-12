@@ -909,5 +909,26 @@
 		"face": "verso",
 		"platform": "mobile",
 		"ok": true
+	},
+	{
+		"card": "Value",
+		"cid": "1543766946983",
+		"id": "1lvc0ii8jz8uucye",
+		"locals": {
+			"CommandOrFunc": "curl",
+			"Arg": "CURLOPT_VERBOSE",
+			"Value": "TRUE",
+			"Usage": "afficher tous les événements. Écrit la sortie sur <code>STDERR</code> ou dans le fichier spécifié en utilisant <code>CURLOPT_STDERR</code>.",
+			"Comment": "active le mode verbeux",
+			"Tags": " php "
+		},
+		"model": "command::arg::value",
+		"ord": 1,
+		"type": 0,
+		"title": "Syntax coloration",
+		"description": "La réponse doit être colorée",
+		"face": "verso",
+		"platform": "mobile",
+		"ok": true
 	}
 ]
