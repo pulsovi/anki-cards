@@ -150,6 +150,7 @@
         <i id="viewJSON" class="btn btn-secondary">package.json</i>
         <i id="view-fixtures" class="btn btn-secondary">fixtures.json</i>
       </div>
+      <div id="debug-fixture" class="btn-block btn btn-warning">Debug</div>
     </div>
     <div class="img-block base-pug">
       <h4>base-pug</h4>
@@ -272,6 +273,14 @@
 
   document.getElementById('view-fixtures').addEventListener('click', function() {
     viewFile(path.resolve(ankiPugRoot, 'tests/fixture/fixtures.json'));
+  });
+
+  document.getElementById('debug-fixture').addEventListener('click', async function() {
+    var fixturesPath = path.join(ankiPugRoot, 'tests/fixture/fixtures.json');
+    var fixtures = JSON.parse(await fs.promises.readFile(fixturesPath, 'utf8'));
+    var myId = "{{id}}";
+    var me = fixtures.find(fixture => fixture.id === myId);
+    run(`"C:/Program Files/Git/bin/sh" "${path.resolve(ankiPugRoot, 'tests/bin/debug.sh')}" "${me.cid}"`);
   });
 
   (() => {

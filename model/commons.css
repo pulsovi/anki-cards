@@ -196,6 +196,10 @@ ul,
   width: 4em;
 }
 
+.mk-bg1 {
+  color: #3e3d32;
+}
+
 .mk-blue, .mk-var-typ, .mk-type, .typ {
   color: #66d9ef;
 }
@@ -282,6 +286,12 @@ ul,
 
 .pre {
   margin: 0 1em;
+}
+
+.pre-head {
+  background: #3e3d32;
+  display: block;
+  text-align: center;
 }
 
 .resp {
