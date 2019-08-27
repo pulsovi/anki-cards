@@ -2,6 +2,6 @@ extends ../command_recto_layout
 block variables
 	- var condition = "Arg";
 block command-present
-	|#{' '}{{CommandName}} #[i.mk-comment &hellip;] #[b {{Arg}}]_
+	|#{' '}{{CommandName}} #[i.mk-comment &hellip;] #[b.nobreak {{Arg}}]_
 block question-content
 	.p Usage
