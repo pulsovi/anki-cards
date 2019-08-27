@@ -21,13 +21,14 @@ main()
     Fixture.close();
   });
 
-async function extendFixture(options){
+async function extendFixture(options) {
   var jsonFile = path.resolve(ROOT, 'tests/out', options.id, 'package.json');
   var moreOptions = null;
   try {
     var json = await util.promisify(fs.readFile)(jsonFile, 'utf8');
     moreOptions = JSON.parse(json).fixture;
-  } catch (e){
+  } catch (e) {
+    if (e.code === 'ENOENT') return options;
     console.error('Erreur non attrapée :' + e.message);
     throw e;
   }
