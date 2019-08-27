@@ -930,5 +930,25 @@
 		"face": "verso",
 		"platform": "mobile",
 		"ok": true
+	},
+	{
+		"card": "Usage",
+		"cid": "1538720938603",
+		"id": "1lvc0594jztxrp1i",
+		"locals": {
+			"CommandName": "git ls-files",
+			"Arg": "--others",
+			"ShortAlias": "-o",
+			"Usage": "view list of files ignored due to <code>git ignore</code>",
+			"Tags": " git "
+		},
+		"model": "command::arg",
+		"ord": 0,
+		"type": 0,
+		"title": "No break",
+		"description": "Le texte de l'argument ne doit pas être coupé sur deux lignes",
+		"face": "verso",
+		"platform": "mobile",
+		"ok": true
 	}
 ]
