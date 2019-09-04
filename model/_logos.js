@@ -33,6 +33,7 @@
     'sql': '_mariadb.svg',
     'unix': '_terminal.svg',
     'vba':'_vb.svg',
+    'wordpress': '_wordpress.svg',
   };
   var header = document.getElementsByTagName('header')[0];
   if (!header) return;
