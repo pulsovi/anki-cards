@@ -950,5 +950,26 @@
 		"face": "verso",
 		"platform": "mobile",
 		"ok": true
+	},
+	{
+		"card": "Name",
+		"cid": "1558008876229",
+		"id": "1lvc0m48k054x6dl",
+		"locals": {
+			"Name": "operator",
+			"ObjectType": "module",
+			"Description": "module exports a set of efficient functions corresponding to the intrinsic operators of Python.",
+			"Comment": "For example, operator.add(x, y) is equivalent to the expression x+y.",
+			"Syntax": "import operator<div>my_sum = functools.reduce(operator.add, my_list)</div>",
+			"Tags": " python "
+		},
+		"model": "language::object",
+		"ord": 1,
+		"type": 0,
+		"title": "Type centered",
+		"description": "Le type d'objet doit être aligné au centre horizontalement",
+		"face": "recto",
+		"platform": "mobile",
+		"ok": true
 	}
 ]
