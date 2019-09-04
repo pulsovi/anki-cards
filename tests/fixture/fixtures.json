@@ -971,5 +971,25 @@
 		"face": "recto",
 		"platform": "mobile",
 		"ok": true
+	},
+	{
+		"card": "Psak",
+		"cid": "1545218279620",
+		"id": "1lvc0figk055iasu",
+		"locals": {
+			"Auteur": "רמב\"ם",
+			"Question": "על איזה סיבה יכול אדם לגרש את אשתו",
+			"Reponse": "אם מצא בה דבר ערוה או אפילו אם הקדיחה תבשילו אבל לא אם רק מצא אחרת נאה הימנה<br>",
+			"Psak": "מגרש אדם את אשתו אפילו הקדיחה תבשילו",
+			"Tags": " הלכות_גיטין "
+		},
+		"model": "Limoud::psakim",
+		"ord": 1,
+		"type": 0,
+		"title": "Hide unknown source",
+		"description": "La source doit être masquée si elle n'est pas renseignée",
+		"face": "verso",
+		"platform": "mobile",
+		"ok": true
 	}
 ]
