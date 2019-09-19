@@ -271,8 +271,11 @@
     run('{{directory}}\\anki.html');
   });
 
-  document.getElementById('view-fixtures').addEventListener('click', function() {
-    viewFile(path.resolve(ankiPugRoot, 'tests/fixture/fixtures.json'));
+  document.getElementById('view-fixtures').addEventListener('click', async function() {
+    var filename = path.resolve(ankiPugRoot, 'tests/fixture/fixtures.json');
+    var text = await fs.readFileSync(filename, 'utf8');
+    var line = text.split('\n').indexOf('\t\t"id": "{{id}}",') + 1;
+    viewFile(`${filename}:${line}`);
   });
 
   document.getElementById('debug-fixture').addEventListener('click', async function() {
