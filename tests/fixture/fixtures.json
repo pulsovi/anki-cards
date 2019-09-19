@@ -991,5 +991,28 @@
 		"face": "verso",
 		"platform": "mobile",
 		"ok": true
+	},
+	{
+		"card": "Usage",
+		"cid": "1545135196564",
+		"id": "1lvc0abwk06kgmd6",
+		"locals": {
+			"CommandName": "DocumentRoot",
+			"Usage": "Racine de l'arborescence des documents principale visible depuis Internet",
+			"Syntax": "DocumentRoot &lt;chemin répertoire&gt;",
+			"Extra": "<p>Cette directive permet de définir le répertoire à partir duquel<br>    <code class=\"program\">httpd</code> va servir les fichiers. S'il ne correspond<br>    pas à un <code class=\"directive\">Alias</code>, le chemin<br>    de l'URL sera ajouté par le serveur à la racine des documents afin<br>    de construire le chemin du document recherché. <aside>Exemple :<pre> DocumentRoot /usr/web</pre>un accès à <code>http://<wbr>www.my.<wbr>host.com/<wbr>index.html</code> se<br>    réfère alors à <code>/usr/web/index.html</code>.</aside><aside>Si chemin répertoire n'est pas un chemin absolu, il est considéré comme<br>    relatif au chemin défini par la directive <code>ServerRoot</code>.</aside><aside><b>Attention</b>:<br>Le répertoire défini par la directive<br>    <code class>DocumentRoot</code> ne doit pas comporter de slash<br>    terminal.</aside>",
+			"Tags": " apache "
+		},
+		"model": "command",
+		"ord": 0,
+		"type": 0,
+		"title": "Padding bottom",
+		"description": "Les asides successifs doivent être séparés par un espace blanc de 1em de part et d'autre d'une bordure fine",
+		"face": "verso",
+		"platform": "mobile",
+		"ok": true,
+		"screenshot": {
+			"fullPage": true
+		}
 	}
 ]
