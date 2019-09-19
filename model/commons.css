@@ -5,6 +5,10 @@
   text-align: center;
 }
 
+* {
+  margin: 0;
+}
+
 aside {
   background: #eeb;
   color: #a62;
@@ -14,7 +18,11 @@ aside {
 
 aside>aside {
   margin: 0 !important;
-  padding: 0.5em 0 0 0.5em !important;
+  padding: 0.5em 0 0 0.5em;
+}
+
+aside>aside:not(:last-child) {
+  padding-bottom: 0.5em;
 }
 
 aside pre {
