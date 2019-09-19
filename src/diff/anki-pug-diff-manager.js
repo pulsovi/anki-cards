@@ -111,8 +111,8 @@ class DiffManager {
           '\to - [overwrite] replace the anki template by the pug template\n' +
           '\tp - [previous]  let this template undecided, jump to previous template\n' +
           '\tl - [list]      list all template conflicts and quit this model\n' +
-          '\tq - [quit]      skip all unmanaged models and templates and quit the diff\n' +
-          d ? '' : '\td - [debug]     run debugging GUI tool'
+          '\tq - [quit]      skip all unmanaged models and templates and quit the diff' +
+          (d ? '\n\td - [debug]     run debugging GUI tool' : '')
         ));
         break;
     }
@@ -202,7 +202,10 @@ async function fixtures(template) {
   const allFixtures = JSON.parse(await promisify(fs.readFile)(fixturesFile, 'utf8'));
   const matchArray = allFixtures.filter(f =>
     f.model === template.model.name &&
-    f.card === template.name.split('_').slice(0, -1).join('_')
+    (
+      f.card === template.name.split('_').slice(0, -1).join('_') ||
+      template.name === 'style'
+    )
   );
   return matchArray.length ? matchArray : null;
 }
