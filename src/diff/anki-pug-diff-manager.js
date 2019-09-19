@@ -9,10 +9,13 @@ const fs = require('fs');
 const chalk = require('chalk');
 const diff = require('diff');
 const mkdirp = require('mkdirp');
+const find_process = require('find-process');
 // local dependencies
 const Tree = require('./anki-pug-tree');
-const Model = require('./anki-pug-model');
+//const Model = require('./anki-pug-model');
 const FileManager = require('./file_manager');
+//
+const ROOT = process.env.ANKI_PUG_ROOT;
 
 class DiffManager {
   constructor(root) {
@@ -67,7 +70,9 @@ class DiffManager {
       return;
     }
 
-    var response = await rlQuestion(chalk.blueBright(`  compare ${template.name} [ynsSoplq]? `));
+    var d = await fixtures(template);
+    var options = d ? '[ynsSoplqd]' : '[ynsSoplq]';
+    var response = await rlQuestion(chalk.blueBright(`  compare ${template.name} ${options}? `));
     switch (response) {
       case 'y':
         await this.compare(template);
@@ -91,6 +96,12 @@ class DiffManager {
       case 'q':
         this.quit = true;
         return;
+      case 'd':
+        if (d) {
+          debug(d.map(f => f.id));
+          break;
+        }
+        // else falls through
       default:
         console.log(chalk.red(
           '\ty - [yes]       compare versions\n' +
@@ -100,7 +111,8 @@ class DiffManager {
           '\to - [overwrite] replace the anki template by the pug template\n' +
           '\tp - [previous]  let this template undecided, jump to previous template\n' +
           '\tl - [list]      list all template conflicts and quit this model\n' +
-          '\tq - [quit]      skip all unmanaged models and templates and quit the diff'
+          '\tq - [quit]      skip all unmanaged models and templates and quit the diff\n' +
+          d ? '' : '\td - [debug]     run debugging GUI tool'
         ));
         break;
     }
@@ -183,4 +195,27 @@ function write_diff(chunk) {
       .join('\n\n');
     process.stdout.write(value);
   }
+}
+
+async function fixtures(template) {
+  const fixturesFile = path.join(ROOT, 'tests/fixture/fixtures.json');
+  const allFixtures = JSON.parse(await promisify(fs.readFile)(fixturesFile, 'utf8'));
+  const matchArray = allFixtures.filter(f =>
+    f.model === template.model.name &&
+    f.card === template.name.split('_').slice(0, -1).join('_')
+  );
+  return matchArray.length ? matchArray : null;
+}
+
+async function debug(idArray) {
+  const shell = await getShell();
+  idArray.forEach(id => {
+    child_process.spawn(shell, [path.join(ROOT, 'tests/bin/test.sh'), id]);
+  });
+}
+
+async function getShell() {
+  const shellPid = (await find_process('pid', process.pid))[0].ppid;
+  const shellProcess = (await find_process('pid', shellPid))[0];
+  return shellProcess.bin;
 }
