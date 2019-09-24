@@ -145,7 +145,7 @@ class FixtureManager {
         try {
           content = await this.fixture.html(this.version);
         } catch (e) {
-          if(e.message === `Carte ${this.fixture.card} introuvable.`){
+          if (e.message === `Carte ${this.fixture.card} introuvable.`) {
             console.log(e.message);
             await waitFile(this.fixture.model.maker.fullname);
             this.fixture = await getFixture(this.options);

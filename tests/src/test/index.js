@@ -1,6 +1,6 @@
 //jshint esversion:8
 // native dependancies
-const childProcess = require('child_process');
+const child_process = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const util = require('util');
@@ -62,7 +62,7 @@ async function manage_fixture(options) {
   await fixture.setHtmlDiff();
   if (!fixture.diff.ok || !fixture.ok) {
     console.log(fixture.htmlDiffFile, fixture.diffString);
-    childProcess.spawn(
+    child_process.spawn(
       'D:\\ProgrammesPortables\\NW\\nw.exe "' + path.dirname(fixture.htmlDiffFile) + '"', {
         detached: true,
         stdio: 'ignore',
