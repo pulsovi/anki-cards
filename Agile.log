@@ -62,4 +62,4 @@
 			✓ Comparer les images
 			✓ create-fixture
 			✓ diff.html
-	… Creation d'un layout 'daf' pouvant prendre en parametres le nom des champs de l'image et du masque
+	✓ Creer un script pour indexer (git add) les images en montrant le diff
