@@ -123,7 +123,10 @@ class FixtureManager {
 
   async show(watch) {
     await this.ready;
-    this.browser = await puppeteer.launch({ headless: false });
+    this.browser = await puppeteer.launch({
+      headless: false,
+      args: ['--auto-open-devtools-for-tabs', '--start-maximized']
+    });
     this.page = await this.browser.newPage();
     await this.page.setViewport({ height: 560, width: 360 });
     await this.fill();
