@@ -23,6 +23,7 @@
     'javascript': '_js.png',
     'jquery': '_jquery.svg',
     'jsx': '_reactjs.svg',
+    'laravel': '_laravel.svg',
     'linux': '_linux.svg',
     'node.js': '_nodejs.svg',
     'npm': '_npm.svg',
