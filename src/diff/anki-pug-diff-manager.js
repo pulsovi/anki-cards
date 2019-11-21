@@ -125,7 +125,9 @@ class DiffManager {
       await promisify(mkdirp)(path.dirname(template.pug.file));
       await promisify(fs.writeFile)(template.pug.file, template.pug.content);
     }
-    child_process.execSync(`meld "${template.pug.file}" "${template.anki.path}"`);
+    child_process.execSync(
+      `"${process.env.MELD_PATH}" "${template.pug.file}" "${template.anki.path}"`,
+    );
   }
 
   async promptModel() {
