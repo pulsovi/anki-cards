@@ -8,23 +8,23 @@ const mkdirp = require('mkdirp');
 const mustache = require('mustache');
 const puppeteer = require('puppeteer').launch();
 const resemble = require('node-resemble-js');
-var sharp = null;
-if (!process.send) sharp = require('sharp');
+const sharp = require('sharp');
+
 const sizeOf = promisify(require('image-size'));
 // local dependancies
-
-const AnkiManager = new(require(path.resolve(__dirname, 'AnkiManager')))();
+const AnkiManager = require(path.resolve(__dirname, 'AnkiManager'));
+const ankiManager = new AnkiManager();
 
 const ROOT = process.env.ANKI_PUG_ROOT;
 const Model = require(path.resolve(ROOT, 'src/diff/anki-pug-model'));
 
 // model types
 const MODEL_STD = 0;
-const MODEL_CLOZE = 1;
+//const MODEL_CLOZE = 1;
 
-function mkdirpPromise(path) {
-  return new Promise(function(resolve, reject) {
-    mkdirp(path, undefined, resolve);
+function mkdirpPromise(pathname) {
+  return new Promise(resolve => {
+    mkdirp(pathname, null, resolve);
   });
 }
 
@@ -35,16 +35,16 @@ async function shot(html, viewport, screenshot) {
   await page.setContent(html);
   await mkdirpPromise(path.dirname(screenshot.path));
   await page.screenshot(screenshot);
-  setImmediate(_ => page.close());
+  setImmediate(() => page.close());
 }
 
 function getModel(modelName) {
-  var fullname = path.resolve(ROOT, 'model', modelName.replace(/:/g, path.sep), 'export.js');
+  var fullname = path.resolve(ROOT, 'model', modelName.replace(/:/gu, path.sep), 'export.js');
   return new Model(fullname, modelName);
 }
 
 function fileExist(filename) {
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     fs.stat(filename, (err, stat) => {
       if (!err) return resolve(stat);
       if (err.code === 'ENOENT') return resolve(false);
@@ -60,17 +60,15 @@ function resembleData(file1, file2) {
 }
 
 function parseCondition(template) {
-  return template.replace(/{{([^/#\^][^}]*)}}/g, '{{{$1}}}');
+  return template.replace(/\{\{(?<field>[^/#^][^}]*)\}\}/gu, '{{{$1}}}');
 }
 
 function getConfig(keyName) {
-  var config = JSON.parse(
-    fs.readFileSync(
-      path.resolve(ROOT, 'config/default.json'), 'utf8'
-    )
-  );
+  var config = JSON.parse(fs.readFileSync(path.resolve(ROOT, 'config/default.json'), 'utf8'));
   var keyValue = config;
-  keyName.split('.').forEach(_ => keyValue = keyValue[_]);
+  keyName.split('.').forEach(part => {
+    keyValue = keyValue[part];
+  });
   return keyValue;
 }
 
@@ -88,7 +86,9 @@ class Fixture {
       'platform',
       'title',
       'type',
-    ].forEach(_ => { this[_] = options[_]; });
+    ].forEach(field => {
+      this[field] = options[field];
+    });
     this.model = getModel(options.model);
 
     if (this.id) this.directory = path.resolve(ROOT, 'tests/out', this.id);
@@ -106,56 +106,50 @@ class Fixture {
     await Promise.all([
       this.model.getTemplate(this.card + '_recto').assign(this, 'recto'),
       this.model.getTemplate(this.card + '_verso').assign(this, 'verso'),
-      this.model.getTemplate('style').assign(this, 'css')
+      this.model.getTemplate('style').assign(this, 'css'),
     ]);
-    ['recto', 'verso'].forEach(
-      f => ['pug', 'anki'].forEach(
-        v => this[f][v].content = this.parse(this[f][v].content, f)
-      )
-    );
+    ['recto', 'verso'].forEach(face => {
+      ['pug', 'anki'].forEach(version => {
+        this[face][version].content = this.parse(this[face][version].content, face);
+      });
+    });
     return this;
   }
 
   async getRecto(version) {
     await this.ready;
     var template = this.recto[version].content;
-    return mustache.render(
-      template,
-      this.locals
-    );
+    return mustache.render(template, this.locals);
   }
 
   async getVerso(version) {
-    var locals = Object.assign({}, this.locals);
+    var locals = { ...this.locals };
     locals.FrontSide = await this.getRecto(version);
     var template = this.verso[version].content;
-    return mustache.render(
-      template,
-      locals
-    );
+    return mustache.render(template, locals);
   }
 
   parse(template, face) {
     if (this.type === MODEL_STD) return parseCondition(template);
-    else return parseCondition(this.parseCloze(template, face));
+    return parseCondition(this.parseCloze(template, face));
   }
 
   parseCloze(template, face) {
-    return template.replace(/{{cloze:([^}]*)}}/g, (match, field) => {
+    return template.replace(/\{\{cloze:(?<fld>[^}]*)\}\}/gu, (match, field) => {
       var source = this.locals[field];
       return source
         .replace(
-          RegExp(`{{c${this.ord + 1}::([^:}]*)(?:::([^}]*))?}}`, 'g'),
+          RegExp(`{{c${this.ord + 1}::(?<clozeText>[^:}]*)(?:::(?<hint>[^}]*))?}}`, 'gu'),
           (_, text, clue) => `<span class="cloze">${face === 'recto' ? '[' + (clue || '…') + ']' : text}</span>`
         )
-        .replace(/{{c\d+::([^}:]*)(::[^}]*)?}}/g, '$1');
+        .replace(/\{\{c\d+::(?<clozeText>[^}:]*)(?:::(?<hint>[^}]*))?\}\}/gu, '$1');
     });
   }
 
   async setVersion(version) {
     var html = await this.html(version);
     var dest = path.resolve(this.directory, version + '.png');
-    var screenshot = Object.assign({ path: dest }, this.screenshot);
+    var screenshot = { path: dest, ...this.screenshot };
     await Promise.all([
       shot(html, this.viewport, screenshot),
       promisify(fs.writeFile)(path.resolve(this.directory, version + '.html'), html),
@@ -179,8 +173,7 @@ class Fixture {
     var size = await sizeOf(filename);
     if (
       size.width !== this.viewport.width ||
-      size.height !== this.viewport.height &&
-      !this.screenshot.fullPage
+      (size.height !== this.viewport.height && !this.screenshot.fullPage)
     ) {
       await promisify(fs.copyFile)(filename, filename + '.old');
       var height = this.screenshot.fullPage ? size.height : this.viewport.height;
@@ -189,16 +182,15 @@ class Fixture {
   }
 
   async setResemble(version1, version2) {
-    var _this = this;
     var file1 = this.directory + '/' + version1 + '.png';
     var file2 = this.directory + '/' + version2 + '.png';
     if (!await fileExist(file1) || !await fileExist(file2)) return;
     var data = await resembleData(file1, file2);
     var diffVal = parseFloat(data.misMatchPercentage);
-    this.diffString = (this.diffString || '') + version1 + '-' + version2 + ':' + data.misMatchPercentage + '; ';
+    this.diffString = (this.diffString || '') + version1 + '-' + version2 + ':' + diffVal + '; ';
     this.diff = this.diff || {};
     this.diff[version1 + '-' + version2] = data.misMatchPercentage;
-    var resemblePath = _this.directory + '/' + version1 + '-' + version2 + '.png';
+    var resemblePath = this.directory + '/' + version1 + '-' + version2 + '.png';
     await new Promise(resolve => {
       data
         .getDiffImage()
@@ -210,22 +202,24 @@ class Fixture {
 
   async setHtmlDiff() {
     this.diff = this.diff || {};
-    this.diff.ok = parseFloat(this.diff['base-pug']) == 0 && parseFloat(this.diff['pug-anki']) == 0;
+    this.diff.ok =
+      parseFloat(this.diff['base-pug']) === 0 &&
+      parseFloat(this.diff['pug-anki']) === 0;
     this.htmlDiffFile = path.join(this.directory, 'index.html');
     var locals = this.asRaw({
       __dirname,
-      pugRectoFile: this.recto.pug.path.replace(/\\/g, '\\\\'),
-      pugVersoFile: this.verso.pug.path.replace(/\\/g, '\\\\'),
-      cssFile: this.css.pug.path.replace(/\\/g, '\\\\'),
+      cssFile: this.css.pug.path.replace(/\\/gu, '\\\\'),
+      pugRectoFile: this.recto.pug.path.replace(/\\/gu, '\\\\'),
+      pugVersoFile: this.verso.pug.path.replace(/\\/gu, '\\\\'),
     });
-    locals.directory = locals.directory.replace(/\\/g, '\\\\');
+    locals.directory = locals.directory.replace(/\\/gu, '\\\\');
     var html = mustache.render(await this.diffTemplate, locals);
     await Promise.all([
       promisify(fs.writeFile)(this.htmlDiffFile, html),
       promisify(fs.writeFile)(this.directory + '/package.json', JSON.stringify({
+        fixture: this.asRaw(),
         main: "index.html",
         name: this.title,
-        fixture: this.asRaw()
       }, null, '\t')),
     ]);
   }
@@ -236,17 +230,28 @@ class Fixture {
     );
     var body = await (this.face === 'recto' ? this.getRecto(version) : this.getVerso(version));
     var locals = {
-      css: this.css[version].content,
       body,
-      port: await AnkiManager.getPort()
+      css: this.css[version].content,
+      port: await ankiManager.getPort(),
     };
     return mustache.render(template, locals);
   }
 
   asRaw(from) {
     var raw = from || {};
-    ["card", "description", "diffTemplate", "directory", "face", "id", "locals",
-      "ok", "platform", "title", "viewport", "diff"
+    [
+      "card",
+      "description",
+      "diff",
+      "diffTemplate",
+      "directory",
+      "face",
+      "id",
+      "locals",
+      "ok",
+      "platform",
+      "title",
+      "viewport",
     ].forEach(_ => {
       raw[_] = this[_];
     });
