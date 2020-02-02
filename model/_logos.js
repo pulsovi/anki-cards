@@ -14,6 +14,7 @@
     'dos': '_cmd.png',
     'es6': '_es6.png',
     'es8': '_es6.png',
+    'eslint': '_eslint.svg',
     'excel': '_excel.svg',
     'express': '_npm.svg',
     'firefox': '_firefox.svg',
