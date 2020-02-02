@@ -4,12 +4,12 @@
   "description": "mes cartes anki",
   "main": "''",
   "dependencies": {
-    "config": "^3.2.4",
-    "diff": "^4.0.1",
+    "config": "^3.2.5",
+    "diff": "^4.0.2",
     "find-process": "^1.4.3",
     "image-size": "^0.7.5",
     "mkdirp": "^0.5.1",
-    "mustache": "^3.1.0",
+    "mustache": "^3.2.1",
     "node-netstat": "^1.8.0",
     "node-resemble-js": "^0.2.0",
     "pug": "^2.0.4",
@@ -17,8 +17,8 @@
     "readline-sync": "^1.4.10",
     "recursive-readdir-async": "^1.1.6",
     "sharp": "^0.22.1",
-    "sqlite3": "^4.1.0",
-    "uniqid": "^5.1.0"
+    "sqlite3": "^4.1.1",
+    "uniqid": "^5.2.0"
   },
   "devDependencies": {},
   "scripts": {
