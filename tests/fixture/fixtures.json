@@ -1014,5 +1014,36 @@
 		"screenshot": {
 			"fullPage": true
 		}
+	},
+	{
+		"card": "3typ",
+		"cid": "1542604754202",
+		"id": "400pr1usk655lsj5",
+		"locals": {
+			"MethodName": "writeFileSync",
+			"ClassName": "fs",
+			"Usage": "writes synchroniously <code>data</code> in <code>file</code>",
+			"ReturnType": "undefined",
+			"ReturnContent": "no value returned",
+			"Param1Name": "file",
+			"Param1Type": "String<wbr>|<wbr>Buffer<wbr>|<wbr>URL<wbr>|<wbr>Integer",
+			"Param1Desc": "&nbsp;filename or file descriptor",
+			"Param2Name": "data",
+			"Param2Type": "String<wbr>|<wbr>Buffer<wbr>|<wbr>TypedArray<wbr>|<wbr>DataWiew",
+			"Param2Desc": "The encoding option is ignored if data is a buffer.",
+			"Param3Name": "options",
+			"Param3Type": "Object | String",
+			"Param3IsOptional": "y",
+			"Param3Default": "{&hellip;}",
+			"Tags": " node.js "
+		},
+		"model": "language::function",
+		"ord": 16,
+		"type": 0,
+		"title": "multiples types",
+		"description": "La question ne doit pas sous entendre qu'un seul type est possible",
+		"face": "recto",
+		"platform": "mobile",
+		"ok": true
 	}
 ]
