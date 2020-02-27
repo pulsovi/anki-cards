@@ -121,6 +121,10 @@ class FixtureManager {
     this.fixture = await getFixture(options);
   }
 
+  static close() {
+    Fixture.close();
+  }
+
   async show(watch) {
     await this.ready;
     this.browser = await puppeteer.launch({
