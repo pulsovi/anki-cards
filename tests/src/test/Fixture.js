@@ -1,4 +1,3 @@
-//jshint esversion:8
 // native dependancies
 const fs = require('fs');
 const path = require('path');
@@ -12,10 +11,12 @@ const sharp = require('sharp');
 
 const sizeOf = promisify(require('image-size'));
 // local dependancies
-const AnkiManager = require(path.resolve(__dirname, 'AnkiManager'));
+const AnkiManager = require('./AnkiManager');
+
 const ankiManager = new AnkiManager();
 
 const ROOT = process.env.ANKI_PUG_ROOT;
+// eslint-disable-next-line import/no-dynamic-require
 const Model = require(path.resolve(ROOT, 'src/diff/anki-pug-model'));
 
 // model types
@@ -39,7 +40,7 @@ async function shot(html, viewport, screenshot) {
 }
 
 function getModel(modelName) {
-  var fullname = path.resolve(ROOT, 'model', modelName.replace(/:/gu, path.sep), 'export.js');
+  const fullname = path.resolve(ROOT, 'model', modelName.replace(/:/gu, path.sep), 'export.js');
   return new Model(fullname, modelName);
 }
 
@@ -64,9 +65,9 @@ function parseCondition(template) {
 }
 
 function getConfig(keyName) {
-  var config = JSON.parse(fs.readFileSync(path.resolve(ROOT, 'config/default.json'), 'utf8'));
-  var keyValue = config;
-  keyName.split('.').forEach(part => {
+  const config = JSON.parse(fs.readFileSync(path.resolve(ROOT, 'config/default.json'), 'utf8'));
+  let keyValue = config;
+  keyName.split('.').forEach((part) => {
     keyValue = keyValue[part];
   });
   return keyValue;
@@ -86,7 +87,7 @@ class Fixture {
       'platform',
       'title',
       'type',
-    ].forEach(field => {
+    ].forEach((field) => {
       this[field] = options[field];
     });
     this.model = getModel(options.model);
@@ -94,7 +95,7 @@ class Fixture {
     if (this.id) this.directory = path.resolve(ROOT, 'tests/out', this.id);
     this.locals.Card = this.card;
     this.locals.Type = this.model.name;
-    this.viewport = Object.assign(getConfig(this.platform + '.viewport'), options.viewport);
+    this.viewport = Object.assign(getConfig(`${this.platform}.viewport`), options.viewport);
     this.screenshot = options.screenshot || {};
     this.diffTemplate = promisify(fs.readFile)(path.join(__dirname, 'diff.html'), 'utf8');
 
@@ -104,8 +105,8 @@ class Fixture {
 
   async getRaw() {
     await Promise.all([
-      this.model.getTemplate(this.card + '_recto').assign(this, 'recto'),
-      this.model.getTemplate(this.card + '_verso').assign(this, 'verso'),
+      this.model.getTemplate(`${this.card}_recto`).assign(this, 'recto'),
+      this.model.getTemplate(`${this.card}_verso`).assign(this, 'verso'),
       this.model.getTemplate('style').assign(this, 'css'),
     ]);
     ['recto', 'verso'].forEach(face => {
@@ -130,7 +131,7 @@ class Fixture {
   }
 
   parse(template, face) {
-    if (this.type === MODEL_STD) return parseCondition(template);
+    if (this.type === Fixture.MODEL_STD) return parseCondition(template);
     return parseCondition(this.parseCloze(template, face));
   }
 
@@ -263,5 +264,9 @@ class Fixture {
     (await puppeteer).close();
   }
 }
+
+// model types
+Fixture.MODEL_STD = 0;
+Fixture.MODEL_CLOZE = 1;
 
 module.exports = Fixture;

@@ -1,4 +1,3 @@
-//jshint esversion:8
 const AnkiDbManager = require('../new-fixture/AnkiDbManager');
 const child_process = require('child_process');
 const Fixture = require('../test/Fixture');

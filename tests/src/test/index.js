@@ -1,11 +1,11 @@
-//jshint esversion:8
 // native dependancies
-const child_process = require('child_process');
+const childProcess = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const util = require('util');
 // local dependancies
-const Fixture = require(path.resolve(__dirname, 'Fixture'));
+const Fixture = require('./Fixture');
+
 const ROOT = process.env.ANKI_PUG_ROOT;
 
 const fixturesPath = path.resolve(ROOT, 'tests/fixture/fixtures.json');
@@ -22,14 +22,14 @@ main()
   });
 
 async function extendFixture(options) {
-  var jsonFile = path.resolve(ROOT, 'tests/out', options.id, 'package.json');
-  var moreOptions = null;
+  const jsonFile = path.resolve(ROOT, 'tests/out', options.id, 'package.json');
+  let moreOptions = null;
   try {
-    var json = await util.promisify(fs.readFile)(jsonFile, 'utf8');
+    const json = await util.promisify(fs.readFile)(jsonFile, 'utf8');
     moreOptions = JSON.parse(json).fixture;
   } catch (e) {
     if (e.code === 'ENOENT') return options;
-    console.error('Erreur non attrapée :' + e.message);
+    console.error(`Erreur non attrapée : ${e.message}`);
     throw e;
   }
   return Object.assign(moreOptions, options);
@@ -37,10 +37,10 @@ async function extendFixture(options) {
 
 async function main() {
   if (process.argv.length > 2) {
-    var fixture = fixtures.find(f => f.id === process.argv[2]);
+    let fixture = fixtures.find((f) => f.id === process.argv[2]);
     if (!fixture) throw new ReferenceError(`Unable to found ${process.argv[2]} fixture.`);
     fixture = await extendFixture(fixture);
-    await manage_one_fixture(fixture);
+    await manageOneFixture(fixture);
   } else {
     for (let i = 0; i < fixtures.length; ++i) {
       await manage_fixture(fixtures[i]);
@@ -104,14 +104,14 @@ async function reload_base(options) {
 }
 
 async function reload_anki(options) {
-  var fixture = new Fixture(options);
+  const fixture = new Fixture(options);
   await fixture.setAnki();
   await fixture.setResemble('pug', 'anki');
   await fixture.setHtmlDiff();
 }
 
 async function reload_pug(options) {
-  var fixture = new Fixture(options);
+  const fixture = new Fixture(options);
   await fixture.setPug();
   await Promise.all([
     fixture.setResemble('base', 'pug'),

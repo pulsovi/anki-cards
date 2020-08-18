@@ -4,7 +4,7 @@
   "description": "mes cartes anki",
   "main": "''",
   "dependencies": {
-    "config": "^3.2.5",
+    "config": "^3.3.1",
     "diff": "^4.0.2",
     "find-process": "^1.4.3",
     "image-size": "^0.7.5",
@@ -15,17 +15,17 @@
     "pug": "^2.0.4",
     "puppeteer": "^1.20.0",
     "readline-sync": "^1.4.10",
-    "recursive-readdir-async": "^1.1.6",
+    "recursive-readdir-async": "^1.1.8",
     "sharp": "^0.22.1",
-    "sqlite3": "^4.1.1",
+    "sqlite3": "^4.2.0",
     "uniqid": "^5.2.0"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.2.0",
-    "eslint-config-standard": "^14.1.0",
-    "eslint-plugin-import": "^2.21.2",
-    "eslint-plugin-node": "^11.0.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1"
   },
