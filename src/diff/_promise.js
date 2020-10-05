@@ -1,16 +1,14 @@
-promise = {
-  noCallBack : function noCallBack (){
-    var Rpromise, Rresolve, Rreject;
-    Rpromise = new Promise(function(resolve, reject){
-      Rresolve = resolve;
-      Rreject = reject;
+const promise = {
+  noCallBack: function noCallBack() {
+    const retval = {};
+
+    retval.promise = new Promise((resolve, reject) => {
+      retval.resolve = resolve;
+      retval.reject = reject;
     });
-    return {
-      promise: Rpromise,
-      resolve: Rresolve,
-      reject: Rreject
-    };
-  }
+
+    return retval;
+  },
 };
 
 module.exports = promise;

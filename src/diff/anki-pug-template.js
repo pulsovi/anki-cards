@@ -1,10 +1,8 @@
 // jshint esversion: 8
-const fs = require('fs');
-const path = require('path');
-const readline = require('readline');
-const MustacheTemplate = require('./anki-pug-mustache-template');
-const FileManager = require('./file_manager');
-const chalk = require('chalk');
+const fs = require("fs");
+const path = require("path");
+const chalk = require("chalk");
+const FileManager = require("./file_manager");
 
 class Template {
   constructor(pugMakefile, name, model) {
@@ -15,7 +13,8 @@ class Template {
   }
 
   async parse() {
-    var templates;
+    let templates;
+
     delete require.cache[require.resolve(this.makefile)];
     try {
       templates = require(this.makefile);
@@ -24,7 +23,8 @@ class Template {
         return this.waitForReload(e.message, e.filename);
       return this.waitForReload(e.message);
     }
-    var template = templates.find(t => t.name === this.name);
+    const template = templates.find(t => t.name === this.name);
+
     if (!template)
       return this.waitForReload(`Impossible de trouver le template ${this.name}.`);
     Object.assign(this, template);
@@ -44,7 +44,7 @@ class Template {
   async check() {
     if (!this.pug || !this.pug.content || !this.pug.file || !this.pug.path) {
       return await this.waitForReload(
-        'Le template doit contenir une propriété pug avec les éléments path, file et content'
+        "Le template doit contenir une propriété pug avec les éléments path, file et content"
       );
     }
   }
@@ -53,22 +53,23 @@ class Template {
     await this.ready;
     object[child] = {
       name: this.name,
-      pug: Object.assign({}, this.pug),
-      anki: Object.assign({}, this.anki)
+      pug: { ...this.pug },
+      anki: { ...this.anki },
     };
   }
 
-  watch(){
+  watch() {
     this.close();
-    var dirname = path.dirname(this.makefile);
-    this.watcher = fs.watch(dirname, (event, file)=>{
+    const dirname = path.dirname(this.makefile);
+
+    this.watcher = fs.watch(dirname, (event, file) => {
       console.log(chalk.yellow(`\nfile ${event}: ${path.resolve(dirname, file)}`));
       this.ready = this.parse();
     });
   }
 
-  close(){
-    if(this.watcher) this.watcher.close();
+  close() {
+    if (this.watcher) this.watcher.close();
   }
 }
 

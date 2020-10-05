@@ -1,4 +1,3 @@
-//jshint esversion:6
 const fs = require('fs');
 const path = require('path');
 const pug = require('pug');

@@ -1,51 +1,56 @@
 // jshint esversion:8
-const fs = require('fs');
-const path = require('path');
-const child_process = require('child_process');
+const fs = require("fs");
+const path = require("path");
+const childProcess = require("child_process");
+const { deprecate } = require("util");
 
+const FileManager = {
+  fileNormalized(filename) {
+    return this.normalizeEnding(fs.readFileSync(filename, "utf8"));
+  },
+  normalizeEnding(string) {
+    let result = string;
 
-class FileManager {
-  async waitOnce(...files) {
+    while (result.includes("\r\r\n")) result = result.replace(/\r\r\n/gu, "\r\n");
+    return result.replace(/\r\n/gu, "\n").replace(/\r/gu, "\n").replace(/\n*$/u, "\n");
+  },
+  open(...files) {
+    files.forEach(viewFile);
+  },
+  waitOnce(...files) {
     return new Promise(resolve => {
-      var watchers = files.map(f => {
-        if (typeof f !== 'string') {
-          console.log(`${f} is not a string`);
-          throw new TypeError('files MUST be of type string');
+      const watchers = files.map(file => {
+        if (typeof file !== "string") {
+          console.error(`${file} is not a string`);
+          throw new TypeError("files MUST be of type string");
         }
-        var file = path.basename(f);
-        var directory = path.dirname(f);
-        var watcher = fs.watch(directory, (event, filename) => {
-          if (filename !== file) return;
-          console.log(event, filename);
-          watchers.forEach(w => w.close());
-          resolve(f);
+        const basename = path.basename(file);
+        const directory = path.dirname(file);
+        const watcher = fs.watch(directory, (event, filename) => {
+          if (filename !== basename) return;
+          console.info(event, filename);
+          watchers.forEach(wtchr => wtchr.close());
+          resolve(file);
         });
-        console.log('watch file:', f);
-        viewFile(f);
+
+        console.info("watch file:", file);
+        viewFile(file);
         return watcher;
       });
     });
-  }
-
-  async open(...files) {
-    files.forEach(viewFile);
-  }
-
-  normalizeEnding(string) {
-    return string.replace(/\r\n|\r|\n/g, '\n').replace(/\n*$/, '\n');
-  }
-
-  fileNormalized(filename) {
-    return this.normalizeEnding(fs.readFileSync(filename, 'utf8'));
-  }
-}
+  },
+};
 
 function run(command) {
-  child_process.spawn(command, { detached: true, stdio: 'ignore', shell: true }).unref();
+  childProcess.spawn(command, { detached: true, shell: true, stdio: "ignore" }).unref();
 }
 
 function viewFile(filename) {
   run(`"C:\\Program Files\\Sublime Text 3\\sublime_text.exe" "${filename}"`);
 }
 
-module.exports = new FileManager();
+FileManager.fileNormalized = deprecate(
+  FileManager.fileNormalized,
+  "fileNormalized() is deprecated, please normalize the original file instead"
+);
+module.exports = FileManager;

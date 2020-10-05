@@ -1,9 +1,13 @@
-//jshint esversion:8
+// jshint esversion:8
 // native dependancies
-const path = require('path');
+const path = require("path");
 // local dependancies
-const DiffManager = require('./anki-pug-diff-manager');
-const ROOT = process.env.ANKI_PUG_ROOT;
+const DiffManager = require("./anki-pug-diff-manager");
 
-var diffManager = new DiffManager(path.resolve(ROOT, 'model'));
-diffManager.processAll().catch(e=>console.log('main error: ', e));
+const { "anki-pug-root": ROOT } = require("../../config/global");
+
+const diffManager = new DiffManager(path.resolve(ROOT, "model"));
+
+process.env.ANKI_PUG_ROOT = ROOT;
+
+diffManager.processAll().catch(error => console.error("main error: ", error));
