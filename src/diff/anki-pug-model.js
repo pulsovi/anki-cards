@@ -1,8 +1,8 @@
-//jshint esversion:8
 const util = require('util');
 
 const path = require('path');
 const pug = require('pug');
+const chalk = require('chalk');
 
 const promiseNoCallback = require('./_promise').noCallBack;
 const Template = require('./anki-pug-template');
