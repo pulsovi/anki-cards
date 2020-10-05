@@ -4,17 +4,15 @@ from aqt.utils import showInfo
 import os
 import pathlib
 import importlib
-from . import coucou
-from anki.hooks import addHook
-from anki.hooks import remHook
+from anki.hooks import addHook, remHook
 
 
-ROOT_FOLDER = "D:\\MesDonnees\\Dev\\Kodech\\Anki\\cards\\model"
+ROOT_FOLDER = "E:\\dev\\03 - Anki\\anki-cards\\model"
 
 
-def export():
-    for key in mw.col.models.models:
-        export_model(mw.col.models.models[key])
+def export_models():
+    for model in mw.col.models.all():
+        export_model(model)
 
 
 def export_model(model):
@@ -142,16 +140,6 @@ def ShowCardCount(message=""):
     showInfo(("Card count: %d" % cardCount) + message)
 
 
-export_action = qt.QAction("Exporter les models", mw)
-export_action.triggered.connect(export)
-mw.form.menuTools.addAction(export_action)
-
-
-import_models_action = qt.QAction("Importer les models", mw)
-import_models_action.triggered.connect(import_models)
-mw.form.menuTools.addAction(import_models_action)
-
-
 def onSync(state):
     try:
         if(state == 'findMedia'):
@@ -161,4 +149,17 @@ def onSync(state):
         pass
 
 
+def AddBouton(title, action):
+    button = qt.QAction(title, mw)
+    button.triggered.connect(action)
+    mw.form.menuTools.addAction(button)
+
+
+def Test():
+    models = mw.col.models.all()
+    showInfo(str(len(models)) + "\n" + str(models[0]))
+
+AddBouton("Exporter les models", export_models)
+AddBouton("Importer les models", import_models)
+AddBouton("Test", Test)
 addHook('sync', onSync)
