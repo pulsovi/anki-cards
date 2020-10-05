@@ -18,6 +18,7 @@
     "recursive-readdir-async": "^1.1.8",
     "sharp": "^0.22.1",
     "sqlite3": "^4.2.0",
+    "underscore": "^1.11.0",
     "uniqid": "^5.2.0"
   },
   "devDependencies": {
@@ -30,7 +31,7 @@
     "eslint-plugin-standard": "^4.0.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
