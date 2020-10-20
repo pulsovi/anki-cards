@@ -11,16 +11,6 @@ const ROOT = process.env.ANKI_PUG_ROOT;
 const fixturesPath = path.resolve(ROOT, 'tests/fixture/fixtures.json');
 const fixtures = JSON.parse(fs.readFileSync(fixturesPath, 'utf8'));
 
-// main
-main()
-  .then(_ => {
-    Fixture.close();
-  })
-  .catch(e => {
-    console.log('Main error:', e);
-    Fixture.close();
-  });
-
 async function extendFixture(options) {
   const jsonFile = path.resolve(ROOT, 'tests/out', options.id, 'package.json');
   let moreOptions = null;
@@ -35,6 +25,37 @@ async function extendFixture(options) {
     throw e;
   }
   return Object.assign(moreOptions, options);
+}
+
+async function reloadBase(options) {
+  const fixture = new Fixture(options);
+
+  await fixture.setResemble('base', 'pug');
+  await fixture.setHtmlDiff();
+}
+
+async function manageOneVersion(options, version) {
+  switch (version) {
+  case 'anki':
+    await reload_anki(options);
+    break;
+  case 'pug':
+    await reload_pug(options);
+    break;
+  case 'base':
+    await reloadBase(options);
+    break;
+  default:
+    throw new ReferenceError(`Version ${version} unknown.`);
+  }
+}
+
+async function manageOneFixture(options) {
+  if (process.argv.length > 3) {
+    const version = process.argv[3];
+
+    await manageOneVersion(options, version);
+  } else await manage_fixture(options);
 }
 
 async function main() {
@@ -77,35 +98,6 @@ async function manage_fixture(options) {
     console.log('Pass:', fixture.id, fixture.model.name, fixture.card, fixture.title);
 }
 
-async function manage_one_fixture(options) {
-  if (process.argv.length > 3) {
-    var version = process.argv[3];
-    await manage_one_version(options, version);
-  } else await manage_fixture(options);
-}
-
-async function manage_one_version(options, version) {
-  switch (version) {
-    case 'anki':
-      await reload_anki(options);
-      break;
-    case 'pug':
-      await reload_pug(options);
-      break;
-    case 'base':
-      await reload_base(options);
-      break;
-    default:
-      throw new ReferenceError(`Version ${version} unknown.`);
-  }
-}
-
-async function reload_base(options) {
-  var fixture = new Fixture(options);
-  await fixture.setResemble('base', 'pug');
-  await fixture.setHtmlDiff();
-}
-
 async function reload_anki(options) {
   const fixture = new Fixture(options);
 
@@ -124,3 +116,13 @@ async function reload_pug(options) {
   ]);
   await fixture.setHtmlDiff();
 }
+
+// main
+main()
+  .then(_ => {
+    Fixture.close();
+  })
+  .catch(e => {
+    console.log('Main error:', e);
+    Fixture.close();
+  });
