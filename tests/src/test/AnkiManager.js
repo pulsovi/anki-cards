@@ -9,11 +9,11 @@ const cache = {
 
 function getPort(pid) {
   return new Promise((resolve, reject) => {
-    var ntret = netstat({
+    const ntret = netstat({
       filter: {
         pid,
-        state: 'LISTENING'
-      }
+        state: 'LISTENING',
+      },
     }, stat => {
       resolve(stat.local.port);
     });
@@ -27,9 +27,9 @@ function toCache(keyName, keyValue) {
 
 class AnkiManager {
   async getPid() {
-    if (!await this.isRunning()) {
+    if (!await this.isRunning())
       await this.start();
-    }
+
     return (await find_process('name', 'anki'))
       .filter(ps => ps.name === 'anki.exe')[0]
       .pid;
@@ -41,18 +41,20 @@ class AnkiManager {
   }
 
   async isRunning() {
-    var process_list = await find_process('name', 'anki');
+    const process_list = await find_process('name', 'anki');
+
     return process_list.filter(ps => ps.name === 'anki.exe').length > 0;
   }
 
   start() {
     return new Promise((resolve, reject) => {
-      var anki = child_process.spawn(
-        `"C:\\Program Files\\Anki\\anki.exe"`, {
+      let anki = child_process.spawn(
+        '"C:\\Program Files\\Anki\\anki.exe"', {
           stdio: ['ignore', 'pipe', 'ignore'],
-          shell: true
+          shell: true,
         }
       );
+
       anki.stdout.setEncoding('utf8');
       anki.stdout.on('data', chunk => {
         if (chunk === 'anki:ready') {

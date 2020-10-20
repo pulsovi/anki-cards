@@ -1,21 +1,20 @@
-//jshint esversion:8
 // native dependancies
-const fs = require('fs');
-const path = require('path');
-const readline = require('readline');
-const { promisify } = require('util');
+const fs = require("fs");
+const path = require("path");
+const readline = require("readline");
+const { promisify } = require("util");
 // npm dependancies
-const config = require('config');
-const mkdirp = require('mkdirp');
-const puppeteer = require('puppeteer');
-const resemble = require('node-resemble-js');
-const sharp = require('sharp');
-const uniqid = require('uniqid');
+const config = require("config");
+const mkdirp = require("mkdirp");
+const puppeteer = require("puppeteer");
+const resemble = require("node-resemble-js");
+const sharp = require("sharp");
+const uniqid = require("uniqid");
 // local dependancies
-const AnkiDbManager = require('./AnkiDbManager');
+const AnkiDbManager = require("./AnkiDbManager");
 
 const ROOT = process.env.ANKI_PUG_ROOT;
-const fixturesPath = path.resolve(ROOT, 'tests/fixture/fixtures.json');
+const fixturesPath = path.resolve(ROOT, "tests/fixture/fixtures.json");
 
 main()
   .catch(e => {
@@ -23,34 +22,38 @@ main()
   });
 
 async function main() {
-  var JSONfixtures = await promisify(fs.readFile)(fixturesPath, 'utf8');
-  var fixtures = JSON.parse(JSONfixtures);
-  var fixture = await createFixture();
+  const JSONfixtures = await promisify(fs.readFile)(fixturesPath, "utf8");
+  const fixtures = JSON.parse(JSONfixtures);
+  const fixture = await createFixture();
+
   fixtures.push(fixture);
-  fs.writeFile(fixturesPath, JSON.stringify(fixtures, null, '\t') + '\n', () => {});
-  console.log('tests/bin/test.sh', fixture.id);
+  fs.writeFile(fixturesPath, `${JSON.stringify(fixtures, null, "\t")}\n`, () => {});
+  console.log("tests/bin/test.sh", fixture.id);
 }
 
 async function createFixture() {
-  var fixture = {};
-  var cid = '';
+  let fixture = {};
+  let cid = "";
+
   if (process.argv.length > 2) cid = process.argv[2];
-  else cid = await prompt('create from card id ? cid/n (no): ');
+  else cid = await prompt("create from card id ? cid/n (no): ");
   fixture = await createFixtureFromCid(cid);
-  var file = (await prompt('base image file : ')).replace(/"/g, "");
+  const file = (await prompt("base image file : ")).replace(/"/g, "");
+
   fixture.ok = false;
   if (file) {
     await setFixtureBase(fixture, file);
-    if (await prompt('is the base image fit well ? y/n (no): ') === 'y')
+    if (await prompt("is the base image fit well ? y/n (no): ") === "y")
       fixture.ok = true;
   }
   return fixture;
 }
 
 async function createFixtureFromCid(cid) {
-  var fixture = {};
-  var nid = await AnkiDbManager.getCardNote(cid);
-  var mid = await AnkiDbManager.getNoteModel(nid);
+  const fixture = {};
+  const nid = await AnkiDbManager.getCardNote(cid);
+  const mid = await AnkiDbManager.getNoteModel(nid);
+
   fixture.card = await AnkiDbManager.getCardName(cid);
   fixture.cid = cid;
   fixture.id = uniqid();
@@ -60,44 +63,45 @@ async function createFixtureFromCid(cid) {
   fixture.ord = await AnkiDbManager.getCardOrd(cid);
   fixture.type = await AnkiDbManager.getModelType(mid);
 
-  fixture.title = await prompt('title (Title): ', 'Title');
-  fixture.description = await prompt('description (Description): ', 'Description');
-  fixture.face = await prompt('face ? recto/verso (verso): ', 'verso');
-  fixture.platform = await prompt('platform ? mobile/win (mobile): ', 'mobile');
+  fixture.title = await prompt("title (Title): ", "Title");
+  fixture.description = await prompt("description (Description): ", "Description");
+  fixture.face = await prompt("face ? recto/verso (verso): ", "verso");
+  fixture.platform = await prompt("platform ? mobile/win (mobile): ", "mobile");
   return fixture;
 }
 
 async function setFixtureBase(fixture, image) {
-  var dest = path.resolve(ROOT, 'tests/out', fixture.id, 'base.png');
+  const dest = path.resolve(ROOT, "tests/out", fixture.id, "base.png");
+
   mkdirp.sync(path.dirname(dest));
   await sharp(image)
     .extract({
-      width: 1080,
       height: 1690,
+      left: 0,
       top: 72,
-      left: 0
+      width: 1080,
     })
     .resize(360, 560)
     .toFile(dest);
 }
 
 function prompt(message, defaultValue) {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     const rl = readline.createInterface({
       input: process.stdin,
-      output: process.stdout
+      output: process.stdout,
     });
 
-    rl.question(message, (answer) => {
+    rl.question(message, answer => {
       rl.close();
-      resolve(answer || defaultValue || '');
+      resolve(answer || defaultValue || "");
     });
   });
 }
 
 function cleanLocals(locals) {
   Object.keys(locals).forEach(k => {
-    if (locals[k] === '') delete locals[k];
+    if (locals[k] === "") delete locals[k];
   });
   return locals;
 }

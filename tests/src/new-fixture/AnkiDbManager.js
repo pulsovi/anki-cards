@@ -12,7 +12,7 @@ const MODEL_CLOZE = 1;
 
 function GetAnkiDb() {
   return new Promise((resolve, reject) => {
-    var Db = new sqlite3.Database(AnkiDB, sqlite3.OPEN_READONLY, (err) => {
+    var Db = new sqlite3.Database(AnkiDB, sqlite3.OPEN_READONLY, err => {
       if (err) reject(err);
       else resolve(Db);
     });
@@ -20,8 +20,9 @@ function GetAnkiDb() {
 }
 
 async function GetModels(manager) {
-  var row = await manager.getRow('SELECT models FROM col');
-  var models = JSON.parse(row.models);
+  const row = await manager.getRow('SELECT models FROM col');
+  const models = JSON.parse(row.models);
+
   return models;
 }
 
@@ -31,41 +32,45 @@ class AnkiDbManager {
     this.models = GetModels(this);
     this.cache = {
       notes: {},
-      cards: {}
+      cards: {},
     };
   }
 
   async getCard(cid) {
     if (this.cache.cards.hasOwnProperty(cid))
       return this.cache.cards[cid];
-    var card = await this.getRow('SELECT * FROM cards WHERE id=?', cid);
+    const card = await this.getRow('SELECT * FROM cards WHERE id=?', cid);
+
     this.cache.cards[cid] = card;
     return card;
-
   }
 
   async getCardName(cid) {
-    var nid = await this.getCardNote(cid);
-    var mid = await this.getNoteModel(nid);
-    var model = await this.getModel(mid);
-    var pos = (await this.getCard(cid)).ord;
-    var typ = await this.getModelType(mid);
+    const nid = await this.getCardNote(cid);
+    const mid = await this.getNoteModel(nid);
+    const model = await this.getModel(mid);
+    const pos = (await this.getCard(cid)).ord;
+    const typ = await this.getModelType(mid);
+
     return (typ === MODEL_STD && model.tmpls[pos].name) || model.tmpls[0].name;
   }
 
   async getCardNote(cid) {
-    var card = await this.getCard(cid);
+    const card = await this.getCard(cid);
+
     return card.nid;
   }
 
   async getCardOrd(cid) {
-    var card = await this.getCard(cid);
+    const card = await this.getCard(cid);
+
     return card.ord;
   }
 
   async getModel(mid) {
-    var models = await this.models;
-    var model = models[mid];
+    const models = await this.models;
+    const model = models[mid];
+
     return model;
   }
 
@@ -73,43 +78,48 @@ class AnkiDbManager {
     return (await this.getModel(mid)).name;
   }
 
-  async getModelType(mid){
-    var model = await this.getModel(mid);
+  async getModelType(mid) {
+    const model = await this.getModel(mid);
+
     return model.type;
   }
 
   async getNote(nid) {
     if (this.cache.notes.hasOwnProperty(nid))
       return this.cache.notes[nid];
-    var note = await this.getRow('SELECT * FROM notes WHERE id=?', nid);
+    const note = await this.getRow('SELECT * FROM notes WHERE id=?', nid);
+
     this.cache.notes[nid] = note;
     return note;
   }
 
   async getNoteFields(nid) {
-    var note = await this.getNote(nid);
-    var model = await this.getModel(note.mid);
-    var fieldsValues = note.flds.split('\u001f');
-    var fieldsNames = model.flds.map(fp => fp.name);
-    var fields = {};
-    for (let i = 0; i < fieldsNames.length; ++i) {
+    const note = await this.getNote(nid);
+    const model = await this.getModel(note.mid);
+    const fieldsValues = note.flds.split('\u001f');
+    const fieldsNames = model.flds.map(fp => fp.name);
+    const fields = {};
+
+    for (let i = 0; i < fieldsNames.length; ++i)
       fields[fieldsNames[i]] = fieldsValues[i];
-    }
+
     return fields;
   }
 
-  async getNoteModel(nid){
+  async getNoteModel(nid) {
     return (await this.getNote(nid)).mid;
   }
 
-  async getNoteTags(nid){
-    var note = await this.getNote(nid);
+  async getNoteTags(nid) {
+    const note = await this.getNote(nid);
+
     return note.tags;
   }
 
   getRow(sql, params) {
-    return new Promise(async (resolve, reject) => {
-      var db = await this.db;
+    return new Promise(async(resolve, reject) => {
+      const db = await this.db;
+
       db.get(sql, params, (err, row) => {
         if (err) reject(err);
         else resolve(row);

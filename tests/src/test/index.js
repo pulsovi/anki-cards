@@ -24,8 +24,10 @@ main()
 async function extendFixture(options) {
   const jsonFile = path.resolve(ROOT, 'tests/out', options.id, 'package.json');
   let moreOptions = null;
+
   try {
     const json = await util.promisify(fs.readFile)(jsonFile, 'utf8');
+
     moreOptions = JSON.parse(json).fixture;
   } catch (e) {
     if (e.code === 'ENOENT') return options;
@@ -37,7 +39,8 @@ async function extendFixture(options) {
 
 async function main() {
   if (process.argv.length > 2) {
-    let fixture = fixtures.find((f) => f.id === process.argv[2]);
+    let fixture = fixtures.find(f => f.id === process.argv[2]);
+
     if (!fixture) throw new ReferenceError(`Unable to found ${process.argv[2]} fixture.`);
     fixture = await extendFixture(fixture);
     await manageOneFixture(fixture);
@@ -50,6 +53,7 @@ async function main() {
 
 async function manage_fixture(options) {
   const fixture = new Fixture(options);
+
   await Promise.all([
     fixture.setPug(),
     fixture.setAnki(),
@@ -63,15 +67,14 @@ async function manage_fixture(options) {
   if (!fixture.diff.ok || !fixture.ok) {
     console.log(fixture.htmlDiffFile, fixture.diffString);
     child_process.spawn(
-      'D:\\ProgrammesPortables\\NW\\nw.exe "' + path.dirname(fixture.htmlDiffFile) + '"', {
+      `D:\\ProgrammesPortables\\NW\\nw.exe "${path.dirname(fixture.htmlDiffFile)}"`, {
         detached: true,
         stdio: 'ignore',
-        shell: true
+        shell: true,
       }
     ).unref();
-  } else {
+  } else
     console.log('Pass:', fixture.id, fixture.model.name, fixture.card, fixture.title);
-  }
 }
 
 async function manage_one_fixture(options) {
@@ -105,6 +108,7 @@ async function reload_base(options) {
 
 async function reload_anki(options) {
   const fixture = new Fixture(options);
+
   await fixture.setAnki();
   await fixture.setResemble('pug', 'anki');
   await fixture.setHtmlDiff();
@@ -112,6 +116,7 @@ async function reload_anki(options) {
 
 async function reload_pug(options) {
   const fixture = new Fixture(options);
+
   await fixture.setPug();
   await Promise.all([
     fixture.setResemble('base', 'pug'),
