@@ -1,14 +1,18 @@
-const path = require("path");
-const pug = require("pug");
-const FileManager = require("../src/diff/file_manager");
+/* eslint-disable no-sync */
+const fs = require('fs');
+const path = require('path');
+
+const pug = require('pug');
+
+const FileManager = require('../src/diff/file_manager');
 
 function make(
   dirname,
-  cards = ["Card1"],
-  css = path.resolve(__dirname, "commons.css"),
+  cards = ['Card1'],
+  css = path.resolve(__dirname, 'commons.css'),
   fields = [
-    "_recto",
-    "_verso",
+    '_recto',
+    '_verso',
   ]
 ) {
   const outputList = [];
@@ -20,13 +24,15 @@ function make(
 
       outputList.push({
         anki: {
-          content: FileManager.fileNormalized(path.resolve(dirname, "out", `${name + field}.html`)),
-          path: path.resolve(dirname, "out", `${name + field}.html`),
+          content: FileManager.normalizeEnding(
+            fs.readFileSync(path.resolve(dirname, 'out', `${name + field}.html`), 'utf8')
+          ),
+          path: path.resolve(dirname, 'out', `${name + field}.html`),
         },
         name: name + field,
         pug: {
           content: FileManager.normalizeEnding(pug.renderFile(pugFile)),
-          file: path.resolve(__dirname, "../var", relative, `${name + field}.html`),
+          file: path.resolve(__dirname, '../var', relative, `${name + field}.html`),
           path: pugFile,
         },
       });
@@ -35,12 +41,12 @@ function make(
 
   outputList.push({
     anki: {
-      content: FileManager.fileNormalized(path.resolve(dirname, "out", "style.css")),
-      path: path.resolve(dirname, "out", "style.css"),
+      content: fs.readFileSync(path.resolve(dirname, 'out', 'style.css'), 'utf8'),
+      path: path.resolve(dirname, 'out', 'style.css'),
     },
-    name: "style",
+    name: 'style',
     pug: {
-      content: FileManager.fileNormalized(css),
+      content: fs.readFileSync(css, 'utf8'),
       file: css,
       path: css,
     },

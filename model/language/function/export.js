@@ -1,13 +1,16 @@
-//jshint esversion:6
+/* eslint-disable no-sync */
 const fs = require('fs');
 const path = require('path');
 const pug = require('pug');
 
+// eslint-disable-next-line no-process-env
 const ROOT = process.env.ANKI_PUG_ROOT;
-var pugFileDir = path.resolve(ROOT, 'var', path.relative(path.join(ROOT, 'model'), __dirname));
+const pugFileDir = path.resolve(ROOT, 'var', path.relative(path.join(ROOT, 'model'), __dirname));
 
+// eslint-disable-next-line import/no-dynamic-require
 const FileManager = require(path.resolve(ROOT, 'src/diff/file_manager'));
 
+// eslint-disable-next-line no-extend-native
 String.prototype.toCapitalisationCase = function toCapitalisationCase() {
   return this.charAt(0).toUpperCase() + this.substring(1);
 };
@@ -43,71 +46,75 @@ const single = {
 
 const fields = [
   '_recto',
-  '_verso'
+  '_verso',
 ];
 
-outputList = [];
+const outputList = [];
 
-list.forEach(export_param_card);
+list.forEach(exportParamCard);
 
-function export_param_card(name) {
-  fields.forEach(function(field) {
-    export_param_field(name, field);
+function exportParamCard(name) {
+  fields.forEach(field => {
+    exportParamField(name, field);
   });
 }
 
-function export_param_field(card_name, field) {
-  var pugFile = path.resolve(__dirname, card_name + field + '.pug');
-  var model = pug.compileFile(pugFile);
-  for (let i = 1; i <= max; ++i) {
+function exportParamField(cardName, field) {
+  const pugFile = path.resolve(__dirname, `${cardName + field}.pug`);
+  const model = pug.compileFile(pugFile);
+
+  for (let paramNb = 1; paramNb <= max; ++paramNb) {
     outputList.push({
-      pug: {
-        path: pugFile,
-        file: path.join(pugFileDir, path.basename(pugFile)),
-        content: FileManager.normalizeEnding(model({ th: th[i - 1], i: i, max: max }))
-      },
       anki: {
-        path: path.resolve(__dirname, 'out/' + i + card_name + field + '.html'),
-        file: path.resolve(__dirname, 'out/' + i + card_name + field + '.html'),
-        get content() { return FileManager.fileNormalized(this.path); }
+        get content() { return FileManager.normalizeEnding(fs.readFileSync(this.path, 'utf8')); },
+        file: path.resolve(__dirname, `out/${paramNb}${cardName}${field}.html`),
+        path: path.resolve(__dirname, `out/${paramNb}${cardName}${field}.html`),
       },
-      name: i + card_name + field
+      name: paramNb + cardName + field,
+      pug: {
+        // eslint-disable-next-line id-length
+        content: FileManager.normalizeEnding(model({ i: paramNb, max, th: th[paramNb - 1] })),
+        file: path.join(pugFileDir, path.basename(pugFile)),
+        path: pugFile,
+      },
     });
   }
 }
 
-Object.keys(single).forEach(function(pugName) {
-  var htmlName = single[pugName];
-  fields.forEach(function(field) {
-    var pugFile = path.resolve(__dirname, pugName + field + '.pug');
+Object.keys(single).forEach(pugName => {
+  const htmlName = single[pugName];
+
+  fields.forEach(field => {
+    const pugFile = path.resolve(__dirname, `${pugName + field}.pug`);
+
     outputList.push({
-      pug: {
-        path: pugFile,
-        file: path.join(pugFileDir, path.basename(pugFile)),
-        content: FileManager.normalizeEnding(pug.renderFile(pugFile, { max: max }))
-      },
       anki: {
-        path: path.resolve(__dirname, 'out/' + htmlName + field + '.html'),
-        file: path.resolve(__dirname, 'out/' + htmlName + field + '.html'),
-        get content() { return FileManager.fileNormalized(this.path); }
+        get content() { return FileManager.normalizeEnding(fs.readFileSync(this.path, 'utf8')); },
+        file: path.resolve(__dirname, `out/${htmlName}${field}.html`),
+        path: path.resolve(__dirname, `out/${htmlName}${field}.html`),
       },
-      name: htmlName + field
+      name: htmlName + field,
+      pug: {
+        content: FileManager.normalizeEnding(pug.renderFile(pugFile, { max })),
+        file: path.join(pugFileDir, path.basename(pugFile)),
+        path: pugFile,
+      },
     });
   });
 });
 
 outputList.push({
-  pug: {
-    file: path.resolve(__dirname, '../../commons.css'),
-    path: path.resolve(__dirname, '../../commons.css'),
-    get content() { return FileManager.fileNormalized(this.path); }
-  },
   anki: {
+    get content() { return FileManager.normalizeEnding(fs.readFileSync(this.path, 'utf8')); },
     file: path.resolve(__dirname, 'out/style.css'),
     path: path.resolve(__dirname, 'out/style.css'),
-    get content() { return FileManager.fileNormalized(this.path); }
   },
-  name: 'style'
+  name: 'style',
+  pug: {
+    get content() { return FileManager.normalizeEnding(fs.readFileSync(this.path, 'utf8')); },
+    file: path.resolve(__dirname, '../../commons.css'),
+    path: path.resolve(__dirname, '../../commons.css'),
+  },
 });
 
 module.exports = outputList;
