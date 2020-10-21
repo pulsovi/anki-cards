@@ -5,6 +5,7 @@ import os
 import pathlib
 import importlib
 from anki.hooks import addHook, remHook
+from typing import Dict, List, Optional
 
 
 ROOT_FOLDER = "E:\\dev\\03 - Anki\\anki-cards\\model"
@@ -42,9 +43,39 @@ def export_models():
         export_model(model)
 
 
+def get_all_models() -> List[Dict[str, Optional[int]]]:
+    "get all models from both Anki and folder tree as list of {name: id}"
+    models = {}
+    # Anki models
+    for model in mw.col.models.all_names_and_ids():
+        models[model.name] = model.id
+    # folder tree models
+    for model in get_model_folders():
+        if not model in models:
+            models[model] = None
+    return models
+
+
 def get_model_folder(name):
     return os.path.join(ROOT_FOLDER, *(name.split("::")), "out")
 
+
+def get_model_folders(root=ROOT_FOLDER) -> List[str]:
+    "get list of models from folder tree"
+    models = []
+    for folder in list_folders_in(root):
+        if folder == "out":
+            models.append("")
+            continue
+
+        if not list_folders_in(os.path.join(root, folder)):
+            models.append(folder)
+            continue
+
+        submodels = get_model_folders(os.path.join(root, folder))
+        for submodel in submodels:
+            models.append(folder + (("::" + submodel) if submodel else ""))
+    return models
 
 def import_model(model):
     name = model["name"]
@@ -76,6 +107,10 @@ def import_models():
         message += import_model(mw.col.models.models[key])
     mw.col.models.flush()
     show_card_count(message)
+
+
+def list_folders_in(path) -> List[str]:
+    return [folder for folder in os.listdir(path) if os.path.isdir(os.path.join(path, folder))]
 
 
 def list_new_cards(model):
