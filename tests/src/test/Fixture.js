@@ -19,10 +19,6 @@ const ROOT = process.env.ANKI_PUG_ROOT;
 // eslint-disable-next-line import/no-dynamic-require
 const Model = require(path.resolve(ROOT, 'src/diff/anki-pug-model'));
 
-// model types
-const MODEL_STD = 0;
-//const MODEL_CLOZE = 1;
-
 function mkdirpPromise(pathname) {
   return new Promise(resolve => {
     mkdirp(pathname, null, resolve);
