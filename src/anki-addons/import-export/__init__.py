@@ -1,9 +1,9 @@
 from aqt import mw
 from aqt import qt
-from aqt.utils import showInfo
+from aqt.utils import askUser, showInfo
 import os
 import pathlib
-import importlib
+import shutil
 from anki.hooks import addHook, remHook
 from typing import Dict, List, Optional
 
@@ -29,18 +29,48 @@ def add_template(model, name, folder):
     return "\n\tadded " + name
 
 
-def export_model(model):
-    name = model["name"]
+def export_model(name, id):
     folder = get_model_folder(name)
+    if id is None:
+        return export_model_absent(folder, name)
+
+    model_manager = mw.col.models
+    model = model_manager.get(id)
     print_css(folder, model["css"])
     cards = model["tmpls"]
     for card in cards:
         print_card(folder, card)
 
 
+def export_model_absent(folder, name):
+    question = "Le modèle " + name + " est absent de la collection," + \
+        "supprimer le dossier correspondant dans le modèle pug ?"
+    if not askUser(question): return
+    try:
+        # html folder ("out" directory)
+        if os.path.isdir(folder):
+            shutil.rmtree(folder)
+
+        # pug folder
+        pug = os.path.dirname(folder)
+        if not os.listdir(pug):
+            os.rmdir(pug)
+
+        # model type folder (like "css" dir for "css::property" model)
+            model_type = os.path.dirname(pug)
+            if not os.listdir(model_type):
+                model_type_folder = os.path.join(model_type, "out")
+                model_type_name = "::".join(name.split("::")[0:-1])
+                export_model_absent(model_type_folder, model_type_name)
+    except Exception as error:
+        showInfo(str(error))
+        showInfo("Directory '%s' can not be removed" % folder)
+    return
+
+
 def export_models():
-    for model in mw.col.models.all():
-        export_model(model)
+    for name, id in get_all_models().items():
+        export_model(name, id)
 
 
 def get_all_models() -> List[Dict[str, Optional[int]]]:
@@ -76,6 +106,7 @@ def get_model_folders(root=ROOT_FOLDER) -> List[str]:
         for submodel in submodels:
             models.append(folder + (("::" + submodel) if submodel else ""))
     return models
+
 
 def import_model(model):
     name = model["name"]
