@@ -11,6 +11,10 @@ from typing import Dict, List, Optional
 ROOT_FOLDER = "E:\\dev\\03 - Anki\\anki-cards\\model"
 
 
+def todo():
+    raise Exception("La fonction n'est pas terminée")
+
+
 def add_button(title, action):
     button = qt.QAction(title, mw)
     button.triggered.connect(action)
@@ -29,23 +33,37 @@ def add_template(model, name, folder):
     return "\n\tadded " + name
 
 
-def export_model(name, id):
+def export_model(name, id) -> str:
+    "Update or create fs model from Anki model"
+    message = ""
     folder = get_model_folder(name)
-    if id is None:
-        return export_model_absent(folder, name)
-
     model_manager = mw.col.models
     model = model_manager.get(id)
-    print_css(folder, model["css"])
-    cards = model["tmpls"]
-    for card in cards:
-        print_card(folder, card)
+    message += export_model_css(model, folder)
+    for card in model["tmpls"]:
+        message += export_model_card(folder, card)
+    return message
 
 
-def export_model_absent(folder, name):
+def export_model_card(folder, card):
+    name = card["name"]
+    recto = card["qfmt"]
+    verso = card["afmt"]
+    write_file(os.path.join(folder, name + "_recto.html"), recto)
+    write_file(os.path.join(folder, name + "_verso.html"), verso)
+
+
+def export_model_css(model, folder):
+    write_file(os.path.join(folder, "style.css"), model["css"])
+
+
+def export_model_delete(name) -> None:
+    "Deletes model from folder tree"
     question = "Le modèle " + name + " est absent de la collection," + \
         "supprimer le dossier correspondant dans le modèle pug ?"
     if not askUser(question): return
+
+    folder = get_model_folder(name)
     try:
         # html folder ("out" directory)
         if os.path.isdir(folder):
@@ -56,12 +74,12 @@ def export_model_absent(folder, name):
         if not os.listdir(pug):
             os.rmdir(pug)
 
-        # model type folder (like "css" dir for "css::property" model)
+            # model type folder (like "css" dir for "css::property" model)
             model_type = os.path.dirname(pug)
             if not os.listdir(model_type):
                 model_type_folder = os.path.join(model_type, "out")
                 model_type_name = "::".join(name.split("::")[0:-1])
-                export_model_absent(model_type_folder, model_type_name)
+                export_model_delete(model_type_folder, model_type_name)
     except Exception as error:
         showInfo(str(error))
         showInfo("Directory '%s' can not be removed" % folder)
@@ -70,7 +88,24 @@ def export_model_absent(folder, name):
 
 def export_models():
     for name, id in get_all_models().items():
-        export_model(name, id)
+        if id is None:
+            # pug model which does not exists in Anki, delete it from folder tree
+            export_model_delete(name)
+        else:
+            export_model(name, id)
+    showInfo("Procédure terminée avec succés.")
+
+
+def get_all_cards(model, folder) -> List[Dict]:
+    ankiCards = model["tmpls"]
+    ankiCardsNames = [card["name"] for card in ankiCards]
+    files = list(os.walk(folder))[0][2]
+    newCards = [{"name": recto.replace('_recto.html', '')}
+        for recto in files if
+        recto.endswith('_recto.html') and
+        recto.replace('recto', 'verso') in files and
+        recto.replace('_recto.html', '') not in ankiCardsNames]
+    return ankiCards + newCards
 
 
 def get_all_models() -> List[Dict[str, Optional[int]]]:
@@ -80,17 +115,13 @@ def get_all_models() -> List[Dict[str, Optional[int]]]:
     for model in mw.col.models.all_names_and_ids():
         models[model.name] = model.id
     # folder tree models
-    for model in get_model_folders():
-        if not model in models:
+    for model in get_fs_models():
+        if model not in models:
             models[model] = None
     return models
 
 
-def get_model_folder(name):
-    return os.path.join(ROOT_FOLDER, *(name.split("::")), "out")
-
-
-def get_model_folders(root=ROOT_FOLDER) -> List[str]:
+def get_fs_models(root=ROOT_FOLDER) -> List[str]:
     "get list of models from folder tree"
     models = []
     for folder in list_folders_in(root):
@@ -102,56 +133,116 @@ def get_model_folders(root=ROOT_FOLDER) -> List[str]:
             models.append(folder)
             continue
 
-        submodels = get_model_folders(os.path.join(root, folder))
+        submodels = get_fs_models(os.path.join(root, folder))
         for submodel in submodels:
             models.append(folder + (("::" + submodel) if submodel else ""))
     return models
 
 
-def import_model(model):
-    name = model["name"]
+def get_model_folder(name):
+    return os.path.join(ROOT_FOLDER, *(name.split("::")), "out")
+
+
+def import_model_card_create(model, card, folder):
+    todo()
     message = ""
-    folder = get_model_folder(name)
-    css = read_css(folder)
-    if model["css"] != css:
-        message += "\n\tupdate css"
-    model["css"] = css
-    tempMessage = message
-    cards = model["tmpls"]
+    message += add_template(model, card, folder)
+    mw.col.genCards(mw.col.models.nids(model))
+
+
+def import_model_card_delete():
+    todo()
+
+
+def import_model_card_update(model, card, folder) -> str:
+    "Updates anki card from folder tree"
+    message = ""
+    name = card["name"]
+    file = os.path.join(folder, name)
+    recto = read_file(file + "_recto.html")  # recto
+    verso = read_file(file + "_verso.html")  # verso
+    if card["qfmt"] != recto:
+        card["qfmt"] = recto
+        message += "\n\tupdate " + name + " recto"
+    if card["afmt"] != verso:
+        card["afmt"] = verso
+        message += "\n\tupdate " + name + " verso"
+    return message
+
+
+def import_model_cards(model, folder) -> (str, bool):
+    "Import cards of a model from folder tree"
+    message = ""
+    cards = get_all_cards(model, folder)
     for card in cards:
-        message += read_card(folder, card)
-    new_cards = list_new_cards(model)
-    if len(new_cards):
-        for new_card in new_cards:
-            message += add_template(model, new_card, folder)
-        mw.col.genCards(mw.col.models.nids(model))
-    if message == "":
-        return message
-    mw.col.models.save(model, tempMessage != message)
+        name = card["name"]
+        file = os.path.join(folder, name)
+        recto = file + "_recto.html"
+        if len(card.keys()) == 1:
+            # new pug card, import it to anki
+            message += import_model_card_create(model, folder, card)
+        elif not os.path.isfile(recto):
+            # anki card not in pug, delete it from Anki
+            message += import_model_card_delete(model, card)
+        else:
+            # already existent card, update it in Anki
+            message += import_model_card_update(model, card, folder)
+    return message, bool(message)
+
+
+def import_model_create(name):
+    showInfo("create model : " + name)
+    todo()
+
+
+def import_model_css(model, folder) -> str:
+    pugCss = read_file(os.path.join(folder, "style.css"))
+    if model["css"] != pugCss:
+        model["css"] = pugCss
+        return "\n\tupdate css"
+    return ""
+
+
+def import_model_delete(id):
+    showInfo("delete model : " + id)
+    raise Exception("Fonction non créée")
+
+
+def import_model_update(name, id, folder) -> str:
+    "Update anki model by import its fields from folder tree"
+    message = ""
+    model = mw.col.models.get(id)
+    templateUpdated = False
+
+    message += import_model_css(model, folder)
+    cardsMessage, templateUpdated = import_model_cards(model, folder)
+    message += cardsMessage
+
+    if not message: return message
+    mw.col.models.save(model, templateUpdated)
     return "\n" + name + " :" + message
 
 
-def import_models():
+def import_models() -> str:
     show_card_count()
     message = ""
-    for key in mw.col.models.models:
-        message += import_model(mw.col.models.models[key])
+    for name, id in get_all_models().items():
+        folder = get_model_folder(name)
+        if id is None:
+            # new pug model, create it in Anki
+            message += import_model_create(name)
+        elif not os.path.isdir(folder):
+            # anki model not in pug, delete it from Anki
+            message += import_model_delete(id)
+        else:
+            # already existent model, update it in Anki
+            message += import_model_update(name, id, folder)
     mw.col.models.flush()
     show_card_count(message)
 
 
 def list_folders_in(path) -> List[str]:
     return [folder for folder in os.listdir(path) if os.path.isdir(os.path.join(path, folder))]
-
-
-def list_new_cards(model):
-    files = list(os.walk(get_model_folder(model["name"])))[0][2]
-    old_cards = [i["name"] for i in model["tmpls"]]
-    new_cards = [i.replace('_recto.html', '') for i in files if
-                 i.endswith('_recto.html') and
-                 i.replace('recto', 'verso') in files and
-                 i.replace('_recto.html', '') not in old_cards]
-    return new_cards
 
 
 def normalize(data):
@@ -161,43 +252,13 @@ def normalize(data):
 
 
 def on_sync(state):
+    showInfo("on_sync")
     try:
         if(state == 'findMedia'):
             print('anki:ready', end='', flush=True)
             remHook('sync', on_sync)
-    except:
-        pass
-
-
-def print_card(folder, card):
-    name = card["name"]
-    recto = card["qfmt"]
-    verso = card["afmt"]
-    write_file(os.path.join(folder, name + "_recto.html"), recto)
-    write_file(os.path.join(folder, name + "_verso.html"), verso)
-
-
-def print_css(folder, data):
-    write_file(os.path.join(folder, "style.css"), data)
-
-
-def read_card(folder, card):
-    message = ""
-    name = card["name"]
-    file = os.path.join(folder, name)
-    recto = read_file(file + "_recto.html")  # recto
-    verso = read_file(file + "_verso.html")  # verso
-    if card["qfmt"] != recto:
-        message += "\n\tupdate " + name + " recto"
-    if card["afmt"] != verso:
-        message += "\n\tupdate " + name + " verso"
-    card["qfmt"] = recto
-    card["afmt"] = verso
-    return message
-
-
-def read_css(folder):
-    return read_file(os.path.join(folder, "style.css"))
+    except Exception as error:
+        showInfo("on sync error" + str(error))
 
 
 def read_file(filename):
