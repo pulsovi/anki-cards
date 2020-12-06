@@ -2,7 +2,15 @@
   "name": "anki-cards",
   "version": "1.0.0",
   "description": "mes cartes anki",
-  "main": "''",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "eslintConfig": {
+    "extends": [
+      "pulsovi/node"
+    ]
+  },
   "dependencies": {
     "chalk": "^4.1.0",
     "config": "^3.3.1",
@@ -25,14 +33,12 @@
   "devDependencies": {
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-config-pulsovi": "https://github.com/pulsovi/eslint-config-pulsovi.git",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1"
-  },
-  "scripts": {
-    "start": "node index.js"
   },
   "repository": {
     "type": "git",
