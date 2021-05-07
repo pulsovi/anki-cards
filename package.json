@@ -19,7 +19,7 @@
     "recursive-readdir-async": "^1.1.8",
     "sharp": "^0.22.1",
     "sqlite3": "^4.2.0",
-    "underscore": "^1.11.0",
+    "underscore": "^1.12.1",
     "uniqid": "^5.2.0"
   },
   "devDependencies": {
