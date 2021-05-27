@@ -1,11 +1,13 @@
 const childProcess = require('child_process');
 const fs = require('fs');
 const path = require('path');
-const puppeteer = require('puppeteer');
 const readline = require('readline');
 const { promisify } = require('util');
-const Fixture = require('../test/Fixture');
+
+const puppeteer = require('puppeteer');
+
 const AnkiDbManager = require('../new-fixture/AnkiDbManager');
+const Fixture = require('../test/Fixture');
 
 const ROOT = process.env.ANKI_PUG_ROOT;
 const FileManager = require(path.resolve(ROOT, 'src/diff/file_manager'));

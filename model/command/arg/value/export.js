@@ -1,4 +1,4 @@
-module.exports = require(process.env.ANKI_PUG_ROOT + '/model/standard-export')(__dirname, [
+module.exports = require(`${process.env.ANKI_PUG_ROOT}/model/standard-export`)(__dirname, [
   'Usage',
-  'Value'
+  'Value',
 ]);

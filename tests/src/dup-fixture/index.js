@@ -1,6 +1,7 @@
-const path = require('path');
 const fs = require('fs');
+const path = require('path');
 const { promisify } = require('util');
+
 // npm
 const uniqid = require('uniqid');
 

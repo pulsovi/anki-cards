@@ -1,20 +1,24 @@
 // native dependencies
-const readline = require("readline");
-const path = require("path");
-const { promisify } = require("util");
-const childProcess = require("child_process");
-const fs = require("fs");
+const childProcess = require('child_process');
+const fs = require('fs');
+const path = require('path');
+const readline = require('readline');
+const { promisify } = require('util');
+
 // npm dependencies
-const chalk = require("chalk");
-const diff = require("diff");
-const mkdirp = require("mkdirp");
-const findProcess = require("find-process");
+const chalk = require('chalk');
+const diff = require('diff');
+const findProcess = require('find-process');
+const mkdirp = require('mkdirp');
+
 // local dependencies
-const Tree = require("./anki-pug-tree");
-const meld = require("../utils/meld");
-const FileManager = require("./file_manager");
+const { 'anki-pug-root': ROOT } = require('../../config/global');
+const meld = require('../utils/meld');
+
+const Tree = require('./anki-pug-tree');
+const FileManager = require('./file_manager');
+
 // config
-const { "anki-pug-root": ROOT } = require("../../config/global");
 
 class DiffManager {
   constructor(root) {
@@ -47,7 +51,7 @@ class DiffManager {
       const response = await this.processTemplate(template, previous);
 
       template.close();
-      if (response && response.command && response.command === "previous") {
+      if (response && response.command && response.command === 'previous') {
         if (index > 0) {
           index -= 2;
           previous = true;
@@ -62,7 +66,7 @@ class DiffManager {
 
   async processTemplate(template, toPrevious) {
     if (template.pug.content === template.anki.content)
-      return toPrevious ? { command: "previous" } : null;
+      return toPrevious ? { command: 'previous' } : null;
     if (this.manageModel === null) await this.promptModel();
     if (this.manageModel === false || this.quit === true) return;
 
@@ -72,33 +76,33 @@ class DiffManager {
     }
 
     const fixtureList = await fixtures(template);
-    const options = fixtureList ? "[ynsSoplqd]" : "[ynsSoplq]";
+    const options = fixtureList ? '[ynsSoplqd]' : '[ynsSoplq]';
     const response = await rlQuestion(chalk.blueBright(`  compare ${template.name} ${options}? `));
 
     switch (response) {
-    case "y":
+    case 'y':
       await this.compare(template);
       break;
-    case "n":
+    case 'n':
       return;
-    case "s":
+    case 's':
       this.diff_words(template);
       break;
-    case "S":
+    case 'S':
       this.diff_lines(template);
       break;
-    case "o":
+    case 'o':
       fs.writeFile(template.anki.path, template.pug.content, _ => _);
       return;
-    case "p":
-      return { command: "previous" };
-    case "l":
+    case 'p':
+      return { command: 'previous' };
+    case 'l':
       this.listOnly = true;
       return;
-    case "q":
+    case 'q':
       this.quit = true;
       return;
-    case "d":
+    case 'd':
       if (fixtureList) {
         debug(fixtureList.map(fixture => fixture.id));
         break;
@@ -106,15 +110,15 @@ class DiffManager {
       // else falls through
     default:
       console.log(chalk.red(
-        `${"\ty - [yes]       compare versions\n" +
-          "\tn - [no]        skip this template\n" +
-          "\ts - [simple-w]  print simple words diff\n" +
-          "\tS - [simple-l]  print simple lines diff\n" +
-          "\to - [overwrite] replace the anki template by the pug template\n" +
-          "\tp - [previous]  let this template undecided, jump to previous template\n" +
-          "\tl - [list]      list all template conflicts and quit this model\n" +
-          "\tq - [quit]      skip all unmanaged models and templates and quit the diff"}${
-          d ? "\n\td - [debug]     run debugging GUI tool" : ""}`
+        `${'\ty - [yes]       compare versions\n' +
+          '\tn - [no]        skip this template\n' +
+          '\ts - [simple-w]  print simple words diff\n' +
+          '\tS - [simple-l]  print simple lines diff\n' +
+          '\to - [overwrite] replace the anki template by the pug template\n' +
+          '\tp - [previous]  let this template undecided, jump to previous template\n' +
+          '\tl - [list]      list all template conflicts and quit this model\n' +
+          '\tq - [quit]      skip all unmanaged models and templates and quit the diff'}${
+          d ? '\n\td - [debug]     run debugging GUI tool' : ''}`
       ));
       break;
     }
@@ -139,25 +143,25 @@ class DiffManager {
     const response = await rlQuestion(chalk.cyanBright(`manage ${this.currentModel.name} [ynaq]? `));
 
     switch (response) {
-    case "n":
+    case 'n':
       this.manageModel = false;
       return;
-    case "a":
+    case 'a':
       this.manageAllModels = true;
       this.manageModel = true;
       return;
-    case "y":
+    case 'y':
       this.manageModel = true;
       return;
-    case "q":
+    case 'q':
       this.quit = true;
       return;
     default:
       console.log(chalk.red(
-        "\ty - [yes]  manage\n" +
-          "\tn - [no]   skip this model\n" +
-          "\ta - [all]  manage all models\n" +
-          "\tq - [quit] skip all unmanaged models and quit the diff"
+        '\ty - [yes]  manage\n' +
+          '\tn - [no]   skip this model\n' +
+          '\ta - [all]  manage all models\n' +
+          '\tq - [quit] skip all unmanaged models and quit the diff'
       ));
       return this.promptModel();
     }
@@ -193,20 +197,20 @@ function write_diff(chunk) {
     process.stdout.write(chalk.red(value));
   else {
     value = value
-      .split("\n\n")
+      .split('\n\n')
       .filter((el, index, array) => index === 0 || index === array.length - 1)
-      .join("\n\n");
+      .join('\n\n');
     process.stdout.write(value);
   }
 }
 
 async function fixtures(template) {
-  const fixturesFile = path.join(ROOT, "tests/fixture/fixtures.json");
-  const allFixtures = JSON.parse(await promisify(fs.readFile)(fixturesFile, "utf8"));
+  const fixturesFile = path.join(ROOT, 'tests/fixture/fixtures.json');
+  const allFixtures = JSON.parse(await promisify(fs.readFile)(fixturesFile, 'utf8'));
   const matchArray = allFixtures.filter(fixture => fixture.model === template.model.name &&
     (
-      fixture.card === template.name.split("_").slice(0, -1).join("_") ||
-      template.name === "style"
+      fixture.card === template.name.split('_').slice(0, -1).join('_') ||
+      template.name === 'style'
     ));
   return matchArray.length ? matchArray : null;
 }
@@ -215,12 +219,12 @@ async function debug(idArray) {
   const shell = await getShell();
 
   idArray.forEach(id => {
-    childProcess.spawn(shell, [path.join(ROOT, "tests/bin/test.sh"), id]);
+    childProcess.spawn(shell, [path.join(ROOT, 'tests/bin/test.sh'), id]);
   });
 }
 
 async function getShell() {
-  const shellPid = (await findProcess("pid", process.pid))[0].ppid;
-  const shellProcess = (await findProcess("pid", shellPid))[0];
+  const shellPid = (await findProcess('pid', process.pid))[0].ppid;
+  const shellProcess = (await findProcess('pid', shellPid))[0];
   return shellProcess.bin;
 }

@@ -3,7 +3,7 @@ function endProcess(subprocess) {
     return Promise.resolve(subprocess.exitCode);
 
   return new Promise(resolve => {
-    subprocess.on("close", () => resolve(subprocess.exitCode));
+    subprocess.on('close', () => resolve(subprocess.exitCode));
   });
 }
 

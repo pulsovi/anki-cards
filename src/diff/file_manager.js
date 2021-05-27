@@ -1,18 +1,18 @@
 // jshint esversion:8
-const fs = require("fs");
-const path = require("path");
-const childProcess = require("child_process");
-const { deprecate } = require("util");
+const childProcess = require('child_process');
+const fs = require('fs');
+const path = require('path');
+const { deprecate } = require('util');
 
 const FileManager = {
   fileNormalized(filename) {
-    return this.normalizeEnding(fs.readFileSync(filename, "utf8"));
+    return this.normalizeEnding(fs.readFileSync(filename, 'utf8'));
   },
   normalizeEnding(string) {
     let result = string;
 
-    while (result.includes("\r\r\n")) result = result.replace(/\r\r\n/gu, "\r\n");
-    return result.replace(/\r\n/gu, "\n").replace(/\r/gu, "\n").replace(/\n*$/u, "\n");
+    while (result.includes('\r\r\n')) result = result.replace(/\r\r\n/gu, '\r\n');
+    return result.replace(/\r\n/gu, '\n').replace(/\r/gu, '\n').replace(/\n*$/u, '\n');
   },
   open(...files) {
     files.forEach(viewFile);
@@ -20,9 +20,9 @@ const FileManager = {
   waitOnce(...files) {
     return new Promise(resolve => {
       const watchers = files.map(file => {
-        if (typeof file !== "string") {
+        if (typeof file !== 'string') {
           console.error(`${file} is not a string`);
-          throw new TypeError("files MUST be of type string");
+          throw new TypeError('files MUST be of type string');
         }
         const basename = path.basename(file);
         const directory = path.dirname(file);
@@ -33,7 +33,7 @@ const FileManager = {
           resolve(file);
         });
 
-        console.info("watch file:", file);
+        console.info('watch file:', file);
         viewFile(file);
         return watcher;
       });
@@ -42,7 +42,7 @@ const FileManager = {
 };
 
 function run(command) {
-  childProcess.spawn(command, { detached: true, shell: true, stdio: "ignore" }).unref();
+  childProcess.spawn(command, { detached: true, shell: true, stdio: 'ignore' }).unref();
 }
 
 function viewFile(filename) {
@@ -51,6 +51,6 @@ function viewFile(filename) {
 
 FileManager.fileNormalized = deprecate(
   FileManager.fileNormalized,
-  "fileNormalized() is deprecated, please normalize the original file instead"
+  'fileNormalized() is deprecated, please normalize the original file instead'
 );
 module.exports = FileManager;

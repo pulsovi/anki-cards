@@ -3,6 +3,7 @@ const childProcess = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const util = require('util');
+
 // local dependancies
 const Fixture = require('./Fixture');
 
@@ -66,9 +67,8 @@ async function main() {
     fixture = await extendFixture(fixture);
     await manageOneFixture(fixture);
   } else {
-    for (let i = 0; i < fixtures.length; ++i) {
+    for (let i = 0; i < fixtures.length; ++i)
       await manage_fixture(fixtures[i]);
-    }
   }
 }
 

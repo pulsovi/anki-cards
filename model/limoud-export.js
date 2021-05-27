@@ -1,6 +1,7 @@
-//jshint esversion:6
+// jshint esversion:6
 const fs = require('fs');
 const path = require('path');
+
 const pug = require('pug');
 
 function make(
@@ -9,7 +10,7 @@ function make(
   css = path.resolve(__dirname, 'kodech.css'),
   fields = [
     '_recto',
-    '_verso'
+    '_verso',
   ]
 ) {
   return require('./standard-export')(dirname, cards, css, fields);

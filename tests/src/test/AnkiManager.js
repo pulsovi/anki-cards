@@ -1,7 +1,8 @@
 // jshint esversion:8
+const child_process = require('child_process');
+
 const find_process = require('find-process');
 const netstat = require('node-netstat');
-const child_process = require('child_process');
 
 const cache = {
   port: null,

@@ -1,6 +1,7 @@
 /* eslint-disable no-sync */
 const fs = require('fs');
 const path = require('path');
+
 const pug = require('pug');
 
 // eslint-disable-next-line no-process-env

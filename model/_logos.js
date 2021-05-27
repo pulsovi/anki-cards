@@ -1,5 +1,5 @@
 (function IIFE() {
-  var logos = {
+  const logos = {
     'anki': '_anki.svg',
     'anki-addon': '_anki.svg',
     'apache': '_apache.png',
@@ -39,9 +39,11 @@
     'vba': '_vb.svg',
     'wordpress': '_wordpress.svg',
   };
-  var header = document.getElementsByTagName('header')[0];
+  const header = document.getElementsByTagName('header')[0];
+
   if (!header) return;
-  var tag = header.innerText.toLowerCase();
+  const tag = header.innerText.toLowerCase();
+
   if (!logos.hasOwnProperty(tag)) return;
   header.classList.add('logo');
   header.appendChild(document.createElement('img')).src = logos[tag];

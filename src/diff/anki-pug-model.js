@@ -1,9 +1,9 @@
-const util = require("util");
+const util = require('util');
 
-const chalk = require("chalk");
+const chalk = require('chalk');
 
-const Template = require("./anki-pug-template");
-const FileManager = require("./file_manager");
+const Template = require('./anki-pug-template');
+const FileManager = require('./file_manager');
 
 class Model {
   constructor(makefile, name) {
@@ -15,11 +15,11 @@ class Model {
     try {
       this.pug = require(this.pugMakefile);
     } catch (error) {
-      if (error.code === "ENOENT")
+      if (error.code === 'ENOENT')
         return this.waitForReload(error.message, error.path);
 
-      console.log("Model.parse error: ", error);
-      return this.waitForReload("");
+      console.log('Model.parse error: ', error);
+      return this.waitForReload('');
     }
     return Promise.resolve(this);
   }
@@ -45,7 +45,7 @@ class Model {
 
 Model.prototype.reload = util.deprecate(
   Model.prototype.parse,
-  "Model.reload() is deprecated, use Model.parse() instead."
+  'Model.reload() is deprecated, use Model.parse() instead.'
 );
 
 module.exports = Model;

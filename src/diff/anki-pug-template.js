@@ -1,8 +1,10 @@
 // jshint esversion: 8
-const fs = require("fs");
-const path = require("path");
-const chalk = require("chalk");
-const FileManager = require("./file_manager");
+const fs = require('fs');
+const path = require('path');
+
+const chalk = require('chalk');
+
+const FileManager = require('./file_manager');
 
 class Template {
   constructor(pugMakefile, name, model) {
@@ -44,7 +46,7 @@ class Template {
   async check() {
     if (!this.pug || !this.pug.content || !this.pug.file || !this.pug.path) {
       return await this.waitForReload(
-        "Le template doit contenir une propriété pug avec les éléments path, file et content"
+        'Le template doit contenir une propriété pug avec les éléments path, file et content'
       );
     }
   }

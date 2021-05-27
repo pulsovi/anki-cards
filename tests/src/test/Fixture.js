@@ -2,14 +2,15 @@
 const fs = require('fs');
 const path = require('path');
 const { promisify } = require('util');
+
 // npm dependancies
 const mkdirp = require('mkdirp');
 const mustache = require('mustache');
 const puppeteer = require('puppeteer').launch();
 const resemble = require('node-resemble-js');
 const sharp = require('sharp');
-
 const sizeOf = promisify(require('image-size'));
+
 // local dependancies
 const AnkiManager = require('./AnkiManager');
 
@@ -255,18 +256,18 @@ class Fixture {
     const raw = from || {};
 
     [
-      "card",
-      "description",
-      "diff",
-      "diffTemplate",
-      "directory",
-      "face",
-      "id",
-      "locals",
-      "ok",
-      "platform",
-      "title",
-      "viewport",
+      'card',
+      'description',
+      'diff',
+      'diffTemplate',
+      'directory',
+      'face',
+      'id',
+      'locals',
+      'ok',
+      'platform',
+      'title',
+      'viewport',
     ].forEach(_ => {
       raw[_] = this[_];
     });
