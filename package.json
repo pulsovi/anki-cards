@@ -25,7 +25,7 @@
     "puppeteer": "^1.20.0",
     "readline-sync": "^1.4.10",
     "recursive-readdir-async": "^1.1.8",
-    "sharp": "^0.22.1",
+    "sharp": "^0.28.3",
     "sqlite3": "^4.2.0",
     "underscore": "^1.11.0",
     "uniqid": "^5.2.0"
@@ -33,7 +33,7 @@
   "devDependencies": {
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.2.0",
-    "eslint-config-pulsovi": "https://github.com/pulsovi/eslint-config-pulsovi.git",
+    "eslint-config-pulsovi": "^2.4.2",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-node": "^11.1.0",
