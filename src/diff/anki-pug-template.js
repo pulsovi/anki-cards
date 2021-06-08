@@ -3,11 +3,15 @@ const fs = require('fs');
 const path = require('path');
 
 const chalk = require('chalk');
+const debug = require('debug');
 
 const FileManager = require('./file_manager');
 
+const log = debug('diff:anki-pug-template');
+
 class Template {
   constructor(pugMakefile, name, model) {
+    log('new Template', { model, name, pugMakefile });
     this.parent = this.model = model;
     this.name = name;
     this.makefile = pugMakefile;
@@ -54,9 +58,9 @@ class Template {
   async assign(object, child) {
     await this.ready;
     object[child] = {
+      anki: { ...this.anki },
       name: this.name,
       pug: { ...this.pug },
-      anki: { ...this.anki },
     };
   }
 

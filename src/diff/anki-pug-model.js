@@ -1,12 +1,16 @@
 const util = require('util');
 
 const chalk = require('chalk');
+const debug = require('debug');
 
 const Template = require('./anki-pug-template');
 const FileManager = require('./file_manager');
 
+const log = debug('diff:anki-pug-model');
+
 class Model {
   constructor(makefile, name) {
+    log('new Model', { makefile, name });
     this.pugMakefile = makefile;
     this.name = name;
   }

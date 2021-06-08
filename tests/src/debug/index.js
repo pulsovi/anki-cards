@@ -6,7 +6,9 @@ function helpMessage() {
 }
 
 async function main() {
-  if (process.argv.length < 3 || ['', '--help', '-h'].includes(process.argv[2])) return helpMessage();
+  if (process.argv.length < 3 || ['', '--help', '-h'].includes(process.argv[2]))
+    return helpMessage();
+
   const cid = process.argv[2];
   const manager = new FixtureManager(cid);
 
@@ -15,7 +17,4 @@ async function main() {
 }
 
 // main
-main()
-  .catch(error => {
-    console.log('Error in main function:', error);
-  });
+main().catch(console.error);
