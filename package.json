@@ -8,15 +8,21 @@
   },
   "eslintConfig": {
     "extends": [
-      "pulsovi/node"
+      "pulsovi-node"
     ]
+  },
+  "engines": {
+    "node": ">=14.0.0"
   },
   "dependencies": {
     "chalk": "^4.1.0",
     "config": "^3.3.1",
+    "debug": "^4.3.1",
     "diff": "^4.0.2",
+    "dot-prop": "^6.0.1",
     "find-process": "^1.4.3",
     "image-size": "^0.7.5",
+    "joi": "^17.4.0",
     "mkdirp": "^0.5.1",
     "mustache": "^3.2.1",
     "node-netstat": "^1.8.0",
@@ -26,19 +32,12 @@
     "readline-sync": "^1.4.10",
     "recursive-readdir-async": "^1.1.8",
     "sharp": "^0.28.3",
-    "sqlite3": "^4.2.0",
+    "sqlite3": "^5.0.2",
     "underscore": "^1.11.0",
     "uniqid": "^5.2.0"
   },
-  "devDependencies": {
-    "eslint": "^6.8.0",
-    "eslint-config-airbnb-base": "^14.2.0",
-    "eslint-config-pulsovi": "^2.4.2",
-    "eslint-config-standard": "^14.1.1",
-    "eslint-plugin-import": "^2.22.0",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1"
+  "resolutions": {
+    "eslint-config-pulsovi-node/eslint-config-pulsovi": "E:\\dev\\eslint-config-pulsovi\\packages\\core"
   },
   "repository": {
     "type": "git",
@@ -48,5 +47,12 @@
     "anki"
   ],
   "author": "pulsovi",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^7.27.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-pulsovi-node": "E:\\dev\\eslint-config-pulsovi\\packages\\node",
+    "eslint-plugin-import": "^2.23.3",
+    "eslint-plugin-node": "^11.1.0"
+  }
 }
