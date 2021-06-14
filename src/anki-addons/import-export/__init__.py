@@ -33,16 +33,14 @@ def add_template(model, name, folder):
     return "\n\tadded " + name
 
 
-def export_model(name, id) -> str:
+def export_model(name, id):
     "Update or create fs model from Anki model"
-    message = ""
     folder = get_model_folder(name)
     model_manager = mw.col.models
     model = model_manager.get(id)
-    message += export_model_css(model, folder)
+    export_model_css(model, folder)
     for card in model["tmpls"]:
-        message += export_model_card(folder, card)
-    return message
+        export_model_card(folder, card)
 
 
 def export_model_card(folder, card):
