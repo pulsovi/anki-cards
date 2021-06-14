@@ -36,9 +36,6 @@
     "underscore": "^1.11.0",
     "uniqid": "^5.2.0"
   },
-  "resolutions": {
-    "eslint-config-pulsovi-node/eslint-config-pulsovi": "E:\\dev\\eslint-config-pulsovi\\packages\\core"
-  },
   "repository": {
     "type": "git",
     "url": ".."
@@ -51,7 +48,8 @@
   "devDependencies": {
     "eslint": "^7.27.0",
     "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-config-pulsovi-node": "E:\\dev\\eslint-config-pulsovi\\packages\\node",
+    "eslint-config-pulsovi-browser": "^0.0.1",
+    "eslint-config-pulsovi-node": "^0.0.3",
     "eslint-plugin-import": "^2.23.3",
     "eslint-plugin-node": "^11.1.0"
   }

@@ -265,7 +265,8 @@ __metadata:
     dot-prop: ^6.0.1
     eslint: ^7.27.0
     eslint-config-airbnb-base: ^14.2.1
-    eslint-config-pulsovi-node: "E:\\dev\\eslint-config-pulsovi\\packages\\node"
+    eslint-config-pulsovi-browser: ^0.0.1
+    eslint-config-pulsovi-node: ^0.0.3
     eslint-plugin-import: ^2.23.3
     eslint-plugin-node: ^11.1.0
     find-process: ^1.4.3
@@ -1155,15 +1156,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-pulsovi-node@file:E:\\dev\\eslint-config-pulsovi\\packages\\node::locator=anki-cards%40workspace%3A.":
-  version: 0.0.3
-  resolution: "eslint-config-pulsovi-node@file:/E%3A/dev/eslint-config-pulsovi/packages/node#/E%3A/dev/eslint-config-pulsovi/packages/node::hash=599375&locator=anki-cards%40workspace%3A."
+"eslint-config-pulsovi-browser@npm:0.0.1, eslint-config-pulsovi-browser@npm:^0.0.1":
+  version: 0.0.1
+  resolution: "eslint-config-pulsovi-browser@npm:0.0.1"
   dependencies:
     eslint-config-pulsovi: "*"
-    eslint-plugin-node: "*"
+  checksum: 7ed693eca2ea37ffc3b4f88f623cc30ace01ba826972cee2083f09ee9567cfbd0cd7c694bf235334f374e71da4fc4962e533401c6508a218bb0e216e1c478736
+  languageName: node
+  linkType: hard
+
+"eslint-config-pulsovi-node@npm:^0.0.3":
+  version: 0.0.3
+  resolution: "eslint-config-pulsovi-node@npm:0.0.3"
+  dependencies:
+    eslint-config-pulsovi: "*"
   peerDependencies:
     eslint: "*"
-  checksum: b7813b84695717a7154462ccb3ecf42a6d1112fe2fc8cce5deda26bc7259c6051415205b4d82ff3eb26ec800f204ddfc63dd5d38b76c091fca52d0fa1a57ad1f
+    eslint-config-airbnb-base: "*"
+    eslint-plugin-import: "*"
+    eslint-plugin-node: "*"
+  checksum: 6fd9453977041828f8459669d6bdb1ea395fba7c5141a6be53816a8b338ab07c6f6f9ddf58b6db20ea875fd6d63d7937d863455b29f76d1738cecc02832f0d36
   languageName: node
   linkType: hard
 
@@ -1277,7 +1289,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-node@npm:*, eslint-plugin-node@npm:^11.1.0":
+"eslint-plugin-node@npm:^11.1.0":
   version: 11.1.0
   resolution: "eslint-plugin-node@npm:11.1.0"
   dependencies:
