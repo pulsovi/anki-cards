@@ -76,7 +76,7 @@ class DiffManager {
     }
 
     const fixtureList = await fixtures(template);
-    const options = fixtureList ? '[ynsSoplqd]' : '[ynsSoplq]';
+    const options = fixtureList ? '[ymnsSoplqd]' : '[ymnsSoplq]';
     const response = await rlQuestion(chalk.blueBright(`  compare ${template.name} ${options}? `));
 
     switch (response) {
@@ -91,6 +91,9 @@ class DiffManager {
     case 'S':
       this.diff_lines(template);
       break;
+    case 'm':
+      FileManager.open(template.pug.path);
+      break;
     case 'o':
       fs.writeFile(template.anki.path, template.pug.content, _ => _);
       return;
@@ -104,13 +107,14 @@ class DiffManager {
       return;
     case 'd':
       if (fixtureList) {
-        debug(fixtureList.map(fixture => fixture.id));
+        await debug(fixtureList.map(fixture => fixture.id));
         break;
       }
       // else falls through
     default:
       console.log(chalk.red(
         `${'\ty - [yes]       compare versions\n' +
+          '\tm - [model]     open the pug file for edit\n' +
           '\tn - [no]        skip this template\n' +
           '\ts - [simple-w]  print simple words diff\n' +
           '\tS - [simple-l]  print simple lines diff\n' +
@@ -118,7 +122,7 @@ class DiffManager {
           '\tp - [previous]  let this template undecided, jump to previous template\n' +
           '\tl - [list]      list all template conflicts and quit this model\n' +
           '\tq - [quit]      skip all unmanaged models and templates and quit the diff'}${
-          d ? '\n\td - [debug]     run debugging GUI tool' : ''}`
+          fixtureList ? '\n\td - [debug]     run debugging GUI tool' : ''}`
       ));
       break;
     }
