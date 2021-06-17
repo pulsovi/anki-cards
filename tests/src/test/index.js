@@ -87,7 +87,7 @@ async function manage_fixture(options) {
   await fixture.setHtmlDiff();
   if (!fixture.diff.ok || !fixture.ok) {
     console.log(fixture.htmlDiffFile, fixture.diffString);
-    child_process.spawn(
+    childProcess.spawn(
       `D:\\ProgrammesPortables\\NW\\nw.exe "${path.dirname(fixture.htmlDiffFile)}"`, {
         detached: true,
         stdio: 'ignore',
