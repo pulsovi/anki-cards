@@ -5,12 +5,13 @@ const path = require('path');
 const util = require('util');
 
 // local dependancies
+const { 'anki-pug-root': ROOT } = require('../../../config/global');
 const Fixture = require('./Fixture');
 
-const ROOT = process.env.ANKI_PUG_ROOT;
 
 const fixturesPath = path.resolve(ROOT, 'tests/fixture/fixtures.json');
 const fixtures = JSON.parse(fs.readFileSync(fixturesPath, 'utf8'));
+process.env.ANKI_PUG_ROOT = ROOT;
 
 async function extendFixture(options) {
   const jsonFile = path.resolve(ROOT, 'tests/out', options.id, 'package.json');

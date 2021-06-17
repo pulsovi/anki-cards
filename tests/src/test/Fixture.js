@@ -14,9 +14,9 @@ const sizeOf = promisify(require('image-size'));
 // local dependancies
 const AnkiManager = require('./AnkiManager');
 
+const ROOT = path.resolve(__dirname, '../../..');
 const ankiManager = new AnkiManager();
 
-const ROOT = process.env.ANKI_PUG_ROOT;
 // eslint-disable-next-line import/no-dynamic-require
 const Model = require(path.resolve(ROOT, 'src/diff/anki-pug-model'));
 
