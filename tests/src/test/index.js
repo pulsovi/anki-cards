@@ -1,3 +1,5 @@
+Error.stackTraceLimit = 100;
+
 // native dependancies
 const childProcess = require('child_process');
 const fs = require('fs');
