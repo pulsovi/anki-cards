@@ -1,5 +1,3 @@
 {
-	"rules": {
-		"quotes": ["warn", "single"]
-	}
+	"extends": ["pulsovi-browser"]
 }
