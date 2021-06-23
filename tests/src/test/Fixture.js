@@ -11,12 +11,11 @@ const sharp = require('sharp');
 const sizeOf = promisify(require('image-size'));
 
 const config = require('../../../config/default');
+const Model = require('../../../src/diff/anki-pug-model');
+
 const AnkiManager = require('./AnkiManager');
 
 const ROOT = path.resolve(__dirname, '../../..');
-
-// eslint-disable-next-line import/no-dynamic-require
-const Model = require(path.resolve(ROOT, 'src/diff/anki-pug-model'));
 
 class Fixture {
   constructor(options) {
@@ -89,8 +88,8 @@ class Fixture {
 
       return source
         .replace(
-          RegExp(`{{c${this.ord + 1}::(?<clozeText>[^:}]*)(?:::(?<hint>[^}]*))?}}`, 'gu'),
-          (_, text, clue) => `<span class="cloze">${face === 'recto' ? `[${clue || '…'}]` : text}</span>`
+          RegExp(`\\{\\{c${this.ord + 1}::(?<clozeText>[^:}]*)(?:::(?<hint>[^}]*))?\\}\\}`, 'gu'),
+          (match2, text, clue) => `<span class="cloze">${face === 'recto' ? `[${clue || '…'}]` : text}</span>`
         )
         .replace(/\{\{c\d+::(?<clozeText>[^}:]*)(?:::(?<hint>[^}]*))?\}\}/gu, '$1');
     });
@@ -213,8 +212,8 @@ class Fixture {
       'platform',
       'title',
       'viewport',
-    ].forEach(_ => {
-      raw[_] = this[_];
+    ].forEach(field => {
+      raw[field] = this[field];
     });
     raw.model = this.model.name;
     return raw;
