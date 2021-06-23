@@ -1,17 +1,16 @@
-// native dependancies
 const fs = require('fs');
 const path = require('path');
 const { promisify } = require('util');
 
-// npm dependancies
+const { get } = require('dot-prop');
 const mkdirp = require('mkdirp');
 const mustache = require('mustache');
-const puppeteer = require('puppeteer').launch();
 const resemble = require('node-resemble-js');
+const puppeteer = require('puppeteer').launch();
 const sharp = require('sharp');
 const sizeOf = promisify(require('image-size'));
 
-// local dependancies
+const config = require('../../../config/default');
 const AnkiManager = require('./AnkiManager');
 
 const ROOT = path.resolve(__dirname, '../../..');
@@ -60,16 +59,6 @@ function resembleData(file1, file2) {
 
 function parseCondition(template) {
   return template.replace(/\{\{(?<field>[^/#^][^}]*)\}\}/gu, '{{{$1}}}');
-}
-
-function getConfig(keyName) {
-  const config = JSON.parse(fs.readFileSync(path.resolve(ROOT, 'config/default.json'), 'utf8'));
-  let keyValue = config;
-
-  keyName.split('.').forEach(part => {
-    keyValue = keyValue[part];
-  });
-  return keyValue;
 }
 
 class Fixture {
@@ -282,5 +271,9 @@ class Fixture {
 // model types
 Fixture.MODEL_STD = 0;
 Fixture.MODEL_CLOZE = 1;
+
+function getConfig(keyName) {
+  return get(config, keyName);
+}
 
 module.exports = Fixture;
