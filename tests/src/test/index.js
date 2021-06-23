@@ -14,6 +14,7 @@ const fixtures = require('../../fixture/fixtures');
 
 const Fixture = require('./Fixture');
 
+const args = getArgs();
 
 process.env.ANKI_PUG_ROOT = ROOT;
 
@@ -31,6 +32,11 @@ async function extendFixture(options) {
     throw e;
   }
   return Object.assign(moreOptions, options);
+}
+
+function getArgs() {
+  const [, id, version] = process.argv.slice(1);
+  return { id, version };
 }
 
 async function reloadBase(options) {
@@ -57,18 +63,15 @@ async function manageOneVersion(options, version) {
 }
 
 async function manageOneFixture(options) {
-  if (process.argv.length > 3) {
-    const version = process.argv[3];
-
-    await manageOneVersion(options, version);
-  } else await manage_fixture(options);
+  if (args.version) await manageOneVersion(options, args.version);
+  else await manage_fixture(options);
 }
 
 async function main() {
-  if (process.argv.length > 2) {
-    let fixture = fixtures.find(f => f.id === process.argv[2]);
+  if (args.id) {
+    let fixture = fixtures.find(fixtureItem => fixtureItem.id === args.id);
 
-    if (!fixture) throw new ReferenceError(`Unable to found ${process.argv[2]} fixture.`);
+    if (!fixture) throw new ReferenceError(`Unable to found <${args.id}> fixture.`);
     fixture = await extendFixture(fixture);
     await manageOneFixture(fixture);
   } else {
