@@ -18,49 +18,6 @@ const ROOT = path.resolve(__dirname, '../../..');
 // eslint-disable-next-line import/no-dynamic-require
 const Model = require(path.resolve(ROOT, 'src/diff/anki-pug-model'));
 
-function mkdirpPromise(pathname) {
-  return new Promise(resolve => {
-    mkdirp(pathname, null, resolve);
-  });
-}
-
-async function shot(html, viewport, screenshot) {
-  const browser = await puppeteer;
-  const page = await browser.newPage();
-
-  await page.setViewport(viewport);
-  await page.setContent(html);
-  await mkdirpPromise(path.dirname(screenshot.path));
-  await page.screenshot(screenshot);
-  setImmediate(() => page.close());
-}
-
-function getModel(modelName) {
-  const fullname = path.resolve(ROOT, 'model', modelName.replace(/:/gu, path.sep), 'export.js');
-
-  return new Model(fullname, modelName);
-}
-
-function fileExist(filename) {
-  return new Promise(resolve => {
-    fs.stat(filename, (err, stat) => {
-      if (!err) return resolve(stat);
-      if (err.code === 'ENOENT') return resolve(false);
-      throw err;
-    });
-  });
-}
-
-function resembleData(file1, file2) {
-  return new Promise(resolve => {
-    resemble(file1).compareTo(file2).onComplete(resolve);
-  });
-}
-
-function parseCondition(template) {
-  return template.replace(/\{\{(?<field>[^/#^][^}]*)\}\}/gu, '{{{$1}}}');
-}
-
 class Fixture {
   constructor(options) {
     [
@@ -271,6 +228,49 @@ class Fixture {
 // model types
 Fixture.MODEL_STD = 0;
 Fixture.MODEL_CLOZE = 1;
+
+function mkdirpPromise(pathname) {
+  return new Promise(resolve => {
+    mkdirp(pathname, null, resolve);
+  });
+}
+
+async function shot(html, viewport, screenshot) {
+  const browser = await puppeteer;
+  const page = await browser.newPage();
+
+  await page.setViewport(viewport);
+  await page.setContent(html);
+  await mkdirpPromise(path.dirname(screenshot.path));
+  await page.screenshot(screenshot);
+  setImmediate(() => page.close());
+}
+
+function getModel(modelName) {
+  const fullname = path.resolve(ROOT, 'model', modelName.replace(/:/gu, path.sep), 'export.js');
+
+  return new Model(fullname, modelName);
+}
+
+function fileExist(filename) {
+  return new Promise(resolve => {
+    fs.stat(filename, (err, stat) => {
+      if (!err) return resolve(stat);
+      if (err.code === 'ENOENT') return resolve(false);
+      throw err;
+    });
+  });
+}
+
+function resembleData(file1, file2) {
+  return new Promise(resolve => {
+    resemble(file1).compareTo(file2).onComplete(resolve);
+  });
+}
+
+function parseCondition(template) {
+  return template.replace(/\{\{(?<field>[^/#^][^}]*)\}\}/gu, '{{{$1}}}');
+}
 
 function getConfig(keyName) {
   return get(config, keyName);
