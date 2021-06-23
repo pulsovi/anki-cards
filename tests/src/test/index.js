@@ -1,6 +1,5 @@
 Error.stackTraceLimit = 100;
 
-// native dependancies
 const childProcess = require('child_process');
 const fs = require('fs');
 const path = require('path');
@@ -26,10 +25,10 @@ async function extendFixture(options) {
     const json = await util.promisify(fs.readFile)(jsonFile, 'utf8');
 
     moreOptions = JSON.parse(json).fixture;
-  } catch (e) {
-    if (e.code === 'ENOENT') return options;
-    console.error(`Erreur non attrapée : ${e.message}`);
-    throw e;
+  } catch (error) {
+    if (error.code === 'ENOENT') return options;
+    console.error(`Erreur non attrapée : ${error.message}`);
+    throw error;
   }
   return Object.assign(moreOptions, options);
 }
@@ -49,10 +48,10 @@ async function reloadBase(options) {
 async function manageOneVersion(options, version) {
   switch (version) {
   case 'anki':
-    await reload_anki(options);
+    await reloadAnki(options);
     break;
   case 'pug':
-    await reload_pug(options);
+    await reloadPug(options);
     break;
   case 'base':
     await reloadBase(options);
@@ -64,7 +63,7 @@ async function manageOneVersion(options, version) {
 
 async function manageOneFixture(options) {
   if (args.version) await manageOneVersion(options, args.version);
-  else await manage_fixture(options);
+  else await manageFixture(options);
 }
 
 async function main() {
@@ -74,13 +73,14 @@ async function main() {
     if (!fixture) throw new ReferenceError(`Unable to found <${args.id}> fixture.`);
     fixture = await extendFixture(fixture);
     await manageOneFixture(fixture);
-  } else {
-    for (let i = 0; i < fixtures.length; ++i)
-      await manage_fixture(fixtures[i]);
+    return;
   }
+  for (let i = 0; i < fixtures.length; ++i)
+    // eslint-disable-next-line no-await-in-loop
+    await manageFixture(fixtures[i]);
 }
 
-async function manage_fixture(options) {
+async function manageFixture(options) {
   const fixture = new Fixture(options);
   let subprocess = null;
 
@@ -111,7 +111,7 @@ function endProcess(proc) {
   return new Promise(rs => proc.on('close', rs));
 }
 
-async function reload_anki(options) {
+async function reloadAnki(options) {
   const fixture = new Fixture(options);
 
   await fixture.setAnki();
@@ -119,7 +119,7 @@ async function reload_anki(options) {
   await fixture.setHtmlDiff();
 }
 
-async function reload_pug(options) {
+async function reloadPug(options) {
   const fixture = new Fixture(options);
 
   await fixture.setPug();
@@ -132,10 +132,5 @@ async function reload_pug(options) {
 
 // main
 main()
-  .then(_ => {
-    Fixture.close();
-  })
-  .catch(e => {
-    console.log('Main error:', e);
-    Fixture.close();
-  });
+  .catch(error => { log('Main error:', error); })
+  .finally(() => { Fixture.close(); });
