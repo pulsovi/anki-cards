@@ -15,7 +15,6 @@ const sizeOf = promisify(require('image-size'));
 const AnkiManager = require('./AnkiManager');
 
 const ROOT = path.resolve(__dirname, '../../..');
-const ankiManager = new AnkiManager();
 
 // eslint-disable-next-line import/no-dynamic-require
 const Model = require(path.resolve(ROOT, 'src/diff/anki-pug-model'));
@@ -246,7 +245,7 @@ class Fixture {
     const locals = {
       body,
       css: this.css[version].content,
-      port: await ankiManager.getPort(),
+      port: await AnkiManager.getPort(),
     };
 
     return mustache.render(template, locals);

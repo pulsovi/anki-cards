@@ -1,16 +1,28 @@
 // jshint esversion:8
-const child_process = require('child_process');
+const childProcess = require('child_process');
 
-const find_process = require('find-process');
+const log = require('debug')('anki-manager');
+const findProcess = require('find-process');
 const netstat = require('node-netstat');
+
+const { 'anki-exe': ankiExe } = require('../../../config/global');
 
 const cache = {
   port: null,
 };
 
-function getPort(pid) {
-  return new Promise((resolve, reject) => {
-    const ntret = netstat({
+function sleep(ms) {
+  return new Promise(rs => setTimeout(rs, ms));
+}
+
+function getPidPort(pid) {
+  log('get-pid-port from pid', pid);
+  return new Promise(resolve => {
+    netstat({
+      done() {
+        log('get-pid-port done, not found');
+        resolve(null);
+      },
       filter: {
         pid,
         state: 'LISTENING',
@@ -27,45 +39,38 @@ function toCache(keyName, keyValue) {
 }
 
 class AnkiManager {
-  async getPid() {
-    if (!await this.isRunning())
-      await this.start();
+  static async getPid() {
+    log('get-pid');
+    if (!await AnkiManager.isRunning())
+      await AnkiManager.start();
 
-    return (await find_process('name', 'anki'))
-      .filter(ps => ps.name === 'anki.exe')[0]
+    return (await findProcess('name', 'anki'))
+      .find(ps => ps.name === 'anki.exe')
       .pid;
   }
 
-  async getPort() {
+  static async getPort() {
+    log('get-port');
     if (cache.port !== null) return cache.port;
-    return toCache('port', await getPort(await this.getPid()));
+    const port = await getPidPort(await AnkiManager.getPid());
+
+    if (port === null)
+      return sleep(1000).then(AnkiManager.getPort);
+    return toCache('port', port);
   }
 
-  async isRunning() {
-    const process_list = await find_process('name', 'anki');
+  static async isRunning(psName = 'anki.exe') {
+    log('is-running', psName);
+    const processList = await findProcess('name', psName);
 
-    return process_list.filter(ps => ps.name === 'anki.exe').length > 0;
+    return processList.some(ps => ps.name === psName);
   }
 
-  start() {
-    return new Promise((resolve, reject) => {
-      let anki = child_process.spawn(
-        '"C:\\Program Files\\Anki\\anki.exe"', {
-          stdio: ['ignore', 'pipe', 'ignore'],
-          shell: true,
-        }
-      );
-
-      anki.stdout.setEncoding('utf8');
-      anki.stdout.on('data', chunk => {
-        if (chunk === 'anki:ready') {
-          anki.stdout.destroy();
-          anki.unref();
-          anki = null;
-          resolve();
-        }
-      });
-    });
+  static start() {
+    log('starting anki ...');
+    childProcess
+      .spawn(`"${ankiExe}"`, { shell: true, stdio: 'ignore' })
+      .unref();
   }
 }
 
