@@ -4,7 +4,9 @@
   "description": "mes cartes anki",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "./tests/bin/test.sh",
+    "verify": "yarn && yarn test"
   },
   "eslintConfig": {
     "extends": [
@@ -27,6 +29,7 @@
     "mustache": "^3.2.1",
     "node-netstat": "^1.8.0",
     "node-resemble-js": "^0.2.0",
+    "nw": "sdk",
     "pug": "^2.0.4",
     "puppeteer": "^1.20.0",
     "readline-sync": "^1.4.10",

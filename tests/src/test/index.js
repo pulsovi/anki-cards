@@ -7,12 +7,14 @@ const path = require('path');
 const util = require('util');
 
 // local dependancies
+const nw = require('nw').findpath();
+
 const { 'anki-pug-root': ROOT } = require('../../../config/global');
+const fixtures = require('../../fixture/fixtures');
+
 const Fixture = require('./Fixture');
 
 
-const fixturesPath = path.resolve(ROOT, 'tests/fixture/fixtures.json');
-const fixtures = JSON.parse(fs.readFileSync(fixturesPath, 'utf8'));
 process.env.ANKI_PUG_ROOT = ROOT;
 
 async function extendFixture(options) {
@@ -77,6 +79,7 @@ async function main() {
 
 async function manage_fixture(options) {
   const fixture = new Fixture(options);
+  let subprocess = null;
 
   await Promise.all([
     fixture.setPug(),
@@ -90,15 +93,19 @@ async function manage_fixture(options) {
   await fixture.setHtmlDiff();
   if (!fixture.diff.ok || !fixture.ok) {
     console.log(fixture.htmlDiffFile, fixture.diffString);
-    childProcess.spawn(
-      `D:\\ProgrammesPortables\\NW\\nw.exe "${path.dirname(fixture.htmlDiffFile)}"`, {
-        detached: true,
-        stdio: 'ignore',
-        shell: true,
-      }
-    ).unref();
+    subprocess = childProcess.execFile(nw, ['.'], {
+      cwd: path.dirname(fixture.htmlDiffFile),
+      shell: false,
+      stdio: 'inherit',
+    });
   } else
     console.log('Pass:', fixture.id, fixture.model.name, fixture.card, fixture.title);
+  return await endProcess(subprocess);
+}
+
+function endProcess(proc) {
+  if (!(proc instanceof childProcess.ChildProcess)) return Promise.resolve();
+  return new Promise(rs => proc.on('close', rs));
 }
 
 async function reload_anki(options) {
