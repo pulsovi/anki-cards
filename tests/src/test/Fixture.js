@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { promisify } = require('util');
 
-const { get } = require('dot-prop');
+const { get, has } = require('dot-prop');
 const mkdirp = require('mkdirp');
 const mustache = require('mustache');
 const resemble = require('node-resemble-js');
@@ -20,19 +20,20 @@ const ROOT = path.resolve(__dirname, '../../..');
 class Fixture {
   constructor(options) {
     [
-      'card',
-      'description',
-      'diff',
-      'face',
-      'id',
-      'locals',
-      'ok',
-      'ord',
-      'platform',
-      'title',
-      'type',
-    ].forEach(field => {
-      this[field] = options[field];
+      { name: 'card', required: true },
+      { name: 'description', required: false },
+      { name: 'diff', required: false },
+      { name: 'face', required: true },
+      { name: 'id', required: false },
+      { name: 'locals', required: true },
+      { name: 'ok', required: false },
+      { name: 'ord', required: false },
+      { name: 'platform', required: true },
+      { name: 'title', required: false },
+      { name: 'type', required: true },
+    ].forEach(({ name, required }) => {
+      if (required && !has(options, name)) throw new Error(`${name} option is required.`);
+      this[name] = options[name];
     });
     this.model = getModel(options.model);
 
