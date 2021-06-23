@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { promisify } = require('util');
 
+const log = require('debug')('test:Fixture');
 const { get, has } = require('dot-prop');
 const mkdirp = require('mkdirp');
 const mustache = require('mustache');
@@ -19,6 +20,7 @@ const ROOT = path.resolve(__dirname, '../../..');
 
 class Fixture {
   constructor(options) {
+    log('new Fixture', options);
     [
       { name: 'card', required: true },
       { name: 'description', required: false },
@@ -66,6 +68,7 @@ class Fixture {
     await this.ready;
     const template = this.recto[version].content;
 
+    log('GET RECTO', { locals: this.locals, template });
     return mustache.render(template, this.locals);
   }
 
@@ -184,6 +187,7 @@ class Fixture {
   }
 
   async html(version) {
+    log(`get html for ${version}`);
     const template = await promisify(fs.readFile)(
       path.resolve(__dirname, `${this.platform}.mustache.html`), { encoding: 'utf8' }
     );
@@ -247,6 +251,7 @@ async function shot(html, viewport, screenshot) {
 }
 
 function getModel(modelName) {
+  log('GET MODEL', { ROOT, modelName });
   const fullname = path.resolve(ROOT, 'model', modelName.replace(/:/gu, path.sep), 'export.js');
 
   return new Model(fullname, modelName);
