@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const util = require('util');
 
-// local dependancies
+const log = require('debug')('anki:test');
 const nw = require('nw').findpath();
 
 const { 'anki-pug-root': ROOT } = require('../../../config/global');
@@ -46,6 +46,7 @@ async function reloadBase(options) {
 }
 
 async function manageOneVersion(options, version) {
+  log('manage-one-version', version);
   switch (version) {
   case 'anki':
     await reloadAnki(options);
@@ -95,14 +96,15 @@ async function manageFixture(options) {
   ]);
   await fixture.setHtmlDiff();
   if (!fixture.diff.ok || !fixture.ok) {
-    console.log(fixture.htmlDiffFile, fixture.diffString);
+    log(fixture.htmlDiffFile, fixture.diffString);
+    log(path.dirname(fixture.htmlDiffFile));
     subprocess = childProcess.execFile(nw, ['.'], {
       cwd: path.dirname(fixture.htmlDiffFile),
       shell: false,
       stdio: 'inherit',
     });
   } else
-    console.log('Pass:', fixture.id, fixture.model.name, fixture.card, fixture.title);
+    log('Pass:', fixture.id, fixture.model.name, fixture.card, fixture.title);
   return await endProcess(subprocess);
 }
 
