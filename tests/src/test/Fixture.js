@@ -64,19 +64,13 @@ class Fixture {
     return this;
   }
 
-  async getRecto(version) {
+  async getFace(face, version) {
     await this.ready;
-    const template = this.recto[version].content;
-
-    log('GET RECTO', { locals: this.locals, template });
-    return mustache.render(template, this.locals);
-  }
-
-  async getVerso(version) {
+    const template = this[face][version].content;
     const locals = { ...this.locals };
 
-    locals.FrontSide = await this.getRecto(version);
-    const template = this.verso[version].content;
+    if (face === 'verso')
+      locals.FrontSide = await this.getFace('recto', version);
 
     return mustache.render(template, locals);
   }
@@ -106,11 +100,13 @@ class Fixture {
 
     await Promise.all([
       shot(html, this.viewport, screenshot),
-      promisify(fs.writeFile)(path.resolve(this.directory, `${version}.html`), html),
+      fs.promises.writeFile(path.resolve(this.directory, `${version}.html`), html),
     ]);
-    fs.writeFile(`${this.directory}/${version}_recto_template.html`, this.recto[version].content, () => {});
-    fs.writeFile(`${this.directory}/${version}_verso_template.html`, this.verso[version].content, () => {});
-    fs.writeFile(`${this.directory}/${version}_css_template.html`, this.css[version].content, () => {});
+
+    // TODO: unhandled rejection possibility ...
+    fs.promises.writeFile(`${this.directory}/${version}_recto_template.html`, this.recto[version].content);
+    fs.promises.writeFile(`${this.directory}/${version}_verso_template.html`, this.verso[version].content);
+    fs.promises.writeFile(`${this.directory}/${version}_css_template.html`, this.css[version].content);
   }
 
   async setPug() {
@@ -192,10 +188,10 @@ class Fixture {
 
   async html(version) {
     log(`get html for ${version}`);
-    const template = await promisify(fs.readFile)(
+    const template = await fs.promises.readFile(
       path.resolve(__dirname, `${this.platform}.mustache.html`), { encoding: 'utf8' }
     );
-    const body = await (this.face === 'recto' ? this.getRecto(version) : this.getVerso(version));
+    const body = await this.getFace(this.face, version);
     const locals = {
       body,
       css: this.css[version].content,
