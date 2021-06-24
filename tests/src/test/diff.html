@@ -192,15 +192,18 @@
   </div>
   <h3>{{model}}&gt;{{card}}</h3>
   <script>
-  //jshint esversion:8
+  const log = require('debug')('anki-pug:diff');
   const ngui = require('nw.gui');
   const win = ngui.Window.get();
   const fs = require('fs');
   const path = require('path');
-  const child_process = require('child_process');
+  const childProcess = require('child_process');
 
   const ankiPugRoot = process.env.ANKI_PUG_ROOT;
-  var runningJobs = [];
+  const runningJobs = [];
+
+  log.enabled = true;
+  debug.log = console.log.bind(console);
 
   win.on('loaded', function() {
     win.show();
@@ -264,10 +267,12 @@
   });
 
   document.getElementById('pug-firefox').addEventListener('click', function() {
+    log('open pug to firefox');
     run('{{directory}}\\pug.html');
   });
 
   document.getElementById('anki-firefox').addEventListener('click', function() {
+    log('open anki to firefox');
     run('{{directory}}\\anki.html');
   });
 
@@ -337,6 +342,7 @@
 
   function viewTemplate(templateName) {
     var templateFile = path.join(process.cwd(), templateName + '_{{face}}_template.html');
+    log('view template', templateName, templateFile)
     viewFile(templateFile);
   }
 
@@ -345,6 +351,7 @@
   }
 
   function viewFile(filename) {
+    log('view-file', filename);
     run(`"C:\\Program Files\\Sublime Text 3\\sublime_text.exe" "${filename}"`);
   }
 
