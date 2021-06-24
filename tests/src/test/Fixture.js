@@ -220,7 +220,11 @@ class Fixture {
     ].forEach(field => {
       raw[field] = this[field];
     });
-    raw.model = this.model.name;
+    raw.model = {
+      name: this.model.name,
+      recto: this.recto,
+      verso: this.verso,
+    };
     return raw;
   }
 

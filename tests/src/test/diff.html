@@ -155,7 +155,7 @@
     <div class="img-block base-pug">
       <h4>base-pug</h4>
       <div class="img"><img src="./base-pug.png"></img></div>
-      <p>{{diff.base-pug}}</p>
+      <p id="base-pug-diff">{{diff.base-pug}}</p>
     </div>
     <div class="img-block pug">
       <h4>pug</h4>
@@ -176,7 +176,7 @@
     <div class="img-block pug-anki">
       <h4>pug-anki</h4>
       <div class="img"><img src="./pug-anki.png"></img></div>
-      <p>{{diff.pug-anki}}</p>
+      <p id="pug-anki-diff">{{diff.pug-anki}}</p>
     </div>
     <div class="img-block anki">
       <h4>anki</h4>
@@ -190,8 +190,9 @@
       </div>
     </div>
   </div>
-  <h3>{{model}}&gt;{{card}}</h3>
+  <h3>{{model.name}}&gt;{{card}}</h3>
   <script>
+  /* eslint-env browser, nw */
   const childProcess = require('child_process');
   const fs = require('fs');
   const path = require('path');
@@ -306,19 +307,59 @@
   })();
 
   async function refreshTemplate(template) {
-    await new Promise((resolve, reject) => {
-      childProcess.spawn("node", [
-          path.resolve(ankiPugRoot, 'tests/src/test/index.js'),
-          '{{id}}',
-          template
-        ], {
-          env: { ANKI_PUG_ROOT: ankiPugRoot },
-          shell: true
-        })
-        .once('close', resolve)
+    log('refreshing template', template);
+    const [stdout, stderr] = await new Promise((resolve, reject) => {
+      const subprocess = childProcess.spawn(
+        'node',
+        [path.resolve(ankiPugRoot, 'tests/src/test/index.js'), '{{id}}', template]
+      );
+      const stdio = Promise.all([
+        readStream(subprocess.stdout),
+        readStream(subprocess.stderr),
+      ]);
+
+      subprocess
+        .once('close', () => resolve(stdio))
         .once('error', reject);
     });
-    location.reload();
+
+    log('refreshed template', template);
+    log('STDOUT:\n', stdout);
+    log('STDERR:\n', stderr);
+    addJob(reloadImages());
+    addJob(reloadDiff());
+  }
+
+  function reloadImages() {
+    return Promise.all(
+      Array
+        .from(document.querySelectorAll('img'))
+        .map(img => new Promise(
+          resolve => {
+            img.onload = resolve;
+            img.src = `${img.src.split('?')[0]}?t=${Date.now()}`;
+          }
+        ))
+    );
+  }
+
+  async function reloadDiff() {
+    const { fixture: { diff }} = JSON.parse(await fs.promises.readFile('./package.json', 'utf8'));
+
+    document.getElementById('base-pug-diff').innerHTML = diff['base-pug'];
+    document.getElementById('pug-anki-diff').innerHTML = diff['pug-anki'];
+    document.getElementById('diff-ok').classList.remove('ok', 'nok');
+    document.getElementById('diff-ok').classList.add(diff.ok ? 'ok' : 'nok');
+  }
+
+  function readStream(stream) {
+    return new Promise(resolve => {
+      let content = '';
+
+      stream.setEncoding('utf8');
+      stream.on('data', chunk => { content += chunk; });
+      stream.on('close', () => resolve(content));
+    });
   }
 
   async function setAsBase(source) {
@@ -350,7 +391,7 @@
   }
 
   function run(command) {
-    child_process.spawn(command, { detached: true, stdio: 'ignore', shell: true }).unref();
+    childProcess.spawn(command, { detached: true, stdio: 'ignore', shell: true }).unref();
   }
 
   function viewFile(filename) {
