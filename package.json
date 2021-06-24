@@ -11,6 +11,16 @@
   "eslintConfig": {
     "extends": [
       "pulsovi-node"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "*.html"
+        ]
+      }
+    ],
+    "plugins": [
+      "html"
     ]
   },
   "engines": {
@@ -53,6 +63,7 @@
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-pulsovi-browser": "^0.0.1",
     "eslint-config-pulsovi-node": "^0.0.3",
+    "eslint-plugin-html": "^6.1.2",
     "eslint-plugin-import": "^2.23.3",
     "eslint-plugin-node": "^11.1.0"
   }
