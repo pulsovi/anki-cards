@@ -8,6 +8,9 @@
     "test": "./tests/bin/test.sh",
     "verify": "yarn && yarn test"
   },
+  "stylelint": {
+    "extends": "stylelint-config-standard"
+  },
   "eslintConfig": {
     "extends": [
       "pulsovi-node"
@@ -40,12 +43,14 @@
     "node-netstat": "^1.8.0",
     "node-resemble-js": "^0.2.0",
     "nw": "sdk",
+    "postcss": "^8.3.5",
     "pug": "^2.0.4",
     "puppeteer": "^1.20.0",
     "readline-sync": "^1.4.10",
     "recursive-readdir-async": "^1.1.8",
     "sharp": "^0.28.3",
     "sqlite3": "^5.0.2",
+    "stylelint": "^13.13.1",
     "underscore": "^1.11.0",
     "uniqid": "^5.2.0"
   },
@@ -65,6 +70,7 @@
     "eslint-config-pulsovi-node": "^0.0.3",
     "eslint-plugin-html": "^6.1.2",
     "eslint-plugin-import": "^2.23.3",
-    "eslint-plugin-node": "^11.1.0"
+    "eslint-plugin-node": "^11.1.0",
+    "stylelint-config-standard": "^22.0.0"
   }
 }
