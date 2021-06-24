@@ -177,12 +177,16 @@ class Fixture {
     const html = mustache.render(await this.diffTemplate, locals);
 
     await Promise.all([
-      promisify(fs.writeFile)(this.htmlDiffFile, html),
-      promisify(fs.writeFile)(`${this.directory}/package.json`, JSON.stringify({
+      fs.promises.writeFile(this.htmlDiffFile, html),
+      fs.promises.writeFile(`${this.directory}/package.json`, JSON.stringify({
         fixture: this.asRaw(),
         main: 'index.html',
         name: this.title,
       }, null, '\t')),
+      fs.promises.copyFile(
+        path.join(__dirname, 'bootstrap.min.css'),
+        path.join(this.directory, 'bootstrap.min.css')
+      ),
     ]);
   }
 
