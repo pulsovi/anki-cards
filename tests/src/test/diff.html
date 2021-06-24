@@ -4,132 +4,132 @@
 <head>
   <meta charset="UTF-8">
   <title>{{id}}-{{title}}</title>
-  <link rel="stylesheet" href="./bootstrap.min.css" />
+  <link rel="stylesheet" href="./bootstrap.css" />
   <style type="text/css">
-  body {
-    display: grid;
-    grid-template-rows: 5em 1fr 2em;
-    height: 100%;
-    text-align: center;
-  }
+    body {
+      display: grid;
+      grid-template-rows: 5em 1fr 2em;
+      height: 100%;
+      text-align: center;
+    }
 
-  h3 {
-    background-color: #aeaeae;
-    color: #cbcbcb;
-    font-size: 1em;
-    grid-row: 3;
-    margin: 0.2em 0 0;
-    padding: 0.2em;
-  }
+    h3 {
+      background-color: #aeaeae;
+      color: #cbcbcb;
+      font-size: 1em;
+      grid-row: 3;
+      margin: 0.2em 0 0;
+      padding: 0.2em;
+    }
 
-  h4 {
-    background: #808080;
-    color: #aaa;
-    grid-row: 1;
-    margin: 0 0 1px;
-    padding: 0.5em;
-  }
+    h4 {
+      background: #808080;
+      color: #aaa;
+      grid-row: 1;
+      margin: 0 0 1px;
+      padding: 0.5em;
+    }
 
-  header {
-    display: grid;
-    grid-row: 1;
-    grid-template-columns: 1fr 10fr 1fr .5fr;
-  }
+    header {
+      display: grid;
+      grid-row: 1;
+      grid-template-columns: 1fr 10fr 1fr .5fr;
+    }
 
-  html {
-    height: 100%;
-    overflow: hidden;
-  }
+    html {
+      height: 100%;
+      overflow: hidden;
+    }
 
-  img {
-    max-width: 100%;
-  }
+    img {
+      max-width: 100%;
+    }
 
-  .anki {
-    grid-column: 5;
-  }
+    .anki {
+      grid-column: 5;
+    }
 
-  .base {
-    grid-column: 1;
-  }
+    .base {
+      grid-column: 1;
+    }
 
-  .base-ok {
-    grid-column: 1;
-  }
+    .base-ok {
+      grid-column: 1;
+    }
 
-  .base-ok, .diff-ok {
-    font-weight: 600;
-    padding: 1em;
-  }
+    .base-ok, .diff-ok {
+      font-weight: 600;
+      padding: 1em;
+    }
 
-  .base-pug {
-    grid-column: 2;
-  }
+    .base-pug {
+      grid-column: 2;
+    }
 
-  .close-btn {
-    background-color: #dc3545;
-    color: #fff;
-    cursor: default;
-    font-size: 2em;
-  }
+    .close-btn {
+      background-color: #dc3545;
+      color: #fff;
+      cursor: default;
+      font-size: 2em;
+    }
 
-  .close-btn:hover {
-    background-color: #c82333;
-  }
+    .close-btn:hover {
+      background-color: #c82333;
+    }
 
-  .content {
-    column-gap: 1px;
-    display: grid;
-    grid-row: 2;
-    grid-template-columns: repeat(5, minmax(360px, 1fr));
-    overflow: auto;
-  }
+    .content {
+      column-gap: 1px;
+      display: grid;
+      grid-row: 2;
+      grid-template-columns: repeat(5, minmax(360px, 1fr));
+      overflow: auto;
+    }
 
-  .img-block {
-    display: grid;
-    grid-template-rows: 3em 1fr repeat(3, 3em);
-  }
+    .img-block {
+      display: grid;
+      grid-template-rows: 3em 1fr repeat(3, 3em);
+    }
 
-  .img-block .img {
-    grid-row: 2;
-    margin-bottom: 0.5em;
-    overflow: auto;
-  }
+    .img-block .img {
+      grid-row: 2;
+      margin-bottom: 0.5em;
+      overflow: auto;
+    }
 
-  .diff-ok {
-    grid-column: 3;
-  }
+    .diff-ok {
+      grid-column: 3;
+    }
 
-  .fa.btn, .fab.btn {
-    padding: 10px;
-  }
+    .fa.btn, .fab.btn {
+      padding: 10px;
+    }
 
-  .header-title {
-    background-color: #aeaeae;
-    color: #cbcbcb;
-    font-size: 1.5rem;
-    grid-column: 2;
-    margin-bottom: 0;
-    padding: 0.4em;
-  }
+    .header-title {
+      background-color: #aeaeae;
+      color: #cbcbcb;
+      font-size: 1.5rem;
+      grid-column: 2;
+      margin-bottom: 0;
+      padding: 0.4em;
+    }
 
-  .nok {
-    background-color: #dc3545;
-    color: #ff9da7;
-  }
+    .nok {
+      background-color: #dc3545;
+      color: #ff9da7;
+    }
 
-  .ok {
-    background-color: #28a745;
-    color: #5fd87b;
-  }
+    .ok {
+      background-color: #28a745;
+      color: #5fd87b;
+    }
 
-  .pug {
-    grid-column: 3;
-  }
+    .pug {
+      grid-column: 3;
+    }
 
-  .pug-anki {
-    grid-column: 4;
-  }
+    .pug-anki {
+      grid-column: 4;
+    }
   </style>
   <script src="https://kit.fontawesome.com/41610c1ead.js"></script>
 </head>

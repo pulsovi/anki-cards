@@ -180,8 +180,8 @@ class Fixture {
         name: this.title,
       }, null, '\t')),
       fs.promises.copyFile(
-        path.join(__dirname, 'bootstrap.min.css'),
-        path.join(this.directory, 'bootstrap.min.css')
+        path.join(__dirname, 'bootstrap.css'),
+        path.join(this.directory, 'bootstrap.css')
       ),
     ]);
   }
