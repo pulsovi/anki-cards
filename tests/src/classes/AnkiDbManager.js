@@ -1,5 +1,3 @@
-throw new Error('AnkiManager is deprecated, use AnkiDbManager instead');
-// eslint-disable-next-line no-unreachable
 const path = require('path');
 const { promisify } = require('util');
 

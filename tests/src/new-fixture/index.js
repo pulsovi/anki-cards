@@ -1,26 +1,21 @@
-// native dependancies
 const fs = require('fs');
 const path = require('path');
 const readline = require('readline');
 const { promisify } = require('util');
 
-// npm dependancies
-const config = require('config');
+const log = require('debug')('anki:new-fixture');
 const mkdirp = require('mkdirp');
-const resemble = require('node-resemble-js');
-const puppeteer = require('puppeteer');
 const sharp = require('sharp');
 const uniqid = require('uniqid');
 
-// local dependancies
-const AnkiDbManager = require('./AnkiDbManager');
+const AnkiDbManager = require('../classes/AnkiDbManager');
 
-const ROOT = process.env.ANKI_PUG_ROOT;
+const ROOT = path.join(__dirname, '../../..');
 const fixturesPath = path.resolve(ROOT, 'tests/fixture/fixtures.json');
 
 main()
-  .catch(e => {
-    console.log(e);
+  .catch(error => {
+    log(error);
   });
 
 async function main() {
@@ -30,17 +25,18 @@ async function main() {
 
   fixtures.push(fixture);
   fs.writeFile(fixturesPath, `${JSON.stringify(fixtures, null, '\t')}\n`, () => {});
-  console.log('tests/bin/test.sh', fixture.id);
+  log('tests/bin/test.sh', fixture.id);
 }
 
 async function createFixture() {
   let fixture = {};
   let cid = '';
 
+  // eslint-disable-next-line prefer-destructuring
   if (process.argv.length > 2) cid = process.argv[2];
   else cid = await prompt('create from card id ? cid/n (no): ');
   fixture = await createFixtureFromCid(cid);
-  const file = (await prompt('base image file : ')).replace(/"/g, '');
+  const file = (await prompt('base image file : ')).replace(/"/gu, '');
 
   fixture.ok = false;
   if (file) {
@@ -53,17 +49,18 @@ async function createFixture() {
 
 async function createFixtureFromCid(cid) {
   const fixture = {};
-  const nid = await AnkiDbManager.getCardNote(cid);
-  const mid = await AnkiDbManager.getNoteModel(nid);
+  const card = await AnkiDbManager.getCard(cid);
+  const note = await card.getNote();
+  const notetype = await note.getNotetype();
 
-  fixture.card = await AnkiDbManager.getCardName(cid);
+  fixture.card = await card.getName();
   fixture.cid = cid;
   fixture.id = uniqid();
-  fixture.locals = cleanLocals(await AnkiDbManager.getNoteFields(nid));
-  fixture.locals.Tags = await AnkiDbManager.getNoteTags(nid);
-  fixture.model = await AnkiDbManager.getModelName(mid);
-  fixture.ord = await AnkiDbManager.getCardOrd(cid);
-  fixture.type = await AnkiDbManager.getModelType(mid);
+  fixture.locals = cleanLocals(await note.getFieldsJSON());
+  fixture.locals.Tags = await note.getTags();
+  fixture.model = await notetype.getName();
+  fixture.ord = await card.getOrd();
+  fixture.type = await notetype.getType();
 
   fixture.title = await prompt('title (Title): ', 'Title');
   fixture.description = await prompt('description (Description): ', 'Description');
@@ -83,6 +80,7 @@ async function setFixtureBase(fixture, image) {
       top: 72,
       width: 1080,
     })
+    // eslint-disable-next-line no-magic-numbers
     .resize(360, 560)
     .toFile(dest);
 }
@@ -102,8 +100,8 @@ function prompt(message, defaultValue) {
 }
 
 function cleanLocals(locals) {
-  Object.keys(locals).forEach(k => {
-    if (locals[k] === '') delete locals[k];
+  Object.keys(locals).forEach(key => {
+    if (locals[key] === '') Reflect.deleteProperty(locals, key);
   });
   return locals;
 }
