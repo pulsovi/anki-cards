@@ -209,99 +209,103 @@
   // eslint-disable-next-line no-console
   debug.log = console.log.bind(console);
 
-  win.on('loaded', function() {
+  win.on('loaded', () => {
     win.show();
     win.maximize();
   });
 
-  document.getElementById('anki-as-base').addEventListener('click', function() {
+  document.getElementById('anki-as-base').addEventListener('click', () => {
     addJob(setAsBase('anki.png'));
   });
 
-  document.getElementById('pug-as-base').addEventListener('click', function() {
+  document.getElementById('pug-as-base').addEventListener('click', () => {
     addJob(setAsBase('pug.png'));
   });
 
-  document.getElementById('set-base-ok').addEventListener('click', function() {
+  document.getElementById('set-base-ok').addEventListener('click', () => {
     addJob(setBaseOk());
   });
 
-  document.getElementById('close').addEventListener('click', function() {
+  document.getElementById('close').addEventListener('click', () => {
     close();
   });
 
-  document.getElementById('anki-template').addEventListener('click', function() {
+  document.getElementById('anki-template').addEventListener('click', () => {
     viewTemplate('anki');
   });
 
-  document.getElementById('pug-template').addEventListener('click', function() {
+  document.getElementById('pug-template').addEventListener('click', () => {
     viewTemplate('pug');
   });
 
-  document.getElementById('reload-pug').addEventListener('click', function() {
+  document.getElementById('reload-pug').addEventListener('click', () => {
     addJob(refreshTemplate('pug'));
   });
 
-  document.getElementById('reload-anki').addEventListener('click', function() {
+  document.getElementById('reload-anki').addEventListener('click', () => {
     addJob(refreshTemplate('anki'));
   });
 
-  document.getElementById('viewJSON').addEventListener('click', function() {
+  document.getElementById('viewJSON').addEventListener('click', () => {
     viewFile(path.resolve('package.json'));
   });
 
-  document.getElementById('anki-html').addEventListener('click', function() {
+  document.getElementById('anki-html').addEventListener('click', () => {
     viewFile(path.resolve('anki.html'));
   });
 
-  document.getElementById('pug-html').addEventListener('click', function() {
+  document.getElementById('pug-html').addEventListener('click', () => {
     viewFile(path.resolve('pug.html'));
   });
 
-  document.getElementById('pug-recto').addEventListener('click', function() {
-    viewFile("{{pugRectoFile}}");
+  document.getElementById('pug-recto').addEventListener('click', () => {
+    viewFile('{{pugRectoFile}}');
   });
 
-  document.getElementById('pug-verso').addEventListener('click', function() {
-    viewFile("{{pugVersoFile}}");
+  document.getElementById('pug-verso').addEventListener('click', () => {
+    viewFile('{{pugVersoFile}}');
   });
 
-  document.getElementById('pug-css').addEventListener('click', function() {
-    viewFile("{{cssFile}}");
+  document.getElementById('pug-css').addEventListener('click', () => {
+    viewFile('{{cssFile}}');
   });
 
-  document.getElementById('pug-firefox').addEventListener('click', function() {
+  document.getElementById('pug-firefox').addEventListener('click', () => {
     log('open pug to firefox');
     run('{{directory}}\\pug.html');
   });
 
-  document.getElementById('anki-firefox').addEventListener('click', function() {
+  document.getElementById('anki-firefox').addEventListener('click', () => {
     log('open anki to firefox');
     run('{{directory}}\\anki.html');
   });
 
-  document.getElementById('view-fixtures').addEventListener('click', async function() {
-    var filename = path.resolve(ankiPugRoot, 'tests/fixture/fixtures.json');
-    var text = await fs.readFileSync(filename, 'utf8');
-    var line = text.split('\n').indexOf('\t\t"id": "{{id}}",') + 1;
+  document.getElementById('view-fixtures').addEventListener('click', async() => {
+    const filename = path.resolve(ankiPugRoot, 'tests/fixture/fixtures.json');
+    const text = await fs.promises.readFile(filename, 'utf8');
+    const line = text.split('\n').indexOf('\t\t"id": "{{id}}",') + 1;
+
     viewFile(`${filename}:${line}`);
   });
 
-  document.getElementById('debug-fixture').addEventListener('click', async function() {
-    var fixturesPath = path.join(ankiPugRoot, 'tests/fixture/fixtures.json');
-    var fixtures = JSON.parse(await fs.promises.readFile(fixturesPath, 'utf8'));
-    var myId = "{{id}}";
-    var me = fixtures.find(fixture => fixture.id === myId);
+  document.getElementById('debug-fixture').addEventListener('click', async() => {
+    const fixturesPath = path.join(ankiPugRoot, 'tests/fixture/fixtures.json');
+    const fixtures = JSON.parse(await fs.promises.readFile(fixturesPath, 'utf8'));
+    const myId = '{{id}}';
+    const me = fixtures.find(fixture => fixture.id === myId);
+
     run(`"C:/Program Files/Git/bin/sh" "${path.resolve(ankiPugRoot, 'tests/bin/debug.sh')}" "${me.cid}"`);
   });
 
   (() => {
-    var baseOk = document.getElementById('base-ok');
-    var isBaseOk = baseOk.innerText === 'true';
+    const baseOk = document.getElementById('base-ok');
+    const isBaseOk = baseOk.innerText === 'true';
+
     if (isBaseOk) document.getElementById('set-base-ok').hidden = true;
     baseOk.classList.add(isBaseOk ? 'ok' : 'nok');
     baseOk.innerText = 'BASE';
-    var diffOk = document.getElementById('diff-ok');
+    const diffOk = document.getElementById('diff-ok');
+
     diffOk.classList.add(diffOk.innerText === 'true' ? 'ok' : 'nok');
     diffOk.innerText = 'DIFF';
   })();
@@ -368,13 +372,14 @@
   }
 
   async function setBaseOk() {
-    var fixturesPath = path.join(ankiPugRoot, 'tests/fixture/fixtures.json');
-    var fixtures = JSON.parse(await fs.promises.readFile(fixturesPath, 'utf8'));
-    var myId = path.basename(process.cwd());
-    var me = fixtures.find(fixture => fixture.id === myId);
+    const fixturesPath = path.join(ankiPugRoot, 'tests/fixture/fixtures.json');
+    const fixtures = JSON.parse(await fs.promises.readFile(fixturesPath, 'utf8'));
+    const myId = path.basename(process.cwd());
+    const me = fixtures.find(fixture => fixture.id === myId);
+
     me.ok = true;
-    console.log(fixturesPath, me, fixtures);
-    await fs.promises.writeFile(fixturesPath, JSON.stringify(fixtures, null, '\t') + '\n');
+    log(fixturesPath, me, fixtures);
+    await fs.promises.writeFile(fixturesPath, `${JSON.stringify(fixtures, null, '\t')}\n`);
     document.getElementById('base-ok').classList.replace('nok', 'ok');
     document.getElementById('set-base-ok').hidden = true;
   }
@@ -385,13 +390,14 @@
   }
 
   function viewTemplate(templateName) {
-    var templateFile = path.join(process.cwd(), templateName + '_{{face}}_template.html');
-    log('view template', templateName, templateFile)
+    const templateFile = path.join(process.cwd(), `${templateName}_{{face}}_template.html`);
+
+    log('view template', templateName, templateFile);
     viewFile(templateFile);
   }
 
   function run(command) {
-    childProcess.spawn(command, { detached: true, stdio: 'ignore', shell: true }).unref();
+    childProcess.spawn(command, { detached: true, shell: true, stdio: 'ignore' }).unref();
   }
 
   function viewFile(filename) {
@@ -400,8 +406,8 @@
   }
 
   function addJob(job) {
-    job.catch(e => {
-      console.log('Job error:', e);
+    job.catch(error => {
+      log('Job error:', error);
       runningJobs.splice(runningJobs.indexOf(job), 1);
     });
     runningJobs.push(job);
