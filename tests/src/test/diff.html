@@ -155,7 +155,7 @@
     <div class="img-block base-pug">
       <h4>base-pug</h4>
       <div class="img"><img src="./base-pug.png"></img></div>
-      <p id="base-pug-diff">{{diff.base-pug}}</p>
+      <p id="base-pug-diff" class="btn-block">{{diff.base-pug}}</p>
       <div class="btn-group btn-block">
         <i id="base-pug-recto" class="btn btn-warning">Recto</i>
         <i id="base-pug-verso" class="btn btn-warning">Verso</i>
@@ -181,7 +181,7 @@
     <div class="img-block pug-anki">
       <h4>pug-anki</h4>
       <div class="img"><img src="./pug-anki.png"></img></div>
-      <p id="pug-anki-diff">{{diff.pug-anki}}</p>
+      <p id="pug-anki-diff" class="btn-block">{{diff.pug-anki}}</p>
     </div>
     <div class="img-block anki">
       <h4>anki</h4>
@@ -220,11 +220,11 @@
   });
 
   document.getElementById('anki-as-base').addEventListener('click', () => {
-    addJob(setAsBase('anki.png'));
+    addJob(setAsBase('anki'));
   });
 
   document.getElementById('pug-as-base').addEventListener('click', () => {
-    addJob(setAsBase('pug.png'));
+    addJob(setAsBase('pug'));
   });
 
   document.getElementById('set-base-ok').addEventListener('click', () => {
