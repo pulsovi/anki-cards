@@ -2052,9 +2052,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-pulsovi@npm:*":
+"eslint-config-pulsovi@file:E:\\dev\\eslint-config-pulsovi\\packages\\core::locator=anki-cards%40workspace%3A.":
   version: 2.6.3
-  resolution: "eslint-config-pulsovi@npm:2.6.3"
+  resolution: "eslint-config-pulsovi@file:/E%3A/dev/eslint-config-pulsovi/packages/core#/E%3A/dev/eslint-config-pulsovi/packages/core::hash=747201&locator=anki-cards%40workspace%3A."
   dependencies:
     eslint: "*"
     eslint-config-airbnb-base: "*"
@@ -2076,7 +2076,7 @@ __metadata:
       optional: true
     eslint-config-pulsovi-react:
       optional: true
-  checksum: ff00beb883e255c05d5867ad7fc78e45dd270792a1adb325f44dbe43826ec9497ba35a5181611cbf33b2a522c21764070ef01ecc15aa187a9374e4833c3642f7
+  checksum: 0cd5157c9cd29603155408b296b6054aa64a598ce9da2dd270986941df7b820690399016e48f1d7d02d102d39ec7652f09870526fcce43aef4fc909cae2a71f5
   languageName: node
   linkType: hard
 

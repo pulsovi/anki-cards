@@ -12,6 +12,7 @@ const sharp = require('sharp');
 const sizeOf = promisify(require('image-size'));
 
 const config = require('../../../config/default');
+const globals = require('../../../config/global');
 const Model = require('../../../src/diff/anki-pug-model');
 
 const AnkiManager = require('./AnkiManager');
@@ -44,7 +45,7 @@ class Fixture {
     this.locals.Type = this.model.name;
     this.viewport = Object.assign(getConfig(`${this.platform}.viewport`), options.viewport);
     this.screenshot = options.screenshot || {};
-    this.diffTemplate = promisify(fs.readFile)(path.join(__dirname, 'diff.html'), 'utf8');
+    this.diffTemplate = fs.promises.readFile(path.join(__dirname, 'diff.html'), 'utf8');
 
     if (this.directory) mkdirp.sync(this.directory);
     this.ready = this.getRaw();
@@ -165,6 +166,7 @@ class Fixture {
     const locals = this.asRaw({
       __dirname,
       cssFile: this.css.pug.path.replace(/\\/gu, '\\\\'),
+      diffExe: globals['meld-path'].replace(/\\/gu, '\\\\'),
       pugRectoFile: this.recto.pug.path.replace(/\\/gu, '\\\\'),
       pugVersoFile: this.verso.pug.path.replace(/\\/gu, '\\\\'),
     });

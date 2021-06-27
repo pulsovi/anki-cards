@@ -156,6 +156,11 @@
       <h4>base-pug</h4>
       <div class="img"><img src="./base-pug.png"></img></div>
       <p id="base-pug-diff">{{diff.base-pug}}</p>
+      <div class="btn-group btn-block">
+        <i id="base-pug-recto" class="btn btn-warning">Recto</i>
+        <i id="base-pug-verso" class="btn btn-warning">Verso</i>
+        <i id="base-pug-css" class="btn btn-warning">CSS</i>
+      </div>
     </div>
     <div class="img-block pug">
       <h4>pug</h4>
@@ -272,12 +277,27 @@
 
   document.getElementById('pug-firefox').addEventListener('click', () => {
     log('open pug to firefox');
-    run('{{directory}}\\pug.html');
+    run('"{{directory}}\\pug.html"');
   });
 
   document.getElementById('anki-firefox').addEventListener('click', () => {
     log('open anki to firefox');
-    run('{{directory}}\\anki.html');
+    run('"{{directory}}\\anki.html"');
+  });
+
+  document.getElementById('base-pug-recto').addEventListener('click', () => {
+    log('open diff for base / pug recto');
+    diff('./base_recto_template.html', './pug_recto_template.html');
+  });
+
+  document.getElementById('base-pug-verso').addEventListener('click', () => {
+    log('open diff for base / pug verso');
+    diff('./base_verso_template.html', './pug_verso_template.html');
+  });
+
+  document.getElementById('base-pug-css').addEventListener('click', () => {
+    log('open diff for base / pug css');
+    diff('./base_css_template.html', './pug_css_template.html');
   });
 
   document.getElementById('view-fixtures').addEventListener('click', async() => {
@@ -298,17 +318,34 @@
   });
 
   (() => {
+    const diffOk = document.getElementById('diff-ok');
     const baseOk = document.getElementById('base-ok');
     const isBaseOk = baseOk.innerText === 'true';
 
     if (isBaseOk) document.getElementById('set-base-ok').hidden = true;
     baseOk.classList.add(isBaseOk ? 'ok' : 'nok');
     baseOk.innerText = 'BASE';
-    const diffOk = document.getElementById('diff-ok');
 
     diffOk.classList.add(diffOk.innerText === 'true' ? 'ok' : 'nok');
     diffOk.innerText = 'DIFF';
   })();
+
+  function diff(fileA, fileB) {
+    const diffExe = '{{diffExe}}';
+
+    log('diff exe:', diffExe);
+    childProcess.execFile(
+      diffExe,
+      [fileA, fileB],
+      { env: { PATH: `${process.env.PATH};${path.join(diffExe, '../lib')}` }},
+      (error, stdout, stderr) => {
+        log('end diff', fileA, fileB);
+        if (error) log('Error:', error);
+        if (stdout) log('STDOUT:', stdout);
+        if (stderr) log('STDERR:', stderr);
+      }
+    );
+  }
 
   async function refreshTemplate(template) {
     log('refreshing template', template);
@@ -348,12 +385,12 @@
   }
 
   async function reloadDiff() {
-    const { fixture: { diff }} = JSON.parse(await fs.promises.readFile('./package.json', 'utf8'));
+    const { fixture: { diff: diffs }} = JSON.parse(await fs.promises.readFile('./package.json', 'utf8'));
 
-    document.getElementById('base-pug-diff').innerHTML = diff['base-pug'];
-    document.getElementById('pug-anki-diff').innerHTML = diff['pug-anki'];
+    document.getElementById('base-pug-diff').innerHTML = diffs['base-pug'];
+    document.getElementById('pug-anki-diff').innerHTML = diffs['pug-anki'];
     document.getElementById('diff-ok').classList.remove('ok', 'nok');
-    document.getElementById('diff-ok').classList.add(diff.ok ? 'ok' : 'nok');
+    document.getElementById('diff-ok').classList.add(diffs.ok ? 'ok' : 'nok');
   }
 
   function readStream(stream) {
@@ -367,7 +404,16 @@
   }
 
   async function setAsBase(source) {
-    await fs.promises.copyFile(path.resolve(source), path.resolve('base.png'));
+    log('set-as-base', source);
+    await Promise.all([
+      '.html',
+      '.png',
+      '_css_template.html',
+      '_recto_template.html',
+      '_verso_template.html',
+    ].map(suffix => fs.promises.copyFile(
+      path.resolve(`${source}${suffix}`), path.resolve(`base${suffix}`)
+    )));
     addJob(refreshTemplate('base'));
   }
 
@@ -397,6 +443,7 @@
   }
 
   function run(command) {
+    log('run', command);
     childProcess.spawn(command, { detached: true, shell: true, stdio: 'ignore' }).unref();
   }
 
@@ -406,10 +453,9 @@
   }
 
   function addJob(job) {
-    job.catch(error => {
-      log('Job error:', error);
-      runningJobs.splice(runningJobs.indexOf(job), 1);
-    });
+    job
+      .catch(error => log('Job error:', error))
+      .finally(() => runningJobs.splice(runningJobs.indexOf(job), 1));
     runningJobs.push(job);
   }
   </script>
