@@ -2,7 +2,8 @@ node_modules/
 out/
 !tests/out
 tests/out/*/*
-!tests/out/*/base.png
+!tests/out/*/base*
+tests/out/*/base-pug*
 /tmp
 /var
 /.yarn/

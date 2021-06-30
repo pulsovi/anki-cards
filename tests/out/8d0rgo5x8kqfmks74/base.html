@@ -1,0 +1,376 @@
+<html class="mobile android linux js">
+
+<head>
+  <title>AnkidDroid Flashcard</title>
+  <base href="http://127.0.0.1:57163/">
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="file:///D:/MesDonnees/Dev/Anki-Android/AnkiDroid/src/main/assets/flashcard.css">
+  <link rel="stylesheet" type="text/css" href="file:///D:/MesDonnees/Dev/Anki-Android/AnkiDroid/src/main/assets/ruby.css">
+  <link rel="stylesheet" type="text/css" href="file:///D:/MesDonnees/Dev/Anki-Android/AnkiDroid/src/main/assets/chess.css">
+  <style> @font-face {font-family: "OpenSans"; font-weight: normal; font-style: italic; src: url("file:///D:/MesDonnees/Dev/Anki-Android/AnkiDroid/src/main/assets/fonts/OpenSans-Italic.ttf");}@font-face {font-family: "OpenSans"; font-weight: bolder; font-style: italic; src: url("file:///D:/MesDonnees/Dev/Anki-Android/AnkiDroid/src/main/assets/fonts/OpenSans-BoldItalic.ttf");}@font-face {font-family: "OpenSans-Regular"; font-weight: normal; font-style: normal; src: url("file:///D:/MesDonnees/Dev/Anki-Android/AnkiDroid/src/main/assets/fonts/OpenSans-Regular.ttf");}@font-face {font-family: "OpenSans"; font-weight: bolder; font-style: normal; font-stretch: condensed; src: url("file:///D:/MesDonnees/Dev/Anki-Android/AnkiDroid/src/main/assets/fonts/OpenSans-CondensedBold.ttf");}@font-face {font-family: "OpenSans"; font-weight: lighter; font-style: italic; src: url("file:///D:/MesDonnees/Dev/Anki-Android/AnkiDroid/src/main/assets/fonts/OpenSans-LightItalic.ttf");}@font-face {font-family: "OpenSans"; font-weight: lighter; font-style: normal; src: url("file:///D:/MesDonnees/Dev/Anki-Android/AnkiDroid/src/main/assets/fonts/OpenSans-Light.ttf");}@font-face {font-family: "OpenSans"; font-weight: bolder; font-style: normal; src: url("file:///D:/MesDonnees/Dev/Anki-Android/AnkiDroid/src/main/assets/fonts/OpenSans-Bold.ttf");}BODY {font-family: 'OpenSans';font-weight: normal;font-style: normal;font-stretch: normal;}        </style>
+  <script src="file:///D:/MesDonnees/Dev/Anki-Android/AnkiDroid/src/main/assets/scripts/card.js" type="text/javascript"> </script>
+</head>
+
+<body class="card card1">
+  <div id="content">
+    <div class="answer"><style>:root {
+  background: #282828;
+  font-size: 20px;
+  height: 100%;
+  text-align: center;
+}
+
+* {
+  margin: 0;
+}
+
+aside {
+  background: #eeb;
+  color: #a62;
+  padding: 1em;
+  text-align: justify;
+}
+
+aside>aside {
+  margin: 0 !important;
+  padding: 0.5em 0 0 0.5em;
+}
+
+aside>aside:not(:last-child) {
+  padding-bottom: 0.5em;
+}
+
+aside pre {
+  margin-bottom: 1em;
+  margin-top: 1em;
+}
+
+body {
+  font-size: inherit;
+}
+
+code {
+  background-color: #ccc;
+  color: #a52a2a;
+  padding: 0 .5em;
+  white-space: nowrap;
+}
+
+footer {
+  background-color: #a9a9a9;
+  color: #fff;
+  font-size: .5em;
+  padding: 2em 0;
+}
+
+header {
+  background-color: #34b9ff;
+  color: #99dbff;
+  font-size: 1.4em;
+  padding: 0.5em 1em;
+  text-transform: uppercase;
+}
+
+header.logo {
+  padding-left: 3em;
+  position: relative;
+}
+
+header img {
+  height: 2em;
+  left: 0.1em;
+  margin-top: -1em;
+  position: absolute;
+  top: 50%;
+}
+
+i {
+  font-style: normal;
+}
+
+.proto-indent, .indent {
+  background: #555;
+  border-left: solid 1px #888;
+}
+
+img {
+  float: left;
+}
+
+kbd {
+  background-color: #ddd;
+  border: solid 2px #aaa;
+  border-radius: 5px;
+  color: #000;
+  display: inline-block;
+  font-size: .7em;
+  padding: 2px 15px;
+}
+
+pre, .monokai, .mk {
+  background: #272822;
+  color: #f8f8f2;
+  font-family: "Monospace", "Consolas", "Menlo-Regular";
+  font-weight: 500;
+  overflow-wrap: break-word;
+  text-decoration-color: #f8f8f2;
+}
+
+pre, .pre {
+  padding: 0.2em 0.5em;
+  white-space: pre-wrap;
+}
+
+pre b, .monokai b, .mk b {
+  background-color: #640000;
+  background-color: rgba(200, 0, 0, .5);
+  color: #f00;
+}
+
+section {
+  padding: 1px 0;
+}
+
+section aside, section .p {
+  margin: 1em;
+}
+
+section .p {
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 1em;
+  text-align: justify;
+}
+
+section .p aside {
+  margin: 1em 0.3em;
+}
+
+section+pre, header+pre {
+  display: block;
+}
+
+dl,
+ol,
+pre,
+ul,
+.pre {
+  display: table;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.card {
+  background-color: #fff;
+  color: #000;
+  font-family: arial;
+  margin: auto;
+  max-width: 120vh;
+  min-height: 100%;
+  text-align: center;
+}
+
+.clearfix {
+  clear: both;
+}
+
+.cloze {
+  color: #00f;
+  font-weight: bold;
+}
+
+.error-unknown-block::before {
+  background: #f00;
+  color: #faa;
+  content: "error: block balise without class style (please check the field content).";
+  font-size: 0.5em;
+  padding: 0 0.3em;
+}
+
+.hotkey {
+  display: inline;
+  white-space: nowrap;
+}
+
+.inline {
+  display: inline;
+}
+
+.lang-am {
+  color: #939;
+}
+
+.lang-en {
+  color: #f00;
+}
+
+.lang-fr {
+  color: #00f;
+}
+
+.lang-he {
+  color: #0ff;
+}
+
+.lang-title {
+  background-color: #fff;
+  background-color: rgba(128, 128, 128, 0.8);
+  box-shadow: rgba(128, 128, 128, 0.8) 0 0 0.5em 0.3em;
+  color: #000;
+  color: rgba(0, 0, 0, 0.7);
+  margin: 1em auto;
+  width: 4em;
+}
+
+.mk-bg1 {
+  color: #3e3d32;
+}
+
+.mk-blue, .mk-var-typ, .mk-type, .typ {
+  color: #66d9ef;
+}
+
+.mk-cyan {
+  color: #a1efe4;
+}
+
+.mk-fg2, .mk-comment, .comment {
+  color: #75715e;
+}
+
+.mk-green, .mk-class-name, .mk-func-name, .class, .func {
+  color: #a6e22e;
+}
+
+.mk-orange, .mk-func-param, .nam {
+  color: #fd971f;
+}
+
+.mk-red, .mk-keyword, .mk-operator, .oper, .keyword {
+  color: #f92672;
+}
+
+.mk-violet, .mk-number, .mk-boolean, .num, .number {
+  color: #ae81ff;
+}
+
+.mk-yellow, .mk-string, .val {
+  color: #e6db74;
+}
+
+.mobile {
+  font-size: x-large;
+}
+
+.mobile section {
+  padding: 0;
+}
+
+.mobile section aside+aside {
+  border-top: solid 1px;
+}
+
+.mobile section .p {
+  margin-bottom: 0;
+  margin-top: 0;
+  padding: 1em;
+}
+
+.mobile section>aside,
+.mobile section>pre {
+  margin: 0;
+}
+
+.mobile section .p+.p {
+  padding-top: 0;
+}
+
+
+.mobile section>:first-child {
+  margin-top: 0;
+  padding-top: 1em;
+}
+
+.mobile section>:last-child {
+  margin-bottom: 0;
+  padding-bottom: 1em;
+}
+
+.no-break, .nobreak {
+  white-space: nowrap;
+}
+
+.outline {
+  border: solid 0.1em;
+  border-radius: 0.5em;
+  display: inline-block;
+  padding: 0.1em 0.2em;
+}
+
+.outline-red {
+  border-color: #f00;
+}
+
+.pre {
+  margin: 0 1em;
+}
+
+.pre-head {
+  background: #3e3d32;
+  display: block;
+  text-align: center;
+}
+
+.resp {
+  background-color: #3d7198;
+  color: #fff;
+}
+
+.subtitle {
+  background-color: #99dbff;
+  color: #fff;
+  font-weight: 100;
+  padding: .5em 0;
+}
+
+.toam, .toen, .tofr, .tohe {
+  font-weight: bold;
+  padding: 1em;
+}
+
+.toam {
+  background-color: #939;
+}
+
+.toen {
+  background-color: #f00;
+}
+
+.tofr {
+  background-color: #00f;
+}
+
+.tohe {
+  background-color: #0ff;
+}
+
+.win {
+  font-size: 1.7em;
+}
+
+.win .mobile-only {
+  display: none;
+}
+
+#content {
+  margin: 0;
+  padding: 0;
+}
+</style><section class="quest"><div class="p"><font style="font-family: vilna;text-align:left;" dir="rtl"><br>"שְׁמַע בְּנִי מוּסַר אָבִיךָ, וְאַל תִּטֹּשׁ תּוֹרַת אִמֶּךָ" (משלי א ח).<br><br>תִּתְנַהֵג תָּמִיד לְדַבֵּר כָּל דְּבָרֶיךָ בְּנַחַת, לְכָל אָדָם וּבְכָל עֵת, וּבַזֶּה תִּנָּצֵל מִן הַכַּעַס, שֶׁהִיא מִדָּה רָעָה לְהַחְטִיא בְּנֵי אָדָם.<br>וְכֵן אָמְרוּ רַבּוֹתֵינוּ ז"ל (נדרים כב ע"א): כָּל הַכּוֹעֵס – כָּל מִינֵי גֵיהִנּוֹם שׁוֹלְטִים בּוֹ, שֶׁנֶּאֱמַר (קהלת יא י): "וְהָסֵר כַּעַס מִלִּבֶּךָ, וְהַעֲבֵר רָעָה מִבְּשָׂרֶךָ".<br>וְאֵין "רָעָה" אֶלָּא גֵיהִנּוֹם, שֶׁנֶּאֱמַר (משלי טז ד): "וְגַם רָשָׁע לְיוֹם רָעָה".<br><br>וְכַאֲשֶׁר תִּנָּצֵל מִן הַכַּעַס, תַּעֲלֶה עַל לִבְּךָ מִדַּת הָעֲנָוָה, שֶׁהִיא מִדָּה טוֹבָה מִכָּל מִדּוֹת טוֹבוֹת, שֶׁנֶּאֱמַר (משלי כב ד): "עֵקֶב עֲנָוָה, יִרְאַת ה'".<br><br>וּבַעֲבוּר הָעֲנָוָה, תַּעֲלֶה עַל לִבְּךָ מִדַּת הַיִּרְאָה, כִּי תִתֵּן אֶל לִבְּךָ תָּמִיד:<br>מֵאַיִן בָּאתָ, וּלְאַן אַתָּה הוֹלֵךְ;<br>וְשֶׁאַתָּה רִמָּה וְתוֹלֵעָה בְּחַיֶּיךָ, וְאַף כִּי בְּמוֹתָךְ;<br>וְלִפְנֵי מִי אַתָּה עָתִיד לִתֵּן דִּין וְחֶשְׁבּוֹן – לִפְנֵי מֶלֶךְ הַכָּבוֹד, שֶׁנֶּאֱמַר (דה"ב ו יח): "הִנֵּה הַשָּׁמַיִם וּשְׁמֵי הַשָׁמַיִם לֹא יְכַלְכְּלוּךָ", אַף כִּי לִבּוֹת בְּנֵי אָדָם (ע"פ משלי טו יא).<br>וְנֶאֱמַר (ירמיהו כג כד): "הֲלֹא אֵת הַשָׁמַיִם וְאֵת הָאָרֶץ אֲנִי מָלֵא, נְאֻם ה'".<br><br>וְכַאֲשֶׁר תַּחֲשֹׁב אֶת כָּל אֵלֶּה, תִּירָא מִבּוֹרְאֶךָ וְתִשָּׁמֵר מִן הַחֵטְא. וּבַמִּדוֹת הָאֵלֶּה תִּהְיֶה שָֹמֵחַ בְּחֶלְקֶךָ.<br>וְכַאֲשֶׁר תִּתְנַהֵג בְּמִדַּת הָעֲנָוָה לְהִתְבּוֹשֵׁשׁ מִכָּל אָדָם, וּלְהִתְפַּחֵד מִמֶּנּוּ וּמִן הַחֵטְא – אָז תִּשְׁרֶה עָלֶיךָ רוּחַ הַשְּׁכִינָה, וְזִיו כְּבוֹדָהּ, וְחַיֵּי עוֹלָם הַבָּא.<br><br>וְעַתָּה, בְּנִי, דַע וּרְאֵה כִּי הַמִּתְגָּאֶה בְּלִבּוֹ עַל הַבְּרִיוֹת – מוֹרֵד הוּא בְּמַלְכוּת שָׁמַיִם, כִּי מִתְפָּאֵר הוּא בִּלְבוּשׁ מַלְכוּת שָׁמַיִם, שֶׁנֶּאֱמַר (תהלים צג א): "ה' מָלָךְ גֵּאוּת לָבֵש" וגו'.<br>וּבַמֶה יִתְגָּאֵה לֵב הָאָדָם?<br>אִם בְּעֹשֶׁר – "ה' מוֹרִישׁ וּמַעֲשִׁיר" (שמ"א ב ז).<br>וְאִם בְּכָבוֹד – הֲלֹא לֵאלֹהִים הוּא, שֶׁנֶּאֱמַר (דה"א כט יב): "וְהָעֹשֶׁר וְהַכָּבוֹד מִלְפָנֶיךָ", וְאֵיךְ מִתְפָּאֵר בִּכְבוֹד קוֹנוֹ?<br>וְאִם מִתְפָּאֵר בְּחָכְמָה: "מֵסִיר שָֹפָה לְנֶאֱמָנִים, וְטַעַם זְקֵנִים יִקַח" (איוב יב כ).<br>נִמְצָא: הַכָּל שָׁוֶה לִפְנֵי הַמָּקוֹם, כִּי בְאַפּוֹ מַשְׁפִּיל גֵּאִים, וּבִרְצוֹנוֹ מַגְבִּיהַ שְׁפָלִים. לָכֵן הַשְׁפֵּל עַצְמְךָ, וִינַשַֹּאֲךָ הַמָּקוֹם.<br><br>עַל כֵּן אַפָרֵשׁ לְךָ אֵיךְ תִּתְנַהֵג בְּמִדַּת הָעֲנָוָה, לָלֶכֶת בָּהּ תָּמִיד:<br>כָּל דְבָרֶיךָ יִהְיוּ בְּנַחַת, וְרֹאשְׁךָ כָּפוּף;<br>וְעֵינֶךָ יַבִּיטוּ לְמַטָּה לָאָרֶץ, וְלִבְּךָ לְמַעֲלָה;<br>וְאַל תַּבִּיט בִּפְנֵי אָדָם בְּדַבֶּרְךָ עִמוֹ.<br>וְכָל אָדָם יִהְיֶה גָדוֹל מִמְךָ בְּעֵינֶיךָ:<br>אִם חָכָם אוֹ עָשִׁיר הוּא – עָלֶיךָ לְכַבְּדוֹ.<br>וְאִם רָשׁ הוּא, וְאַתָּה עָשִׁיר אוֹ חָכָם מִמֶנוּ – חֲשֹׁב בְּלִבְּךָ כִּי אַתָּה חַיָּב מִמֶנוּ, וְהוּא זַכַּאי מִמְךָ. שֶׁאִם הוּא חוֹטֵא – הוּא שׁוֹגֵג, וְאַתָּה מֵזִיד.<br><br>בְּכָל דְּבָרֶיךָ וּמַעֲשֶֹיךָ וּמַחְשְׁבוֹתֶיךָ, וּבְכָל עֵת – חֲשׁוֹב בְּלִבָּךְ כְּאִלוּ אַתָּה עוֹמֵד לִפְנֵי הַקָּדוֹשׁ בָּרוּךְ הוּא, וּשְׁכִינָתוֹ עָלֶיךָ, כִּי כְּבוֹדוֹ מָלֵא הָעוֹלָם.<br>וּדְבָרֶיךָ יִהְיוּ בְּאֵימָה וּבְיִרְאָה, כְּעֶבֶד לִפְנֵי רַבּוֹ.<br><br>וְתִתְבַּיֵּשׁ מִכָּל אָדָם. וְאִם יִקְרָאֲךָ אִישׁ – אַל תַּעֲנֵהוּ בְּקוֹל רָם, רַק בְּנַחַת כְּעוֹמֵד לִפְנֵי רַבּוֹ.<br><br>וֶהֱוֵי זָהִיר לִקְרוֹת בַּתּוֹרָה תָּמִיד, אֲשֶׁר תּוּכַל לְקַיְּמָהּ.<br>וְכַאֲשֶׁר תָּקוּם מִן הַסֵּפֶר – תְּחַפֵּשֹ בַּאֲשֶׁר לָמַדְתָּ אִם יֵשׁ בּוֹ דָבָר אֲשֶׁר תּוּכַל לְקַיְּמוֹ.<br>וּתְפַשְׁפֵּשׁ בְּמַעֲשֶֹיךָ בַּבֹּקֶר וּבָעֶרֶב, וּבָזֶה יִהְיוּ כָּל יָמֶיךָ בִּתְשׁוּבָה.<br><br>וְהַסֵר כָּל דִבְרֵי הָעוֹלָם מִלִבְּךָ בְּעֵת הַתְּפִלָּה, וְהָכֵן לִבְּךָ לִפְנֵי הַמָּקוֹם בָּרוּךְ הוּא. וְטַהֵר רַעֲיוֹנֶיךָ, וַחֲשֹׁב הַדִּבּוּר קֹדֶם שֶׁתּוֹצִיאֶנּוּ מִפִּיךָ.<br><br>וְכֵן תַּעֲשֶֹה כָּל יְמֵי חַיֵּי הֶבְלֶךָ בְּכָל דָּבָר וְדָבָר, וְלֹא תֶחֱטָא.<br>וּבָזֶּה יִהְיוּ דְּבָרֶיךָ וּמַעֲשֶֹיךָ וּמַחְשְׁבוֹתֶיךָ יְשָׁרִים;<br>וּתְפִלָּתְךָ תִּהְיֶה זַכָּה וּבָרָה וּנְקִיָּה, וּמְכֻוֶּנֶת וּמְקֻבֶּלֶת לִפְנֵי הַמָּקוֹם בָּרוּךְ הוּא, שֶׁנֶּאֱמַר (תהלים י יז): "תָּכִין לִבָּם – תַּקְשִׁיב אָזְנֶךָ".<br><br>תִּקְרָא הָאִגֶּרֶת הַזֹּאת פַּעַם אַחַת בְּשָׁבוּעַ וְלֹא תִפְחֹת, לְקַיְּמָהּ וְלָלֶכֶת בָּהּ תָּמִיד אַחַר הַשֵּׁם יִתְבָּרַךְ.<br>לְמַעַן תַּצְלִיחַ בְּכָל דְּרָכֶיךָ, וְתִזְכֶּה לָעוֹלָם הַבָּא הַצָּפוּן לַצַּדִּיקִים.<br>וּבְכָל יוֹם שֶׁתִּקְרָאֶנָּה – יַעֲנוּךָ מִן הַשָּׁמַיִם כַּאֲשֶׁר יַעֲלֶה עַל לִבְּךָ לִשְׁאֹל, עַד עוֹלָם. אָמֵן סֶלָה.<br></font></div></section><script src="_css.js"></script><script src="_logos.js"></script>
+<section class="resp" id="answer"></section><footer>Basic&gt;Card 1</footer>
+</div>
+  </div>
+</body>
+
+</html>
