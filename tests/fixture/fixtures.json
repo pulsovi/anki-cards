@@ -1065,5 +1065,25 @@
 		"screenshot": {
 			"fullPage": true
 		}
+	},
+	{
+		"card": "Ou",
+		"cid": "1551348642806",
+		"id": "2yy9a19h14kqj6os2r",
+		"locals": {
+			"Auteur": "פתחי תשובה",
+			"Ou": "אבן העזר כח ג 2",
+			"Question": "קדש בחפץ שלו והעדים היו סבורים שהיה חפץ גזול",
+			"Reponse": "אינה מקודשת<br>(צריך עיון מה דעת האבני מלאוים בזה פתחי תשובה כז סעיף קטן ו)",
+			"Tags": " הלכות_קידושין "
+		},
+		"model": "Limoud::psakim",
+		"ord": 3,
+		"type": 0,
+		"title": "Auteur inline",
+		"description": "Le nom de l'auteur doit apparaître dans la question (et pas dans un titre au dessus)",
+		"face": "recto",
+		"platform": "mobile",
+		"ok": true
 	}
 ]
