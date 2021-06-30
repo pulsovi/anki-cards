@@ -1,10 +1,11 @@
+const fs = require('fs');
 const path = require('path');
 const { promisify } = require('util');
 
-const debug = require('debug');
+const log = require('debug')('anki-db-manager');
 const { get, has, set } = require('dot-prop');
-// const Joi = require('joi');
 const sqlite3 = require('sqlite3').verbose();
+const tmp = require('tmp');
 
 const Card = require('./AnkiCard');
 const Field = require('./AnkiField');
@@ -13,13 +14,12 @@ const Notetype = require('./AnkiNotetype');
 const Template = require('./AnkiTemplate');
 
 const AnkiDB = path.resolve(process.env.APPDATA, 'Anki2/David/collection.anki2');
-const log = debug('anki-db-manager');
 
 log('structures are designed in AnkiSources\\rslib\\backend.proto');
 
 class AnkiDbManager {
   constructor(db) {
-    this.db = db || GetAnkiDb();
+    this.db = db || getAnkiDb();
     this.cache = {};
   }
 
@@ -78,13 +78,39 @@ class AnkiDbManager {
   }
 }
 
-function GetAnkiDb() {
+async function getAnkiDb(tmpFile) {
+  return await getDb(tmpFile || AnkiDB).then(testDb).then(db => {
+    log('Anki database loaded from', tmpFile || AnkiDB);
+    return db;
+  }).catch(err => {
+    if (err.code === 'SQLITE_BUSY' && !tmpFile) {
+      log('Mirroring Anki DB ...');
+      return mirrorFile(AnkiDB).then(getAnkiDb);
+    }
+    log('error on getting AnkiDB from', tmpFile || AnkiDB);
+    throw err;
+  });
+}
+
+async function mirrorFile(src) {
+  const dest = await promisify(tmp.file)();
+
+  await fs.promises.copyFile(src, dest);
+  return dest;
+}
+
+function getDb(file) {
   return new Promise((resolve, reject) => {
-    const Db = new sqlite3.Database(AnkiDB, sqlite3.OPEN_READONLY, err => {
+    const DB = new sqlite3.Database(file, sqlite3.OPEN_READONLY, err => {
       if (err) reject(err);
-      else resolve(Db);
+      else resolve(DB);
     });
   });
+}
+
+function testDb(DB) {
+  const req = "SELECT name FROM sqlite_master WHERE type ='table' AND name NOT LIKE 'sqlite_%';";
+  return promisify(DB.all.bind(DB))(req).then(() => DB);
 }
 
 // Pattern Singleton

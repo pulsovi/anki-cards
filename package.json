@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "new-fixture": "./tests/bin/new-fixture.sh",
     "test": "./tests/bin/test.sh",
     "verify": "yarn && yarn test"
   },
@@ -71,6 +72,7 @@
     "eslint-plugin-html": "^6.1.2",
     "eslint-plugin-import": "^2.23.3",
     "eslint-plugin-node": "^11.1.0",
-    "stylelint-config-standard": "^22.0.0"
+    "stylelint-config-standard": "^22.0.0",
+    "tmp": "^0.2.1"
   }
 }

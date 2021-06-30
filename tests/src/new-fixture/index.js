@@ -14,9 +14,7 @@ const ROOT = path.join(__dirname, '../../..');
 const fixturesPath = path.resolve(ROOT, 'tests/fixture/fixtures.json');
 
 main()
-  .catch(error => {
-    log(error);
-  });
+  .catch(error => { log(error); });
 
 async function main() {
   const JSONfixtures = await promisify(fs.readFile)(fixturesPath, 'utf8');
