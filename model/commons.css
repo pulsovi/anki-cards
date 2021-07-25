@@ -1,3 +1,8 @@
+@font-face {
+ font-family: "vilna";
+ src: url("_VILNA.ttf") format("truetype");
+}
+
 :root {
   background: #282828;
   font-size: 20px;
