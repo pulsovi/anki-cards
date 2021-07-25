@@ -2,8 +2,7 @@ extends ../kodech_recto_layout.pug
 block variables
 	- var condition = 'Source';
 block question-content
-	|{{#Auteur}}#[h1.subheader {{Auteur}}]{{/Auteur}}
-	.p על מי סמך לאמר
+	.p על מי סמך {{#Auteur}} {{Auteur}}{{/Auteur}} לאמר
 	.sic
 		|{{#Psak}} {{Psak}}{{/Psak}}
 		|{{^Psak}} {{Question}} =&gt; {{Reponse}}{{/Psak}}
