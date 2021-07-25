@@ -46,9 +46,9 @@ function make(
     },
     name: 'style',
     pug: {
-      content: fs.readFileSync(css, 'utf8'),
-      file: css,
-      path: css,
+      content: fs.readFileSync(path.resolve(dirname, css), 'utf8'),
+      file: path.resolve(dirname, css),
+      path: path.resolve(dirname, css),
     },
   });
 
