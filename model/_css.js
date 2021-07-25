@@ -1,18 +1,12 @@
-window.setImmediate = window.setImmediate || function(cb) {
-  return setTimeout(cb, null);
-};
-
 const isInline = (function IIFE() {
   const inlineList = [
     'inline',
     'inline-block',
     'table',
   ];
-  return function isInline(element) {
-    return element.nodeType === Node.TEXT_NODE ||
-      !!~inlineList.indexOf(getComputedStyle(element).display) ||
-      getComputedStyle(element).float !== 'none';
-  };
+  return element => element.nodeType === Node.TEXT_NODE ||
+    inlineList.includes(getComputedStyle(element).display) ||
+    getComputedStyle(element).float !== 'none';
 }());
 
 const isBlock = (function IIFE() {
@@ -27,67 +21,69 @@ const isBlock = (function IIFE() {
     'why',
   ];
 
-  return function isBlock(element) {
-    return !!~blockTagList.indexOf(element.tagName.toLowerCase()) ||
-      blockClassList.some(className => element.classList.contains(className));
-  };
+  return element => blockTagList.includes(element.tagName.toLowerCase()) ||
+    blockClassList.some(className => element.classList.contains(className));
 }());
 
-function parseContentType(a, b) {
-  if (isInline(b)) {
-    if (a === 'inline' || a === null) return 'inline';
-    return 'mixed';
-  } if (isBlock(b)) {
-    if (a === 'block' || a === null) return 'block';
-    return 'mixed';
-  }
+function getContentType(elem) {
+  if (isInline(elem)) return 'inline';
+  if (isBlock(elem)) return 'block';
+  return 'mixed';
+}
+
+function parseContentTypeReducer(parsed, elem) {
+  const elemType = getContentType(elem);
+
+  if (parsed === null || parsed === elemType) return elemType;
   return 'mixed';
 }
 
 function blockInP() {
   const pList = Array.from(document.getElementsByClassName('p'));
 
-  pList.forEach(p => {
-    const children = Array.from(p.childNodes);
-    const contentType = children.reduce(parseContentType, null);
+  pList.forEach(pNode => {
+    const children = Array.from(pNode.childNodes);
+    const contentType = children.reduce(parseContentTypeReducer, null);
 
     if (contentType === 'inline')
-      p.appendChild(document.createElement('div')).className = 'clearfix';
+      pNode.appendChild(document.createElement('div')).className = 'clearfix';
     else if (contentType === 'block') {
-      children.forEach(e => {
-        p.parentElement.insertBefore(e, p);
+      children.forEach(childNode => {
+        pNode.parentElement.insertBefore(childNode, pNode);
       });
-      p.parentElement.removeChild(p);
-    } else /* mixed */ {
+      pNode.parentElement.removeChild(pNode);
+    } else {
+      // mixed content
       const inlineList = [];
       let divp = null;
-      let dive = null;
-      let inlineElement = null;
+      let divError = null;
 
       children.forEach(child => {
         if (isInline(child)) inlineList.push(child);
         else {
           if (inlineList.length) {
-            divp = p.parentElement.insertBefore(document.createElement('div'), p);
+            divp = pNode.parentElement.insertBefore(document.createElement('div'), pNode);
             divp.className = 'p';
-            while (inlineElement = inlineList.shift()) divp.appendChild(inlineElement);
+            inlineList.forEach(inlineElement => divp.appendChild(inlineElement));
+            inlineList.length = 0;
             divp.appendChild(document.createElement('div')).className = 'clearfix';
           }
           if (isBlock(child))
-            p.parentElement.insertBefore(child, p);
+            pNode.parentElement.insertBefore(child, pNode);
           else {
-            dive = p.parentElement.insertBefore(document.createElement('div'), p);
-            dive.className = 'error-unknown-block';
-            dive.appendChild(child);
+            divError = pNode.parentElement.insertBefore(document.createElement('div'), pNode);
+            divError.className = 'error-unknown-block';
+            divError.appendChild(child);
           }
         }
       });
       if (inlineList.length) {
-        divp = p.parentElement.appendChild(document.createElement('div'));
+        divp = pNode.parentElement.appendChild(document.createElement('div'));
         divp.className = 'p';
-        while (inlineElement = inlineList.shift()) divp.appendChild(inlineElement);
+        inlineList.forEach(inlineElement => divp.appendChild(inlineElement));
+        inlineList.length = 0;
       }
-      p.parentElement.removeChild(p);
+      pNode.parentElement.removeChild(pNode);
     }
   });
 }
@@ -101,15 +97,20 @@ function colorize() {
 function syntaxColorize(element) {
   const content = element.innerText;
 
-  if ((/^(-?[0-9.]+|true|True|TRUE|false|False|FALSE|null|NULL|None|undefined)$/).test(content))
+  if ((/^(?<keyword>-?[0-9.]+|true|True|TRUE|false|False|FALSE|null|NULL|None|undefined)$/u).test(content))
     element.classList.add('mk-violet');
-  else if ((/^("|').*\1$/).test(content))
+  else if ((/^(?<openQuote>"|').*\1$/u).test(content))
     element.classList.add('mk-yellow');
 }
 
-function main() {
-  setImmediate(blockInP);
-  setImmediate(colorize);
+function docReady(cb) {
+  if (document.readyState === 'complete' || document.readyState === 'interactive')
+    setTimeout(cb, null);
+  else
+    document.addEventListener('DOMContentLoaded', cb);
 }
 
-main();
+docReady(() => {
+  blockInP();
+  colorize();
+});
