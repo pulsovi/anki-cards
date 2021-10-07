@@ -16,6 +16,7 @@ const fixtures = require('../../fixture/fixtures');
 const Fixture = require('./Fixture');
 
 const args = getArgs();
+const gui = { ready: Promise.resolve() };
 const log = debug('anki:test');
 const { humanize } = debug;
 
@@ -81,14 +82,11 @@ async function main() {
     await manageOneFixture(fixture);
     return;
   }
-  for (let i = 0; i < fixtures.length; ++i)
-    // eslint-disable-next-line no-await-in-loop
-    await manageFixture(fixtures[i]);
+  await Promise.all(fixtures.map(fixtureItem => manageFixture(fixtureItem)));
 }
 
 async function manageFixture(options) {
   const fixture = new Fixture(options);
-  let subprocess = null;
 
   await Promise.all([
     fixture.setPug(),
@@ -100,17 +98,20 @@ async function manageFixture(options) {
     fixture.setResemble('pug', 'anki'),
   ]);
   await fixture.setHtmlDiff();
+
   if (!fixture.diff.ok || !fixture.ok) {
-    log(fixture.htmlDiffFile, fixture.diffString);
-    log(path.dirname(fixture.htmlDiffFile));
-    subprocess = childProcess.execFile(nw, ['.'], {
-      cwd: path.dirname(fixture.htmlDiffFile),
-      shell: false,
-      stdio: 'inherit',
+    gui.ready = gui.ready.then(async() => {
+      log('Diff:', fixture.id, fixture.htmlDiffFile);
+      const subprocess = childProcess.execFile(nw, ['.'], {
+        cwd: path.dirname(fixture.htmlDiffFile),
+        shell: false,
+        stdio: 'inherit',
+      });
+      return await endProcess(subprocess);
     });
+    await gui.ready;
   } else
     log('Pass:', fixture.id, fixture.model.name, fixture.card, fixture.title);
-  return await endProcess(subprocess);
 }
 
 function endProcess(proc) {
