@@ -19,6 +19,8 @@ const AnkiManager = require('./AnkiManager');
 
 const ROOT = path.resolve(__dirname, '../../..');
 
+process.on('beforeExit', () => puppeteer.then(browser => browser.close()));
+
 class Fixture {
   constructor(options) {
     log('new Fixture', options);
@@ -228,10 +230,6 @@ class Fixture {
       verso: this.verso,
     };
     return raw;
-  }
-
-  static async close() {
-    (await puppeteer).close();
   }
 }
 

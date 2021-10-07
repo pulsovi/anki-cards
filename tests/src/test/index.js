@@ -1,12 +1,13 @@
 Error.stackTraceLimit = 100;
 process.env.DEBUG_DEPTH = 10;
+const startingTime = Date.now();
 
 const childProcess = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const util = require('util');
 
-const log = require('debug')('anki:test');
+const debug = require('debug');
 const nw = require('nw').findpath();
 
 const { 'anki-pug-root': ROOT } = require('../../../config/global');
@@ -15,8 +16,11 @@ const fixtures = require('../../fixture/fixtures');
 const Fixture = require('./Fixture');
 
 const args = getArgs();
+const log = debug('anki:test');
+const { humanize } = debug;
 
 process.env.ANKI_PUG_ROOT = ROOT;
+log('All dependencies are loaded in', humanize(Date.now() - startingTime));
 
 async function extendFixture(options) {
   const jsonFile = path.resolve(ROOT, 'tests/out', options.id, 'package.json');
@@ -136,4 +140,7 @@ async function reloadPug(options) {
 // main
 main()
   .catch(error => { log('Main error:', error); })
-  .finally(() => { Fixture.close(); });
+  .finally(() => {
+    log('All tests finished in', humanize(Date.now() - startingTime));
+    process.exit();
+  });

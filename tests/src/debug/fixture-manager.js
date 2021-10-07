@@ -63,7 +63,6 @@ class FixtureManager {
     this.page.on('close', () => {
       this.unwatch();
       this.browser.close();
-      Fixture.close();
     });
   }
 
