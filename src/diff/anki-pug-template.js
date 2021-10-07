@@ -4,32 +4,37 @@ const path = require('path');
 
 const chalk = require('chalk');
 const debug = require('debug');
+const { has } = require('underscore');
 
 const FileManager = require('./file_manager');
 
 const log = debug('diff:anki-pug-template');
+const clog = debug('diff:anki-pug-template*');
 
 class Template {
   constructor(pugMakefile, name, model) {
     log('new Template', { model, name, pugMakefile });
-    this.parent = this.model = model;
+    this.model = model;
+    this.parent = model;
     this.name = name;
     this.makefile = pugMakefile;
     this.ready = this.parse();
   }
 
   async parse() {
+    const { makefile } = this;
     let templates;
 
-    delete require.cache[require.resolve(this.makefile)];
+    delete require.cache[require.resolve(makefile)];
     try {
-      templates = require(this.makefile);
-    } catch (e) {
-      if (e.filename)
-        return this.waitForReload(e.message, e.filename);
-      return this.waitForReload(e.message);
+      templates = require(makefile);
+    } catch (error) {
+      console.log(`Error on parse template "${makefile}"`, error.stack);
+      if (error.filename)
+        return this.waitForReload(error.message, error.filename);
+      return this.waitForReload(error.message);
     }
-    const template = templates.find(t => t.name === this.name);
+    const template = templates.find(templateItem => templateItem.name === this.name);
 
     if (!template)
       return this.waitForReload(`Impossible de trouver le template ${this.name}.`);
@@ -40,19 +45,26 @@ class Template {
 
   async waitForReload(message, ...files) {
     if (!files.length) files.push(this.makefile);
-    console.log(chalk.bgRed.yellow(message, `\n${this.model.name} _ ${this.name}`));
-    delete require.cache[require.resolve(this.makefile)];
+    clog(chalk.bgRed.yellow(`Template: ${this.model.name}_${this.name}\n${message}`));
     FileManager.open(files);
     await FileManager.waitOnce(...files);
     return this.parse();
   }
 
   async check() {
-    if (!this.pug || !this.pug.content || !this.pug.file || !this.pug.path) {
-      return await this.waitForReload(
-        'Le template doit contenir une propriété pug avec les éléments path, file et content'
-      );
+    const errors = 'path,file,content'
+      .split(',')
+      .map(prop => (has(this.pug, `${prop}`) ?
+        null :
+        `Le template doit contenir la propriété pug.${prop}`))
+      .filter(error => error !== null);
+
+    if (errors.length) {
+      clog('\n\n', errors.join('\n'));
+      clog(this.pug);
+      return await this.waitForReload();
     }
+    return true;
   }
 
   async assign(object, child) {
@@ -69,7 +81,7 @@ class Template {
     const dirname = path.dirname(this.makefile);
 
     this.watcher = fs.watch(dirname, (event, file) => {
-      console.log(chalk.yellow(`\nfile ${event}: ${path.resolve(dirname, file)}`));
+      clog(chalk.yellow(`\nfile ${event}: ${path.resolve(dirname, file)}`));
       this.ready = this.parse();
     });
   }
