@@ -187,6 +187,10 @@ class Fixture {
         path.join(__dirname, 'bootstrap.css'),
         path.join(this.directory, 'bootstrap.css')
       ),
+      fs.promises.copyFile(
+        path.join(__dirname, 'kit-font-awesome.js'),
+        path.join(this.directory, 'kit-font-awesome.js')
+      ),
     ]);
   }
 
