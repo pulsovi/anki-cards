@@ -1,7 +1,7 @@
 // Node packages
 const childProcess = require('child_process');
 const fs = require('fs');
-fs.path = require('path'); // eslint-disable-line padding-line-between-statements
+const path = require('path');
 
 // npm packages
 const { isFunction } = require('underscore');
@@ -18,9 +18,8 @@ fs.watch(__dirname, { recursive: true }, (event, filename) => {
 
 // add file watcher for update anki ext
 action['src\\anki-addons\\import-export\\__init__.py'] = delayed((event, filename) => {
-  const from = fs.path.resolve(__dirname, filename);
-  // eslint-disable-next-line no-process-env
-  const to = fs.path.resolve(process.env.APPDATA, 'Anki2\\addons21\\import-export\\__init__.py');
+  const from = path.resolve(__dirname, filename);
+  const to = path.resolve(process.env.APPDATA, 'Anki2\\addons21\\import-export\\__init__.py');
 
   if (event !== 'change') return;
   fs.copyFile(from, to, err => console.info('anki extension updated', { err }));
