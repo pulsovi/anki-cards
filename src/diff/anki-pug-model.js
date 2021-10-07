@@ -35,8 +35,8 @@ class Model {
     if (message)
       console.info(chalk.yellow(message));
     FileManager.open(this.pugMakefile);
-    delete require.cache[require.resolve(this.pugMakefile)];
-    await FileManager.waitOnce.apply(FileManager, [this.pugMakefile].concat(files));
+    Reflect.deleteProperty(require.cache, require.resolve(this.pugMakefile));
+    await FileManager.waitOnce(...[this.pugMakefile].concat(files));
     return this.parse();
   }
 
