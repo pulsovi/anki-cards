@@ -1,4 +1,5 @@
 Error.stackTraceLimit = 100;
+process.env.DEBUG_DEPTH = 10;
 
 const childProcess = require('child_process');
 const fs = require('fs');

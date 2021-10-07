@@ -1,8 +1,11 @@
-// jshint esversion:8
-// native dependancies
+Error.stackTraceLimit = 100;
+if (process.argv.includes('-v')) {
+  if (process.env.DEBUG) process.env.DEBUG += ',diff*';
+  else process.env.DEBUG = 'diff*,anki*';
+}
+
 const path = require('path');
 
-// local dependancies
 const { 'anki-pug-root': ROOT } = require('../../config/global');
 
 const DiffManager = require('./anki-pug-diff-manager');
