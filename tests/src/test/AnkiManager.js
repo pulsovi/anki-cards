@@ -49,7 +49,7 @@ class AnkiManager {
       .pid;
   }
 
-  static async getPort() {
+  static async _getPort() {
     log('get-port');
     if (cache.port !== null) return cache.port;
     const port = await getPidPort(await AnkiManager.getPid());
@@ -57,6 +57,11 @@ class AnkiManager {
     if (port === null)
       return sleep(1000).then(AnkiManager.getPort);
     return toCache('port', port);
+  }
+
+  static getPort() {
+    if (!AnkiManager.port) AnkiManager.port = AnkiManager._getPort();
+    return AnkiManager.port;
   }
 
   static async isRunning(psName = 'anki.exe') {
