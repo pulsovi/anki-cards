@@ -1,12 +1,10 @@
 const util = require('util');
 
 const chalk = require('chalk');
-const debug = require('debug');
+const log = require('debug')('diff:anki-pug-model');
 
 const Template = require('./anki-pug-template');
 const FileManager = require('./file_manager');
-
-const log = debug('diff:anki-pug-model');
 
 class Model {
   constructor(makefile, name) {
@@ -17,20 +15,25 @@ class Model {
 
   parse() {
     try {
+      // eslint-disable-next-line global-require, import/no-dynamic-require
       this.pug = require(this.pugMakefile);
     } catch (error) {
-      if (error.code === 'ENOENT')
+      if (error.code === 'ENOENT') {
+        console.info('file not found', error.path);
         return this.waitForReload(error.message, error.path);
+      }
 
-      console.log('Model.parse error: ', error);
-      return this.waitForReload('');
+      console.info('Model.parse error: ', error.message);
+      log(error.stack);
+      // log(Reflect.ownKeys(error).map(key => ({[key]: error[key]})));
+      return this.waitForReload('Please edit and save file to retry.', error.filename);
     }
     return Promise.resolve(this);
   }
 
   async waitForReload(message, ...files) {
     if (message)
-      console.log(chalk.bgRed.yellow(message));
+      console.info(chalk.yellow(message));
     FileManager.open(this.pugMakefile);
     delete require.cache[require.resolve(this.pugMakefile)];
     await FileManager.waitOnce.apply(FileManager, [this.pugMakefile].concat(files));
