@@ -45,7 +45,7 @@
     "node-resemble-js": "^0.2.0",
     "nw": "sdk",
     "postcss": "^8.3.5",
-    "pug": "^2.0.4",
+    "pug": "^3.0.1",
     "puppeteer": "^1.20.0",
     "readline-sync": "^1.4.10",
     "recursive-readdir-async": "^1.1.8",
