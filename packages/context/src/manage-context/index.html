@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Set JSON</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+  <div class="container" ng-app="set-context">
+    <div ng-controller="contextController">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item" ng-repeat="(fIndex, floor) in path">
+          <div class="btn-group">
+            <button type="button" class="btn btn-link" href="#" ng-click="setPath(fIndex)">{{floor.id}}</button>
+            <button type="button" class="btn btn-link dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-show="floor.keys.length">
+              <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" ng-click="setPath(fIndex, key)" href="#" ng-repeat="key in floor.keys">{{key}}</a>
+            </div>
+          </div>
+        </li>
+      </ol>
+      <form>
+        <div class="form-group">{{ path | idChain }}</div>
+        <div class="form-group" ng-repeat="key in currentElementProperties">
+          <label for="{{key}}">{{key}}</label>
+          <input dir="rtl" class="form-control" id="prop-{{key}}" ng-model="currentElement.$[key]" ng-if="key !== 'content'">
+          <textarea dir="rtl" class="form-control" id="prop-{{key}}" ng-model="currentElement.$[key]" ng-if="key === 'content'" rows="7"></textarea>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <ul class="nav nav-tabs" id="Tools" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="group-tab" data-toggle="tab" href="#group" role="tab" aria-controls="group" aria-selected="true" ng-click="setHash('group')">Groups</a>
+              </li>
+              <li class="nav-item" ng-show="currentElement.$.content">
+                <a class="nav-link" id="cloze-tab" data-toggle="tab" href="#cloze" role="tab" aria-controls="cloze" aria-selected="false" ng-click="setHash('cloze')">Clozes</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="model-tab" data-toggle="tab" href="#model" role="tab" aria-controls="model" aria-selected="false" ng-click="setHash('model')">Model</a>
+              </li>
+            </ul>
+            <div class="tab-content" id="ToolsContent">
+              <div id="groups" class="tab-pane fade show active card-body" role="tabpanel" aria-labelledby="group-tab" ng-show="hash == 'group'">
+                <div id="heading-group-{{gindex}}" class="card" ng-repeat="(gindex, group) in currentElementGroups() track by group.start">
+                  <div class="card-header text-center" data-toggle="collapse" data-target="#group-{{gindex}}" aria-expanded="true" aria-controls="group-{{gindex}}">{{group.title}}</div>
+                  <div id="group-{{gindex}}" class="collapse" aria-labelledby="heading-group-{{gindex}}" data-parent="#groups">
+                    <div class="form-group card-body">
+                      <label for="title-{{gindex}}">title</label>
+                      <input type="text" id="title-{{gindex}}" class="form-control" dir="rtl" ng-model="group.title">
+                      <label for="start-{{gindex}}">start</label>
+                      <input type="number" id="start-{{gindex}}" class="form-control" dir="rtl" ng-model="group.start">
+                      <label for="end-{{gindex}}">end</label>
+                      <input type="number" id="end-{{gindex}}" class="form-control" dir="rtl" ng-model="group.end">
+                    </div>
+                  </div>
+                </div>
+                <div class="card" ng-click="addGroup()">
+                  <div class="card-header text-center"><i class="fas fa-plus-circle"></i></div>
+                </div>
+              </div>
+              <div id="cloze" class="tab-pane fade show active card-body" role="tabpanel" aria-labelledby="cloze-tab" ng-show="hash == 'cloze' && currentElement.$.content">
+                <div class="card">
+                  <div class="card-body cloze-text" dir="rtl" ng-bind-html="trust(currentElement.$.content)"></div>
+                </div>
+                <div id="heading-cloze-{{cindex}}" class="card" ng-repeat="(cindex, cloze) in currentElementClozes() track by cloze.clozeNb">
+                  <div class="card-header text-center" data-toggle="collapse" data-target="#cloze-{{cindex}}" aria-expanded="false" aria-controls="cloze-{{cindex}}">{{cloze.clozeNb}}</div>
+                  <div id="cloze-{{cindex}}" class="collapse" aria-labelledby="heading-cloze-{{cindex}}" data-parent="#cloze">
+                    <div class="form-cloze card-body">
+                      <div class="cloze-text" ng-bind-html="trust(highlightCloze(currentElement.$, cloze.clozes))"></div>
+                      <label for="index-{{cindex}}">index</label>
+                      <input type="text" id="index-{{cindex}}" class="form-control" ng-model="cloze.clozeNb">
+                      <div ng-repeat="(itemIndex, clozeItem) in cloze.clozes track by (clozeItem.start + '-' + clozeItem.end)">
+                        <label for="cloze-item-{{cindex}}-{{itemIndex}}">{{itemIndex}} start</label>
+                        <input type="number" class="form-control" id="cloze-item-{{cindex}}-{{itemIndex}}" ng-model="clozeItem.start">
+                        <label for="cloze-item-{{cindex}}-{{itemIndex}}">{{itemIndex}} end</label>
+                        <input type="number" class="form-control" id="cloze-item-{{cindex}}-{{itemIndex}}" ng-model="clozeItem.end">
+                      </div>
+                      <div class="btn btn-block btn-secondary" ng-click="addCloze(cloze)"><i class="fas fa-plus-circle"></i></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card" ng-click="addClozeGroup()">
+                  <div class="card-header text-center"><i class="fas fa-plus-circle"></i></div>
+                </div>
+              </div>
+              <div class="tab-pane fade show active" id="model" role="tabpanel" aria-labelledby="model-tab" ng-show="hash == 'model'">
+                <div class="card-body">Model</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Ajouter : </label><input ng-model="keyName" class="form-control">
+        </div>
+        <div class="form-group" ng-show="keyName">
+          <i class="btn btn-primary" ng-click="addProperty(keyName)">propriété</i>
+          <i class="btn btn-success" ng-click="addChild(keyName)">noeud</i>
+          <i class="btn btn-success" ng-click="addFullChild(keyName)">noeud+ref</i>
+        </div>
+        <div class="form-group" ng-hide="keyName">
+          <i class="btn btn-danger" ng-click="saveContext()">Enregistrer</i>
+          <i class="btn btn-success" ng-click="downContext()">Telecharger</i>
+          <i class="btn btn-secondary" ng-click="reload()"><i class="fas fa-redo"></i></i>
+          <i class="btn btn-secondary" ng-click="toolbox()"><i class="fas fa-toolbox"></i></i>
+        </div>
+        <pre id="context-error"></pre>
+      </form>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular.min.js"></script>
+  <script src="controller.js"></script>
+</body>
+
+</html>
