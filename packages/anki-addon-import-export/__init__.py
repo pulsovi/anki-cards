@@ -7,8 +7,8 @@ import shutil
 from anki.hooks import addHook, remHook
 from typing import Dict, List, Optional
 
-
-ROOT_FOLDER = "E:\\dev\\03 - Anki\\anki-cards\\model"
+config = mw.addonManager.getConfig(__name__)
+ROOT_FOLDER = config['models root path']
 
 
 def todo():
