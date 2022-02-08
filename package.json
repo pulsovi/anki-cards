@@ -1,78 +1,13 @@
 {
-  "name": "anki-cards",
-  "version": "1.0.0",
-  "description": "mes cartes anki",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js",
-    "new-fixture": "./tests/bin/new-fixture.sh",
-    "test": "./tests/bin/test.sh",
-    "verify": "yarn && yarn test"
-  },
-  "stylelint": {
-    "extends": "stylelint-config-standard"
-  },
-  "eslintConfig": {
-    "extends": [
-      "pulsovi-node"
-    ],
-    "overrides": [
-      {
-        "files": [
-          "*.html"
-        ]
-      }
-    ],
-    "plugins": [
-      "html"
-    ]
-  },
-  "engines": {
-    "node": ">=14.0.0"
-  },
-  "dependencies": {
-    "chalk": "^4.1.0",
-    "config": "^3.3.1",
-    "debug": "^4.3.1",
-    "diff": "^4.0.2",
-    "dot-prop": "^6.0.1",
-    "find-process": "^1.4.3",
-    "image-size": "^0.7.5",
-    "joi": "^17.4.0",
-    "mkdirp": "^0.5.1",
-    "mustache": "^3.2.1",
-    "node-netstat": "^1.8.0",
-    "node-resemble-js": "^0.2.0",
-    "nw": "sdk",
-    "postcss": "^8.3.5",
-    "pug": "^2.0.4",
-    "puppeteer": "^1.20.0",
-    "readline-sync": "^1.4.10",
-    "recursive-readdir-async": "^1.1.8",
-    "sharp": "^0.28.3",
-    "sqlite3": "^5.0.2",
-    "stylelint": "^13.13.1",
-    "underscore": "^1.11.0",
-    "uniqid": "^5.2.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": ".."
-  },
-  "keywords": [
-    "anki"
+  "private": true,
+  "workspaces": [
+    "packages/*"
   ],
-  "author": "pulsovi",
-  "license": "ISC",
   "devDependencies": {
-    "eslint": "^7.27.0",
-    "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-config-pulsovi-browser": "^0.0.1",
-    "eslint-config-pulsovi-node": "^0.0.3",
-    "eslint-plugin-html": "^6.1.2",
-    "eslint-plugin-import": "^2.23.3",
-    "eslint-plugin-node": "^11.1.0",
-    "stylelint-config-standard": "^22.0.0",
-    "tmp": "^0.2.1"
+    "husky": "^7.0.0",
+    "lint-staged": "^11.2.5"
+  },
+  "scripts": {
+    "postinstall": "husky install"
   }
 }
