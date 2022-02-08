@@ -15,7 +15,7 @@ def todo():
     raise Exception("La fonction n'est pas terminée")
 
 
-def add_button(title, action):
+def add_button(title: str, action: callable) -> None:
     button = qt.QAction(title, mw)
     button.triggered.connect(action)
     mw.form.menuTools.addAction(button)
@@ -33,7 +33,7 @@ def add_template(model, name, folder):
     return "\n\tadded " + name
 
 
-def export_model(name, id):
+def export_model(name: str, id):
     "Update or create fs model from Anki model"
     folder = get_model_folder(name)
     model_manager = mw.col.models
@@ -63,7 +63,7 @@ def export_model_delete(name) -> None:
 
     folder = get_model_folder(name)
     try:
-        # html folder ("out" directory)
+        # html folder (:the "out" directory)
         if os.path.isdir(folder):
             shutil.rmtree(folder)
 
@@ -116,6 +116,7 @@ def get_all_models() -> List[Dict[str, Optional[int]]]:
     for model in get_fs_models():
         if model not in models:
             models[model] = None
+    showInfo(str(len(models.keys())) + " models trouvés")
     return models
 
 
@@ -124,7 +125,7 @@ def get_fs_models(root=ROOT_FOLDER) -> List[str]:
     models = []
     for folder in list_folders_in(root):
         if folder == "out":
-            models.append("")
+            models.append("") # root is model
             continue
 
         if not list_folders_in(os.path.join(root, folder)):
@@ -274,6 +275,7 @@ def show_card_count(message=""):
 
 
 def write_file(filename, data):
+    "Write eol normalized data at filename"
     pathlib.Path(os.path.dirname(filename)).mkdir(parents=True, exist_ok=True)
     f = open(filename, 'wb')
     f.write(normalize(data if data else ""))
