@@ -14,6 +14,7 @@
     "precommit": "yarn npm-run-all precommit:\\*"
   },
   "resolutions": {
+    "@types/rc": "patch:@types/rc@1.2.0#.yarn-patches/@types/rc.patch",
     "eslint-config-pulsovi": "portal:../../eslint-config-pulsovi/packages/core",
     "eslint-config-pulsovi-browser": "portal:../../eslint-config-pulsovi/packages/browser",
     "eslint-config-pulsovi-node": "portal:../../eslint-config-pulsovi/packages/node",
