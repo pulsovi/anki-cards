@@ -1,5 +1,0 @@
-{
-  "*.js": "eslint",
-  "*.test.ts": "jest",
-  "*.ts": "eslint",
-}
