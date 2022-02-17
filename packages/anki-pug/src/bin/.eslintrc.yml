@@ -1,0 +1,5 @@
+rules:
+  "node/shebang":
+    - error
+    - convertPath:
+        "src/bin/*.ts": ["^src/bin/(.+?)\\.ts$", "bin/$1.js"]

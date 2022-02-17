@@ -1,0 +1,7 @@
+/.coverage/**/*
+/jest.config.js
+/lib/**/*
+/bin/**/*
+/entities/*
+*.md
+/debug*.js

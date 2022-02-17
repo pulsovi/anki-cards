@@ -6,6 +6,7 @@
   * [x] En attendant la validation du PR et l'utilisation de la nouvelle version de `@types/rc`, patcher la version actuelle pour continuer à travailler
     * [x] ajouter une entrée "@types/rc" dans `E:\dev\03 - Anki\anki-cards\package.json@resolutions`
     * [x] ajouter la dépendance à `@types/minimist` dans `anki-cards/.yarnrc.yml@packageExtensions`
+* [ ] Commit ce qui doit l'être pour que le repo soit propre
 * [ ] Continuer à avancer sur la conversion typescript jusqu'à faire marcher la commande `anki-pug diff` 
 * [ ] Ajouter un README au package
   * [ ] Installation

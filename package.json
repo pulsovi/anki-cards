@@ -10,6 +10,13 @@
   "scripts": {
     "postinstall": "husky install"
   },
+  "resolutions": {
+    "eslint-config-pulsovi": "portal:../../eslint-config-pulsovi/packages/core",
+    "eslint-config-pulsovi-browser": "portal:../../eslint-config-pulsovi/packages/browser",
+    "eslint-config-pulsovi-node": "portal:../../eslint-config-pulsovi/packages/node",
+    "eslint-config-pulsovi-typescript": "portal:../../eslint-config-pulsovi/packages/typescript",
+    "eslint-plugin-pulsovi": "link:../../eslint-config-pulsovi/packages/plugin"
+  },
   "packageManager": "yarn@3.1.0",
   "engines": {
     "node": ">=8.5.0"

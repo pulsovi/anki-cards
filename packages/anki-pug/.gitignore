@@ -1,0 +1,19 @@
+# Node artifact files
+node_modules/
+dist/
+
+# Jest artifact files
+.coverage/
+
+# Babel compiled files
+/bin/
+/lib/
+
+# Log files
+*.log
+
+# Sublime files
+*.sublime-workspace
+
+# Local files
+.yarzaitrc
