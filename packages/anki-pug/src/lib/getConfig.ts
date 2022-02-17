@@ -2,9 +2,7 @@ import Joi from 'joi';
 import { load } from 'js-yaml';
 import rc from 'rc';
 
-import { getPackageName } from './util/getPackageName';
-
-const appName = getPackageName();
+const appName = 'ankipug';
 
 export interface AnkiPugConfig {
   ankiProfile?: string;
