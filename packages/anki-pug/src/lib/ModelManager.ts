@@ -3,7 +3,6 @@ import path from 'path';
 import readdirp from 'readdirp';
 
 import Model from './Model';
-import { todo } from './util';
 
 export default class ModelManager {
   public static readonly EXPORT_FILENAME = 'export.js';
@@ -26,6 +25,9 @@ export default class ModelManager {
   }
 
   private nameFromPath (pathname: string): string {
-    return todo(this, pathname) as string;
+    const dirname = pathname.endsWith(ModelManager.EXPORT_FILENAME) ?
+      path.dirname(pathname) :
+      pathname;
+    return path.relative(this.root, dirname).replace(new RegExp(`\\${path.sep}`, 'gu'), '::');
   }
 }
