@@ -3,6 +3,10 @@ import { todo } from '../todo';
 import Ticket from './Ticket';
 
 export class TaskSyncer {
+  private last: Ticket | null = null;
+  private running = 0;
+  private next = 1;
+
   public get current (): number {
     return todo(this) as number;
   }
@@ -12,6 +16,12 @@ export class TaskSyncer {
   }
 
   public getTicket (): Ticket {
-    return todo(this, Ticket) as Ticket;
+    const number = this.next;
+    const ticket = new Ticket(this.last, number);
+
+    this.last = ticket;
+    this.next += 1;
+    ticket.ready.finally(() => { this.running = number; });
+    return ticket;
   }
 }
