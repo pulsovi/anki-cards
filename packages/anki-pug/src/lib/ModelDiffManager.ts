@@ -2,10 +2,11 @@ import path from 'path';
 
 import { sortBy } from 'lodash';
 
-import Model from './Model';
+import type Model from './Model';
 import ModelManager from './ModelManager';
+import TemplateDiffManager from './TemplateDiffManager';
 import type { DiffConfig } from './types';
-import { getLogger, TaskSyncer, todo } from './util';
+import { getLogger, TaskSyncer } from './util';
 
 const debugLog = getLogger(path.basename(__filename, path.extname(__filename)));
 
@@ -39,6 +40,17 @@ export default class ModelDiffManager {
     diffConfig: DiffConfig,
     syncer: TaskSyncer
   ): Promise<void> {
-    await Promise.resolve(todo(this, model, diffConfig, syncer, Model));
+    debugLog('DiffManager.processModel', model.getName());
+    const ticket = syncer.getTicket();
+    const templates = await model.getAllTemplates();
+    const templateSyncer = new TaskSyncer();
+
+    await ticket.ready;
+    await Promise.all(templates.map(async template => {
+      await templateSyncer.enqueue(async () => {
+        await new TemplateDiffManager(template, this).process(diffConfig);
+      });
+    }));
+    ticket.close();
   }
 }
