@@ -1905,6 +1905,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/lodash@npm:^4":
+  version: 4.14.178
+  resolution: "@types/lodash@npm:4.14.178"
+  checksum: a69a04a60bfc5257c3130a554b4efa0c383f0141b7b3db8ab7cf07ad2a46ea085fce66d0242da41da7e5647b133d5dfb2c15add9cbed8d7fef955e4a1e5b3128
+  languageName: node
+  linkType: hard
+
 "@types/minimist@npm:^1.2.2":
   version: 1.2.2
   resolution: "@types/minimist@npm:1.2.2"
@@ -1956,8 +1963,8 @@ __metadata:
 
 "@types/rc@patch:@types/rc@1.2.0#.yarn-patches/@types/rc.patch::locator=root-workspace-0b6124%40workspace%3A.":
   version: 1.2.0
-  resolution: "@types/rc@patch:@types/rc@npm%3A1.2.0#.yarn-patches/@types/rc.patch::version=1.2.0&hash=93fe44&locator=root-workspace-0b6124%40workspace%3A."
-  checksum: c30c9726b3bb5dd020f1cc2942a6a83f9eed33e2fa07b15615c6a66d6c3f02a11195080e92a880f047e62de6416eac1ede33991a8ec8b4c548fbb58001b5e8e2
+  resolution: "@types/rc@patch:@types/rc@npm%3A1.2.0#.yarn-patches/@types/rc.patch::version=1.2.0&hash=4e7fd5&locator=root-workspace-0b6124%40workspace%3A."
+  checksum: 5c1423852449d7bd1b6464ff3aefc8cc60411c7c2fae9c6fb53cf159bf9f546c9f081635a088197ad87bbeace12e5fa6e0f421807aaed6f440a22ae983d2139f
   languageName: node
   linkType: hard
 
@@ -2234,6 +2241,7 @@ __metadata:
     "@types/eslint": ^8
     "@types/jest": ^27.4.0
     "@types/js-yaml": ^4
+    "@types/lodash": ^4
     "@types/node": ^17.0.17
     "@types/rc": ^1
     "@typescript-eslint/parser": ^5.11.0
@@ -2247,6 +2255,7 @@ __metadata:
     joi: ^17.6.0
     js-yaml: ^4.1.0
     lint-staged: ^12.3.4
+    lodash: ^4.17.21
     rc: ^1.2.8
     read-pkg-up: ^7.0.0
     typescript: ^4.5.5
