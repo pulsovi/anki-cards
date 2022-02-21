@@ -1,5 +1,3 @@
-import { todo } from './util';
-
 export default class Model {
   private readonly modulepath: string;
   private readonly name: string;
@@ -10,6 +8,6 @@ export default class Model {
   }
 
   public getName (): string {
-    return todo(this) as string;
+    return this.name;
   }
 }
