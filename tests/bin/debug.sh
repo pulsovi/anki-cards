@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# debug card display with chromium
+
 # Usage: debug <cid>
 # <cid>: card id in anki
 

@@ -1,4 +1,4 @@
-// jshint esversion:8
+/* eslint-disable */
 const find_process = require('find-process');
 const netstat = require('node-netstat');
 const child_process = require('child_process');
@@ -7,7 +7,7 @@ const cache = {
   port: null,
 };
 
-function getPort(pid) {
+function getPort (pid) {
   return new Promise((resolve, reject) => {
     var ntret = netstat({
       filter: {
@@ -20,13 +20,13 @@ function getPort(pid) {
   });
 }
 
-function toCache(keyName, keyValue) {
+function toCache (keyName, keyValue) {
   cache[keyName] = keyValue;
   return keyValue;
 }
 
 class AnkiManager {
-  async getPid() {
+  async getPid () {
     if (!await this.isRunning()) {
       await this.start();
     }

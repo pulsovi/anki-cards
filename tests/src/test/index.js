@@ -100,6 +100,7 @@ async function manageFixture(options) {
   await fixture.setHtmlDiff();
 
   if (!fixture.diff.ok || !fixture.ok) {
+    // queuing prompt action in gui queue
     gui.ready = gui.ready.then(async() => {
       log('Diff:', fixture.id, fixture.htmlDiffFile);
       const subprocess = childProcess.execFile(nw, ['.'], {

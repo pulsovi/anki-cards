@@ -1,6 +1,6 @@
 const childProcess = require('child_process');
 const fs = require('fs');
-fs.path = require('path'); // eslint-disable-line padding-line-between-statements
+const path = require('path');
 
 const DELAY = 200;
 
@@ -13,10 +13,10 @@ const restartWatching = (() => {
     to = setTimeout(restart, DELAY);
   };
 
-  function restart() {
+  function restart () {
     console.info('restart watch');
     if (subprocess) subprocess.kill();
-    subprocess = childProcess.fork(fs.path.resolve(__dirname, 'watch.js'));
+    subprocess = childProcess.fork(path.resolve(__dirname, 'watch.js'));
   }
 })();
 
