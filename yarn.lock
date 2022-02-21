@@ -2258,6 +2258,7 @@ __metadata:
     lodash: ^4.17.21
     rc: ^1.2.8
     read-pkg-up: ^7.0.0
+    readdirp: ^3.6.0
     typescript: ^4.5.5
   bin:
     anki-pug: bin/anki-pug.js
@@ -6418,7 +6419,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"readdirp@npm:~3.6.0":
+"readdirp@npm:^3.6.0, readdirp@npm:~3.6.0":
   version: 3.6.0
   resolution: "readdirp@npm:3.6.0"
   dependencies:

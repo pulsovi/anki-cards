@@ -25,7 +25,8 @@
     "js-yaml": "^4.1.0",
     "lodash": "^4.17.21",
     "rc": "^1.2.8",
-    "read-pkg-up": "^7.0.0"
+    "read-pkg-up": "^7.0.0",
+    "readdirp": "^3.6.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.17.0",

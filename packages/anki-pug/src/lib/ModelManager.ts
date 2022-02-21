@@ -1,9 +1,12 @@
 import path from 'path';
 
+import readdirp from 'readdirp';
+
 import Model from './Model';
 import { todo } from './util';
 
 export default class ModelManager {
+  public static readonly EXPORT_FILENAME = 'export.js';
   private readonly root: string;
 
   public constructor (root: string) {
@@ -16,7 +19,10 @@ export default class ModelManager {
   }
 
   private async listModels (): Promise<string[]> {
-    return await Promise.resolve(todo(this)) as string[];
+    const files = await readdirp.promise(this.root, { fileFilter: ModelManager.EXPORT_FILENAME });
+    return files
+      .map(file => file.fullPath)
+      .sort((strA, strB) => strA.localeCompare(strB));
   }
 
   private nameFromPath (pathname: string): string {
