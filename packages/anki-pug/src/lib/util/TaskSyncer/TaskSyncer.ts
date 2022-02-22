@@ -15,7 +15,9 @@ export class TaskSyncer {
     const ticket = this.getTicket();
     await ticket.ready;
     const taskPromise = task();
-    taskPromise.finally(() => { ticket.close(); });
+    taskPromise.finally(() => { ticket.close(); }).catch(() => {
+      // nothing to do, the possible error will be returned to the caller at end of function
+    });
     return await taskPromise;
   }
 
