@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-type-alias */
 import type { compileTemplate } from 'pug';
 
 import type { AnkiPugConfig } from './getConfig';

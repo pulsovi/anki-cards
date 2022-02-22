@@ -26,7 +26,7 @@ export default class Model {
 
   private async _getAllTemplates (syncer: TaskSyncer): Promise<Template[]> {
     log('getAllTemplates');
-    const model = await new ModuleLoader(this.modulepath).load(syncer) as ModelModule;
+    const model = await new ModuleLoader<ModelModule>(this.modulepath).load(syncer);
     const templates = await (typeof model === 'function' ? model(getConfig()) : model);
     return (Array.isArray(templates) ? templates : [templates]).map(raw => new Template(raw, this));
   }
