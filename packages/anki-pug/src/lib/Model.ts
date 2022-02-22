@@ -1,6 +1,7 @@
+import ModuleLoader from './ModuleLoader';
 import Template from './Template';
 import type { ModelModule } from './types';
-import { getConfig, getLogger } from './util';
+import { getConfig, getLogger, TaskSyncer } from './util';
 
 const log = getLogger('Model');
 
@@ -14,8 +15,8 @@ export default class Model {
     this.name = name;
   }
 
-  public async getAllTemplates (): Promise<Template[]> {
-    if (!this.allTemplates) this.allTemplates = await this._getAllTemplates();
+  public async getAllTemplates (syncer = new TaskSyncer()): Promise<Template[]> {
+    if (!this.allTemplates) this.allTemplates = await this._getAllTemplates(syncer);
     return this.allTemplates;
   }
 
@@ -23,9 +24,9 @@ export default class Model {
     return this.name;
   }
 
-  private async _getAllTemplates (): Promise<Template[]> {
+  private async _getAllTemplates (syncer: TaskSyncer): Promise<Template[]> {
     log('getAllTemplates');
-    const model = await import(this.modulepath) as ModelModule;
+    const model = await new ModuleLoader(this.modulepath).load(syncer) as ModelModule;
     const templates = await (typeof model === 'function' ? model(getConfig()) : model);
     return (Array.isArray(templates) ? templates : [templates]).map(raw => new Template(raw, this));
   }
