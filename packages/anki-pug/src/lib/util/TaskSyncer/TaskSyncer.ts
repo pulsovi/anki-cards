@@ -12,7 +12,11 @@ export class TaskSyncer {
   }
 
   public async enqueue<U> (task: () => Promise<U>): Promise<U> {
-    return await Promise.resolve(todo(this, task) as U);
+    const ticket = this.getTicket();
+    await ticket.ready;
+    const taskPromise = task();
+    taskPromise.finally(() => { ticket.close(); });
+    return await taskPromise;
   }
 
   public getTicket (): Ticket {
