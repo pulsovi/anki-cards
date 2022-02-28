@@ -1,9 +1,12 @@
 {
   "name": "anki-pug",
-  "bin": "bin/anki-pug.js",
   "version": "0.1.0",
   "description": "command that show and possibly merge diff between your pug model and html template",
+  "bin": "bin/anki-pug.js",
   "main": "lib/index.js",
+  "engines": {
+    "node": ">=14"
+  },
   "repository": "https+git@github.com:pulsovi/anki-cards.git",
   "author": "David GABISON <david.gabison@outlook.com>",
   "license": "MIT",

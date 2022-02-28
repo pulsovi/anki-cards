@@ -42,12 +42,10 @@ export default class ModelDiffManager {
   ): Promise<void> {
     debugLog('DiffManager.processModel', model.getName());
     const ticket = syncer.getTicket();
-    const templates = await model.getAllTemplates();
-    const templateSyncer = new TaskSyncer();
+    const templates = await model.getAllTemplates(ticket);
 
-    await ticket.ready;
     await Promise.all(templates.map(async template => {
-      await templateSyncer.enqueue(async () => {
+      await ticket.enqueue(async () => {
         await new TemplateDiffManager(template, this).process(diffConfig);
       });
     }));
