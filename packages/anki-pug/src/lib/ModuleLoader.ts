@@ -1,5 +1,5 @@
-import ErrorManager from './ErrorManager';
-import { TaskSyncer, todo } from './util';
+import { ImportErrorManager } from './ErrorManager';
+import { TaskSyncer } from './util';
 
 export default class ModuleLoader<U> {
   private readonly modulePath: string;
@@ -27,13 +27,10 @@ export default class ModuleLoader<U> {
   }
 
   private async loadErrorHandler (error: unknown, syncer: TaskSyncer): Promise<U> {
-    if (ErrorManager.isManageable(error)) {
-      const errorManager = new ErrorManager(error);
-      const canBeReloaded = await errorManager.manage();
+    const errorManager = new ImportErrorManager(error);
+    const canBeReloaded = await errorManager.manage();
 
-      if (canBeReloaded) return await this._load(syncer);
-      throw error;
-    }
-    return await Promise.resolve(todo() as U);
+    if (canBeReloaded) return await this._load(syncer);
+    throw error;
   }
 }
