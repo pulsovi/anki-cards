@@ -13,6 +13,12 @@ export default class TemplateDiffManager {
   }
 
   public async process (diffConfig: DiffConfig): Promise<void> {
+    const [rawHtml, compiledPug] = await Promise.all([
+      this.template.getRawHtml(),
+      this.template.getCompiledPug(),
+    ]);
+
+    if (rawHtml === compiledPug) return;
     await Promise.resolve(todo(this, diffConfig));
   }
 }
