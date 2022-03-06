@@ -1,7 +1,9 @@
+import Joi from 'joi';
+
 import ModuleLoader from './ModuleLoader';
-import Template from './Template';
+import Template, { templateSchema } from './Template';
 import type { ModelModule } from './types';
-import { getConfig, getLogger, TaskSyncer, todo } from './util';
+import { getConfig, getLogger, TaskSyncer } from './util';
 
 const log = getLogger('Model');
 
@@ -16,10 +18,7 @@ export default class Model {
   }
 
   public async getAllTemplates (syncer = new TaskSyncer()): Promise<Template[]> {
-    if (!this.allTemplates) {
-      this.allTemplates = await this._getAllTemplates(syncer)
-        .catch(async error => await Promise.resolve(todo(error) as Template[]));
-    }
+    if (!this.allTemplates) this.allTemplates = await this._getAllTemplates(syncer);
     return this.allTemplates;
   }
 
@@ -29,7 +28,12 @@ export default class Model {
 
   private async _getAllTemplates (syncer: TaskSyncer): Promise<Template[]> {
     log('getAllTemplates');
-    const model = await new ModuleLoader<ModelModule>(this.modulepath, this.name).load(syncer);
+    const moduleLoader = new ModuleLoader<ModelModule>(
+      this.modulepath,
+      this.name,
+      Joi.array().items(templateSchema)
+    );
+    const model = await moduleLoader.load(syncer);
     const templates = await (typeof model === 'function' ? model(getConfig()) : model);
     return (Array.isArray(templates) ? templates : [templates]).map(raw => new Template(raw, this));
   }

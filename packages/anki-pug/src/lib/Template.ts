@@ -16,7 +16,7 @@ import { TaskSyncer } from './util';
  * }
  */
 
-const templateSchema = Joi.object({
+export const templateSchema = Joi.object({
   htmlFile: Joi.string().required(),
   locals: Joi.object(),
   name: Joi.string().required(),
