@@ -1,4 +1,5 @@
 import fs from 'fs-extra';
+import Joi from 'joi';
 
 import type Model from './Model';
 import PugFile from './PugFile';
@@ -15,12 +16,21 @@ import { TaskSyncer } from './util';
  * }
  */
 
+const templateSchema = Joi.object({
+  htmlFile: Joi.string().required(),
+  locals: Joi.object(),
+  name: Joi.string().required(),
+  pugFile: Joi.string().required(),
+  template: Joi.function(),
+});
+
 export default class Template {
   private readonly model: Model;
   private readonly raw: RawTemplate;
 
   public constructor (raw: RawTemplate, model: Model) {
     this.model = model;
+    Joi.assert(raw, templateSchema);
     this.raw = raw;
   }
 

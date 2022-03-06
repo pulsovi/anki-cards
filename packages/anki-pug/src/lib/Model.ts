@@ -1,7 +1,7 @@
 import ModuleLoader from './ModuleLoader';
 import Template from './Template';
 import type { ModelModule } from './types';
-import { getConfig, getLogger, TaskSyncer } from './util';
+import { getConfig, getLogger, TaskSyncer, todo } from './util';
 
 const log = getLogger('Model');
 
@@ -16,7 +16,10 @@ export default class Model {
   }
 
   public async getAllTemplates (syncer = new TaskSyncer()): Promise<Template[]> {
-    if (!this.allTemplates) this.allTemplates = await this._getAllTemplates(syncer);
+    if (!this.allTemplates) {
+      this.allTemplates = await this._getAllTemplates(syncer)
+        .catch(async error => await Promise.resolve(todo(error) as Template[]));
+    }
     return this.allTemplates;
   }
 
