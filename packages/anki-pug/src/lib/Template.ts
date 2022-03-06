@@ -1,8 +1,9 @@
 import fs from 'fs-extra';
 
 import type Model from './Model';
+import PugFile from './PugFile';
 import type { RawTemplate } from './types';
-import { todo } from './util';
+import { TaskSyncer } from './util';
 
 /*
  * declare interface RawTemplate {
@@ -23,8 +24,12 @@ export default class Template {
     this.raw = raw;
   }
 
-  public async getCompiledPug (): Promise<string> {
-    return await Promise.resolve(todo(this) as string);
+  public async getCompiledPug (syncer = new TaskSyncer()): Promise<string> {
+    if (this.raw.template) return this.raw.template(this.raw.locals);
+
+    const pugLoader = new PugFile(this.raw.pugFile, this.raw.name);
+    const compileTemplate = await pugLoader.compile(syncer);
+    return compileTemplate(this.raw.locals);
   }
 
   public async getRawHtml (): Promise<string | null> {

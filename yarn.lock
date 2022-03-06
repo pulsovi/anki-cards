@@ -1963,6 +1963,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/pug@npm:^2.0.6":
+  version: 2.0.6
+  resolution: "@types/pug@npm:2.0.6"
+  checksum: e8d09c3ddc7e6b87050a16d73694518f259a8ed74a0ab79b81b847baf89d92d44959ed68199966ac6f4a218c715c9bb3e4c86c8800d4868a4a674f4b21d2f01d
+  languageName: node
+  linkType: hard
+
 "@types/rc@npm:^1.2.1":
   version: 1.2.1
   resolution: "@types/rc@npm:1.2.1"
@@ -2248,6 +2255,7 @@ __metadata:
     "@types/js-yaml": ^4
     "@types/lodash": ^4
     "@types/node": ^17.0.17
+    "@types/pug": ^2.0.6
     "@types/rc": ^1.2.1
     "@typescript-eslint/parser": ^5.11.0
     chalk: ^4.0.0
