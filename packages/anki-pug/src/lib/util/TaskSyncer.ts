@@ -61,7 +61,8 @@ export class TaskSyncer {
   private async getReady (index: number): Promise<void> {
     await new Promise((resolve, reject) => {
       this.done.finally(() => { reject(new Error('The syncer is already closed.')); });
-      Promise.allSettled(this.tickets.slice(0, index - 1)).finally(() => { resolve(this.ready); });
+      Promise.allSettled(this.tickets.slice(0, index).map(async ticket => { await ticket.done; }))
+        .finally(() => { resolve(this.ready); });
     });
   }
 }

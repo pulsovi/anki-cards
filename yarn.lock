@@ -3414,7 +3414,7 @@ __metadata:
   resolution: "eslint-config-pulsovi-node@portal:../../eslint-config-pulsovi/packages/node::locator=root-workspace-0b6124%40workspace%3A."
   dependencies:
     "@rushstack/eslint-patch": ^1.1.0
-    eslint-config-pulsovi: 3.8.7
+    eslint-config-pulsovi: 3.8.8
     eslint-plugin-node: ^11.1.0
   peerDependencies:
     eslint: "*"
@@ -3427,7 +3427,7 @@ __metadata:
   dependencies:
     "@rushstack/eslint-patch": ^1.1.0
     "@typescript-eslint/eslint-plugin": ^5.11.0
-    eslint-config-pulsovi-node: 0.1.1
+    eslint-config-pulsovi-node: 0.1.2
     eslint-import-resolver-typescript: ^2.4.0
     eslint-plugin-import: ^2.24.2
     typescript: ^4.5.5
@@ -3441,11 +3441,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "eslint-config-pulsovi@portal:../../eslint-config-pulsovi/packages/core::locator=root-workspace-0b6124%40workspace%3A."
   dependencies:
-    eslint: ^7.29.0 || ^8.0.0
     eslint-config-airbnb-base: ^15.0.0
     eslint-plugin-import: ^2.25.2
-    eslint-plugin-pulsovi: 0.1.1
+    eslint-plugin-pulsovi: 0.1.2
   peerDependencies:
+    eslint: ^7.29.0 || ^8.0.0
     eslint-config-pulsovi-browser: "*"
     eslint-config-pulsovi-browser-jquery: "*"
     eslint-config-pulsovi-node: "*"
@@ -3619,7 +3619,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^7.29.0 || ^8.0.0, eslint@npm:^8.8.0":
+"eslint@npm:^8.8.0":
   version: 8.9.0
   resolution: "eslint@npm:8.9.0"
   dependencies:

@@ -76,6 +76,55 @@ describe('TaskSyncer', () => {
         }
       });
     });
+
+    test('second ticket is not ready until first ticket is done', async () => {
+      // Arrange
+      const syncer = new TaskSyncer();
+      syncer.getTicket();
+      const ticket2 = syncer.getTicket();
+      let ticket2ready = false;
+
+      // Act
+      ticket2.ready.then(() => { ticket2ready = true; }, () => { /* do nothing */ });
+
+      // Assert
+      expect(ticket2ready).toBe(false);
+      await new Promise<void>((resolve, reject) => {
+        process.nextTick(() => {
+          try {
+            expect(ticket2ready).toBe(false);
+            resolve();
+          } catch (error) {
+            reject(error);
+          }
+        });
+      });
+    });
+
+    test('second ticket is ready when first ticket is done', async () => {
+      // Arrange
+      const syncer = new TaskSyncer();
+      const ticket1 = syncer.getTicket();
+      const ticket2 = syncer.getTicket();
+      let ticket2ready = false;
+
+      // Act
+      ticket2.ready.then(() => { ticket2ready = true; }, () => { /* do nothing */ });
+      ticket1.close();
+
+      // Assert
+      expect(ticket2ready).toBe(false);
+      await new Promise<void>((resolve, reject) => {
+        process.nextTick(() => {
+          try {
+            expect(ticket2ready).toBe(true);
+            resolve();
+          } catch (error) {
+            reject(error);
+          }
+        });
+      });
+    });
   });
 
   describe('sub-ticket', () => {
