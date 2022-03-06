@@ -1,3 +1,5 @@
+import fs from 'fs-extra';
+
 import type Model from './Model';
 import type { RawTemplate } from './types';
 import { todo } from './util';
@@ -25,7 +27,8 @@ export default class Template {
     return await Promise.resolve(todo(this) as string);
   }
 
-  public async getRawHtml (): Promise<string> {
-    return await Promise.resolve(todo(this) as string);
+  public async getRawHtml (): Promise<string | null> {
+    if (!await fs.pathExists(this.raw.htmlFile)) return null;
+    return await fs.readFile(this.raw.htmlFile, 'utf8');
   }
 }
