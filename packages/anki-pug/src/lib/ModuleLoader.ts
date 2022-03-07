@@ -1,7 +1,7 @@
 import type { Schema } from 'joi';
 
-import { ImportErrorManager } from './ErrorManager';
-import { TaskSyncer, todo } from './util';
+import { ImportErrorManager, ValidationErrorManager } from './ErrorManager';
+import { TaskSyncer } from './util';
 
 export default class ModuleLoader<U> {
   private readonly modulePath: string;
@@ -49,6 +49,10 @@ export default class ModuleLoader<U> {
   }
 
   private async validationErrorHandler (error: unknown, syncer: TaskSyncer): Promise<U> {
-    return await Promise.resolve(todo(this, error, syncer) as U);
+    const errorManager = new ValidationErrorManager(error as Error);
+    const canBeReloaded = await errorManager.manage();
+
+    if (canBeReloaded) return await this._load(syncer);
+    throw error;
   }
 }
