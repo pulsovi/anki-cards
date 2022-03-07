@@ -1,15 +1,13 @@
-import BaseErrorManager from './BaseErrorManager';
 import InvalidArgTypeErrorManager from './InvalidArgTypeErrorManager';
 import ModuleNotFoundErrorManager from './ModuleNotFoundErrorManager';
-import type { ErrorWithCode } from './types';
+import type { BaseErrorManager, ErrorWithCode } from './types';
 
-export default class ImportErrorManager extends BaseErrorManager {
+export default class ImportErrorManager implements BaseErrorManager {
   private readonly specificManager: BaseErrorManager;
 
   public constructor (error: Error) {
     if (!ImportErrorManager.isManageable(error))
       throw new TypeError('Only errors with a "code" property of type string can be handled.');
-    super(error);
     if (error.code === 'MODULE_NOT_FOUND')
       this.specificManager = new ModuleNotFoundErrorManager(error);
     else if (error.code === 'ERR_INVALID_ARG_TYPE')
