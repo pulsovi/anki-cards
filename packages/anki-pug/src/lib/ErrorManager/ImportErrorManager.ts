@@ -19,7 +19,7 @@ export default class ImportErrorManager implements BaseErrorManager {
   }
 
   public static isManageable (error: unknown): error is ErrorWithCode {
-    return error instanceof Error && 'code' in error && 'string' === typeof error.code;
+    return error instanceof Error && 'string' === typeof error.code;
   }
 
   public async manage (): Promise<boolean> {

@@ -1,7 +1,5 @@
-import Joi from 'joi';
-
 import ModuleLoader from './ModuleLoader';
-import Template, { templateSchema } from './Template';
+import Template from './Template';
 import type { ModelModule } from './types';
 import { getConfig, getLogger, TaskSyncer } from './util';
 
@@ -30,10 +28,9 @@ export default class Model {
     log('getAllTemplates');
     const moduleLoader = new ModuleLoader<ModelModule>(
       this.modulepath,
-      this.name,
-      Joi.array().items(templateSchema)
+      this.name
     );
-    const model = await moduleLoader.load(syncer);
+    const model = await moduleLoader.load({ syncer });
     const templates = await (typeof model === 'function' ? model(getConfig()) : model);
     return (Array.isArray(templates) ? templates : [templates]).map(raw => new Template(raw, this));
   }
