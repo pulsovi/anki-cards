@@ -8,19 +8,19 @@ import type { SyncOrPromise } from './types';
 import { TaskSyncer } from './util';
 
 export interface RawTemplate {
-  htmlFile: string;
   locals?: Record<string, string>;
   name: string;
+  outputFile: string;
   pugFile: string;
   template?: (locals?: LocalsObject) => SyncOrPromise<string>;
 }
 
 export const rawTemplateSchema = Joi.object({
-  htmlFile: Joi.string().required(),
   locals: Joi.object(),
   name: Joi.string().required(),
   pugFile: Joi.string().required(),
   template: Joi.function(),
+  outputFile: Joi.string().required(),
 });
 
 export default class Template {
@@ -41,8 +41,8 @@ export default class Template {
     return compileTemplate(this.raw.locals);
   }
 
-  public async getRawHtml (): Promise<string | null> {
-    if (!await fs.pathExists(this.raw.htmlFile)) return null;
-    return await fs.readFile(this.raw.htmlFile, 'utf8');
+  public async getCurrentOutput (): Promise<string | null> {
+    if (!await fs.pathExists(this.raw.outputFile)) return null;
+    return await fs.readFile(this.raw.outputFile, 'utf8');
   }
 }
