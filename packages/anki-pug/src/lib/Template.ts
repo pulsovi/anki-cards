@@ -7,20 +7,31 @@ import PugFile from './PugFile';
 import type { SyncOrPromise } from './types';
 import { TaskSyncer } from './util';
 
-export interface RawTemplate {
+export type RawTemplate = {
   locals?: Record<string, string>;
   name: string;
   outputFile: string;
+} & ({
   pugFile: string;
-  template?: (locals?: LocalsObject) => SyncOrPromise<string>;
-}
+  template: undefined;
+} | {
+  pugFile: undefined;
+  template: (locals?: LocalsObject) => SyncOrPromise<string>;
+});
 
 export const rawTemplateSchema = Joi.object({
   locals: Joi.object(),
   name: Joi.string().required(),
-  pugFile: Joi.string().required(),
-  template: Joi.function(),
   outputFile: Joi.string().required(),
+  pugFile: Joi.string(),
+  template: Joi.when('pugFile', {
+    is: Joi.string().required(),
+    otherwise: Joi.function().required(),
+    then: Joi.forbidden(),
+  }).messages({
+    'any.required': 'one of "template" or "pugFile" is required',
+    'any.unknown': '"template" is forbidden when "pugFile" is provided',
+  }),
 });
 
 export default class Template {
