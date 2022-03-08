@@ -1,7 +1,8 @@
+import chalk from 'chalk';
 import { ValidationError } from 'joi';
 
 import type ModuleLoader from '../ModuleLoader';
-import { todo } from '../util';
+import { chokidarOnce } from '../util';
 
 import type { BaseErrorManager } from './types';
 
@@ -16,6 +17,14 @@ export default class ValidationErrorManager<U> implements BaseErrorManager {
   }
 
   public async manage (): Promise<void> {
-    await Promise.resolve(todo(this));
+    const moduleName = this.moduleLoader.getModuleName();
+    const modulePath = this.moduleLoader.getModulePath();
+
+    console.info(`${chalk.red('ValidationError')}: ${this.error.message}\n  when attempt to load ${
+      typeof moduleName === 'string' ?
+        `"${moduleName}"(${chalk.yellow(modulePath)})` :
+        chalk.yellow(modulePath)
+    }\n  Edit the file and save changes for retry.`);
+    await chokidarOnce('change', this.moduleLoader.getModulePath());
   }
 }

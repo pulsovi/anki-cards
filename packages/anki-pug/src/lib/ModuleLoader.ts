@@ -24,6 +24,14 @@ export default class ModuleLoader<U> {
     this.moduleName = moduleName;
   }
 
+  public getModulePath (): string {
+    return this.modulePath;
+  }
+
+  public getModuleName (): string | undefined {
+    return this.moduleName;
+  }
+
   public async load (options: LoadOptions<U>): Promise<U> {
     if (!this.loadedModule) this.loadedModule = this._load(options);
     return await this.loadedModule;
