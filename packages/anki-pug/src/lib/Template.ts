@@ -14,7 +14,7 @@ export interface RawTemplate {
   template?: compileTemplate;
 }
 
-export const templateSchema = Joi.object({
+export const rawTemplateSchema = Joi.object({
   htmlFile: Joi.string().required(),
   locals: Joi.object(),
   name: Joi.string().required(),
@@ -28,7 +28,7 @@ export default class Template {
 
   public constructor (raw: RawTemplate, model: Model) {
     this.model = model;
-    Joi.assert(raw, templateSchema);
+    Joi.assert(raw, rawTemplateSchema);
     this.raw = raw;
   }
 

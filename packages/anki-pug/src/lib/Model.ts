@@ -1,10 +1,11 @@
+import Joi from 'joi';
 import type { ValidationResult } from 'joi';
 
 import ModuleLoader from './ModuleLoader';
-import Template from './Template';
+import Template, { rawTemplateSchema } from './Template';
 import type { RawTemplate } from './Template';
 import type { ModelModule } from './types';
-import { getConfig, getLogger, TaskSyncer, todo } from './util';
+import { getConfig, getLogger, TaskSyncer } from './util';
 
 const log = getLogger('Model');
 
@@ -28,6 +29,10 @@ export default class Model {
     return Array.isArray(templates) ? templates : [templates];
   }
 
+  private static validateModule (moduleValue: RawTemplate[]): ValidationResult<RawTemplate[]> {
+    return Joi.array().items(rawTemplateSchema).validate(moduleValue);
+  }
+
   public async getAllTemplates (syncer = new TaskSyncer()): Promise<Template[]> {
     if (!this.allTemplates) this.allTemplates = await this._getAllTemplates(syncer);
     return this.allTemplates;
@@ -46,12 +51,8 @@ export default class Model {
     const rawTemplates = await moduleLoader.load({
       format: async moduleValue => await Model.formatModule(moduleValue),
       syncer,
-      validate: async moduleValue => await this.validateModule(moduleValue),
+      validate: moduleValue => Model.validateModule(moduleValue),
     });
     return rawTemplates.map(rawTemplate => new Template(rawTemplate, this));
-  }
-
-  private async validateModule (moduleValue: ModelModule): Promise<ValidationResult<RawTemplate[]>> {
-    return await Promise.resolve(todo(this, moduleValue) as ValidationResult<RawTemplate[]>);
   }
 }
