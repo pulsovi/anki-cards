@@ -59,7 +59,7 @@ export default class ModuleLoader<U> {
   }
 
   private async validationErrorHandler (error: unknown, loadOptions: LoadOptions<U>): Promise<U> {
-    const errorManager = new ValidationErrorManager(error as Error);
+    const errorManager = new ValidationErrorManager(error as Error, this);
     await errorManager.manage();
     return await this._load(loadOptions);
   }
