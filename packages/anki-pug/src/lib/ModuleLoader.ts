@@ -54,17 +54,13 @@ export default class ModuleLoader<U> {
 
   private async importErrorHandler (error: unknown, loadOptions: LoadOptions<U>): Promise<U> {
     const errorManager = new ImportErrorManager(error as Error);
-    const canBeReloaded = await errorManager.manage();
-
-    if (canBeReloaded) return await this._load(loadOptions);
-    throw error;
+    await errorManager.manage();
+    return await this._load(loadOptions);
   }
 
   private async validationErrorHandler (error: unknown, loadOptions: LoadOptions<U>): Promise<U> {
     const errorManager = new ValidationErrorManager(error as Error);
-    const canBeReloaded = await errorManager.manage();
-
-    if (canBeReloaded) return await this._load(loadOptions);
-    throw error;
+    await errorManager.manage();
+    return await this._load(loadOptions);
   }
 }

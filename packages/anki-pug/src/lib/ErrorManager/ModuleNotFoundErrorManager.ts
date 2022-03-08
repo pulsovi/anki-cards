@@ -8,7 +8,7 @@ export default class ModuleNotFoundErrorManager implements BaseErrorManager {
       throw new TypeError(`Le code de l'erreur doit être "MODULE_NOT_FOUND", code reçu : "${error.code}"`);
   }
 
-  public async manage (): Promise<boolean> {
-    return await Promise.resolve(todo(this) as boolean);
+  public async manage (): Promise<void> {
+    await Promise.resolve(todo(this));
   }
 }

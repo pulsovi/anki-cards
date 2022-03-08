@@ -22,7 +22,7 @@ export default class ImportErrorManager implements BaseErrorManager {
     return error instanceof Error && 'string' === typeof error.code;
   }
 
-  public async manage (): Promise<boolean> {
-    return await this.specificManager.manage();
+  public async manage (): Promise<void> {
+    await this.specificManager.manage();
   }
 }

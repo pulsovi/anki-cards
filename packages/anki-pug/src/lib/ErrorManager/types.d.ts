@@ -3,5 +3,5 @@ export interface ErrorWithCode extends Error {
 }
 
 export interface BaseErrorManager {
-  manage: () => Promise<boolean>;
+  manage: () => Promise<void>;
 }
