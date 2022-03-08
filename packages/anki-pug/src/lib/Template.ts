@@ -1,20 +1,18 @@
 import fs from 'fs-extra';
 import Joi from 'joi';
+import type { compileTemplate } from 'pug';
 
 import type Model from './Model';
 import PugFile from './PugFile';
-import type { RawTemplate } from './types';
 import { TaskSyncer } from './util';
 
-/*
- * declare interface RawTemplate {
- *   name: string;
- *   pugFile: string;
- *   template?: compileTemplate;
- *   locals?: Record<string, string>;
- *   htmlFile: string;
- * }
- */
+export interface RawTemplate {
+  htmlFile: string;
+  locals?: Record<string, string>;
+  name: string;
+  pugFile: string;
+  template?: compileTemplate;
+}
 
 export const templateSchema = Joi.object({
   htmlFile: Joi.string().required(),

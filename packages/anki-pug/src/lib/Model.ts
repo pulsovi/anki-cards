@@ -1,5 +1,6 @@
 import ModuleLoader from './ModuleLoader';
 import Template from './Template';
+import type { RawTemplate } from './Template';
 import type { ModelModule } from './types';
 import { getConfig, getLogger, TaskSyncer } from './util';
 
@@ -15,6 +16,16 @@ export default class Model {
     this.name = name;
   }
 
+  private static async formatModule (moduleValue: unknown): Promise<RawTemplate[]> {
+    const modelModule = moduleValue as ModelModule;
+    const templates = await (
+      typeof modelModule === 'function' ?
+        modelModule(getConfig()) :
+        modelModule
+    );
+    return Array.isArray(templates) ? templates : [templates];
+  }
+
   public async getAllTemplates (syncer = new TaskSyncer()): Promise<Template[]> {
     if (!this.allTemplates) this.allTemplates = await this._getAllTemplates(syncer);
     return this.allTemplates;
@@ -26,12 +37,14 @@ export default class Model {
 
   private async _getAllTemplates (syncer: TaskSyncer): Promise<Template[]> {
     log('getAllTemplates');
-    const moduleLoader = new ModuleLoader<ModelModule>(
+    const moduleLoader = new ModuleLoader<RawTemplate[]>(
       this.modulepath,
       this.name
     );
-    const model = await moduleLoader.load({ syncer });
-    const templates = await (typeof model === 'function' ? model(getConfig()) : model);
-    return (Array.isArray(templates) ? templates : [templates]).map(raw => new Template(raw, this));
+    const rawTemplates = await moduleLoader.load({
+      format: async moduleValue => await Model.formatModule(moduleValue),
+      syncer,
+    });
+    return rawTemplates.map(rawTemplate => new Template(rawTemplate, this));
   }
 }
