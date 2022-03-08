@@ -1,9 +1,10 @@
 import fs from 'fs-extra';
 import Joi from 'joi';
-import type { compileTemplate } from 'pug';
+import type { LocalsObject } from 'pug';
 
 import type Model from './Model';
 import PugFile from './PugFile';
+import type { SyncOrPromise } from './types';
 import { TaskSyncer } from './util';
 
 export interface RawTemplate {
@@ -11,7 +12,7 @@ export interface RawTemplate {
   locals?: Record<string, string>;
   name: string;
   pugFile: string;
-  template?: compileTemplate;
+  template?: (locals?: LocalsObject) => SyncOrPromise<string>;
 }
 
 export const rawTemplateSchema = Joi.object({
@@ -33,7 +34,7 @@ export default class Template {
   }
 
   public async getCompiledPug (syncer = new TaskSyncer()): Promise<string> {
-    if (this.raw.template) return this.raw.template(this.raw.locals);
+    if (this.raw.template) return await this.raw.template(this.raw.locals);
 
     const pugLoader = new PugFile(this.raw.pugFile, this.raw.name);
     const compileTemplate = await pugLoader.compile(syncer);
