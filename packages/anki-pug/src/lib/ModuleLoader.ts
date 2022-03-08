@@ -31,9 +31,9 @@ export default class ModuleLoader<U> {
 
   private async _load (options: LoadOptions<U>): Promise<U> {
     const { format, syncer = new TaskSyncer(), validate } = options;
-    const value = await import(this.modulePath).catch(async error => await syncer.enqueue(
+    const value = (await import(this.modulePath).catch(async error => await syncer.enqueue(
       async () => await this.importErrorHandler(error, { ...options, syncer })
-    )) as U;
+    )) as { default: U }).default;
     const formatedValue = format ? await format(value) : value;
 
     if (validate) {
