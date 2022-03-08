@@ -9,6 +9,9 @@ export class TaskSyncer {
   private readonly tickets: TaskSyncer[] = [];
   private readonly number: number;
   private currentTicket = 0;
+  private isReady = false;
+  private wasReady = false;
+  private status: 'done' | 'pending' | 'running' = 'pending';
 
   public constructor (
     parent?: TaskSyncer,
@@ -18,12 +21,22 @@ export class TaskSyncer {
 
     const deferredPromise: DeferredPromise<void> = getDeferredPromise();
     this.close = deferredPromise.resolve;
-    this.done = deferredPromise.promise;
-    this.ready = new Promise((resolve, reject) => {
+    this.done = deferredPromise.promise.finally(() => {
+      this.isReady = false;
+      this.status = 'done';
+    });
+    this.ready = new Promise<void>((resolve, reject) => {
+      if (this.status === 'done') reject(new Error('The ticket is already done.'));
       this.done.finally(() => { reject(new Error('The ticket is already done.')); });
       if (parent) parent.getReady(number).then(resolve, reject);
       else resolve();
+    }).then(() => {
+      this.isReady = true;
+      this.wasReady = true;
+      this.status = 'running';
     });
+
+    if (parent) parent.done.finally(() => { this.close(); }).catch(() => { /* do nothing */ });
   }
 
   public async enqueue<U> (task: (syncer: TaskSyncer) => Promise<U>): Promise<U> {
