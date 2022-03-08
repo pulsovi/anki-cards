@@ -9,14 +9,18 @@ export class TaskSyncer {
   private readonly tickets: TaskSyncer[] = [];
   private readonly number: number;
   private currentTicket = 0;
+  private readonly name: string;
   private isReady = false;
   private wasReady = false;
   private status: 'done' | 'pending' | 'running' = 'pending';
 
   public constructor (
+    name?: string,
     parent?: TaskSyncer,
     number = 0
   ) {
+    if (name) this.name = parent ? `${parent.name}:${name}` : name;
+    else this.name = parent ? `${parent.name}[${number}]` : 'root';
     this.number = number;
 
     const deferredPromise: DeferredPromise<void> = getDeferredPromise();
@@ -39,8 +43,8 @@ export class TaskSyncer {
     if (parent) parent.done.finally(() => { this.close(); }).catch(() => { /* do nothing */ });
   }
 
-  public async enqueue<U> (task: (syncer: TaskSyncer) => Promise<U>): Promise<U> {
-    const ticket = this.getTicket();
+  public async enqueue<U> (task: (syncer: TaskSyncer) => Promise<U>, name?: string): Promise<U> {
+    const ticket = this.getTicket(name);
     await ticket.ready;
     const status: {
       isError: boolean;
@@ -58,13 +62,13 @@ export class TaskSyncer {
     return status.value as U;
   }
 
-  public getTicket<T> (
+  public getTicket<T extends number | string | undefined> (
     index?: T
   ): T extends number ? TaskSyncer | undefined : TaskSyncer {
     if (typeof index === 'number') return this.tickets[index];
 
     const number = this.tickets.length;
-    const ticket = new TaskSyncer(this, number);
+    const ticket = new TaskSyncer(index, this, number);
 
     this.tickets.push(ticket);
     ticket.ready.finally(() => { this.currentTicket = number; });
