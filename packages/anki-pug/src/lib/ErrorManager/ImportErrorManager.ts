@@ -1,11 +1,15 @@
+import type ModuleLoader from '../ModuleLoader';
+
 import InvalidArgTypeErrorManager from './InvalidArgTypeErrorManager';
 import ModuleNotFoundErrorManager from './ModuleNotFoundErrorManager';
 import type { BaseErrorManager, ErrorWithCode } from './types';
 
-export default class ImportErrorManager implements BaseErrorManager {
+export default class ImportErrorManager<U> implements BaseErrorManager {
+  private readonly moduleLoader: ModuleLoader<U>;
   private readonly specificManager: BaseErrorManager;
 
-  public constructor (error: Error) {
+  public constructor (error: Error, moduleLoader: ModuleLoader<U>) {
+    this.moduleLoader = moduleLoader;
     if (!ImportErrorManager.isManageable(error))
       throw new TypeError('Only errors with a "code" property of type string can be handled.');
     if (error.code === 'MODULE_NOT_FOUND')

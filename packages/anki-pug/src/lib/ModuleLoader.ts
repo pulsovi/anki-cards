@@ -39,20 +39,29 @@ export default class ModuleLoader<U> {
 
   private async _load (options: LoadOptions<U>): Promise<U> {
     const { format, syncer = new TaskSyncer(), validate } = options;
-    const value = (await import(this.modulePath).catch(async error => await syncer.enqueue(
-      async () => await this.importErrorHandler(error, { ...options, syncer })
-    )) as { default: U }).default;
-    const formatedValue = format ? await format(value) : value;
+    const imported = await import(this.modulePath).then(
+      (value: { default: unknown }) => ({ value: value.default }),
+      (error: unknown) => ({ error })
+    );
+
+    if ('error' in imported) {
+      await syncer.enqueue(
+        async () => { await this.importErrorHandler(imported.error); },
+        'ImportError'
+      );
+      return await this._load(options);
+    }
+
+    const formatedValue = format ? await format(imported.value) : imported.value as U;
 
     if (validate) {
       const validationResult = await validate(formatedValue);
       if (validationResult.error) {
-        return await syncer.enqueue(
-          async () => await this.validationErrorHandler(
-            validationResult.error,
-            { ...options, syncer }
-          )
+        await syncer.enqueue(
+          async () => { await this.validationErrorHandler(validationResult.error); },
+          'ValidationError'
         );
+        return await this._load(options);
       }
       return validationResult.value;
     }
@@ -60,15 +69,13 @@ export default class ModuleLoader<U> {
     return formatedValue;
   }
 
-  private async importErrorHandler (error: unknown, loadOptions: LoadOptions<U>): Promise<U> {
-    const errorManager = new ImportErrorManager(error as Error);
+  private async importErrorHandler (error: unknown): Promise<void> {
+    const errorManager = new ImportErrorManager(error as Error, this);
     await errorManager.manage();
-    return await this._load(loadOptions);
   }
 
-  private async validationErrorHandler (error: unknown, loadOptions: LoadOptions<U>): Promise<U> {
+  private async validationErrorHandler (error: unknown): Promise<void> {
     const errorManager = new ValidationErrorManager(error as Error, this);
     await errorManager.manage();
-    return await this._load(loadOptions);
   }
 }
