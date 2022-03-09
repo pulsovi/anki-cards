@@ -62,9 +62,9 @@ export class TaskSyncer {
     return status.value as U;
   }
 
-  public getTicket<T extends number | string | undefined> (
-    index?: T
-  ): T extends number ? TaskSyncer | undefined : TaskSyncer {
+  public getTicket (index?: string): TaskSyncer;
+  public getTicket (index: number): TaskSyncer | undefined;
+  public getTicket (index?: number | string): TaskSyncer | undefined {
     if (typeof index === 'number') return this.tickets[index];
 
     const number = this.tickets.length;

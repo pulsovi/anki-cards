@@ -1,9 +1,10 @@
-import trueConfig from '../package';
+// eslint-disable-next-line import/extensions
+import trueConfig from '../package.json';
 import { getPackageName } from '../src/lib/util/getPackageName';
 
 describe('getPackageName', () => {
   it('match to package.json name', () => {
-    const { name: trueName } = trueConfig as { name: string };
+    const trueName = trueConfig.name;
     const name = getPackageName();
 
     expect(trueConfig).toHaveProperty('name');

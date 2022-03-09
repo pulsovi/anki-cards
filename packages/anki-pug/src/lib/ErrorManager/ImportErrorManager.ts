@@ -19,7 +19,8 @@ export default class ImportErrorManager implements BaseErrorManager {
   }
 
   public static isManageable (error: unknown): error is ErrorWithCode {
-    return error instanceof Error && 'string' === typeof error.code;
+    const testedError = error as ErrorWithCode;
+    return testedError instanceof Error && 'string' === typeof testedError.code;
   }
 
   public async manage (): Promise<void> {
