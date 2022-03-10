@@ -2,7 +2,10 @@
   "name": "anki-pug",
   "version": "0.1.0",
   "description": "command that show and possibly merge diff between your pug model and html template",
-  "bin": "bin/anki-pug.js",
+  "bin": {
+    "anki-pug": "bin/anki-pug.js",
+    "fix-with-test": "bin/fix-with-test.js"
+  },
   "main": "lib/index.js",
   "engines": {
     "node": ">=14"
@@ -13,9 +16,10 @@
   "private": true,
   "scripts": {
     "build": "rm -rf ./bin && rm -rf ./lib && yarn babel src --out-dir . --extensions \".ts\"",
+    "commit-msg": "yarn fix-with-test",
     "debug-tests": "yarn node --stack-trace-limit=100 --trace-warnings --async-stack-traces $(yarn bin jest)",
     "lint": "eslint .",
-    "precommit": "yarn lint-staged",
+    "pre-commit": "yarn lint-staged",
     "prepack": "yarn build",
     "test": "jest"
   },

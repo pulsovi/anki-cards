@@ -8,10 +8,12 @@
     "lint-staged": "^11.2.5"
   },
   "scripts": {
+    "commit-msg": "yarn npm-run-all \"commit-msg:\\* -- $@\"",
+    "commit-msg:anki-pug": "cd packages/anki-pug && yarn commit-msg",
     "postinstall": "husky install",
-    "precommit:_": "lint-staged",
-    "precommit:anki-pug": "cd packages/anki-pug && yarn precommit",
-    "precommit": "yarn npm-run-all precommit:\\*"
+    "pre-commit": "yarn npm-run-all pre-commit:\\*",
+    "pre-commit:_": "lint-staged",
+    "pre-commit:anki-pug": "cd packages/anki-pug && yarn pre-commit"
   },
   "resolutions": {
     "eslint-config-pulsovi": "portal:../../eslint-config-pulsovi/packages/core",

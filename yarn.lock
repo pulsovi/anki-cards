@@ -2278,6 +2278,7 @@ __metadata:
     typescript: ^4.5.5
   bin:
     anki-pug: bin/anki-pug.js
+    fix-with-test: bin/fix-with-test.js
   languageName: unknown
   linkType: soft
 
