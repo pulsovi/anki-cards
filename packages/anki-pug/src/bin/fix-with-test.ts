@@ -44,7 +44,7 @@ program
         .map(file => `"${path.relative(process.cwd(), path.join(gitRoot, file))}"`)
         .join(' ')
     }`);
-    await cmdOut(`git tag -f dd ${stashIndexHash}`);
+    // await cmdOut(`git tag -f dd ${stashIndexHash}`);
     const jest = await cmdOut('yarn jest --bail').then(
       value => ({ error: null, value }),
       (error: unknown) => ({ error, value: null })
