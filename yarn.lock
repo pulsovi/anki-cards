@@ -2261,6 +2261,7 @@ __metadata:
     chalk: ^4.0.0
     chokidar: ^3.5.3
     commander: ^9.0.0
+    core-js: ^3.21.1
     debug: ^4.3.3
     eslint: ^8.8.0
     eslint-config-pulsovi-typescript: ^0.2.8
@@ -3016,6 +3017,13 @@ __metadata:
     browserslist: ^4.19.1
     semver: 7.0.0
   checksum: 6af1bcbc94ede50b109e54bf3f5a9ca28b8a303124e07c2bf76c2257a8a94a0b550cf4a318f6ec0594b351b6f9a5453fd4516e3681560b6d984b95d1988baf13
+  languageName: node
+  linkType: hard
+
+"core-js@npm:^3.21.1":
+  version: 3.21.1
+  resolution: "core-js@npm:3.21.1"
+  checksum: d68eddd831340ad5b24ac29c72fda022a43b17f194c4278b6b875a843283d316502cb4abd07f28631d6ebc4387f66aa06e2b1b3c8fd7e08096a751b5c63f6889
   languageName: node
   linkType: hard
 

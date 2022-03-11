@@ -1,3 +1,5 @@
+import 'core-js/actual/aggregate-error';
+
 import type ModuleLoader from '../ModuleLoader';
 
 import InvalidArgTypeErrorManager from './InvalidArgTypeErrorManager';
@@ -10,8 +12,12 @@ export default class ImportErrorManager<U> implements BaseErrorManager {
 
   public constructor (error: Error, moduleLoader: ModuleLoader<U>) {
     this.moduleLoader = moduleLoader;
-    if (!ImportErrorManager.isManageable(error))
-      throw new TypeError('Only errors with a "code" property of type string can be handled.');
+    if (!ImportErrorManager.isManageable(error)) {
+      throw new AggregateError([
+        new TypeError('Only errors with a "code" property of type string can be handled.'),
+        error,
+      ], 'Unable to manage this error');
+    }
     if (error.code === 'MODULE_NOT_FOUND')
       this.specificManager = new ModuleNotFoundErrorManager(error);
     else if (error.code === 'ERR_INVALID_ARG_TYPE')
