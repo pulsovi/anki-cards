@@ -18,7 +18,7 @@ describe('ImportErrorManager', () => {
       // Assert
       expect(builder).toThrow('Unable to manage this error');
     });
-    it('throws AggregateError if no "code" property provided', () => {
+    it('throws AggregateError if error is not Error', () => {
       // Arrange
       const errorLike = { message: 'error like object', name: 'test error' };
       const moduleLoaderLike = {} as ModuleLoader<unknown>;
@@ -31,7 +31,7 @@ describe('ImportErrorManager', () => {
       // Assert
       expect(builder).toThrow(AggregateError);
     });
-    it('throws if no "code" property provided', () => {
+    it('throws if error is not Error', () => {
       // Arrange
       const errorLike = { message: 'error like object', name: 'test error' };
       const moduleLoaderLike = {} as ModuleLoader<unknown>;
@@ -49,7 +49,7 @@ describe('ImportErrorManager', () => {
       // Assert
       expect(builder).toThrowWithMessage(
         TypeError,
-        'Only errors with a "code" property of type string can be handled.'
+        'Only errors which are instance of Error can be handled.'
       );
     });
   });

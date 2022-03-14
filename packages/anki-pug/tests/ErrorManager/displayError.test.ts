@@ -2,6 +2,14 @@ import 'core-js/actual/aggregate-error';
 
 import { displayError } from '../../src/lib/ErrorManager/displayError';
 
+beforeAll(() => {
+  jest.spyOn(console, 'error').mockImplementation(() => { /* do nothing */ });
+});
+
+afterAll(() => {
+  jest.restoreAllMocks();
+});
+
 describe('displayError', () => {
   it('displays AggregateError errors', () => {
     // Arrange
