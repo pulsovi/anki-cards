@@ -1,46 +1,46 @@
+import EventEmitter from 'events';
+
 import { getDeferredPromise } from './deferredPromise';
 import type { DeferredPromise } from './deferredPromise';
 
-export class TaskSyncer {
-  public readonly close: () => void;
+export class TaskSyncer extends EventEmitter {
   public readonly done: Promise<void>;
   public ready: Promise<void>;
 
-  private readonly tickets: TaskSyncer[] = [];
-  private readonly number: number;
-  private currentTicket = 0;
+  private readonly deferredDone: DeferredPromise<void>;
+  private readonly deferredReady: DeferredPromise<void>;
   private readonly name: string;
+  private readonly number: number;
+  private readonly parent?: TaskSyncer;
+  private readonly tickets: TaskSyncer[] = [];
+  private currentTicket = 0;
   private isReady = false;
-  private wasReady = false;
   private status: 'done' | 'pending' | 'running' = 'pending';
+  private wasReady = false;
 
   public constructor (
     name?: string,
     parent?: TaskSyncer,
     number = 0
   ) {
-    if (name) this.name = parent ? `${parent.name}:${name}` : name;
-    else this.name = parent ? `${parent.name}[${number}]` : 'root';
+    super();
     this.number = number;
+    this.parent = parent;
+    this.name = this.defineName(name);
+    this.deferredDone = getDeferredPromise();
+    this.done = this.deferredDone.promise;
+    this.deferredReady = getDeferredPromise();
+    this.ready = this.deferredReady.promise;
 
-    const deferredPromise: DeferredPromise<void> = getDeferredPromise();
-    this.close = deferredPromise.resolve;
-    this.done = deferredPromise.promise.finally(() => {
-      this.isReady = false;
-      this.status = 'done';
-    });
-    this.ready = new Promise<void>((resolve, reject) => {
-      if (this.status === 'done') reject(new Error('The ticket is already done.'));
-      this.done.finally(() => { reject(new Error('The ticket is already done.')); });
-      if (parent) parent.getReady(number).then(resolve, reject);
-      else resolve();
-    }).then(() => {
-      this.isReady = true;
-      this.wasReady = true;
-      this.status = 'running';
-    });
+    this.setReadyTriggers();
+    if (parent) parent.once('done', () => { this.close(); });
+  }
 
-    if (parent) parent.done.finally(() => { this.close(); }).catch(() => { /* do nothing */ });
+  public close (): void {
+    this.isReady = false;
+    this.status = 'done';
+    this.deferredDone.resolve();
+    this.emit('done');
   }
 
   public async enqueue<U> (task: (syncer: TaskSyncer) => Promise<U>, name?: string): Promise<U> {
@@ -71,15 +71,45 @@ export class TaskSyncer {
     const ticket = new TaskSyncer(index, this, number);
 
     this.tickets.push(ticket);
-    ticket.ready.finally(() => { this.currentTicket = number; });
+    ticket.once('ready', () => { this.currentTicket = number; });
     return ticket;
   }
 
   private async getReady (index: number): Promise<void> {
-    await new Promise((resolve, reject) => {
-      this.done.finally(() => { reject(new Error('The syncer is already closed.')); });
-      Promise.allSettled(this.tickets.slice(0, index).map(async ticket => { await ticket.done; }))
-        .finally(() => { resolve(this.ready); });
+    await Promise.race([
+      this.done.finally(() => { throw new Error('The syncer is already closed.'); }),
+      Promise.allSettled(this.tickets.slice(0, index).map(async ticket => { await ticket.done; })),
+    ]);
+    await this.ready;
+  }
+
+  private defineName (name?: string): string {
+    if (name) return this.parent ? `${this.parent.name}:${name}` : name;
+    return this.parent ? `${this.parent.name}[${this.number}]` : 'root';
+  }
+
+  private resolveReady (): void {
+    this.isReady = true;
+    this.wasReady = true;
+    this.status = 'running';
+    this.emit('ready');
+    this.deferredReady.resolve();
+  }
+
+  private setReadyTriggers (): void {
+    this.deferredReady.promise.catch(() => { /* do nothing there */ });
+    this.once('done', () => {
+      const isDoneError = new Error(`The ticket "${this.name}" is already done.`);
+      this.deferredReady.reject(isDoneError);
+      this.ready = Promise.reject(isDoneError);
+      this.ready.catch(() => { /* do nothing there */ });
     });
+    if (this.parent) {
+      this.parent.getReady(this.number).then(
+        () => { this.resolveReady(); },
+        this.deferredReady.reject
+      );
+    }
+    else this.resolveReady();
   }
 }

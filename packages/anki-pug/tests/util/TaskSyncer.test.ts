@@ -150,4 +150,21 @@ describe('TaskSyncer', () => {
       expect(childReady).toBe(false);
     });
   });
+
+  describe('complexe bugs', () => {
+    test('ticket close before ready does not throw "UnhandledPromiseRejectionWarning"', async () => {
+      // Arrange
+      const syncer = new TaskSyncer();
+      const ticket1 = syncer.getTicket();
+
+      syncer.getTicket();
+
+      // Act
+      // ticket1.ready.catch(() => { /* do nothing */ });
+      ticket1.close();
+      await new Promise(rs => { setTimeout(rs, 500); });
+
+      // Assert
+    });
+  });
 });

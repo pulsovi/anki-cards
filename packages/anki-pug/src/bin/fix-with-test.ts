@@ -52,7 +52,9 @@ program
     if (jest.value) console.log('FAIL'); else console.log('SUCCESS');
     // inutile de vérifier que les tests passent après le commit, lint-staged s'en charge
     await cmdOut('git reset --hard');
-    await cmdOut(`git stash pop --quiet --index ${stashHash}`);
+    await cmdOut(`git stash apply --quiet --index ${stashHash}`);
+    if (await cmdOut('git rev-parse stash@{0}') === stashHash)
+      await cmdOut('git stash drop stash@{0}');
     if (jest.value) {
       console.log('FAIL: fix commits MUST add at least one test that fail before the commit, all this tests pass');
       process.exit(1);
@@ -65,7 +67,7 @@ program
     console.log('===============================================');
     if (error instanceof Error) {
       console.log(`${chalk.red(error.name)}: ${chalk.yellow(error.message)}`);
-      console.log(error.stack);
+      console.log(error.stack?.split('\n').slice(1).join('\n'));
     }
     else
       console.log(error);
