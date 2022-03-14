@@ -166,5 +166,24 @@ describe('TaskSyncer', () => {
 
       // Assert
     });
+
+    describe('MaxListenersExceededWarning', () => {
+      // eslint-disable-next-line multiline-comment-style
+      // Unable to check process.on('warning', ...)
+      // see: https://johann.pardanaud.com/blog/how-to-assert-unhandled-rejection-and-uncaught-exception-with-jest/
+      // and: https://github.com/facebook/jest/issues/5620
+      test('getTicket does not add any event listener', () => {
+        // Arrange
+        let listenerAdded = false;
+        const syncer = new TaskSyncer();
+        syncer.on('newListener', () => { listenerAdded = true; });
+
+        // Act
+        syncer.getTicket();
+
+        // Assert
+        expect(listenerAdded).toBe(false);
+      });
+    });
   });
 });

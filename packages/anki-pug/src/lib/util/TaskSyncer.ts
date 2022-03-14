@@ -33,14 +33,20 @@ export class TaskSyncer extends EventEmitter {
     this.ready = this.deferredReady.promise;
 
     this.setReadyTriggers();
-    if (parent) parent.once('done', () => { this.close(); });
+    if (parent) parent.done.finally(() => { this.close(); }).catch(() => { /* do nothing */ });
   }
 
   public close (): void {
-    this.isReady = false;
     this.status = 'done';
-    this.deferredDone.resolve();
+    // set ready state
+    this.isReady = false;
+    const isDoneError = new Error(`The ticket "${this.name}" is already done.`);
+    this.deferredReady.reject(isDoneError);
+    this.ready = Promise.reject(isDoneError);
+    this.ready.catch(() => { /* do nothing there */ });
+    // fire done event and promise
     this.emit('done');
+    this.deferredDone.resolve();
   }
 
   public async enqueue<U> (task: (syncer: TaskSyncer) => Promise<U>, name?: string): Promise<U> {
@@ -98,12 +104,6 @@ export class TaskSyncer extends EventEmitter {
 
   private setReadyTriggers (): void {
     this.deferredReady.promise.catch(() => { /* do nothing there */ });
-    this.once('done', () => {
-      const isDoneError = new Error(`The ticket "${this.name}" is already done.`);
-      this.deferredReady.reject(isDoneError);
-      this.ready = Promise.reject(isDoneError);
-      this.ready.catch(() => { /* do nothing there */ });
-    });
     if (this.parent) {
       this.parent.getReady(this.number).then(
         () => { this.resolveReady(); },
