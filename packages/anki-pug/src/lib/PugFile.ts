@@ -1,6 +1,6 @@
+import { compileFile } from 'pug';
 import type { compileTemplate } from 'pug';
 
-import { todo } from './util';
 import type { TaskSyncer } from './util';
 
 export default class PugFile {
@@ -12,7 +12,7 @@ export default class PugFile {
     this.name = name;
   }
 
-  public async compile (syncer?: TaskSyncer): Promise<compileTemplate> {
-    return await Promise.resolve(todo(this, syncer) as compileTemplate);
+  public async compile (_syncer?: TaskSyncer): Promise<compileTemplate> {
+    return await Promise.resolve(compileFile(this.pugFile));
   }
 }

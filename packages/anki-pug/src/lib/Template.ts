@@ -47,8 +47,8 @@ export default class Template {
   public async getCompiledPug (syncer = new TaskSyncer()): Promise<string> {
     if (this.raw.template) return await this.raw.template(this.raw.locals);
 
-    const pugLoader = new PugFile(this.raw.pugFile, this.raw.name);
-    const compileTemplate = await pugLoader.compile(syncer);
+    const pugFile = new PugFile(this.raw.pugFile, this.raw.name);
+    const compileTemplate = await pugFile.compile(syncer);
     return compileTemplate(this.raw.locals);
   }
 
