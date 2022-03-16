@@ -36,3 +36,15 @@ export function requireGetCached (moduleName: string): NodeModule | undefined {
   const resolved = require.resolve(moduleName);
   return require.cache[resolved];
 }
+
+export function requireGetStack (modulePath: string): string[] {
+  let current: NodeModule | null | undefined = require.cache[require.resolve(modulePath)];
+  const stack: string[] = [];
+
+  while (current) {
+    stack.push(current.id);
+    current = current.parent;
+  }
+
+  return stack;
+}

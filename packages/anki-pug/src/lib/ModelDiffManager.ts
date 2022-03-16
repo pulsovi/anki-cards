@@ -19,7 +19,7 @@ export default class ModelDiffManager {
     this.modelManager = new ModelManager(root);
   }
 
-  public async processAll (syncer = new TaskSyncer()): Promise<void> {
+  public async processAll (syncer = new TaskSyncer('ModelDiffManager@processAll')): Promise<void> {
     debugLog('DiffManager.processAll');
     const models = sortBy(
       await this.modelManager.getModels(),
@@ -41,13 +41,14 @@ export default class ModelDiffManager {
     syncer: TaskSyncer
   ): Promise<void> {
     debugLog('DiffManager.processModel', model.getName());
-    const ticket = syncer.getTicket();
+    const ticket = syncer.getTicket(model.getName());
     const templates = await model.getAllTemplates(ticket);
 
     await Promise.all(templates.map(async template => {
       await ticket.enqueue(async () => {
+        debugLog('DiffManager.processModel@ticket.enqueue', model.getName());
         await new TemplateDiffManager(template, this).process(diffConfig);
-      });
+      }, `getTemplateDiffManager(${model.getName()})`);
     }));
     ticket.close();
   }
