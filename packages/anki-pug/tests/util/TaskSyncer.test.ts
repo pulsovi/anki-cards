@@ -125,6 +125,34 @@ describe('TaskSyncer', () => {
         });
       });
     });
+
+    it('rejects if the ticket is closed before ready', async () => {
+      // Arrange
+      const syncer = new TaskSyncer();
+      syncer.getTicket();
+      const ticket2 = syncer.getTicket();
+      const readyPromise = ticket2.ready;
+
+      // Act
+      ticket2.close();
+
+      // Assert
+      await expect(readyPromise).toReject();
+      expect(ticket2.ready).not.toBe(readyPromise);
+    });
+  });
+
+  describe('ticket.enqueue', () => {
+    it('returns a rejected Promise if task thrown synchronously', async () => {
+      // Arrange
+      const syncer = new TaskSyncer();
+
+      // Act
+      const task = syncer.enqueue(() => { throw new Error('fail'); });
+
+      // Assert
+      await expect(task).toReject();
+    });
   });
 
   describe('sub-ticket', () => {
@@ -148,6 +176,21 @@ describe('TaskSyncer', () => {
       expect(p1Ready).toBe(true);
       expect(p2Ready).toBe(false);
       expect(childReady).toBe(false);
+    });
+
+    test('sub-ticket.ready rejects if its parent is done before', async () => {
+      // Arrange
+      const syncer = new TaskSyncer();
+      syncer.getTicket();
+      const ticket2 = syncer.getTicket();
+      const readyPromise = ticket2.ready;
+
+      // Act
+      syncer.close();
+
+      // Assert
+      await expect(readyPromise).toReject();
+      expect(ticket2.ready).not.toBe(readyPromise);
     });
   });
 

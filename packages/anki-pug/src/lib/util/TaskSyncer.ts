@@ -52,20 +52,7 @@ export class TaskSyncer extends EventEmitter {
   public async enqueue<U> (task: (syncer: TaskSyncer) => Promise<U>, name?: string): Promise<U> {
     const ticket = this.getTicket(name);
     await ticket.ready;
-    const status: {
-      isError: boolean;
-      value?: U;
-      reason?: unknown;
-    } = { isError: false };
-    try {
-      status.value = await task(ticket);
-    } catch (error) {
-      status.isError = true;
-      status.reason = error;
-    }
-    ticket.close();
-    if (status.isError) throw status.reason;
-    return status.value as U;
+    return await task(ticket).finally(() => { ticket.close(); });
   }
 
   public getTicket (index?: string): TaskSyncer;
