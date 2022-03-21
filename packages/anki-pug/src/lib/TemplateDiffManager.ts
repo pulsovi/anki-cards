@@ -2,6 +2,7 @@ import type ModelDiffManager from './ModelDiffManager';
 import type Template from './Template';
 import type { DiffConfig } from './types';
 import { todo } from './util';
+import type { TaskSyncer } from './util';
 
 export default class TemplateDiffManager {
   private readonly modelDiffManager: ModelDiffManager;
@@ -12,13 +13,14 @@ export default class TemplateDiffManager {
     this.template = template;
   }
 
-  public async process (diffConfig: DiffConfig): Promise<void> {
+  public async process (diffConfig: DiffConfig, _syncer: TaskSyncer): Promise<void> {
     const [rawOutput, compiledPug] = await Promise.all([
       this.template.getCurrentOutput(),
       this.template.getCompiledPug(),
     ]);
 
     if (rawOutput === compiledPug) return;
+
     await Promise.resolve(todo(this, diffConfig));
   }
 }

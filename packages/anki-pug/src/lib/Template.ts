@@ -56,4 +56,8 @@ export default class Template {
     if (!await fs.pathExists(this.raw.outputFile)) return null;
     return await fs.readFile(this.raw.outputFile, 'utf8');
   }
+
+  public getName (): string {
+    return this.raw.name;
+  }
 }

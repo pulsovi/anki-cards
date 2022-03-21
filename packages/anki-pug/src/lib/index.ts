@@ -2,7 +2,7 @@ import path from 'path';
 
 import getConfig from './getConfig';
 import type { AnkiPugConfig } from './getConfig';
-import ModelDiffManager from './ModelDiffManager';
+import ModelsDiffManager from './ModelsDiffManager';
 
 Error.stackTraceLimit = 100;
 
@@ -10,7 +10,7 @@ Error.stackTraceLimit = 100;
 export async function diff (argv: Partial<AnkiPugConfig> | null = null): Promise<void> {
   const config = getConfig(argv);
   const modelsFolder = path.resolve(path.dirname(config.configPath), config.modelsPath);
-  const diffManager = new ModelDiffManager(modelsFolder);
+  const diffManager = new ModelsDiffManager(modelsFolder);
 
-  await diffManager.processAll();
+  await diffManager.process();
 }

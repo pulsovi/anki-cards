@@ -1,55 +1,28 @@
 import path from 'path';
 
-import { sortBy } from 'lodash';
-
 import type Model from './Model';
-import ModelManager from './ModelManager';
 import TemplateDiffManager from './TemplateDiffManager';
 import type { DiffConfig } from './types';
-import { getLogger, TaskSyncer } from './util';
+import { getLogger } from './util';
+import type { TaskSyncer } from './util';
 
-const debugLog = getLogger(path.basename(__filename, path.extname(__filename)));
+const log = getLogger(path.basename(__filename, path.extname(__filename)));
 
 export default class ModelDiffManager {
-  private readonly root: string;
-  private readonly modelManager: ModelManager;
+  private readonly model: Model;
 
-  public constructor (root: string) {
-    this.root = root;
-    this.modelManager = new ModelManager(root);
+  public constructor (model: Model) {
+    this.model = model;
   }
 
-  public async processAll (syncer = new TaskSyncer('ModelDiffManager@processAll')): Promise<void> {
-    debugLog('DiffManager.processAll');
-    const models = sortBy(
-      await this.modelManager.getModels(),
-      model => model.getName().toLowerCase()
-    );
-    debugLog('DiffManager.processAll', models.length, 'models found');
-    const diffConfig: DiffConfig = {
-      quit: false,
-    };
-
-    await Promise.all(models.map(async model => {
-      await this.processModel(model, diffConfig, syncer);
-    }));
-  }
-
-  public async processModel (
-    model: Model,
-    diffConfig: DiffConfig,
-    syncer: TaskSyncer
-  ): Promise<void> {
-    debugLog('DiffManager.processModel', model.getName());
-    const ticket = syncer.getTicket(model.getName());
-    const templates = await model.getAllTemplates(ticket);
+  public async process (diffConfig: DiffConfig, syncer: TaskSyncer): Promise<void> {
+    log('process', this.model.getName());
+    const templates = await this.model.getAllTemplates(syncer);
 
     await Promise.all(templates.map(async template => {
-      await ticket.enqueue(async () => {
-        debugLog('DiffManager.processModel@ticket.enqueue', model.getName());
-        await new TemplateDiffManager(template, this).process(diffConfig);
-      }, `getTemplateDiffManager(${model.getName()})`);
+      const ticket = syncer.getTicket(template.getName());
+      await new TemplateDiffManager(template, this).process(diffConfig, ticket);
+      ticket.close();
     }));
-    ticket.close();
   }
 }
