@@ -18,9 +18,11 @@ export default class ImportErrorManager<U> implements BaseErrorManager {
         error,
       ], 'Unable to manage this error');
     }
-    if ((error as ErrorWithCode).code === 'MODULE_NOT_FOUND')
-      this.specificManager = new ModuleNotFoundErrorManager(error as ErrorWithCode);
-    else
+    if ((error as ErrorWithCode).code === 'MODULE_NOT_FOUND') {
+      this.specificManager = new ModuleNotFoundErrorManager(
+        error as ErrorWithCode, this.moduleLoader
+      );
+    } else
       this.specificManager = new DefaultImportErrorManager(error, this.moduleLoader);
   }
 

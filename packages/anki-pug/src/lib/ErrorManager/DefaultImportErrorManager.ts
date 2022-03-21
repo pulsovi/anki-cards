@@ -4,6 +4,7 @@ import type ModuleLoader from '../ModuleLoader';
 import { chokidarOnce, requireGetChildren, requireUncacheOnly } from '../util';
 
 import type { BaseErrorManager } from './types';
+import { formatError, formatFiles, formatModule } from './util';
 
 export default class DefaultImportErrorManager<U> implements BaseErrorManager {
   private readonly error: Error;
@@ -15,7 +16,6 @@ export default class DefaultImportErrorManager<U> implements BaseErrorManager {
   }
 
   public async manage (): Promise<void> {
-    const moduleName = this.moduleLoader.getModuleName();
     const modulePath = this.moduleLoader.getModulePath();
     const errorModule = this.getErrorModulePath();
     const moduleTree = (errorModule ? [errorModule, ...requireGetChildren(errorModule)] : [])
@@ -25,16 +25,13 @@ export default class DefaultImportErrorManager<U> implements BaseErrorManager {
       ])
       .filter(filepath => !filepath.includes('\\node_modules\\'));
 
-    console.info(`${chalk.red(this.error.name)}: ${chalk.yellow(this.error.message)}\n${
+    console.info(`${formatError(this.error)}\n${
       moduleTree.reduce((output, file) => output.replace(
         RegExp(file.replace(/\\/gu, '\\\\'), 'gu'), chalk.underline(file)
       ), this.getErrorStackOnly() ?? '')
-    }\n  when attempt to load ${
-      typeof moduleName === 'string' ?
-        `"${chalk.green(moduleName)}"(${chalk.yellow(modulePath)})` :
-        chalk.yellow(modulePath)
-    }\n  Edit the file or one of its dependancies and save changes for retry.\n  Files watched:\n    ${
-      moduleTree.map(file => chalk.cyanBright(file)).join('\n    ')}`);
+    }\n${formatModule(this.moduleLoader)}\n  ${
+      chalk.green('Edit the file or one of its dependancies and save changes for retry.')
+    }\n${formatFiles(moduleTree)}`);
     await chokidarOnce('change', moduleTree);
     requireUncacheOnly(moduleTree);
   }

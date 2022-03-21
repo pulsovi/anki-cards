@@ -5,6 +5,7 @@ import type ModuleLoader from '../ModuleLoader';
 import { chokidarOnce, requireGetChildren, requireUncacheOnly } from '../util';
 
 import type { BaseErrorManager } from './types';
+import { formatError, formatFiles, formatModule } from './util';
 
 export default class ValidationErrorManager<U> implements BaseErrorManager {
   private readonly error: ValidationError;
@@ -17,19 +18,15 @@ export default class ValidationErrorManager<U> implements BaseErrorManager {
   }
 
   public async manage (): Promise<void> {
-    const moduleName = this.moduleLoader.getModuleName();
     const modulePath = this.moduleLoader.getModulePath();
     const moduleTree = [
       modulePath,
       ...requireGetChildren(modulePath),
     ].filter(filepath => !filepath.includes('\\node_modules\\'));
 
-    console.info(`${chalk.red('ValidationError')}: ${this.error.message}\n  when attempt to load ${
-      typeof moduleName === 'string' ?
-        `"${moduleName}"(${chalk.yellow(modulePath)})` :
-        chalk.yellow(modulePath)
-    }\n  Edit the file or one of its dependancies and save changes for retry.\n  Files watched: [\n    ${
-      moduleTree.join('\n    ')}\n  ].`);
+    console.info(`${formatError(this.error)}\n${formatModule(this.moduleLoader)}\n  ${
+      chalk.green('Edit the file or one of its dependancies and save changes for retry.')
+    }\n${formatFiles(moduleTree)}`);
     await chokidarOnce('change', moduleTree);
     requireUncacheOnly(moduleTree);
   }

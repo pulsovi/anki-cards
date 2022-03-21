@@ -3,6 +3,7 @@ import 'core-js/actual/aggregate-error';
 import ModuleNotFoundErrorManager from '../../src/lib/ErrorManager/ModuleNotFoundErrorManager';
 import type { ModuleNotFoundError } from '../../src/lib/ErrorManager/ModuleNotFoundErrorManager';
 import type { ErrorWithCode } from '../../src/lib/ErrorManager/types';
+import type ModuleLoader from '../../src/lib/ModuleLoader';
 import * as chokidarUtils from '../../src/lib/util/chokidarOnce';
 import { getDeferredPromise } from '../../src/lib/util/deferredPromise';
 
@@ -11,10 +12,14 @@ describe('ModuleNotFoundErrorManager', () => {
     it('throws if no "code" property provided', () => {
       // Arrange
       const errorLike = { message: 'error like object' } as unknown as ModuleNotFoundError;
+      const moduleLoaderLike = {
+        getModuleName () { return ''; },
+        getModulePath () { return ''; },
+      } as ModuleLoader<unknown>;
 
       // Act
-      function builder (): ModuleNotFoundErrorManager {
-        return new ModuleNotFoundErrorManager(errorLike);
+      function builder (): ModuleNotFoundErrorManager<unknown> {
+        return new ModuleNotFoundErrorManager(errorLike, moduleLoaderLike);
       }
 
       // Assert
@@ -34,7 +39,11 @@ describe('ModuleNotFoundErrorManager', () => {
         message: "Cannot find module './foo'\n",
         requireStack: [__filename],
       }) as ErrorWithCode;
-      const manager = new ModuleNotFoundErrorManager(error);
+      const moduleLoaderLike = {
+        getModuleName () { return ''; },
+        getModulePath () { return ''; },
+      } as ModuleLoader<unknown>;
+      const manager = new ModuleNotFoundErrorManager(error, moduleLoaderLike);
 
       // Act
       jest.spyOn(console, 'info').mockImplementation(() => { /* do nothing */ });

@@ -5,9 +5,11 @@ import 'core-js/actual/aggregate-error';
 import Joi from 'joi';
 import pkgDir from 'pkg-dir';
 
+import type ModuleLoader from '../ModuleLoader';
 import { chokidarOnce } from '../util';
 
 import type { ErrorWithCode, BaseErrorManager } from './types';
+import { formatFiles, formatModule } from './util';
 
 export interface ModuleNotFoundError extends ErrorWithCode {
   code: 'MODULE_NOT_FOUND';
@@ -21,12 +23,14 @@ const moduleNotFoundErrorSchema = Joi.object({
   requireStack: Joi.array().items(Joi.string()).required(),
 });
 
-export default class ModuleNotFoundErrorManager implements BaseErrorManager {
+export default class ModuleNotFoundErrorManager<U> implements BaseErrorManager {
   private readonly error: ModuleNotFoundError;
+  private readonly moduleLoader: ModuleLoader<U>;
   private readonly missingFile: string;
 
-  public constructor (error: ErrorWithCode) {
+  public constructor (error: ErrorWithCode, moduleLoader: ModuleLoader<U>) {
     this.error = ModuleNotFoundErrorManager.formatError(error);
+    this.moduleLoader = moduleLoader;
     this.missingFile = this.getMissingFile();
   }
 
@@ -40,16 +44,16 @@ export default class ModuleNotFoundErrorManager implements BaseErrorManager {
   public async manage (): Promise<void> {
     const me = await pkgDir(__filename) ?? __dirname;
     const requireStack = this.error.requireStack.filter(modulePath => !modulePath.startsWith(me));
-
-    console.info(
-      `${chalk.red('Missing file')} : ${chalk.yellow(this.missingFile)}\nrequire stack:\n\t${
-        [this.missingFile, ...requireStack].map(file => chalk.cyanBright(file)).join('\n\t')
-      }\n${chalk.yellow('Edit and save one of these files to retry.')}`
-    );
-    await chokidarOnce(['change', 'add'], [
+    const files = [
       this.missingFile,
       ...requireStack,
-    ]);
+    ];
+
+    console.info(`${chalk.red('Missing file')} : ${chalk.yellow(this.missingFile)}\n${
+      formatModule(this.moduleLoader)}\n  ${
+      chalk.green('Edit and save one of these files to retry.')
+    }\n${formatFiles(files)}`);
+    await chokidarOnce(['change', 'add'], files);
   }
 
   private getMissingFile (): string {
