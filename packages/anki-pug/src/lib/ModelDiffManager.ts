@@ -3,7 +3,7 @@ import path from 'path';
 import type Model from './Model';
 import TemplateDiffManager from './TemplateDiffManager';
 import type { DiffConfig } from './types';
-import { getLogger } from './util';
+import { getLogger, todo } from './util';
 import type { TaskSyncer } from './util';
 
 const log = getLogger(path.basename(__filename, path.extname(__filename)));
@@ -24,5 +24,9 @@ export default class ModelDiffManager {
       await new TemplateDiffManager(template, this).process(diffConfig, ticket);
       ticket.close();
     }));
+  }
+
+  public async isManageable (diffConfig: DiffConfig, _syncer: TaskSyncer): Promise<boolean> {
+    return await Promise.resolve(todo(this, diffConfig) as boolean);
   }
 }
