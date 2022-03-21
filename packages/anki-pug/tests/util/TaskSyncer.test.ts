@@ -194,6 +194,28 @@ describe('TaskSyncer', () => {
     });
   });
 
+  describe('events', () => {
+    it('does not done twice', () => {
+      // Arrange
+      const syncer = new TaskSyncer();
+      let first = false;
+      let second = false;
+
+      syncer.on('done', () => {
+        if (first) second = true;
+        else first = true;
+      });
+
+      // Act
+      syncer.close();
+      syncer.close();
+
+      // Assert
+      expect(first).toBe(true);
+      expect(second).toBe(false);
+    });
+  });
+
   describe('complexe bugs', () => {
     test('ticket close before ready does not throw "UnhandledPromiseRejectionWarning"', async () => {
       // Arrange

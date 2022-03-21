@@ -37,6 +37,7 @@ export class TaskSyncer extends EventEmitter {
   }
 
   public close (): void {
+    if (this.status === 'done') return;
     this.status = 'done';
     // set ready state
     this.isReady = false;
