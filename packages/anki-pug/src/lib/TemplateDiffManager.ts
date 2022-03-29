@@ -26,7 +26,7 @@ export default class TemplateDiffManager {
     );
     if (!modelIsManageable) return;
 
-    const diffMenu = new TemplateDiffMenu();
-    await diffMenu.process(syncer);
+    const diffMenu = new TemplateDiffMenu(this.template);
+    await diffMenu.process(diffConfig, syncer);
   }
 }
