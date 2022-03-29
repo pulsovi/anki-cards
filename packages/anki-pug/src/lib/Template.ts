@@ -29,8 +29,10 @@ export const rawTemplateSchema = Joi.object({
     otherwise: Joi.function().required(),
     then: Joi.forbidden(),
   }).messages({
+    /* eslint-disable @typescript-eslint/naming-convention */
     'any.required': 'one of "template" or "pugFile" is required',
     'any.unknown': '"template" is forbidden when "pugFile" is provided',
+    /* eslint-enable @typescript-eslint/naming-convention */
   }),
 });
 
