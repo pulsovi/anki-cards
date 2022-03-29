@@ -2,9 +2,9 @@ import path from 'path';
 
 import { sortBy } from 'lodash';
 
+import DiffConfig from './DiffConfig';
 import ModelDiffManager from './ModelDiffManager';
 import ModelManager from './ModelManager';
-import type { DiffConfig } from './types';
 import { getLogger, TaskSyncer } from './util';
 
 const debugLog = getLogger(path.basename(__filename, path.extname(__filename)));
@@ -25,9 +25,7 @@ export default class ModelsDiffManager {
       model => model.getName().toLowerCase()
     );
     debugLog('process', models.length, 'models found');
-    const diffConfig: DiffConfig = {
-      quit: false,
-    };
+    const diffConfig = new DiffConfig();
 
     await Promise.all(models.map(async model => {
       const ticket = syncer.getTicket(model.getName());

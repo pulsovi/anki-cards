@@ -1,8 +1,8 @@
 import path from 'path';
 
+import type DiffConfig from './DiffConfig';
 import type Model from './Model';
 import TemplateDiffManager from './TemplateDiffManager';
-import type { DiffConfig } from './types';
 import { getLogger, todo } from './util';
 import type { TaskSyncer } from './util';
 

@@ -7,7 +7,3 @@ type SingleOrArray<T> = T | T[];
 type DirectOrCallback<T> = T | ((config: AnkiPugConfig) => T);
 
 declare type ModelModule = DirectOrCallback<SyncOrPromise<SingleOrArray<RawTemplate>>>;
-
-declare interface DiffConfig {
-  quit: boolean;
-}

@@ -1,7 +1,7 @@
+import type DiffConfig from './DiffConfig';
 import type ModelDiffManager from './ModelDiffManager';
 import type Template from './Template';
 import TemplateDiffMenu from './TemplateDiffMenu';
-import type { DiffConfig } from './types';
 import type { TaskSyncer } from './util';
 
 export default class TemplateDiffManager {
