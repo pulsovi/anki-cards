@@ -23,7 +23,7 @@ export default class TemplateDiffManager {
 
     const modelIsManageable = await syncer.enqueue(
       async ticket => await this.modelDiffManager.isManageable(diffConfig, ticket)
-    );
+    ).catch(() => false);
     if (!modelIsManageable) return;
 
     const diffMenu = new TemplateDiffMenu(this.template);
