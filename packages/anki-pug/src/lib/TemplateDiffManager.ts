@@ -1,3 +1,5 @@
+import chalk from 'chalk';
+
 import type DiffConfig from './DiffConfig';
 import type ModelDiffManager from './ModelDiffManager';
 import type Template from './Template';
@@ -7,6 +9,8 @@ import type { TaskSyncer } from './util';
 export default class TemplateDiffManager {
   private readonly modelDiffManager: ModelDiffManager;
   private readonly template: Template;
+
+  private prompted = false;
 
   public constructor (template: Template, modelDiffManager: ModelDiffManager) {
     this.modelDiffManager = modelDiffManager;
@@ -27,6 +31,15 @@ export default class TemplateDiffManager {
     if (!modelIsManageable) return;
 
     const diffMenu = new TemplateDiffMenu(this.template);
-    await syncer.enqueue(async ticket => { await diffMenu.process(diffConfig, ticket); });
+    await syncer.enqueue(async ticket => {
+      this.prompt();
+      await diffMenu.process(diffConfig, ticket);
+    });
+  }
+
+  private prompt (): void {
+    if (this.prompted) return;
+    console.info(chalk.greenBright(`  ${this.template.getName()}`));
+    this.prompted = true;
   }
 }
