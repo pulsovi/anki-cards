@@ -6,7 +6,7 @@ export default class DiffConfig {
   private readonly syncer: TaskSyncer;
 
   private _manageAllModels = false;
-  private manageableModels: Record<string, boolean> = {};
+  private manageableModels: Record<string, boolean | undefined> = {};
   private quit = false;
 
   public constructor (syncer: TaskSyncer) {
@@ -22,11 +22,10 @@ export default class DiffConfig {
     return this;
   }
 
-  public isModelManageable (modelName: string): boolean;
+  public isModelManageable (modelName: string): boolean | undefined;
   public isModelManageable (modelName: string, value: boolean): this;
-  public isModelManageable (modelName: string, value?: boolean): boolean | this {
-    if (isUndefined(value))
-      return this._manageAllModels || this.manageableModels[modelName] || false;
+  public isModelManageable (modelName: string, value?: boolean): boolean | this | undefined {
+    if (isUndefined(value)) return this._manageAllModels || this.manageableModels[modelName];
     this.manageableModels[modelName] = value;
     return this;
   }

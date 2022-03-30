@@ -21,6 +21,9 @@ export default class ModelDiffManager {
 
   public async process (diffConfig: DiffConfig, syncer: TaskSyncer): Promise<void> {
     log('process', this.model.getName());
+    // prompt model name synchronously, possible error: syncer is done
+    syncer.enqueue(() => { this.prompt(); }).catch(() => { /* do nothing */ });
+
     const templates = await this.model.getAllTemplates(syncer)
       .catch(reason => ({ error: reason as unknown }));
 
@@ -38,11 +41,8 @@ export default class ModelDiffManager {
 
   public async isManageable (diffConfig: DiffConfig, ticket: TaskSyncer): Promise<boolean> {
     if (diffConfig.haveToQuit()) return false;
-    if (diffConfig.isModelManageable(this.model.getName())) {
-      await ticket.ready;
-      this.prompt();
-      return true;
-    }
+    const manageable = diffConfig.isModelManageable(this.model.getName());
+    if (typeof manageable === 'boolean') return manageable;
     return await this.askManageable(diffConfig, ticket);
   }
 

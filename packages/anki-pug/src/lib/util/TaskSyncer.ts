@@ -2,6 +2,8 @@ import EventEmitter from 'events';
 
 import 'core-js/actual/aggregate-error';
 
+import type { SyncOrPromise } from '../types';
+
 import { getDeferredPromise } from './deferredPromise';
 import type { DeferredPromise } from './deferredPromise';
 
@@ -64,10 +66,12 @@ export class TaskSyncer extends EventEmitter {
     this.deferredDone.resolve();
   }
 
-  public async enqueue<U> (task: (syncer: TaskSyncer) => Promise<U>, name?: string): Promise<U> {
+  public async enqueue<U> (
+    task: (syncer: TaskSyncer) => SyncOrPromise<U>, name?: string
+  ): Promise<U> {
     const ticket = this.getTicket(name);
     await ticket.ready;
-    return await task(ticket).finally(() => { ticket.close(); });
+    return await Promise.resolve(task(ticket)).finally(() => { ticket.close(); });
   }
 
   public getName (): string {
