@@ -7,7 +7,7 @@ import ModelDiffManager from './ModelDiffManager';
 import ModelManager from './ModelManager';
 import { getLogger, TaskSyncer } from './util';
 
-const debugLog = getLogger(path.basename(__filename, path.extname(__filename)));
+const log = getLogger(path.basename(__filename, path.extname(__filename)));
 
 export default class ModelsDiffManager {
   private readonly root: string;
@@ -19,12 +19,12 @@ export default class ModelsDiffManager {
   }
 
   public async process (syncer = new TaskSyncer('ModelsDiffManager@process')): Promise<void> {
-    debugLog('process');
+    log('process');
     const models = sortBy(
       await this.modelManager.getModels(),
       model => model.getName().toLowerCase()
     );
-    debugLog('process', models.length, 'models found');
+    log('process', models.length, 'models found');
     const diffConfig = new DiffConfig(syncer);
 
     await Promise.all(models.map(async model => {
