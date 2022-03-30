@@ -15,9 +15,9 @@ export class TaskSyncer extends EventEmitter {
   private readonly parent?: TaskSyncer;
   private readonly tickets: TaskSyncer[] = [];
   private _ready: Promise<void>;
+  private _status: 'done' | 'pending' | 'running' = 'pending';
   private currentTicket = 0;
   private isReady = false;
-  private status: 'done' | 'pending' | 'running' = 'pending';
   private wasReady = false;
 
   public constructor (
@@ -46,9 +46,13 @@ export class TaskSyncer extends EventEmitter {
     });
   }
 
+  public get status (): 'done' | 'pending' | 'running' {
+    return this._status;
+  }
+
   public close (): void {
-    if (this.status === 'done') return;
-    this.status = 'done';
+    if (this._status === 'done') return;
+    this._status = 'done';
     // set ready state
     this.isReady = false;
     const isDoneError = new Error(`The ticket "${this.name}" is already done.`);
@@ -99,7 +103,7 @@ export class TaskSyncer extends EventEmitter {
   private resolveReady (): void {
     this.isReady = true;
     this.wasReady = true;
-    this.status = 'running';
+    this._status = 'running';
     this.emit('ready');
     this.deferredReady.resolve();
   }

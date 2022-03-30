@@ -21,7 +21,13 @@ export default class ModelDiffManager {
 
   public async process (diffConfig: DiffConfig, syncer: TaskSyncer): Promise<void> {
     log('process', this.model.getName());
-    const templates = await this.model.getAllTemplates(syncer);
+    const templates = await this.model.getAllTemplates(syncer)
+      .catch(reason => ({ error: reason as unknown }));
+
+    if ('error' in templates) {
+      if (syncer.status === 'done') return;
+      throw templates.error;
+    }
 
     await Promise.all(templates.map(async template => {
       const ticket = syncer.getTicket(template.getName());
