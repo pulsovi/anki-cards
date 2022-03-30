@@ -5,9 +5,11 @@ import type MenuItem from '../MenuItem';
 import type Template from '../Template';
 import type { TaskSyncer } from '../util';
 
+import No from './No';
 import Quit from './Quit';
 
 const items: (new () => MenuItem)[] = [
+  No,
   Quit,
 ];
 
