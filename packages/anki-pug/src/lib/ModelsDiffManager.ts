@@ -25,7 +25,7 @@ export default class ModelsDiffManager {
       model => model.getName().toLowerCase()
     );
     debugLog('process', models.length, 'models found');
-    const diffConfig = new DiffConfig();
+    const diffConfig = new DiffConfig(syncer);
 
     await Promise.all(models.map(async model => {
       const ticket = syncer.getTicket(model.getName());

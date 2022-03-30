@@ -1,16 +1,24 @@
 import { isUndefined } from 'lodash';
 
-export default class DiffConfig {
-  private manageableModels: Record<string, boolean> = {};
-  private _manageAllModels = false;
+import type { TaskSyncer } from './util';
 
+export default class DiffConfig {
+  private readonly syncer: TaskSyncer;
+
+  private _manageAllModels = false;
+  private manageableModels: Record<string, boolean> = {};
   private quit = false;
+
+  public constructor (syncer: TaskSyncer) {
+    this.syncer = syncer;
+  }
 
   public haveToQuit (): boolean;
   public haveToQuit (value: boolean): this;
   public haveToQuit (value?: boolean): boolean | this {
     if (isUndefined(value)) return this.quit;
     this.quit = value;
+    if (value) this.syncer.close();
     return this;
   }
 
