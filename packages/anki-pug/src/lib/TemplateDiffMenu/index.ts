@@ -7,9 +7,11 @@ import type { TaskSyncer } from '../util';
 
 import No from './No';
 import Quit from './Quit';
+import Word from './Word';
 
-const items: (new () => MenuItem)[] = [
+const items: (new (template: Template) => MenuItem)[] = [
   No,
+  Word,
   Quit,
 ];
 
@@ -18,7 +20,7 @@ export default class TemplateDiffMenu {
   private readonly template: Template;
 
   public constructor (template: Template) {
-    this.items = items.map(Item => new Item());
+    this.items = items.map(Item => new Item(template));
     this.template = template;
   }
 

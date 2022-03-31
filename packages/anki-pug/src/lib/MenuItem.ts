@@ -1,6 +1,7 @@
 import type { ExpandChoiceOptions } from 'inquirer';
 
 import type DiffConfig from './DiffConfig';
+import type Template from './Template';
 import type { TaskSyncer } from './util';
 
 interface MenuChoiceOption extends ExpandChoiceOptions {
@@ -8,8 +9,14 @@ interface MenuChoiceOption extends ExpandChoiceOptions {
 }
 
 export default abstract class MenuItem {
+  protected readonly template: Template;
+
   protected abstract readonly key: string;
   protected abstract readonly name: string;
+
+  public constructor (template: Template) {
+    this.template = template;
+  }
 
   public getChoice (): MenuChoiceOption {
     return {
@@ -25,5 +32,5 @@ export default abstract class MenuItem {
     return previousDefault;
   }
 
-  public abstract process (diffConfig: DiffConfig, ticket?: TaskSyncer): Promise<boolean>;
+  public abstract process (diffConfig: DiffConfig, ticket: TaskSyncer): Promise<boolean>;
 }

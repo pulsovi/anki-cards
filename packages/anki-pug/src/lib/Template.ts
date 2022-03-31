@@ -59,6 +59,10 @@ export default class Template {
     return await fs.readFile(this.raw.outputFile, 'utf8');
   }
 
+  public getModel (): Model {
+    return this.model;
+  }
+
   public getName (): string {
     return this.raw.name;
   }

@@ -1,12 +1,13 @@
 import type DiffConfig from '../DiffConfig';
 import MenuItem from '../MenuItem';
+import type Template from '../Template';
 
 export default class Quit extends MenuItem {
   protected readonly key: string;
   protected readonly name: string;
 
-  public constructor () {
-    super();
+  public constructor (template: Template) {
+    super(template);
     this.key = 'q';
     this.name = '[quit] Skip all unmanaged models/templates and quit the diff';
   }
