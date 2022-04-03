@@ -17,6 +17,10 @@ export default class TemplateDiffManager {
     this.template = template;
   }
 
+  public getTemplate (): Template {
+    return this.template;
+  }
+
   public async process (diffConfig: DiffConfig, syncer: TaskSyncer): Promise<void> {
     const [rawOutput, compiledPug] = await Promise.all([
       this.template.getCurrentOutput(),
@@ -30,14 +34,11 @@ export default class TemplateDiffManager {
     ).catch(() => false);
     if (!modelIsManageable) return;
 
-    const diffMenu = new TemplateDiffMenu(this.template);
-    await syncer.enqueue(async ticket => {
-      this.prompt();
-      await diffMenu.process(diffConfig, ticket);
-    });
+    const diffMenu = new TemplateDiffMenu(this, diffConfig, syncer);
+    await diffMenu.process();
   }
 
-  private prompt (): void {
+  public prompt (): void {
     if (this.prompted) return;
     console.info(chalk.greenBright(`  ${this.template.getName()}`));
     this.prompted = true;

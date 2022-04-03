@@ -1,29 +1,18 @@
 import chalk from 'chalk';
 import { diffWordsWithSpace } from 'diff';
 
-import MenuItem from '../MenuItem';
-import type Template from '../Template';
+import type TemplateDiffMenu from './TemplateDiffMenu';
+import TemplateDiffMenuItem from './TemplateDiffMenuItem';
 
-export default class Word extends MenuItem {
-  protected readonly key: string;
-  protected readonly name: string;
-
-  public constructor (template: Template) {
-    super(template);
+export default class Word extends TemplateDiffMenuItem {
+  public constructor (menu: TemplateDiffMenu) {
+    super(menu);
     this.key = 'w';
     this.name = '[word] Show word diff';
   }
 
-  public async process (): Promise<boolean> {
-    const [rawOutput, compiledPug] = await Promise.all([
-      this.template.getCurrentOutput(),
-      this.template.getCompiledPug(),
-    ]).then(contents => contents.map(content => {
-      let text = content;
-      if (text === null) text = '';
-      // if (!text.endsWith('\n')) text = `${text}\n<NO NEWLINE AT END OF FILE>`;
-      return text;
-    }));
+  public async act (data: [string, string]): Promise<boolean> {
+    const [rawOutput, compiledPug] = data;
     const diffString = diffWordsWithSpace(rawOutput, compiledPug).reduce((reduced: string, chunk) => {
       if (chunk.added || chunk.removed) {
         let { value } = chunk;
@@ -45,6 +34,6 @@ export default class Word extends MenuItem {
     }, '');
 
     console.info(diffString);
-    return false;
+    return await Promise.resolve(false);
   }
 }

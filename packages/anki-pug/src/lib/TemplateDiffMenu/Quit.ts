@@ -1,21 +1,18 @@
-import type DiffConfig from '../DiffConfig';
-import MenuItem from '../MenuItem';
-import type Template from '../Template';
+import type TemplateDiffMenu from './TemplateDiffMenu';
+import TemplateDiffMenuItem from './TemplateDiffMenuItem';
 
-export default class Quit extends MenuItem {
+export default class Quit extends TemplateDiffMenuItem {
   protected readonly key: string;
   protected readonly name: string;
 
-  public constructor (template: Template) {
-    super(template);
+  public constructor (menu: TemplateDiffMenu) {
+    super(menu);
     this.key = 'q';
     this.name = '[quit] Skip all unmanaged models/templates and quit the diff';
   }
 
-  // other concrete MenuItem can need use of `this` on `process`
-  // eslint-disable-next-line class-methods-use-this
-  public async process (diffConfig: DiffConfig): Promise<boolean> {
-    diffConfig.haveToQuit(true);
+  public async act (): Promise<boolean> {
+    this.menu.getDiffConfig().haveToQuit(true);
     return await Promise.resolve(true);
   }
 }
