@@ -3,18 +3,20 @@ import Menu from '../Menu/Menu';
 import type TemplateDiffManager from '../TemplateDiffManager';
 import type { TaskSyncer } from '../util';
 
+import NewlineAtEofFilter from './NewlineAtEofFilter';
 import No from './No';
 import Quit from './Quit';
 import type TemplateDiffMenuItem from './TemplateDiffMenuItem';
 import Word from './Word';
 
 const items: (new (menu: TemplateDiffMenu) => TemplateDiffMenuItem)[] = [
+  NewlineAtEofFilter,
   No,
   Word,
   Quit,
 ];
 
-export default class TemplateDiffMenu extends Menu {
+export default class TemplateDiffMenu extends Menu<[string, string]> {
   protected readonly items: TemplateDiffMenuItem[];
   protected readonly syncer: TaskSyncer;
 
