@@ -18,7 +18,7 @@ program
     const gitRoot = await cmdOut('git rev-parse --show-toplevel');
     const message = await fs.readFile(path.join(gitRoot, commitMsgFile), 'utf8');
 
-    if (!message.startsWith('fix:')) {
+    if (!message.startsWith('fix')) {
       console.log('The commit is not a fix, exit OK');
       return;
     }

@@ -1,11 +1,12 @@
 import EventEmitter from 'events';
 
+import 'core-js/actual/aggregate-error';
+
 import { getDeferredPromise } from './deferredPromise';
 import type { DeferredPromise } from './deferredPromise';
 
 export class TaskSyncer extends EventEmitter {
   public readonly done: Promise<void>;
-  public ready: Promise<void>;
 
   private readonly deferredDone: DeferredPromise<void>;
   private readonly deferredReady: DeferredPromise<void>;
@@ -13,6 +14,7 @@ export class TaskSyncer extends EventEmitter {
   private readonly number: number;
   private readonly parent?: TaskSyncer;
   private readonly tickets: TaskSyncer[] = [];
+  private _ready: Promise<void>;
   private currentTicket = 0;
   private isReady = false;
   private status: 'done' | 'pending' | 'running' = 'pending';
@@ -30,10 +32,18 @@ export class TaskSyncer extends EventEmitter {
     this.deferredDone = getDeferredPromise();
     this.done = this.deferredDone.promise;
     this.deferredReady = getDeferredPromise();
-    this.ready = this.deferredReady.promise;
+    this._ready = this.deferredReady.promise;
 
     this.setReadyTriggers();
     if (parent) parent.done.finally(() => { this.close(); }).catch(() => { /* do nothing */ });
+  }
+
+  public get ready (): Promise<void> {
+    return this._ready.catch((reason: unknown) => {
+      // Get the correct error.stack
+      if (reason instanceof Error) throw new AggregateError([reason], reason.message);
+      throw reason;
+    });
   }
 
   public close (): void {
@@ -43,8 +53,8 @@ export class TaskSyncer extends EventEmitter {
     this.isReady = false;
     const isDoneError = new Error(`The ticket "${this.name}" is already done.`);
     this.deferredReady.reject(isDoneError);
-    this.ready = Promise.reject(isDoneError);
-    this.ready.catch(() => { /* do nothing there */ });
+    this._ready = Promise.reject(isDoneError);
+    this._ready.catch(() => { /* do nothing there */ });
     // fire done event and promise
     this.emit('done');
     this.deferredDone.resolve();
@@ -54,6 +64,10 @@ export class TaskSyncer extends EventEmitter {
     const ticket = this.getTicket(name);
     await ticket.ready;
     return await task(ticket).finally(() => { ticket.close(); });
+  }
+
+  public getName (): string {
+    return this.name;
   }
 
   public getTicket (index?: string): TaskSyncer;
@@ -93,10 +107,9 @@ export class TaskSyncer extends EventEmitter {
   private setReadyTriggers (): void {
     this.deferredReady.promise.catch(() => { /* do nothing there */ });
     if (this.parent) {
-      this.parent.getReady(this.number).then(
-        () => { this.resolveReady(); },
-        this.deferredReady.reject
-      );
+      this.parent.getReady(this.number)
+        .then(() => { this.resolveReady(); })
+        .catch(reason => { this.deferredReady.reject(reason); });
     }
     else this.resolveReady();
   }

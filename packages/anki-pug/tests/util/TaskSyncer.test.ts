@@ -17,7 +17,7 @@ describe('TaskSyncer', () => {
   describe('ticket.ready', () => {
     test('first ticket ready is a Promise', () => {
       // Arrange
-      const taskSyncer = new TaskSyncer();
+      const taskSyncer = new TaskSyncer('ticket.ready: first ticket ready is a Promise');
 
       // Act
       const ticket = taskSyncer.getTicket();
@@ -28,7 +28,7 @@ describe('TaskSyncer', () => {
 
     test('first ticket ready is not sync', () => {
       // Arrange
-      const taskSyncer = new TaskSyncer();
+      const taskSyncer = new TaskSyncer('ticket.ready: first ticket ready is not sync');
 
       // Act
       const ticket = taskSyncer.getTicket();
@@ -42,7 +42,7 @@ describe('TaskSyncer', () => {
     test('first ticket ready.(then|finally) is the first next tick', async () => {
       await new Promise<void>((resolve, reject) => {
         // Arrange
-        const taskSyncer = new TaskSyncer();
+        const taskSyncer = new TaskSyncer('ticket.ready: first ticket ready.(then|finally) is the first next tick');
 
         // Act
         const ticket = taskSyncer.getTicket();
@@ -79,7 +79,7 @@ describe('TaskSyncer', () => {
 
     test('second ticket is not ready until first ticket is done', async () => {
       // Arrange
-      const syncer = new TaskSyncer();
+      const syncer = new TaskSyncer('ticket.ready: second ticket is not ready until first ticket is done');
       syncer.getTicket();
       const ticket2 = syncer.getTicket();
       let ticket2ready = false;
@@ -103,7 +103,7 @@ describe('TaskSyncer', () => {
 
     test('second ticket is ready when first ticket is done', async () => {
       // Arrange
-      const syncer = new TaskSyncer();
+      const syncer = new TaskSyncer('ticket.ready: second ticket is ready when first ticket is done');
       const ticket1 = syncer.getTicket();
       const ticket2 = syncer.getTicket();
       let ticket2ready = false;
@@ -128,7 +128,7 @@ describe('TaskSyncer', () => {
 
     it('rejects if the ticket is closed before ready', async () => {
       // Arrange
-      const syncer = new TaskSyncer();
+      const syncer = new TaskSyncer('ticket.ready: rejects if the ticket is closed before ready');
       syncer.getTicket();
       const ticket2 = syncer.getTicket();
       const readyPromise = ticket2.ready;
@@ -138,14 +138,29 @@ describe('TaskSyncer', () => {
 
       // Assert
       await expect(readyPromise).toReject();
-      expect(ticket2.ready).not.toBe(readyPromise);
+    });
+
+    it('rejects with caller in its stack error', async () => {
+      // Arrange
+      const syncer = new TaskSyncer('ticket.ready: rejects with caller in its stack error');
+      syncer.close();
+
+      // Act
+      const error = await theUniqidCallerIsqlfnp5767sqdfsd4();
+
+      // Assert
+      expect(error.stack).toInclude('theUniqidCallerIsqlfnp5767sqdfsd4');
+
+      async function theUniqidCallerIsqlfnp5767sqdfsd4 (): Promise<Error> {
+        return await syncer.ready.catch((reason: unknown) => reason) as Error;
+      }
     });
   });
 
   describe('ticket.enqueue', () => {
     it('returns a rejected Promise if task thrown synchronously', async () => {
       // Arrange
-      const syncer = new TaskSyncer();
+      const syncer = new TaskSyncer('ticket.enqueue: returns a rejected Promise if task thrown synchronously');
 
       // Act
       const task = syncer.enqueue(() => { throw new Error('fail'); });
@@ -158,7 +173,7 @@ describe('TaskSyncer', () => {
   describe('sub-ticket', () => {
     test('sub-ticket is not ready if its parent is not ready', async () => {
       // Arrange
-      const root = new TaskSyncer();
+      const root = new TaskSyncer('sub-ticket is not ready if its parent is not ready');
       let p1Ready = false;
       let p2Ready = false;
       let childReady = false;
@@ -180,7 +195,7 @@ describe('TaskSyncer', () => {
 
     test('sub-ticket.ready rejects if its parent is done before', async () => {
       // Arrange
-      const syncer = new TaskSyncer();
+      const syncer = new TaskSyncer('sub-ticket.ready rejects if its parent is done before');
       syncer.getTicket();
       const ticket2 = syncer.getTicket();
       const readyPromise = ticket2.ready;
@@ -190,14 +205,13 @@ describe('TaskSyncer', () => {
 
       // Assert
       await expect(readyPromise).toReject();
-      expect(ticket2.ready).not.toBe(readyPromise);
     });
   });
 
   describe('events', () => {
     it('does not done twice', () => {
       // Arrange
-      const syncer = new TaskSyncer();
+      const syncer = new TaskSyncer('events: does not done twice');
       let first = false;
       let second = false;
 
@@ -219,7 +233,7 @@ describe('TaskSyncer', () => {
   describe('complexe bugs', () => {
     test('ticket close before ready does not throw "UnhandledPromiseRejectionWarning"', async () => {
       // Arrange
-      const syncer = new TaskSyncer();
+      const syncer = new TaskSyncer('UnhandledPromiseRejectionWarning');
       const ticket1 = syncer.getTicket();
 
       syncer.getTicket();
@@ -230,6 +244,7 @@ describe('TaskSyncer', () => {
       await new Promise(rs => { setTimeout(rs, 500); });
 
       // Assert
+      expect(true).toBe(true);
     });
 
     describe('MaxListenersExceededWarning', () => {
