@@ -22,10 +22,11 @@ export default class TemplateDiffManager {
   }
 
   public async process (diffConfig: DiffConfig, syncer: TaskSyncer): Promise<void> {
+    syncer.enqueue(() => { this.prompt(); }).catch(() => { /* do nothing */ });
     const modelIsManageable = this.modelDiffManager.isManageable(diffConfig);
     if (!modelIsManageable) return;
 
-    const diffMenu = new TemplateDiffMenu(this, diffConfig, syncer);
+    const diffMenu = new TemplateDiffMenu(this, diffConfig, syncer.getTicket('menu'));
     await diffMenu.process();
   }
 
