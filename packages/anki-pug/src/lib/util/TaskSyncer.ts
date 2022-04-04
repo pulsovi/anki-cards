@@ -40,6 +40,10 @@ export class TaskSyncer extends EventEmitter {
     if (parent) parent.done.finally(() => { this.close(); }).catch(() => { /* do nothing */ });
   }
 
+  public get length (): number {
+    return this.tickets.length;
+  }
+
   public get ready (): Promise<void> {
     return this._ready.catch((reason: unknown) => {
       // Get the correct error.stack
@@ -76,6 +80,10 @@ export class TaskSyncer extends EventEmitter {
 
   public getName (): string {
     return this.name;
+  }
+
+  public getNumber (): number {
+    return this.number;
   }
 
   public getTicket (index?: string): TaskSyncer;
