@@ -47,7 +47,7 @@ export default class ModelDiffManager {
 
   private prompt (): void {
     if (this.prompted) return;
-    console.info(chalk.cyanBright(this.model.getName()));
+    console.info(`${chalk.yellow('<')}${chalk.cyanBright(this.model.getName())}${chalk.yellow('>')}`);
     this.prompted = true;
   }
 }
