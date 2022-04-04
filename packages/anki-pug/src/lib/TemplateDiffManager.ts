@@ -22,13 +22,6 @@ export default class TemplateDiffManager {
   }
 
   public async process (diffConfig: DiffConfig, syncer: TaskSyncer): Promise<void> {
-    const [rawOutput, compiledPug] = await Promise.all([
-      this.template.getCurrentOutput(),
-      this.template.getCompiledPug(),
-    ]);
-
-    if (rawOutput === compiledPug) return;
-
     const modelIsManageable = this.modelDiffManager.isManageable(diffConfig);
     if (!modelIsManageable) return;
 

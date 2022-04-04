@@ -14,6 +14,11 @@ export default abstract class MenuItem<Data> {
     this.menu = menu;
   }
 
+  // eslint-disable-next-line @typescript-eslint/require-await
+  public async act (..._processArgs: unknown[]): Promise<boolean> {
+    throw new Error('MenuItem which return non null value from its getChoice or getResponse methods MUST implements act method too.');
+  }
+
   public cancelResponse (): void {
     throw new Error('MenuItem which return non null value from its getResponse methods MUST implements cancelResponse method too.');
   }
@@ -35,12 +40,11 @@ export default abstract class MenuItem<Data> {
     return previousDefault;
   }
 
-  public getResponse (_data: Data | null): SyncOrPromise<this> | null {
+  public getResponse (_data: Data | null): Promise<this> | null {
     return null;
   }
 
-  // eslint-disable-next-line @typescript-eslint/require-await
-  public async act (..._processArgs: unknown[]): Promise<boolean> {
-    throw new Error('MenuItem which return non null value from its getChoice or getResponse methods MUST implements act method too.');
+  public getSyncResponse (_data: Data | null): this | null {
+    return null;
   }
 }

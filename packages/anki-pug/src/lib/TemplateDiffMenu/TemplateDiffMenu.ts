@@ -5,12 +5,19 @@ import type { TaskSyncer } from '../util';
 
 import NewlineAtEofFilter from './NewlineAtEofFilter';
 import No from './No';
+import NoDiffResponse from './NoDiffResponse';
 import Quit from './Quit';
 import type TemplateDiffMenuItem from './TemplateDiffMenuItem';
 import Word from './Word';
 
 const items: (new (menu: TemplateDiffMenu) => TemplateDiffMenuItem)[] = [
+  // filters
   NewlineAtEofFilter,
+
+  // sync responses
+  NoDiffResponse,
+
+  // choices
   No,
   Word,
   Quit,

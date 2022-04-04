@@ -22,12 +22,14 @@ export default class Menu<Data> {
   public async process (): Promise<void> {
     const data = await this.getData();
     const filteredData = await this.filterData(data);
+    const syncResponse = this.getSyncResponse(filteredData);
 
-    if (this.syncer) {
+    if (!syncResponse && this.syncer) {
       const canPrompt = await this.syncer.ready.then(() => true, () => false);
       if (!canPrompt) return;
     }
-    const choice = await this.getResponse();
+
+    const choice = syncResponse ?? await this.getResponse();
     const solved = await choice.act(filteredData);
 
     if (!solved) await this.process();
@@ -74,5 +76,10 @@ export default class Menu<Data> {
     const inquirerPromise = inquirer.prompt(question);
     const response = await inquirerPromise.then(choice => choice.value);
     return response;
+  }
+
+  protected getSyncResponse (data: Data | null): MenuItem<Data> | null {
+    const syncResponse = this.items.find(item => item.getSyncResponse(data) !== null);
+    return syncResponse ?? null;
   }
 }
