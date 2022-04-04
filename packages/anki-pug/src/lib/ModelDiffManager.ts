@@ -1,7 +1,6 @@
 import path from 'path';
 
 import chalk from 'chalk';
-import inquirer from 'inquirer';
 
 import type DiffConfig from './DiffConfig';
 import type Model from './Model';
@@ -39,47 +38,11 @@ export default class ModelDiffManager {
     }));
   }
 
-  public async isManageable (diffConfig: DiffConfig, ticket: TaskSyncer): Promise<boolean> {
+  public isManageable (diffConfig: DiffConfig): boolean {
     if (diffConfig.haveToQuit()) return false;
     const manageable = diffConfig.isModelManageable(this.model.getName());
     if (typeof manageable === 'boolean') return manageable;
-    return await this.askManageable(diffConfig, ticket);
-  }
-
-  private async askManageable (diffConfig: DiffConfig, ticket: TaskSyncer): Promise<boolean> {
-    await ticket.ready;
-    const name = this.model.getName();
-    const response = await inquirer.prompt({
-      /* eslint-disable sort-keys */
-      type: 'expand',
-      name: 'manage',
-      message: `Manage ${name} ?`,
-      choices: [
-        { key: 'y', name: `[yes]  Manage ${name}`, value: 'yes' },
-        { key: 'n', name: '[no]   Skip this model', value: 'no' },
-        { key: 'a', name: "[all]  Manage all models (don't ask more)", value: 'all' },
-        { key: 'q', name: '[quit] Skip all unmanaged models and quit the diff', value: 'quit' },
-      ],
-      'default': 2,
-      /* eslint-enable sort-keys */
-    });
-
-    switch (response.manage as string) {
-    case 'quit':
-      diffConfig.haveToQuit(true);
-      // fallthrough: continue to 'no' case
-    case 'no':
-      diffConfig.isModelManageable(name, false);
-      return false;
-    case 'all':
-      diffConfig.manageAllModels();
-      // fallthrough: continue to 'y' case
-    case 'yes':
-      diffConfig.isModelManageable(name, true);
-      return true;
-    default:
-      throw new Error(`Unexpected response : "${String(response.manage)}"`);
-    }
+    return true;
   }
 
   private prompt (): void {

@@ -11,8 +11,12 @@ describe('TemplateDiffManager', () => {
       const templateLike = {
         getCompiledPug: async () => await Promise.resolve('compiledPug'),
         getCurrentOutput: async () => await Promise.resolve('output'),
+        getName: () => 'templateLike',
       } as Template;
-      const modelDiffManagerLike = {} as ModelDiffManager;
+      const modelDiffManagerLike = {
+        getTemplate: () => templateLike,
+        isManageable: () => true,
+      } as unknown as ModelDiffManager;
       const templateDiffManager = new TemplateDiffManager(templateLike, modelDiffManagerLike);
       const diffConfigLike = {} as DiffConfig;
       const syncer = new TaskSyncer();

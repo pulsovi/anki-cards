@@ -31,12 +31,6 @@ export default class TemplateDiffMenu extends Menu<[string, string]> {
     this.syncer = syncer;
   }
 
-  public async process (): Promise<void> {
-    await this.syncer.ready;
-    this.diffManager.prompt();
-    await super.process();
-  }
-
   public getDiffConfig (): DiffConfig {
     return this.diffConfig;
   }

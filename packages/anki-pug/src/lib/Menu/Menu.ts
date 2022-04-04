@@ -22,6 +22,11 @@ export default class Menu<Data> {
   public async process (): Promise<void> {
     const data = await this.getData();
     const filteredData = await this.filterData(data);
+
+    if (this.syncer) {
+      const canPrompt = await this.syncer.ready.then(() => true, () => false);
+      if (!canPrompt) return;
+    }
     const choice = await this.getResponse();
     const solved = await choice.act(filteredData);
 
@@ -66,7 +71,6 @@ export default class Menu<Data> {
 
   protected async getResponse (): Promise<MenuItem<Data>> {
     const question = this.getQuestion();
-    if (this.syncer) await this.syncer.ready;
     const inquirerPromise = inquirer.prompt(question);
     const response = await inquirerPromise.then(choice => choice.value);
     return response;
