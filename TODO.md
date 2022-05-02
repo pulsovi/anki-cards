@@ -1,4 +1,4 @@
-* [ ] Supprimer les fichiers / dossiers inutiles à la racine du monorepo
+[ ] Supprimer les fichiers / dossiers inutiles à la racine du monorepo
   * [ ] Déplacer le contenu du dossier `config` en tant que configuration par défaut dans les packages ad-hoc
   * [ ] `/model` 
     * [ ] Une fois que anki-models sera fonctionnel
@@ -21,7 +21,7 @@
       * [ ] ainsi que `eslint-config-pulsovi-node` dans `package.json`
       * [ ] ainsi que `lodash` dans `package.json`
       * [ ] ainsi que `{ engines: { node: '>=8.5.0' }}` dans `package.json`
-* [ ] Retrouver l'usage des packages anciennement utilisés ainsi que leurs alternatives, faire des notes sur obsidian pour ne pas oublier ...
+[ ] Retrouver l'usage des packages anciennement utilisés ainsi que leurs alternatives, faire des notes sur obsidian pour ne pas oublier ...
   * [ ] config
   * [ ] diff
   * [ ] find-process
@@ -35,3 +35,4 @@
   * [ ] sqlite3
   * [ ] stylelint
   * [ ] uniqid
+[ ] Rendre fonctionnel le module `packages/anki-addon-import-export` pour importer les changements apportés aux modèles

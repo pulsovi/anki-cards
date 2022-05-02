@@ -1,11 +1,13 @@
 import type DiffConfig from '../DiffConfig';
 import Menu from '../Menu/Menu';
+import type Template from '../Template';
 import type TemplateDiffManager from '../TemplateDiffManager';
 import type { TaskSyncer } from '../util';
 
 import NewlineAtEofFilter from './NewlineAtEofFilter';
 import No from './No';
 import NoDiffResponse from './NoDiffResponse';
+import Overwrite from './Overwrite';
 import Quit from './Quit';
 import type TemplateDiffMenuItem from './TemplateDiffMenuItem';
 import Word from './Word';
@@ -19,6 +21,7 @@ const items: (new (menu: TemplateDiffMenu) => TemplateDiffMenuItem)[] = [
 
   // choices
   No,
+  Overwrite,
   Word,
   Quit,
 ];
@@ -42,10 +45,14 @@ export default class TemplateDiffMenu extends Menu<[string, string]> {
     return this.diffConfig;
   }
 
+  public getTemplate (): Template {
+    return this.diffManager.getTemplate();
+  }
+
   protected async getData (): Promise<[string, string]> {
     return await Promise.all([
-      this.diffManager.getTemplate().getCurrentOutput().then(text => text ?? ''),
-      this.diffManager.getTemplate().getCompiledPug(),
+      this.getTemplate().getCurrentOutput().then(text => text ?? ''),
+      this.getTemplate().getCompiledPug(),
     ]);
   }
 }

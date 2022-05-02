@@ -66,4 +66,8 @@ export default class Template {
   public getName (): string {
     return this.raw.name;
   }
+
+  public getOutputPath (): string {
+    return this.raw.outputFile;
+  }
 }
