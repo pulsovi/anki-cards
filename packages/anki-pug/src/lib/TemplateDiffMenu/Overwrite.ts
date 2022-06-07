@@ -1,5 +1,3 @@
-import fs from 'fs-extra';
-
 import type TemplateDiffMenu from './TemplateDiffMenu';
 import TemplateDiffMenuItem from './TemplateDiffMenuItem';
 
@@ -15,10 +13,9 @@ export default class Overwrite extends TemplateDiffMenuItem {
 
   public async act (): Promise<boolean> {
     const template = this.menu.getTemplate();
-    const filename = template.getOutputPath();
     const data = await template.getCompiledPug();
 
-    await fs.writeFile(filename, data, 'utf8');
+    await template.setAnki(data);
     return true;
   }
 }

@@ -51,7 +51,7 @@ export default class TemplateDiffMenu extends Menu<[string, string]> {
 
   protected async getData (): Promise<[string, string]> {
     return await Promise.all([
-      this.getTemplate().getCurrentOutput().then(text => text ?? ''),
+      this.getTemplate().getAnki().then(text => text ?? ''),
       this.getTemplate().getCompiledPug(),
     ]);
   }

@@ -9,10 +9,10 @@ describe('TemplateDiffManager', () => {
     it('silently skip if the syncer is closed', async () => {
       // Arrange
       const templateLike = {
+        getAnki: async () => await Promise.resolve('output'),
         getCompiledPug: async () => await Promise.resolve('compiledPug'),
-        getCurrentOutput: async () => await Promise.resolve('output'),
         getName: () => 'templateLike',
-      } as Template;
+      } as unknown as Template;
       const modelDiffManagerLike = {
         getTemplate: () => templateLike,
         isManageable: () => true,
@@ -33,10 +33,10 @@ describe('TemplateDiffManager', () => {
       // Arrange
       let prompted = false;
       const templateLike = {
+        getAnki: async () => await Promise.resolve('same_text'),
         getCompiledPug: async () => await Promise.resolve('same_text'),
-        getCurrentOutput: async () => await Promise.resolve('same_text'),
         getName: () => 'templateLike',
-      } as Template;
+      } as Partial<Template> as Template;
       const modelDiffManagerLike = { isManageable: () => true } as unknown as ModelDiffManager;
       const templateDiffManagerLike = {
         getTemplate: () => templateLike,

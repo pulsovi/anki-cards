@@ -1,35 +1,37 @@
-import fs from 'fs-extra';
 import Joi from 'joi';
 import type { LocalsObject } from 'pug';
 
 import type Model from './Model';
 import PugFile from './PugFile';
 import type { SyncOrPromise } from './types';
-import { TaskSyncer } from './util';
+import { TaskSyncer, todo } from './util';
 
 export type RawTemplate = {
   locals?: Record<string, string>;
   name: string;
-  outputFile: string;
 } & ({
+  pugFile: never;
+  template: (locals?: LocalsObject) => SyncOrPromise<string>;
+} | {
   pugFile: string;
   template: undefined;
-} | {
-  pugFile: undefined;
-  template: (locals?: LocalsObject) => SyncOrPromise<string>;
 });
 
 export const rawTemplateSchema = Joi.object({
   locals: Joi.object(),
   name: Joi.string().required(),
-  outputFile: Joi.string().required(),
+  outputFile: Joi.forbidden().messages({
+    'any.unknown': '"outputFile" is deprecated in favor of AnkiConnect.' +
+      'Please delete it and make sure the name of the model and the board match ' +
+      'those registered in anki',
+  }),
   pugFile: Joi.string(),
   template: Joi.when('pugFile', {
     is: Joi.string().required(),
     otherwise: Joi.function().required(),
     then: Joi.forbidden(),
   }).messages({
-    /* eslint-disable @typescript-eslint/naming-convention */
+
     'any.required': 'one of "template" or "pugFile" is required',
     'any.unknown': '"template" is forbidden when "pugFile" is provided',
     /* eslint-enable @typescript-eslint/naming-convention */
@@ -54,9 +56,8 @@ export default class Template {
     return compileTemplate(this.raw.locals);
   }
 
-  public async getCurrentOutput (): Promise<string | null> {
-    if (!await fs.pathExists(this.raw.outputFile)) return null;
-    return await fs.readFile(this.raw.outputFile, 'utf8');
+  public async getAnki (): Promise<string | null> {
+    return await Promise.resolve(todo(this) as string);
   }
 
   public getModel (): Model {
@@ -67,7 +68,7 @@ export default class Template {
     return this.raw.name;
   }
 
-  public getOutputPath (): string {
-    return this.raw.outputFile;
+  public async setAnki (data: string): Promise<void> {
+    await todo(this, data);
   }
 }
