@@ -2,7 +2,7 @@ import getConfig from '../src/lib/getConfig';
 
 describe('getConfig', () => {
   it('returns an object', () => {
-    const config = getConfig({});
+    const config = getConfig({ modelsPath: './root/models' });
     expect(config).toBeObject();
   });
 

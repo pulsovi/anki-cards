@@ -1,3 +1,5 @@
+import path from 'path';
+
 import Joi from 'joi';
 import { load } from 'js-yaml';
 import rc from 'rc';
@@ -7,28 +9,38 @@ const appName = 'ankipug';
 export interface AnkiPugConfig {
   ankiProfile?: string;
   configPath: string;
+  testsPath?: string;
   modelsPath: string;
 }
 
 const schema = Joi.object({
   ankiProfile: Joi.string(),
   configPath: Joi.string(),
-  modelsPath: Joi.string(),
+  modelsPath: Joi.string().required(),
+  testsPath: Joi.string(),
 });
 
-const defaults = {
-  configPath: process.cwd(),
-  modelsPath: './model',
-};
+const defaults = {};
+
+function defaultMap (config: Partial<AnkiPugConfig>): AnkiPugConfig {
+  const retVal = { ...config } as AnkiPugConfig;
+  if ('modelsPath' in retVal) {
+    if ('configPath' in retVal)
+      retVal.modelsPath = path.resolve(retVal.configPath, retVal.modelsPath);
+    else retVal.modelsPath = path.resolve(retVal.modelsPath);
+    if (!('testsPath' in retVal)) retVal.testsPath = path.join(retVal.modelsPath, '../tests');
+  }
+  return retVal;
+}
 
 class ValidationError extends Error {
   public constructor (error: Error, results: {
     _: unknown;
     __: unknown;
     configs: string[] | undefined;
-    params: AnkiPugConfig;
+    parsed: AnkiPugConfig;
   }) {
-    const { _, __, configs, params } = results;
+    const { _, __, configs, parsed } = results;
     let message = 'There is an error in one of your config files, \n';
 
     if (Array.isArray(configs) && configs.length) {
@@ -41,13 +53,13 @@ class ValidationError extends Error {
     if ((Array.isArray(__) && __.length) || (Array.isArray(_) && _.length)) {
       message += 'argv:\n';
       if (Array.isArray(__) && __.length)
-        message += `\t--: ${__.join(', ')}\n`;
+        message += `  --: ${__.join(', ')}\n`;
       if (Array.isArray(_) && _.length)
-        message += `\t_: ${_.join(', ')}\n`;
+        message += `  _: ${_.join(', ')}\n`;
     }
 
     message += 'parsed config :';
-    message += JSON.stringify(params, null, 2);
+    message += JSON.stringify(parsed, null, 2);
     console.info(message);
 
     super(error.message);
@@ -60,12 +72,14 @@ export default function getConfig (
 ): AnkiPugConfig {
   const rcResult = rc(appName, defaults, argv, loadYaml);
   const { '--': __, _, config, configs, ...params } = rcResult;
-  const { error } = schema.validate(params);
-
-  if (error) throw new ValidationError(error, { _, __, configs, params });
 
   if (config) params.configPath = config;
-  return params;
+  const parsed = defaultMap(params);
+  const { error } = schema.validate(params);
+
+  if (error) throw new ValidationError(error, { _, __, configs, parsed });
+
+  return parsed;
 }
 
 function loadYaml (content: string): object {
