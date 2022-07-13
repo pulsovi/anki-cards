@@ -16,7 +16,7 @@
     "task-syncer": "^0.1.0"
   },
   "scripts": {
-    "build": "rm -rf ./dist && yarn babel src --out-dir ./dist --extensions \".ts\"",
+    "build": "rm -rf ./dist && yarn babel src --out-dir ./dist --extensions \".ts\" $*",
     "emit-types": "tsc --declaration --emitDeclarationOnly",
     "lint": "yarn eslint .",
     "pre-commit": "yarn lint-staged",
