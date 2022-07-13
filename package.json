@@ -13,6 +13,7 @@
     "postinstall": "husky install",
     "pre-commit": "yarn npm-run-all pre-commit:\\*",
     "pre-commit:_": "lint-staged",
+    "pre-commit:anki-connect": "cd packages/anki-connect && yarn pre-commit",
     "pre-commit:anki-pug": "cd packages/anki-pug && yarn pre-commit"
   },
   "resolutions": {
@@ -30,7 +31,6 @@
   },
   "dependencies": {
     "eslint": "^8.8.0",
-    "eslint-config-pulsovi-node": "^0.0.7",
     "lodash": "^4.17.21",
     "npm-run-all": "^3.1.1"
   }
