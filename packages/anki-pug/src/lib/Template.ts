@@ -4,7 +4,7 @@ import type { LocalsObject } from 'pug';
 import type Model from './Model';
 import PugFile from './PugFile';
 import type { SyncOrPromise } from './types';
-import { TaskSyncer, todo } from './util';
+import { ankiConnection, TaskSyncer, todo } from './util';
 
 export type RawTemplate = {
   locals?: Record<string, string>;
@@ -57,7 +57,28 @@ export default class Template {
   }
 
   public async getAnki (): Promise<string | null> {
-    return await Promise.resolve(todo(this) as string);
+    const field = this.getField();
+    const modelName = this.model.getName();
+
+    if (field === 'CSS') return await ankiConnection.getCSS({ modelName });
+    return await ankiConnection.cardFieldTemplates({
+      cardName: this.getCardName(),
+      field,
+      modelName,
+    });
+  }
+
+  public getField (): 'Back' | 'CSS' | 'Front' {
+    switch (this.getName().split('_').pop()) {
+    case 'verso': return 'Back';
+    case 'recto': return 'Front';
+    case 'style': return 'CSS';
+    default: return todo(`getField ${this.getName()}`) as 'Back';
+    }
+  }
+
+  public getCardName (): string {
+    return this.getName().split('_')[0];
   }
 
   public getModel (): Model {

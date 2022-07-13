@@ -1,3 +1,4 @@
+export * from './AnkiConnection';
 export * from './chokidarOnce';
 export * from './debug';
 export * from './deferredPromise';
