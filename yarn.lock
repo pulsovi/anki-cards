@@ -2591,7 +2591,7 @@ __metadata:
     debug: ^4.3.4
     diff: ^5.0.0
     eslint: ^8.8.0
-    eslint-config-pulsovi-typescript: ^0.2.8
+    eslint-config-pulsovi-typescript: ^0.3.8
     fs-extra: ^10.0.1
     inquirer: ^8.2.1
     jest: ^27.5.1
@@ -3892,20 +3892,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-pulsovi-node@portal:../../eslint-config-pulsovi/packages/node::locator=root-workspace-0b6124%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "eslint-config-pulsovi-node@portal:../../eslint-config-pulsovi/packages/node::locator=root-workspace-0b6124%40workspace%3A."
+"eslint-config-pulsovi-node@npm:0.2.4":
+  version: 0.2.4
+  resolution: "eslint-config-pulsovi-node@npm:0.2.4"
   dependencies:
     eslint-config-pulsovi: 3.9.2
     eslint-plugin-node: ^11.1.0
   peerDependencies:
     eslint: ^7.29.0 || ^8.0.0
+  checksum: 998b1e645d509172d4229c379b89cc28dd528c3bd65f5afb63ec40906f008b8174919f8252f73ca4c0a2cceca2cd3d1845e065594085a462754ef5d042a52ed7
   languageName: node
-  linkType: soft
+  linkType: hard
 
-"eslint-config-pulsovi-typescript@portal:../../eslint-config-pulsovi/packages/typescript::locator=root-workspace-0b6124%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "eslint-config-pulsovi-typescript@portal:../../eslint-config-pulsovi/packages/typescript::locator=root-workspace-0b6124%40workspace%3A."
+"eslint-config-pulsovi-typescript@npm:^0.3.8":
+  version: 0.3.8
+  resolution: "eslint-config-pulsovi-typescript@npm:0.3.8"
   dependencies:
     "@typescript-eslint/eslint-plugin": ^5.11.0
     eslint-config-pulsovi-node: 0.2.4
@@ -3915,12 +3916,13 @@ __metadata:
     "@typescript-eslint/parser": ^5.11.0
     eslint: ^7.29.0 || ^8.0.0
     typescript: "*"
+  checksum: c0a3b977fb7d59012e9329a2f4ae30415cf0ec15255334d8e42cf4e095ab240067b811e8b6469453e5bd680c15ae491d94644101a211f16a22978efe66111e27
   languageName: node
-  linkType: soft
+  linkType: hard
 
-"eslint-config-pulsovi@portal:../../eslint-config-pulsovi/packages/core::locator=root-workspace-0b6124%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "eslint-config-pulsovi@portal:../../eslint-config-pulsovi/packages/core::locator=root-workspace-0b6124%40workspace%3A."
+"eslint-config-pulsovi@npm:3.9.2":
+  version: 3.9.2
+  resolution: "eslint-config-pulsovi@npm:3.9.2"
   dependencies:
     eslint-config-airbnb-base: ^15.0.0
     eslint-plugin-import: ^2.26.0
@@ -3943,8 +3945,9 @@ __metadata:
       optional: true
     eslint-config-pulsovi-react:
       optional: true
+  checksum: 02b7d03b9d484a3fab330beedfe179178ef2aa044ee204200349d11c35af1903aa52f3e2f6d9afdffda3c61560e73bacc176ae820714ab1a7d779eec2b525525
   languageName: node
-  linkType: soft
+  linkType: hard
 
 "eslint-import-resolver-node@npm:^0.3.6":
   version: 0.3.6
@@ -4033,15 +4036,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-pulsovi@portal:../../eslint-config-pulsovi/packages/plugin::locator=root-workspace-0b6124%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "eslint-plugin-pulsovi@portal:../../eslint-config-pulsovi/packages/plugin::locator=root-workspace-0b6124%40workspace%3A."
+"eslint-plugin-pulsovi@npm:0.1.6":
+  version: 0.1.6
+  resolution: "eslint-plugin-pulsovi@npm:0.1.6"
   dependencies:
     debug: ^4.3.1
   peerDependencies:
     eslint: ^7.29.0 || ^8.0.0
+  checksum: f20351ec0fb9a88917baa21350989316a6cf1d275af6d8901a69f94eba8054478752f1ffd79f71c69838f5ad47b6500dde64c6f39c84190e39424ef2eab7a215
   languageName: node
-  linkType: soft
+  linkType: hard
 
 "eslint-scope@npm:^5.1.1":
   version: 5.1.1
