@@ -2535,7 +2535,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"anki-connect@workspace:packages/anki-connect":
+"anki-connect@workspace:^, anki-connect@workspace:packages/anki-connect":
   version: 0.0.0-use.local
   resolution: "anki-connect@workspace:packages/anki-connect"
   dependencies:
@@ -2584,10 +2584,11 @@ __metadata:
     "@types/pug": ^2.0.6
     "@types/rc": ^1.2.1
     "@typescript-eslint/parser": ^5.11.0
+    anki-connect: "workspace:^"
     chalk: ^4.0.0
     chokidar: ^3.5.3
     commander: ^9.0.0
-    core-js: ^3.21.1
+    core-js: ^3.23.1
     debug: ^4.3.4
     diff: ^5.0.0
     eslint: ^8.8.0
@@ -2605,6 +2606,7 @@ __metadata:
     rc: ^1.2.8
     read-pkg-up: ^7.0.0
     readdirp: ^3.6.0
+    task-syncer: ^0.1.2
     typescript: ^4.5.5
   bin:
     anki-pug: bin/anki-pug.js
@@ -3451,7 +3453,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"core-js@npm:^3.21.1, core-js@npm:^3.22.8, core-js@npm:^3.23.1":
+"core-js@npm:^3.22.8, core-js@npm:^3.23.1":
   version: 3.23.4
   resolution: "core-js@npm:3.23.4"
   checksum: 1317591dbd4a6dc357b68da324dfab52ffecc0193fe577c55bedc058af3ec96a47c7d68dff4dc914badf398ca120c0b58815fca3a162a497abf73166910d834c

@@ -4,5 +4,5 @@ export * from './debug';
 export * from './deferredPromise';
 export * from './json';
 export * from './requireTools';
-export * from './TaskSyncer';
+export * from './taskSyncer';
 export * from './todo';
