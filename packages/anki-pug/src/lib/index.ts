@@ -3,14 +3,17 @@ import path from 'path';
 import getConfig from './getConfig';
 import type { AnkiPugConfig } from './getConfig';
 import ModelsDiffManager from './ModelsDiffManager';
-import { todo } from './util';
+import * as services from './services';
+import { log, todo } from './util';
 
 Error.stackTraceLimit = 100;
 
 export async function diff (argv: Partial<AnkiPugConfig> | null = null): Promise<void> {
   const config = getConfig(argv);
   const modelsFolder = path.resolve(path.dirname(config.configPath), config.modelsPath);
-  const diffManager = new ModelsDiffManager(modelsFolder);
+
+  log({ config, modelsFolder });
+  const diffManager = new ModelsDiffManager(modelsFolder, services);
 
   await diffManager.process();
 }

@@ -11,3 +11,5 @@ export function getLogger (subName: string): debug.Debugger {
     subLoggers[subName] = rootLogger.extend(subName);
   return subLoggers[subName];
 }
+
+export const log = rootLogger;
