@@ -2545,7 +2545,7 @@ __metadata:
     axios: ^0.27.2
     core-js: ^3.22.8
     eslint: ^8.17.0
-    eslint-config-pulsovi-typescript: ^0.3.8
+    eslint-config-pulsovi-typescript: ^0.3.13
     lint-staged: ^13.0.2
     task-syncer: ^0.1.0
     typescript: ^4.7.3
@@ -2592,7 +2592,7 @@ __metadata:
     debug: ^4.3.4
     diff: ^5.0.0
     eslint: ^8.8.0
-    eslint-config-pulsovi-typescript: ^0.3.8
+    eslint-config-pulsovi-typescript: ^0.3.13
     fs-extra: ^10.0.1
     inquirer: ^8.2.1
     jest: ^27.5.1
@@ -3104,17 +3104,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"caniuse-lite@npm:^1.0.30001286":
-  version: 1.0.30001312
-  resolution: "caniuse-lite@npm:1.0.30001312"
-  checksum: 753fb9ea1e02e999430b323a71b5acab5120f3b5fc0161b01669f54a3ef5c5296240b6ae9b79b12a3742e3aed216aa9ee3d5398a23c16d08625ccd376b79545d
-  languageName: node
-  linkType: hard
-
-"caniuse-lite@npm:^1.0.30001349":
-  version: 1.0.30001349
-  resolution: "caniuse-lite@npm:1.0.30001349"
-  checksum: 0095fcbb7ca4ef76227f5c3788c3cdbad3c52a25825c577371ffa73a44d74ff43fc5a849e5fa37c8b4c6237bb5272777085e1f674f9f86fde9aed85201d26f07
+"caniuse-lite@npm:^1.0.30001286, caniuse-lite@npm:^1.0.30001349":
+  version: 1.0.30001397
+  resolution: "caniuse-lite@npm:1.0.30001397"
+  checksum: 29b31780397221303b8fadda535e71f20319216df75028c60527f10f1aba1237ec81fa9c1d6b8fb3a0a83c201c01af8090e9cbb292da08c2538f367b1148a7ba
   languageName: node
   linkType: hard
 
@@ -3906,9 +3899,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-pulsovi-typescript@npm:^0.3.8":
-  version: 0.3.8
-  resolution: "eslint-config-pulsovi-typescript@npm:0.3.8"
+"eslint-config-pulsovi-typescript@npm:^0.3.13":
+  version: 0.3.13
+  resolution: "eslint-config-pulsovi-typescript@npm:0.3.13"
   dependencies:
     "@typescript-eslint/eslint-plugin": ^5.11.0
     eslint-config-pulsovi-node: 0.2.4
@@ -3918,7 +3911,7 @@ __metadata:
     "@typescript-eslint/parser": ^5.11.0
     eslint: ^7.29.0 || ^8.0.0
     typescript: "*"
-  checksum: c0a3b977fb7d59012e9329a2f4ae30415cf0ec15255334d8e42cf4e095ab240067b811e8b6469453e5bd680c15ae491d94644101a211f16a22978efe66111e27
+  checksum: a86801e64f459599a6a9ffdbe7e4437712df103ca029740ad79dd77a2a2f252d0267b027800e9cd01e04b77aa275140c21ac223ffa21d58c9c259cc9c6ff80af
   languageName: node
   linkType: hard
 
