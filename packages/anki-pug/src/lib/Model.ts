@@ -2,7 +2,7 @@ import Joi from 'joi';
 import type { ValidationResult } from 'joi';
 
 import ModuleLoader from './ModuleLoader';
-import { getConfig } from './services';
+import { config } from './services';
 import type { Services } from './services';
 import Template, { rawTemplateSchema } from './Template';
 import type { RawTemplate } from './Template';
@@ -30,7 +30,7 @@ export default class Model {
     const modelModule = moduleValue as ModelModule;
     const templates = await (
       typeof modelModule === 'function' ?
-        modelModule(getConfig()) :
+        modelModule(config) :
         modelModule
     );
     return Array.isArray(templates) ? templates : [templates];
