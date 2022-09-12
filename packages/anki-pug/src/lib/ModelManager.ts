@@ -3,18 +3,24 @@ import path from 'path';
 import readdirp from 'readdirp';
 
 import Model from './Model';
+import type { Services } from './services';
+
+type ModelManagerServices = Pick<Services, 'ankiConnection'>;
 
 export default class ModelManager {
   public static readonly EXPORT_FILENAME = 'export.js';
+
+  private readonly services: ModelManagerServices;
   private readonly root: string;
 
-  public constructor (root: string) {
+  public constructor (root: string, services: ModelManagerServices) {
     this.root = path.resolve(root);
+    this.services = services;
   }
 
   public async getModels (): Promise<Model[]> {
     const files = await this.listModels();
-    return files.map(file => new Model(file, this.nameFromPath(file)));
+    return files.map(file => new Model(file, this.nameFromPath(file), this.services));
   }
 
   private async listModels (): Promise<string[]> {

@@ -3,6 +3,7 @@ import type { ValidationResult } from 'joi';
 
 import ModuleLoader from './ModuleLoader';
 import { getConfig } from './services';
+import type { Services } from './services';
 import Template, { rawTemplateSchema } from './Template';
 import type { RawTemplate } from './Template';
 import type { ModelModule } from './types';
@@ -10,12 +11,17 @@ import { getLogger, TaskSyncer } from './util';
 
 const log = getLogger('Model');
 
+type ModelServices = Pick<Services, 'ankiConnection'>;
+
 export default class Model {
   private readonly modulepath: string;
   private readonly name: string;
+  private readonly services: ModelServices;
+
   private allTemplates?: Template[];
 
-  public constructor (modulepath: string, name: string) {
+  public constructor (modulepath: string, name: string, services: ModelServices) {
+    this.services = services;
     this.modulepath = modulepath;
     this.name = name;
   }
@@ -54,6 +60,6 @@ export default class Model {
       syncer,
       validate: moduleValue => Model.validateModule(moduleValue),
     });
-    return rawTemplates.map(rawTemplate => new Template(rawTemplate, this));
+    return rawTemplates.map(rawTemplate => new Template(rawTemplate, this, this.services));
   }
 }

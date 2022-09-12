@@ -5,17 +5,20 @@ import { sortBy } from 'lodash';
 import DiffConfig from './DiffConfig';
 import ModelDiffManager from './ModelDiffManager';
 import ModelManager from './ModelManager';
+import type { Services } from './services';
 import { getLogger, TaskSyncer } from './util';
 
 const log = getLogger(path.basename(__filename, path.extname(__filename)));
+
+type ModelDiffManagerServices = Pick<Services, 'ankiConnection'>;
 
 export default class ModelsDiffManager {
   private readonly root: string;
   private readonly modelManager: ModelManager;
 
-  public constructor (root: string) {
+  public constructor (root: string, services: ModelDiffManagerServices) {
     this.root = root;
-    this.modelManager = new ModelManager(root);
+    this.modelManager = new ModelManager(root, services);
   }
 
   public async process (syncer = new TaskSyncer('ModelsDiffManager@process')): Promise<void> {

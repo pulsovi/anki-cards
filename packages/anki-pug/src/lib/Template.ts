@@ -3,8 +3,10 @@ import type { LocalsObject } from 'pug';
 
 import type Model from './Model';
 import PugFile from './PugFile';
+import { ankiConnection } from './services';
+import type { AnkiConnect, Services } from './services';
 import type { SyncOrPromise } from './types';
-import { ankiConnection, TaskSyncer, todo } from './util';
+import { TaskSyncer, todo } from './util';
 
 export type RawTemplate = {
   locals?: Record<string, string>;
@@ -16,7 +18,6 @@ export type RawTemplate = {
   pugFile: string;
   template: undefined;
 });
-
 export const rawTemplateSchema = Joi.object({
   locals: Joi.object(),
   name: Joi.string().required(),
@@ -38,14 +39,18 @@ export const rawTemplateSchema = Joi.object({
   }),
 });
 
+type TemplateServices = Pick<Services, 'ankiConnection'>;
+
 export default class Template {
+  private readonly ankiConnection: AnkiConnect;
   private readonly model: Model;
   private readonly raw: RawTemplate;
 
-  public constructor (raw: RawTemplate, model: Model) {
-    this.model = model;
+  public constructor (raw: RawTemplate, model: Model, services: TemplateServices) {
     Joi.assert(raw, rawTemplateSchema);
     this.raw = raw;
+    this.model = model;
+    this.ankiConnection = services.ankiConnection;
   }
 
   public async getCompiledPug (syncer = new TaskSyncer()): Promise<string> {
