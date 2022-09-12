@@ -28,7 +28,7 @@ function defaultMap (config: Partial<AnkiPugConfig>): AnkiPugConfig {
   const retVal = { ...config } as AnkiPugConfig;
   if ('modelsPath' in retVal) {
     if ('configPath' in retVal)
-      retVal.modelsPath = path.resolve(retVal.configPath, retVal.modelsPath);
+      retVal.modelsPath = path.resolve(path.dirname(retVal.configPath), retVal.modelsPath);
     else retVal.modelsPath = path.resolve(retVal.modelsPath);
     if (!('testsPath' in retVal)) retVal.testsPath = path.join(retVal.modelsPath, '../tests');
   }
@@ -39,6 +39,7 @@ class ValidationError extends Error {
   public constructor (error: Error, results: {
     _: unknown;
     __: unknown;
+    argv: unknown;
     configs: string[] | undefined;
     parsed: AnkiPugConfig;
   }) {
@@ -62,7 +63,7 @@ class ValidationError extends Error {
 
     message += 'parsed config :';
     message += JSON.stringify(parsed, null, 2);
-    console.info(message);
+    console.info(message, { argv: results.argv, 'process.argv': process.argv });
 
     super(error.message);
     this.name = 'ValidationError';
@@ -79,7 +80,7 @@ export default function getConfig (
   const parsed = defaultMap(params);
   const { error } = schema.validate(params);
 
-  if (error) throw new ValidationError(error, { _, __, configs, parsed });
+  if (error) throw new ValidationError(error, { _, __, argv, configs, parsed });
 
   return parsed;
 }
