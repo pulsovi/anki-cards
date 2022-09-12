@@ -14,8 +14,9 @@ const log = getLogger('Model');
 type ModelServices = Pick<Services, 'ankiConnection'>;
 
 export default class Model {
+  public readonly name: string;
+
   private readonly modulepath: string;
-  private readonly name: string;
   private readonly services: ModelServices;
 
   private allTemplates?: Template[];

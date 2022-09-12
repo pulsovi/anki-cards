@@ -8,7 +8,7 @@ export default class Overwrite extends TemplateDiffMenuItem {
   public constructor (menu: TemplateDiffMenu) {
     super(menu);
     this.key = 'o';
-    this.name = '[overwrite] Overwrite output file with parsed template content';
+    this.name = '[overwrite] Overwrite Anki template with parsed pug content';
   }
 
   public async act (): Promise<boolean> {

@@ -5,4 +5,4 @@
   - "yarn jest --bail"
 "**/*!(test).ts":
   - "yarn eslint --fix"
-  - "yarn jest --bail --findRelatedTests"
+  - "yarn jest --bail --findRelatedTests --passWithNoTests"

@@ -20,19 +20,15 @@ export default class AnkiConnect {
   private readonly version: number;
   private readonly syncer = new TaskSyncer('root');
 
-  public constructor ()
-  public constructor (options: { version?: number })
-  public constructor (options: { url: string, version?: number })
-  public constructor (options: { ip?: string, port?: number, version?: number })
   public constructor (
-    options?: ({} | { url: string} | { ip?: string, port?: number }) & { version?: number }
+    options: { version?: number } & ({ ip?: string; port?: number } | { url: string }) = {}
   ) {
     this.url = 'http://127.0.0.1:8765';
     this.version = 6;
-    if (options && 'url' in options) this.url = options.url;
-    if (options && 'ip' in options)
+    if ('url' in options) this.url = options.url;
+    else if ('ip' in options)
       this.url = `http://${options.ip ?? '127.0.0.1'}:${options.port ?? 8765}`;
-    if (options && 'version' in options && options.version && options.version !== 6)
+    if ('version' in options && options.version && options.version !== 6)
       throw new Error('This wrapper is only compatible with AnkiConnect version 6');
   }
 
@@ -69,6 +65,19 @@ export default class AnkiConnect {
     return await this.requestAPI<ModelTemplatesAPI>(
       { action: 'modelTemplates', params: { modelName }}
     );
+  }
+
+  /** Update one side of one template in one model */
+  public async updateModelTemplate (
+    { modelName, templateName, side, value }: {
+      modelName: string;
+      templateName: string;
+      side: 'Back' | 'Front';
+      value: string;
+    }
+  ): Promise<void> {
+    await Promise.resolve(todo({ modelName, templateName, side, value }, this));
+    // AnkiConnect method: updateModelTemplates
   }
 
   private async requestAPI<T extends BaseAPI> (

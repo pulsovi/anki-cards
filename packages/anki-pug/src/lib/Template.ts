@@ -42,6 +42,8 @@ export const rawTemplateSchema = Joi.object({
 type TemplateServices = Pick<Services, 'ankiConnection'>;
 
 export default class Template {
+  public readonly name: string;
+  public readonly side: string;
   private readonly ankiConnection: AnkiConnect;
   private readonly model: Model;
   private readonly raw: RawTemplate;
@@ -49,6 +51,11 @@ export default class Template {
   public constructor (raw: RawTemplate, model: Model, services: TemplateServices) {
     Joi.assert(raw, rawTemplateSchema);
     this.raw = raw;
+    todo({
+      error: 'Comment définir "template.side" à partir de ces infos ?',
+      args: { raw, model },
+    });
+    this.name = raw.name;
     this.model = model;
     this.ankiConnection = services.ankiConnection;
   }
@@ -95,6 +102,11 @@ export default class Template {
   }
 
   public async setAnki (data: string): Promise<void> {
-    await todo(this, data);
+    await this.ankiConnection.updateModelTemplate({
+      modelName: this.model.name,
+      templateName: this.name,
+      side: this.side,
+      value: data,
+    });
   }
 }
