@@ -7,7 +7,12 @@ describe('getConfig', () => {
   });
 
   it('throw an error on incorrect configuration', () => {
-    process.argv.push('--test="hello"');
-    expect(() => getConfig()).toThrow();
+    expect(() => getConfig({ test: 'hello' })).toThrow();
+  });
+
+  it('does not cache earlier calls', () => {
+    const first = getConfig({ modelsPath: 'foo' });
+    getConfig({ ankiProfile: 'foo', modelsPath: 'foo' });
+    expect(getConfig({ modelsPath: 'foo' })).toEqual(first);
   });
 });

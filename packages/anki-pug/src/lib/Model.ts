@@ -2,10 +2,11 @@ import Joi from 'joi';
 import type { ValidationResult } from 'joi';
 
 import ModuleLoader from './ModuleLoader';
+import { getConfig } from './services';
 import Template, { rawTemplateSchema } from './Template';
 import type { RawTemplate } from './Template';
 import type { ModelModule } from './types';
-import { getConfig, getLogger, TaskSyncer } from './util';
+import { getLogger, TaskSyncer } from './util';
 
 const log = getLogger('Model');
 

@@ -4,6 +4,8 @@ import Joi from 'joi';
 import { load } from 'js-yaml';
 import rc from 'rc';
 
+import { jsonClone } from './util';
+
 const appName = 'ankipug';
 
 export interface AnkiPugConfig {
@@ -70,7 +72,7 @@ class ValidationError extends Error {
 export default function getConfig (
   argv: object | null = null
 ): AnkiPugConfig {
-  const rcResult = rc(appName, defaults, argv, loadYaml);
+  const rcResult = rc(appName, jsonClone(defaults), argv, loadYaml);
   const { '--': __, _, config, configs, ...params } = rcResult;
 
   if (config) params.configPath = config;
