@@ -4,7 +4,7 @@ import getConfig from '../src/lib/getConfig';
 
 describe('getConfig', () => {
   it('returns an object', () => {
-    const config = getConfig({ modelsPath: './root/models' });
+    const config = getConfig({ ankiProfile: 'foo', modelsPath: './root/models' });
     expect(config).toBeObject();
   });
 
@@ -13,16 +13,21 @@ describe('getConfig', () => {
   });
 
   it('does not cache earlier calls', () => {
-    const first = getConfig({ modelsPath: 'foo' });
-    getConfig({ ankiProfile: 'foo', modelsPath: 'foo' });
-    expect(getConfig({ modelsPath: 'foo' })).toEqual(first);
+    const first = getConfig({ ankiProfile: 'foo', modelsPath: 'foo' });
+    getConfig({ ankiProfile: 'foo', modelsPath: 'foo', testsPath: 'boo' });
+    expect(getConfig({ ankiProfile: 'foo', modelsPath: 'foo' })).toEqual(first);
   });
 
   it('process well relative paths', () => {
     const config = getConfig({
+      ankiProfile: 'foo',
       configPath: `${__dirname}/.coucourc`,
       modelsPath: './foo/models',
     });
     expect(config.modelsPath).toBe(path.resolve(`${__dirname}/foo/models`));
+  });
+
+  it('requires ankiProfile', () => {
+    expect(() => getConfig({ modelsPath: 'foo' })).toThrow();
   });
 });

@@ -9,14 +9,14 @@ import { jsonClone } from './util';
 const appName = 'ankipug';
 
 export interface AnkiPugConfig {
-  ankiProfile?: string;
+  ankiProfile: string;
   configPath: string;
   testsPath?: string;
   modelsPath: string;
 }
 
 const schema = Joi.object({
-  ankiProfile: Joi.string(),
+  ankiProfile: Joi.string().required(),
   configPath: Joi.string(),
   modelsPath: Joi.string().required(),
   testsPath: Joi.string(),
