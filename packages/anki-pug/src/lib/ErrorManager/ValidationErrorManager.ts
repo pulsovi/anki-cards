@@ -27,7 +27,7 @@ export default class ValidationErrorManager<U> implements BaseErrorManager {
     console.info(`${formatError(this.error)}\n${formatModule(this.moduleLoader)}\n  ${
       chalk.green('Edit the file or one of its dependancies and save changes for retry.')
     }\n${formatFiles(moduleTree)}`);
-    await chokidarOnce('change', moduleTree);
+    await chokidarOnce('all', moduleTree);
     requireUncacheOnly(moduleTree);
   }
 }
