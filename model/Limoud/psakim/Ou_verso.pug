@@ -1,9 +1,0 @@
-extends ../kodech_verso_layout.pug
-block response-content
-	.where {{Ou}}
-	|{{#OuContextRef}}
-	.p #[i(context-data="{{OuContextRef}}.title")]
-	|{{/OuContextRef}}
-	|{{#Lachon}}#[aside {{Lachon}}]{{/Lachon}}
-block response-after
-	include daf.pug

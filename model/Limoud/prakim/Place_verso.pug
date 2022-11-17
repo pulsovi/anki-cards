@@ -1,8 +1,0 @@
-extends ../kodech_verso_layout.pug
-include context.pug
-block response-content
-	.p
-		i(context-data="{{contextRef}}.parent.title")
-		|#{' '}פרק#{' '}
-		i(context-data="{{contextRef}}.id")
-		+context(3,3,0)

@@ -1,8 +1,0 @@
-extends ../command_recto_layout
-block variables
-	- var condition = "ShortAlias";
-	- var condition2 = "Arg";
-block command-present
-	|#{' '}{{CommandName}} #[i.mk-comment &hellip;] #[b {{Arg}}]_
-block question-content
-	.p Short alias

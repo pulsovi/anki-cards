@@ -1,7 +1,0 @@
-extends ../kodech_recto_layout.pug
-block variables
-	- var condition = "Ou";
-block question-content
-	.p איפא אמר{{#Auteur}} {{Auteur}}{{/Auteur}}
-	.sic {{#Psak}} {{Psak}}{{/Psak}}
-		|{{^Psak}} {{Question}} =&gt; {{Reponse}}{{/Psak}}
