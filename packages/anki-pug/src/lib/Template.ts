@@ -23,7 +23,7 @@ export const rawTemplateSchema = Joi.object({
   name: Joi.string().required(),
   outputFile: Joi.forbidden().messages({
     'any.unknown': '"outputFile" is deprecated in favor of AnkiConnect.' +
-      'Please delete it and make sure the name of the model and the board match ' +
+      'Please delete it and make sure the name of the model, the card and the face match ' +
       'those registered in anki',
   }),
   pugFile: Joi.string(),
