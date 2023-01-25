@@ -15,7 +15,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "rm -rf ./bin && rm -rf ./lib && yarn babel src --out-dir . --extensions \".ts\" $*",
+    "build": "rm -rf ./bin && rm -rf ./lib && yarn babel src --out-dir . --extensions \".ts\" --source-maps inline",
     "commit-msg": "yarn fix-with-test",
     "debug-tests": "yarn node --stack-trace-limit=100 --trace-warnings --async-stack-traces $(yarn bin jest)",
     "lint": "yarn eslint .",
