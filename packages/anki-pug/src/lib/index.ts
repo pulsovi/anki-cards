@@ -1,8 +1,8 @@
 import path from 'path';
 
+import CollectionDiffManager from './CollectionDiffManager';
 import getConfig from './getConfig';
 import type { AnkiPugConfig } from './getConfig';
-import ModelsDiffManager from './ModelsDiffManager';
 import * as services from './services';
 import { log, todo } from './util';
 
@@ -13,7 +13,7 @@ export async function diff (argv: Partial<AnkiPugConfig> | null = null): Promise
   const modelsFolder = path.resolve(path.dirname(config.configPath), config.modelsPath);
 
   log({ config, modelsFolder });
-  const diffManager = new ModelsDiffManager(modelsFolder, services);
+  const diffManager = new CollectionDiffManager(modelsFolder, services);
 
   await diffManager.process();
 }

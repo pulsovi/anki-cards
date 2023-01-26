@@ -3,28 +3,32 @@ import path from 'path';
 import { sortBy } from 'lodash';
 
 import DiffConfig from './DiffConfig';
+import ModelCollectionManager from './ModelCollectionManager';
 import ModelDiffManager from './ModelDiffManager';
-import ModelManager from './ModelManager';
 import type { Services } from './services';
 import { getLogger, TaskSyncer } from './util';
 
 const log = getLogger(path.basename(__filename, path.extname(__filename)));
 
-type ModelDiffManagerServices = Pick<Services, 'ankiConnection'>;
+type CollectionDiffManagerServices = Pick<Services, 'ankiConnection'>;
 
-export default class ModelsDiffManager {
+/**
+ * Synchronizes a collection of Anki note types between the Pug files format and
+ * the anki-connect API
+ */
+export default class CollectionDiffManager {
   private readonly root: string;
-  private readonly modelManager: ModelManager;
+  private readonly modelCollectionManager: ModelCollectionManager;
 
-  public constructor (root: string, services: ModelDiffManagerServices) {
+  public constructor (root: string, services: CollectionDiffManagerServices) {
     this.root = root;
-    this.modelManager = new ModelManager(root, services);
+    this.modelCollectionManager = new ModelCollectionManager(root, services);
   }
 
-  public async process (syncer = new TaskSyncer('ModelsDiffManager@process')): Promise<void> {
+  public async process (syncer = new TaskSyncer('CollectionDiffManager@process')): Promise<void> {
     log('process');
     const models = sortBy(
-      await this.modelManager.getModels(),
+      await this.modelCollectionManager.getModels(),
       model => model.getName().toLowerCase()
     );
     log('process', models.length, 'models found');

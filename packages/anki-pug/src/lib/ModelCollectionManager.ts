@@ -5,15 +5,16 @@ import readdirp from 'readdirp';
 import Model from './Model';
 import type { Services } from './services';
 
-type ModelManagerServices = Pick<Services, 'ankiConnection'>;
+type ModelCollectionManagerServices = Pick<Services, 'ankiConnection'>;
 
-export default class ModelManager {
+/** Manage all Anki note models of a collection */
+export default class ModelCollectionManager {
   public static readonly EXPORT_FILENAME = 'export.js';
 
-  private readonly services: ModelManagerServices;
+  private readonly services: ModelCollectionManagerServices;
   private readonly root: string;
 
-  public constructor (root: string, services: ModelManagerServices) {
+  public constructor (root: string, services: ModelCollectionManagerServices) {
     this.root = path.resolve(root);
     this.services = services;
   }
@@ -24,14 +25,16 @@ export default class ModelManager {
   }
 
   private async listModels (): Promise<string[]> {
-    const files = await readdirp.promise(this.root, { fileFilter: ModelManager.EXPORT_FILENAME });
+    const files = await readdirp.promise(this.root, {
+      fileFilter: ModelCollectionManager.EXPORT_FILENAME,
+    });
     return files
       .map(file => file.fullPath)
       .sort((strA, strB) => strA.localeCompare(strB));
   }
 
   private nameFromPath (pathname: string): string {
-    const dirname = pathname.endsWith(ModelManager.EXPORT_FILENAME) ?
+    const dirname = pathname.endsWith(ModelCollectionManager.EXPORT_FILENAME) ?
       path.dirname(pathname) :
       pathname;
     return path.relative(this.root, dirname).replace(new RegExp(`\\${path.sep}`, 'gu'), '::');
