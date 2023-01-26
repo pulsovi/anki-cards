@@ -63,6 +63,7 @@ class ValidationError extends Error {
 
     message += 'parsed config :';
     message += JSON.stringify(parsed, null, 2);
+    message += `\nerror message: ${error.message}`;
     console.info(message, { argv: results.argv, 'process.argv': process.argv });
 
     super(error.message);
