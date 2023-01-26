@@ -1,11 +1,11 @@
 import chalk from 'chalk';
 import { diffWordsWithSpace } from 'diff';
 
-import type TemplateDiffMenu from './TemplateDiffMenu';
-import TemplateDiffMenuItem from './TemplateDiffMenuItem';
+import type ModelItemDiffMenu from './ModelItemDiffMenu';
+import ModelItemDiffMenuItem from './ModelItemDiffMenuItem';
 
-export default class Word extends TemplateDiffMenuItem {
-  public constructor (menu: TemplateDiffMenu) {
+export default class Word extends ModelItemDiffMenuItem {
+  public constructor (menu: ModelItemDiffMenu) {
     super(menu);
     this.key = 'w';
     this.name = '[word] Show word diff';

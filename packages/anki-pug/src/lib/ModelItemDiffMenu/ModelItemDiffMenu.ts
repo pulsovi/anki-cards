@@ -1,18 +1,18 @@
 import type DiffConfig from '../DiffConfig';
 import Menu from '../Menu/Menu';
-import type Template from '../Template';
-import type TemplateDiffManager from '../TemplateDiffManager';
+import type ModelItem from '../ModelItem';
+import type ModelItemDiffManager from '../ModelItemDiffManager';
 import type { TaskSyncer } from '../util';
 
+import type ModelItemDiffMenuItem from './ModelItemDiffMenuItem';
 import NewlineAtEofFilter from './NewlineAtEofFilter';
 import No from './No';
 import NoDiffResponse from './NoDiffResponse';
 import Overwrite from './Overwrite';
 import Quit from './Quit';
-import type TemplateDiffMenuItem from './TemplateDiffMenuItem';
 import Word from './Word';
 
-const items: (new (menu: TemplateDiffMenu) => TemplateDiffMenuItem)[] = [
+const items: (new (menu: ModelItemDiffMenu) => ModelItemDiffMenuItem)[] = [
   // filters
   NewlineAtEofFilter,
 
@@ -26,15 +26,15 @@ const items: (new (menu: TemplateDiffMenu) => TemplateDiffMenuItem)[] = [
   Quit,
 ];
 
-export default class TemplateDiffMenu extends Menu<[string, string]> {
-  protected readonly items: TemplateDiffMenuItem[];
+export default class ModelItemDiffMenu extends Menu<[string, string]> {
+  protected readonly items: ModelItemDiffMenuItem[];
   protected readonly syncer: TaskSyncer;
 
-  private readonly diffManager: TemplateDiffManager;
+  private readonly diffManager: ModelItemDiffManager;
   private readonly diffConfig: DiffConfig;
 
-  public constructor (diffManager: TemplateDiffManager, diffConfig: DiffConfig, syncer: TaskSyncer) {
-    super(`Compare ${diffManager.getTemplate().getName()} ?`, syncer);
+  public constructor (diffManager: ModelItemDiffManager, diffConfig: DiffConfig, syncer: TaskSyncer) {
+    super(`Compare ${diffManager.getModelItem().getName()} ?`, syncer);
     this.items = items.map(Item => new Item(this));
     this.diffConfig = diffConfig;
     this.diffManager = diffManager;
@@ -45,14 +45,14 @@ export default class TemplateDiffMenu extends Menu<[string, string]> {
     return this.diffConfig;
   }
 
-  public getTemplate (): Template {
-    return this.diffManager.getTemplate();
+  public getModelItem (): ModelItem {
+    return this.diffManager.getModelItem();
   }
 
   protected async getData (): Promise<[string, string]> {
     return await Promise.all([
-      this.getTemplate().getAnki().then(text => text ?? ''),
-      this.getTemplate().getCompiledPug(),
+      this.getModelItem().getAnki().then(text => text ?? ''),
+      this.getModelItem().getCompiledPug(),
     ]);
   }
 }

@@ -3,9 +3,9 @@ import path from 'path';
 import readdirp from 'readdirp';
 
 import Model from './Model';
-import type { Services } from './services';
+import type { ModelServices } from './Model';
 
-type ModelCollectionManagerServices = Pick<Services, 'ankiConnection'>;
+export type ModelCollectionManagerServices = ModelServices;
 
 /** Manage all Anki note models of a collection */
 export default class ModelCollectionManager {

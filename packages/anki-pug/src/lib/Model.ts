@@ -1,25 +1,33 @@
 import Joi from 'joi';
 import type { ValidationResult } from 'joi';
 
+import type ModelItem from './ModelItem';
+import type { RawModelItem } from './ModelItem';
 import ModuleLoader from './ModuleLoader';
 import { config } from './services';
 import type { Services } from './services';
-import Template, { rawTemplateSchema } from './Template';
-import type { RawTemplate } from './Template';
 import type { ModelModule } from './types';
 import { getLogger, TaskSyncer } from './util';
 
 const log = getLogger('Model');
 
-type ModelServices = Pick<Services, 'ankiConnection'>;
+export type ModelServices = Pick<Services, 'ankiConnection' | 'modelItemFactory'>;
 
+/**
+ * Represents an Anki note template
+ *
+ * Including:
+ * - The front and back templates of each card
+ * - The note type CSS style file
+ * - Media files used by templates and CSS
+ */
 export default class Model {
   public readonly name: string;
 
   private readonly modulepath: string;
   private readonly services: ModelServices;
 
-  private allTemplates?: Template[];
+  private allModelItems?: ModelItem[];
 
   public constructor (modulepath: string, name: string, services: ModelServices) {
     this.services = services;
@@ -27,40 +35,42 @@ export default class Model {
     this.name = name;
   }
 
-  private static async formatModule (moduleValue: unknown): Promise<RawTemplate[]> {
+  private static async formatModule (moduleValue: unknown): Promise<RawModelItem[]> {
     const modelModule = moduleValue as ModelModule;
-    const templates = await (
-      typeof modelModule === 'function' ?
-        modelModule(config) :
-        modelModule
-    );
-    return Array.isArray(templates) ? templates : [templates];
+    const items = await (typeof modelModule === 'function' ? modelModule(config) : modelModule);
+    return Array.isArray(items) ? items : [items];
   }
 
-  private static validateModule (moduleValue: RawTemplate[]): ValidationResult<RawTemplate[]> {
-    return Joi.array().items(rawTemplateSchema).validate(moduleValue);
-  }
-
-  public async getAllTemplates (syncer = new TaskSyncer()): Promise<Template[]> {
-    if (!this.allTemplates) this.allTemplates = await this._getAllTemplates(syncer);
-    return this.allTemplates;
+  public async getAllModelItems (syncer = new TaskSyncer()): Promise<ModelItem[]> {
+    if (!this.allModelItems) this.allModelItems = await this._getAllModelItems(syncer);
+    return this.allModelItems;
   }
 
   public getName (): string {
     return this.name;
   }
 
-  private async _getAllTemplates (syncer: TaskSyncer): Promise<Template[]> {
-    log('getAllTemplates');
-    const moduleLoader = new ModuleLoader<RawTemplate[]>(
+  /**
+   * Check that the value provided as parameter corresponds to an Array of
+   * ModelItem in Raw and throw an error otherwise
+   */
+  private validateModule (moduleValue: RawModelItem[]): ValidationResult<RawModelItem[]> {
+    return Joi.array().items(...this.services.modelItemFactory.rawSchemas).validate(moduleValue);
+  }
+
+  private async _getAllModelItems (syncer: TaskSyncer): Promise<ModelItem[]> {
+    log('getAllModelItems');
+    const moduleLoader = new ModuleLoader<RawModelItem[]>(
       this.modulepath,
       this.name
     );
-    const rawTemplates = await moduleLoader.load({
+    const rawModelItems = await moduleLoader.load({
       format: async moduleValue => await Model.formatModule(moduleValue),
       syncer,
-      validate: moduleValue => Model.validateModule(moduleValue),
+      validate: moduleValue => this.validateModule(moduleValue),
     });
-    return rawTemplates.map(rawTemplate => new Template(rawTemplate, this, this.services));
+    return rawModelItems.map(
+      rawModelItem => this.services.modelItemFactory.getModelItem(rawModelItem)
+    );
   }
 }

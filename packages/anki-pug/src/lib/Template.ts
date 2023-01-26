@@ -2,6 +2,7 @@ import Joi from 'joi';
 import type { LocalsObject } from 'pug';
 
 import type Model from './Model';
+import ModelItem from './ModelItem';
 import PugFile from './PugFile';
 import { ankiConnection } from './services';
 import type { AnkiConnect, Services } from './services';
@@ -46,7 +47,9 @@ type TemplateServices = Pick<Services, 'ankiConnection'>;
  *
  * Manages Pug version and HTML version on Anki via API
  */
-export default class Template {
+export default class Template extends ModelItem {
+  public readonly rawSchema = rawTemplateSchema;
+
   public readonly name: string;
   public readonly side: 'Back' | 'Front';
   private readonly ankiConnection: AnkiConnect;
@@ -54,6 +57,7 @@ export default class Template {
   private readonly raw: RawTemplate;
 
   public constructor (raw: RawTemplate, model: Model, services: TemplateServices) {
+    super();
     Joi.assert(raw, rawTemplateSchema);
     this.raw = raw;
     todo({

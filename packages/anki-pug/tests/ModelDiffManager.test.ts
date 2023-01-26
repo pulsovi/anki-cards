@@ -8,8 +8,8 @@ describe('ModelDiffManager', () => {
     it('silently skip if the syncer is closed', async () => {
       // Arrange
       const modelLike = {
-        getAllTemplates: async (syncer: TaskSyncer) => await syncer.enqueue(
-          async () => await Promise.resolve('getAllTemplates')
+        getAllModelItems: async (syncer: TaskSyncer) => await syncer.enqueue(
+          async () => await Promise.resolve('getAllModelItems')
         ),
         getName: () => 'modelLike',
       } as unknown as Model;

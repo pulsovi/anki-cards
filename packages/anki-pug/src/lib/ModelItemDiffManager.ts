@@ -2,23 +2,23 @@ import chalk from 'chalk';
 
 import type DiffConfig from './DiffConfig';
 import type ModelDiffManager from './ModelDiffManager';
-import type Template from './Template';
-import TemplateDiffMenu from './TemplateDiffMenu';
+import type ModelItem from './ModelItem';
+import ModelItemDiffMenu from './ModelItemDiffMenu';
 import type { TaskSyncer } from './util';
 
-export default class TemplateDiffManager {
+export default class ModelItemDiffManager {
   private readonly modelDiffManager: ModelDiffManager;
-  private readonly template: Template;
+  private readonly modelItem: ModelItem;
 
   private prompted = false;
 
-  public constructor (template: Template, modelDiffManager: ModelDiffManager) {
+  public constructor (modelItem: ModelItem, modelDiffManager: ModelDiffManager) {
     this.modelDiffManager = modelDiffManager;
-    this.template = template;
+    this.modelItem = modelItem;
   }
 
-  public getTemplate (): Template {
-    return this.template;
+  public getModelItem (): ModelItem {
+    return this.modelItem;
   }
 
   public async process (diffConfig: DiffConfig, syncer: TaskSyncer): Promise<void> {
@@ -26,7 +26,7 @@ export default class TemplateDiffManager {
     const modelIsManageable = this.modelDiffManager.isManageable(diffConfig);
 
     if (modelIsManageable) {
-      const diffMenu = new TemplateDiffMenu(this, diffConfig, syncer.getTicket('menu'));
+      const diffMenu = new ModelItemDiffMenu(this, diffConfig, syncer.getTicket('menu'));
       await diffMenu.process();
     }
     await promptPromise;
@@ -34,7 +34,7 @@ export default class TemplateDiffManager {
 
   private prompt (): void {
     if (this.prompted) return;
-    console.info(chalk.greenBright(`  ${this.template.getName()}`));
+    console.info(chalk.greenBright(`  ${this.modelItem.getName()}`));
     this.prompted = true;
   }
 }

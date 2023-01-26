@@ -4,13 +4,13 @@ import { sortBy } from 'lodash';
 
 import DiffConfig from './DiffConfig';
 import ModelCollectionManager from './ModelCollectionManager';
+import type { ModelCollectionManagerServices } from './ModelCollectionManager';
 import ModelDiffManager from './ModelDiffManager';
-import type { Services } from './services';
 import { getLogger, TaskSyncer } from './util';
 
 const log = getLogger(path.basename(__filename, path.extname(__filename)));
 
-type CollectionDiffManagerServices = Pick<Services, 'ankiConnection'>;
+type CollectionDiffManagerServices = ModelCollectionManagerServices;
 
 /**
  * Synchronizes a collection of Anki note types between the Pug files format and

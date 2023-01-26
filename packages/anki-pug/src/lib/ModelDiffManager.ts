@@ -4,7 +4,7 @@ import chalk from 'chalk';
 
 import type DiffConfig from './DiffConfig';
 import type Model from './Model';
-import TemplateDiffManager from './TemplateDiffManager';
+import ModelItemDiffManager from './ModelItemDiffManager';
 import { getLogger } from './util';
 import type { TaskSyncer } from './util';
 
@@ -23,17 +23,17 @@ export default class ModelDiffManager {
     // prompt model name synchronously, possible error: syncer is done
     syncer.enqueue(() => { this.prompt(); }).catch(() => { /* do nothing */ });
 
-    const templates = await this.model.getAllTemplates(syncer)
+    const modelItems = await this.model.getAllModelItems(syncer)
       .catch(reason => ({ error: reason as unknown }));
 
-    if ('error' in templates) {
+    if ('error' in modelItems) {
       if (syncer.status === 'done') return;
-      throw templates.error;
+      throw modelItems.error;
     }
 
-    await Promise.all(templates.map(async template => {
-      const ticket = syncer.getTicket(template.getName());
-      await new TemplateDiffManager(template, this).process(diffConfig, ticket);
+    await Promise.all(modelItems.map(async modelItem => {
+      const ticket = syncer.getTicket(modelItem.getName());
+      await new ModelItemDiffManager(modelItem, this).process(diffConfig, ticket);
       ticket.close();
     }));
   }

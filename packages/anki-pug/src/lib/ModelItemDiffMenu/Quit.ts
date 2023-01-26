@@ -1,11 +1,11 @@
-import type TemplateDiffMenu from './TemplateDiffMenu';
-import TemplateDiffMenuItem from './TemplateDiffMenuItem';
+import type ModelItemDiffMenu from './ModelItemDiffMenu';
+import ModelItemDiffMenuItem from './ModelItemDiffMenuItem';
 
-export default class Quit extends TemplateDiffMenuItem {
+export default class Quit extends ModelItemDiffMenuItem {
   protected readonly key: string;
   protected readonly name: string;
 
-  public constructor (menu: TemplateDiffMenu) {
+  public constructor (menu: ModelItemDiffMenu) {
     super(menu);
     this.key = 'q';
     this.name = '[quit] Skip all unmanaged models/templates and quit the diff';

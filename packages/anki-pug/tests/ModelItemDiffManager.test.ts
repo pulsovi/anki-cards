@@ -1,10 +1,10 @@
 import type DiffConfig from '../src/lib/DiffConfig';
 import type ModelDiffManager from '../src/lib/ModelDiffManager';
-import type Template from '../src/lib/Template';
-import TemplateDiffManager from '../src/lib/TemplateDiffManager';
+import type ModelItem from '../src/lib/ModelItem';
+import ModelItemDiffManager from '../src/lib/ModelItemDiffManager';
 import { TaskSyncer } from '../src/lib/util';
 
-describe('TemplateDiffManager', () => {
+describe('ModelItemDiffManager', () => {
   describe('process', () => {
     it('silently skip if the syncer is closed', async () => {
       // Arrange
@@ -12,12 +12,12 @@ describe('TemplateDiffManager', () => {
         getAnki: async () => await Promise.resolve('output'),
         getCompiledPug: async () => await Promise.resolve('compiledPug'),
         getName: () => 'templateLike',
-      } as unknown as Template;
+      } as unknown as ModelItem;
       const modelDiffManagerLike = {
-        getTemplate: () => templateLike,
+        getModelItem: () => templateLike,
         isManageable: () => true,
       } as unknown as ModelDiffManager;
-      const templateDiffManager = new TemplateDiffManager(templateLike, modelDiffManagerLike);
+      const templateDiffManager = new ModelItemDiffManager(templateLike, modelDiffManagerLike);
       const diffConfigLike = {} as DiffConfig;
       const syncer = new TaskSyncer();
 
@@ -36,20 +36,20 @@ describe('TemplateDiffManager', () => {
         getAnki: async () => await Promise.resolve('same_text'),
         getCompiledPug: async () => await Promise.resolve('same_text'),
         getName: () => 'templateLike',
-      } as Partial<Template> as Template;
+      } as Partial<ModelItem> as ModelItem;
       const modelDiffManagerLike = { isManageable: () => true } as unknown as ModelDiffManager;
       const templateDiffManagerLike = {
-        getTemplate: () => templateLike,
+        getModelItem: () => templateLike,
         modelDiffManager: modelDiffManagerLike,
         prompt: () => { prompted = true; },
-      } as unknown as TemplateDiffManager;
+      } as unknown as ModelItemDiffManager;
       const diffConfigLike = {} as DiffConfig;
       const syncer = new TaskSyncer('wait for template name prompted before resolve');
       const firstTicket = syncer.getTicket();
 
       // Act
       // eslint-disable-next-line prefer-reflect
-      const processPromise = TemplateDiffManager.prototype.process.apply(templateDiffManagerLike, [
+      const processPromise = ModelItemDiffManager.prototype.process.apply(templateDiffManagerLike, [
         diffConfigLike, syncer.getTicket(),
       ]);
       // laisser le temps à tout le code asynchrone ne dépendant pas du ticket de se dérouler
