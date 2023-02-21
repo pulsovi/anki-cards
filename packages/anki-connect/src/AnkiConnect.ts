@@ -1,4 +1,7 @@
-// https://github.com/FooSoft/anki-connect/blob/master/README.md
+/*
+ * https://github.com/FooSoft/anki-connect/blob/master/README.md
+ * https://foosoft.net/projects/anki-connect/index.html
+ */
 import axios from 'axios';
 import TaskSyncer from 'task-syncer';
 
