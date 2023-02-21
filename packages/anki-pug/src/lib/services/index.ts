@@ -1,5 +1,4 @@
-import type ModelItemFactory from '../ModelItemFactory';
-import { todo } from '../util';
+import ModelItemFactory from '../ModelItemFactory';
 
 import type { AnkiConnect } from './ankiConnection';
 import type { AnkiPugConfig } from './getConfig';
@@ -7,7 +6,7 @@ import type { AnkiPugConfig } from './getConfig';
 export * from './ankiConnection';
 export * from './getConfig';
 
-export const modelItemFactory = todo('créer une instance de ModelItemFactory') as ModelItemFactory;
+export const modelItemFactory = new ModelItemFactory();
 
 export interface Services {
   ankiConnection: AnkiConnect;

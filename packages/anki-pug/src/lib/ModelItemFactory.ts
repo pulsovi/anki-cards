@@ -4,7 +4,7 @@ import type ModelItem from './ModelItem';
 import type { RawModelItem } from './ModelItem';
 import { todo } from './util';
 
-/** Manages the different variations of ModelItem */
+/** Manages the different variations of ModelItem - Template, CssStyleSheet, Media */
 export default class ModelItemFactory {
   /** All valid schemas for Raw objects */
   public readonly rawSchemas: Joi.AnySchema[] = [];
