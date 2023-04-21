@@ -8,6 +8,8 @@ export const log = Object.assign(debug(`cdn-update:${process.pid}`), {
   },
 });
 
+log.enabled = true;
+
 export function stringError (error: unknown): string {
   const err = inspect(error, false, 10, true);
   if (!(error instanceof AggregateError)) return err;

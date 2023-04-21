@@ -12,8 +12,7 @@ const debugMode = log.enabled && process.env.NODE_ENV !== 'prod';
  *   what is passed to this parameter will be printed on standard output before printing the
  *   stack and stopping the process
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function todo (message?: unknown, ..._args: unknown[]): any {
+export function todo (message?: unknown, ..._args: unknown[]): unknown {
   const errStr = typeof message === 'string' ? message : "Cette route n'est pas encore construite.";
   const error = new Error(errStr);
 

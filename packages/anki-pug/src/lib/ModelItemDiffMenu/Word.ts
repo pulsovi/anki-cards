@@ -1,8 +1,12 @@
 import chalk from 'chalk';
 import { diffWordsWithSpace } from 'diff';
 
+import { isString, todo } from '../util';
+
 import type ModelItemDiffMenu from './ModelItemDiffMenu';
 import ModelItemDiffMenuItem from './ModelItemDiffMenuItem';
+
+import type { ModelItemPair } from '.';
 
 export default class Word extends ModelItemDiffMenuItem {
   public constructor (menu: ModelItemDiffMenu) {
@@ -11,8 +15,9 @@ export default class Word extends ModelItemDiffMenuItem {
     this.name = '[word] Show word diff';
   }
 
-  public async act (data: [string, string]): Promise<boolean> {
+  public async act (data: ModelItemPair): Promise<boolean> {
     const [rawOutput, compiledPug] = data;
+    if (!isString(rawOutput) || !isString(compiledPug)) return todo() as boolean;
     const diffString = diffWordsWithSpace(rawOutput, compiledPug).reduce((reduced: string, chunk) => {
       if (chunk.added || chunk.removed) {
         let { value } = chunk;

@@ -55,7 +55,7 @@ export default class Model {
    * ModelItem in Raw and throw an error otherwise
    */
   private validateModule (moduleValue: RawModelItem[]): ValidationResult<RawModelItem[]> {
-    return Joi.array().items(...this.services.modelItemFactory.rawSchemas).validate(moduleValue);
+    return Joi.array().items(...this.services.modelItemFactory.getRawSchemas()).validate(moduleValue);
   }
 
   private async _getAllModelItems (syncer: TaskSyncer): Promise<ModelItem[]> {

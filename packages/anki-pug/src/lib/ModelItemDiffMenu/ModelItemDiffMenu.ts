@@ -12,6 +12,8 @@ import Overwrite from './Overwrite';
 import Quit from './Quit';
 import Word from './Word';
 
+import type { ModelItemPair } from '.';
+
 const items: (new (menu: ModelItemDiffMenu) => ModelItemDiffMenuItem)[] = [
   // filters
   NewlineAtEofFilter,
@@ -26,7 +28,8 @@ const items: (new (menu: ModelItemDiffMenu) => ModelItemDiffMenuItem)[] = [
   Quit,
 ];
 
-export default class ModelItemDiffMenu extends Menu<[string, string]> {
+/** GUI menu to manage diffs found on model items (templates, stylesheet, medias) */
+export default class ModelItemDiffMenu extends Menu<ModelItemPair> {
   protected readonly items: ModelItemDiffMenuItem[];
   protected readonly syncer: TaskSyncer;
 
@@ -49,10 +52,11 @@ export default class ModelItemDiffMenu extends Menu<[string, string]> {
     return this.diffManager.getModelItem();
   }
 
-  protected async getData (): Promise<[string, string]> {
-    return await Promise.all([
-      this.getModelItem().getAnki().then(text => text ?? ''),
-      this.getModelItem().getCompiledPug(),
-    ]);
+  protected async getData (): Promise<ModelItemPair> {
+    const item = this.getModelItem();
+    return (await Promise.all([
+      item.getAnki(),
+      item.getCompiledPug(),
+    ])) as ModelItemPair;
   }
 }
