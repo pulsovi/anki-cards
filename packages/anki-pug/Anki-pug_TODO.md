@@ -1,7 +1,9 @@
 ## Anki-pug
 
-* [ ] Chaque fonctionalité doit être reportée dans le README.md avant le commit, ajouter un hook de pre-commit qui s'assure que le README.md est modifié à chaque commit qui commence par 'feat:'
-* [ ] Chaque fonctionalité et correction de bug doit être reportée dans le CHANGELOG.md, ajouter un hook de pre-commit qui s'en assure
+* [ ] Chaque fonctionalité doit être reportée dans le README.md avant le commit:
+  - [ ] Ajouter un hook de pre-commit qui s'assure que le README.md est modifié à chaque commit qui commence par 'feat:'
+* [ ] Chaque fonctionalité et correction de bug doit être reportée dans le CHANGELOG.md
+  - [ ] Ajouter un hook de pre-commit qui s'en assure
 * [ ] Faire marcher la commande `yarn diff` dans le package `anki-models`
   Certains chemins mènent à `todo()` mais les dev-tools ne sont pas activés
   - [ ] Ajouter `--inspect` à la commande

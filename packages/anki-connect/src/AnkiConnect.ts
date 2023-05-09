@@ -8,6 +8,7 @@ import TaskSyncer from 'task-syncer';
 import type {
   BaseAPI,
   CardTemplate,
+  MediaFileAPI,
   ModelTemplates,
   ModelTemplatesAPI,
   ModelStylingAPI,
@@ -33,6 +34,16 @@ export default class AnkiConnect {
       this.url = `http://${options.ip ?? '127.0.0.1'}:${options.port ?? 8765}`;
     if ('version' in options && options.version && options.version !== 6)
       throw new Error('This wrapper is only compatible with AnkiConnect version 6');
+  }
+
+  /**
+   * Retrieves the Buffer contents of the specified file,
+   * returning null if the file does not exist.
+   */
+  public async retrieveMediaFile (params: { filename: string }): Promise<Buffer | null> {
+    const base64 = await this.requestAPI<MediaFileAPI>({ action: 'retrieveMediaFile', params });
+    if (!base64) return null;
+    return Buffer.from(base64, 'base64');
   }
 
   public async cardFieldTemplates ({ cardName, field, modelName }: {

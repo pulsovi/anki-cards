@@ -25,9 +25,9 @@ export default class ModelItemMedia extends ModelItem<Buffer> {
     this.raw = raw;
   }
 
-  public async getAnki (): Promise<Buffer> {
+  public async getAnki (): Promise<Buffer | null> {
     // https://foosoft.net/projects/anki-connect/index.html#retrievemediafile
-    return await Promise.resolve(todo(null, this) as Buffer);
+    return await this.ankiConnection.retrieveMediaFile({ filename: this.name });
   }
 
   public async getCompiledPug (): Promise<Buffer> {

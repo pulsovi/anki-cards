@@ -46,6 +46,16 @@ export interface ModelTemplatesAPI extends BaseAPI {
   result: ModelTemplates;
 }
 
+export interface MediaFileAPI extends BaseAPI {
+  request: {
+    action: 'retrieveMediaFile';
+    params: {
+      filename: string;
+    };
+  };
+  result: string;
+}
+
 export type AllAPI = ModelStylingAPI | ModelTemplatesAPI | RequestPermissionAPI;
 
 export type APIType<T extends BaseAPI> = APITypeMapping[T['request']['action']];
