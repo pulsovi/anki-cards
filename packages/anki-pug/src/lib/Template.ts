@@ -5,7 +5,7 @@ import type Model from './Model';
 import ModelItem from './ModelItem';
 import PugFile from './PugFile';
 import { ankiConnection } from './services';
-import type { AnkiConnect, Services } from './services';
+import type { Services } from './services';
 import type { SyncOrPromise } from './types';
 import { TaskSyncer, todo } from './util';
 
@@ -52,12 +52,11 @@ export default class Template extends ModelItem {
 
   public readonly name: string;
   public readonly side: 'Back' | 'Front';
-  private readonly ankiConnection: AnkiConnect;
   private readonly model: Model;
   private readonly raw: RawTemplate;
 
   public constructor (raw: RawTemplate, model: Model, services: TemplateServices) {
-    super();
+    super(services);
     Joi.assert(raw, rawTemplateSchema);
     this.raw = raw;
     todo({
@@ -67,7 +66,6 @@ export default class Template extends ModelItem {
     this.name = raw.name;
     this.model = model;
     this.side = todo() as 'Back' | 'Front';
-    this.ankiConnection = services.ankiConnection;
   }
 
   public async getCompiledPug (syncer = new TaskSyncer()): Promise<string> {

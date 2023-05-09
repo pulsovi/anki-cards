@@ -2,11 +2,20 @@ import type Joi from 'joi';
 
 import type ModelItem from './ModelItem';
 import type { ModelItemConcrete, RawModelItem } from './ModelItem';
+import type { AnkiConnect, Services } from './services';
+
+type ModelItemFactoryServices = Pick<Services, 'ankiConnection'>;
 
 /** Manages the different variations of ModelItem - Template, CssStyleSheet, Media */
 export default class ModelItemFactory {
+  public readonly ankiConnection: AnkiConnect;
+
   /** Registered ModelItem types */
   private readonly knownItemTypes: Record<string, ModelItemConcrete> = {};
+
+  public constructor (services: ModelItemFactoryServices) {
+    this.ankiConnection = services.ankiConnection;
+  }
 
   /**
    * Instantiates and returns the correct ModelItem declination corresponding
@@ -15,7 +24,7 @@ export default class ModelItemFactory {
    * @param raw The RawModelItem object that should be mapped to a ModelItem instance
    */
   public getModelItem (raw: RawModelItem): ModelItem {
-    if (raw.type in this.knownItemTypes) return new this.knownItemTypes[raw.type](raw);
+    if (raw.type in this.knownItemTypes) return new this.knownItemTypes[raw.type](raw, this);
     const allowedTypes = Object.keys(this.knownItemTypes).map(type => `"${type}"`).join(', ');
     throw new TypeError(`Unknown model item type : ${raw.type}. Allowed types are ${allowedTypes}.`);
   }

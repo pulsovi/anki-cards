@@ -1,7 +1,7 @@
 import Joi from 'joi';
 
 import ModelItem, { rawModelItemSchema } from './ModelItem';
-import type { RawModelItem } from './ModelItem';
+import type { ModelItemOptions, RawModelItem } from './ModelItem';
 import { todo } from './util/todo';
 
 interface RawModelItemMedia extends RawModelItem {
@@ -18,14 +18,15 @@ export default class ModelItemMedia extends ModelItem<Buffer> {
   public readonly name: string;
   public readonly raw: RawModelItemMedia;
 
-  public constructor (raw: RawModelItemMedia) {
+  public constructor (raw: RawModelItemMedia, options: ModelItemOptions) {
     Joi.assert(raw, rawModelItemMediaSchema);
-    super();
+    super(options);
     this.name = raw.name;
     this.raw = raw;
   }
 
   public async getAnki (): Promise<Buffer> {
+    // https://foosoft.net/projects/anki-connect/index.html#retrievemediafile
     return await Promise.resolve(todo(null, this) as Buffer);
   }
 

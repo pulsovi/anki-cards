@@ -1,3 +1,4 @@
+import type AnkiConnect from 'anki-connect';
 import Joi from 'joi';
 
 /** The type a model item can be */
@@ -7,7 +8,7 @@ type ShallowCopy<T> = { [K in keyof T]: T[K] };
 
 /** A concrete extension of ModelItem class */
 export type ModelItemConcrete = ShallowCopy<typeof ModelItem> &
-(new (raw: RawModelItem) => ModelItem);
+(new (raw: RawModelItem, options: ModelItemOptions) => ModelItem);
 
 export interface RawModelItem {
 
@@ -21,6 +22,10 @@ export const rawModelItemSchema = Joi.object({
   name: Joi.string().required(),
   type: Joi.valid('media').required(),
 });
+
+export interface ModelItemOptions {
+  ankiConnection: AnkiConnect;
+}
 
 /**
  * Represents one of the resources that make up a note template on Anki: a card
@@ -36,8 +41,14 @@ export default abstract class ModelItem<T extends ModelItemType = ModelItemType>
    */
   public static readonly RAW_SCHEMA: Joi.AnySchema;
 
+  public readonly ankiConnection: AnkiConnect;
+
   /** The name of this item, such "Card1_recto" or "background_img", ... */
   public abstract readonly name: string;
+
+  public constructor (options: ModelItemOptions) {
+    this.ankiConnection = options.ankiConnection;
+  }
 
   /** Return the name of this item */
   public getName (): string {
