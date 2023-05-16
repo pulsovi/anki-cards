@@ -15,11 +15,15 @@ export interface RawModelItem {
   /** The name of this item */
   name: string;
 
+  /** path of the source file (pug template, css file, media file, ...) */
+  src: string;
+
   /** The type of the model item : template, style, media */
   type: 'media';
 }
 export const rawModelItemSchema = Joi.object({
   name: Joi.string().required(),
+  src: Joi.string().required(),
   type: Joi.valid('media').required(),
 });
 

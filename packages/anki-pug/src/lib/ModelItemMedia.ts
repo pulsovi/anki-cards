@@ -1,3 +1,4 @@
+import fs from 'fs-extra';
 import Joi from 'joi';
 
 import ModelItem, { rawModelItemSchema } from './ModelItem';
@@ -6,6 +7,9 @@ import { todo } from './util/todo';
 
 interface RawModelItemMedia extends RawModelItem {
   type: 'media';
+
+  /** path of the media source file */
+  src: string;
 }
 const rawModelItemMediaSchema = rawModelItemSchema.append({
   type: Joi.valid('media').required(),
@@ -16,13 +20,13 @@ export default class ModelItemMedia extends ModelItem<Buffer> {
   public static readonly RAW_SCHEMA = rawModelItemMediaSchema;
 
   public readonly name: string;
-  public readonly raw: RawModelItemMedia;
+  public readonly src: string;
 
   public constructor (raw: RawModelItemMedia, options: ModelItemOptions) {
     Joi.assert(raw, rawModelItemMediaSchema);
     super(options);
     this.name = raw.name;
-    this.raw = raw;
+    this.src = raw.src;
   }
 
   public async getAnki (): Promise<Buffer | null> {
@@ -31,7 +35,7 @@ export default class ModelItemMedia extends ModelItem<Buffer> {
   }
 
   public async getCompiledPug (): Promise<Buffer> {
-    return await Promise.resolve(todo(null, this) as Buffer);
+    return await fs.readFile(this.src);
   }
 
   public async setAnki (data: Buffer): Promise<void> {

@@ -17,6 +17,7 @@ export function todo (message?: unknown, ..._args: unknown[]): unknown {
   const error = new Error(errStr);
 
   if (debugMode) {
+    console.log('TODO : STOP');
     stop();
     console.info(message, '\n', error);
     // eslint-disable-next-line no-process-exit
