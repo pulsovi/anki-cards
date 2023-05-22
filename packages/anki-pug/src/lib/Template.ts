@@ -51,6 +51,7 @@ export default class Template extends ModelItem {
   public readonly rawSchema = rawTemplateSchema;
 
   public readonly name: string;
+  public readonly contentType = 'text';
   public readonly side: 'Back' | 'Front';
   private readonly model: Model;
   private readonly raw: RawTemplate;

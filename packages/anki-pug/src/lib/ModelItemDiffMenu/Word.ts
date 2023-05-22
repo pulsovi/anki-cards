@@ -1,10 +1,10 @@
 import chalk from 'chalk';
 import { diffWordsWithSpace } from 'diff';
-
-import { isString, todo } from '../util';
+import type { ExpandChoiceOptions } from 'inquirer';
 
 import type ModelItemDiffMenu from './ModelItemDiffMenu';
 import ModelItemDiffMenuItem from './ModelItemDiffMenuItem';
+import { modelItemToString } from './util';
 
 import type { ModelItemPair } from '.';
 
@@ -16,8 +16,7 @@ export default class Word extends ModelItemDiffMenuItem {
   }
 
   public async act (data: ModelItemPair): Promise<boolean> {
-    const [rawOutput, compiledPug] = data;
-    if (!isString(rawOutput) || !isString(compiledPug)) return todo() as boolean;
+    const [rawOutput, compiledPug] = data.map(modelItemToString);
     const diffString = diffWordsWithSpace(rawOutput, compiledPug).reduce((reduced: string, chunk) => {
       if (chunk.added || chunk.removed) {
         let { value } = chunk;
@@ -40,5 +39,14 @@ export default class Word extends ModelItemDiffMenuItem {
 
     console.info(diffString);
     return await Promise.resolve(false);
+  }
+
+  public getChoice (
+    data: ModelItemPair | null
+  ): (ExpandChoiceOptions & { value: ModelItemDiffMenuItem }) | null {
+    const modelItem = this.menu.getModelItem();
+    if (modelItem.contentType !== 'text') return null;
+    if (!data || !data[0] || !data[1]) return null;
+    return super.getChoice(data);
   }
 }

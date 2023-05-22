@@ -29,8 +29,8 @@ export default class Menu<Data> {
       if (!canPrompt) return;
     }
 
-    const choice = syncResponse ?? await this.getResponse();
-    const solved = await choice.act(filteredData);
+    const choice = syncResponse ?? await this.getResponse(filteredData);
+    const solved = await choice.act(data);
 
     if (!solved) await this.process();
   }
@@ -42,9 +42,9 @@ export default class Menu<Data> {
     );
   }
 
-  protected getChoices (): (ExpandChoiceOptions & { value: MenuItem<Data> })[] {
+  protected getChoices (data: Data | null): (ExpandChoiceOptions & { value: MenuItem<Data> })[] {
     return this.items
-      .map(item => item.getChoice())
+      .map(item => item.getChoice(data))
       .filter(
         (choice): choice is (ExpandChoiceOptions & { value: MenuItem<Data> }) => choice !== null
       );
@@ -54,8 +54,8 @@ export default class Menu<Data> {
     return null;
   }
 
-  protected getQuestion (): ExpandQuestion<{ value: MenuItem<Data> }> {
-    const choices = this.getChoices();
+  protected getQuestion (data: Data | null): ExpandQuestion<{ value: MenuItem<Data> }> {
+    const choices = this.getChoices(data);
     const defaultChoice = choices
       .map(choice => choice.value as MenuItem<Data>)
       .reduce((currentDefault, item) => item.getDefault(currentDefault));
@@ -71,8 +71,8 @@ export default class Menu<Data> {
     return question;
   }
 
-  protected async getResponse (): Promise<MenuItem<Data>> {
-    const question = this.getQuestion();
+  protected async getResponse (data: Data | null): Promise<MenuItem<Data>> {
+    const question = this.getQuestion(data);
     const inquirerPromise = inquirer.prompt(question);
     const response = await inquirerPromise.then(choice => choice.value);
     return response;

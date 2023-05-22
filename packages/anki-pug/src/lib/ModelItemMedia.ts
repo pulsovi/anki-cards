@@ -10,9 +10,13 @@ interface RawModelItemMedia extends RawModelItem {
 
   /** path of the media source file */
   src: string;
+
+  /** content type of the file */
+  contentType?: 'binary' | 'text';
 }
 const rawModelItemMediaSchema = rawModelItemSchema.append({
   type: Joi.valid('media').required(),
+  contentType: Joi.valid('binary', 'text').optional(),
 });
 
 export default class ModelItemMedia extends ModelItem<Buffer> {
@@ -21,12 +25,14 @@ export default class ModelItemMedia extends ModelItem<Buffer> {
 
   public readonly name: string;
   public readonly src: string;
+  public readonly contentType: 'binary' | 'text';
 
   public constructor (raw: RawModelItemMedia, options: ModelItemOptions) {
     Joi.assert(raw, rawModelItemMediaSchema);
     super(options);
     this.name = raw.name;
     this.src = raw.src;
+    this.contentType = raw.contentType ?? 'binary';
   }
 
   public async getAnki (): Promise<Buffer | null> {

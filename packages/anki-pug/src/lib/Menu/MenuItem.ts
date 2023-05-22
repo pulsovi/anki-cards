@@ -27,7 +27,7 @@ export default abstract class MenuItem<Data> {
     return data;
   }
 
-  public getChoice (): (ExpandChoiceOptions & { value: MenuItem<Data> }) | null {
+  public getChoice (_data: Data | null): (ExpandChoiceOptions & { value: MenuItem<Data> }) | null {
     if (!this.key || !this.name) return null;
     return {
       key: this.key,

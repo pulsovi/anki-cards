@@ -1,5 +1,9 @@
+import { todo } from '../util';
+
 import type ModelItemDiffMenu from './ModelItemDiffMenu';
 import ModelItemDiffMenuItem from './ModelItemDiffMenuItem';
+
+import type { ModelItemPair } from '.';
 
 export default class Overwrite extends ModelItemDiffMenuItem {
   protected readonly key: string;
@@ -11,11 +15,11 @@ export default class Overwrite extends ModelItemDiffMenuItem {
     this.name = '[overwrite] Overwrite Anki model item with parsed pug content';
   }
 
-  public async act (): Promise<boolean> {
+  public async act ([_anki, pug]: ModelItemPair): Promise<boolean> {
+    if (!pug) return !todo();
     const modelItem = this.menu.getModelItem();
-    const data = await modelItem.getCompiledPug();
 
-    await modelItem.setAnki(data);
+    await modelItem.setAnki(pug);
     return true;
   }
 }

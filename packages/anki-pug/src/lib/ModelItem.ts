@@ -47,6 +47,9 @@ export default abstract class ModelItem<T extends ModelItemType = ModelItemType>
 
   public readonly ankiConnection: AnkiConnect;
 
+  /** The content type of the data */
+  public abstract readonly contentType: string;
+
   /** The name of this item, such "Card1_recto" or "background_img", ... */
   public abstract readonly name: string;
 
