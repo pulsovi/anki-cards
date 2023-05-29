@@ -19,12 +19,16 @@ export interface RawModelItem {
   src: string;
 
   /** The type of the model item : template, style, media */
-  type: 'media';
+  type: 'media' | 'style' | 'template';
+
+  /** The type of the data in the src file */
+  contentType?: 'binary' | 'text';
 }
 export const rawModelItemSchema = Joi.object({
+  contentType: Joi.valid('text', 'binary').optional(),
   name: Joi.string().required(),
   src: Joi.string().required(),
-  type: Joi.valid('media').required(),
+  type: Joi.valid('media', 'style', 'template').required(),
 });
 
 export interface ModelItemOptions {

@@ -6,8 +6,6 @@ import type { ModelItemOptions, RawModelItem } from './ModelItem';
 import { todo } from './util/todo';
 
 interface RawModelItemMedia extends RawModelItem {
-  type: 'media';
-
   /** path of the media source file */
   src: string;
 

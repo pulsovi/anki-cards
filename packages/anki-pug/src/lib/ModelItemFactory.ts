@@ -1,6 +1,7 @@
-import type Joi from 'joi';
+import Joi from 'joi';
 
 import type ModelItem from './ModelItem';
+import { rawModelItemSchema } from './ModelItem';
 import type { ModelItemConcrete, RawModelItem } from './ModelItem';
 import type { AnkiConnect, Services } from './services';
 
@@ -34,6 +35,17 @@ export default class ModelItemFactory {
     return Object.values(this.knownItemTypes).map(modelItemClass => modelItemClass.RAW_SCHEMA);
   }
 
+  /** Return a conditional schema for Raw model items registered */
+  public getRawConditionalSchema (): Joi.AnySchema {
+    const itemTypes = Object.values(this.knownItemTypes);
+    const cases = itemTypes.map<Joi.SwitchCases & Partial<Joi.SwitchDefault>>(
+      modelItemClass => ({ is: modelItemClass.TYPE, then: modelItemClass.RAW_SCHEMA })
+    );
+
+    cases[cases.length - 1].otherwise = rawModelItemSchema;
+    return Joi.alternatives().conditional('type', { 'switch': cases }).required();
+  }
+
   /**
    * Add a new ModelItem variation to the variations known by this factory
    *
@@ -41,7 +53,7 @@ export default class ModelItemFactory {
    */
   public registerModelItemVariation (variation: ModelItemConcrete): void {
     if (variation.TYPE in this.knownItemTypes)
-      throw new Error(`Duplicate registration error : There is a ModelItem class with the "${variation.TYPE}" already registered in this factory.`);
+      throw new Error(`Duplicate registration error : There is a ModelItem class with the "${variation.TYPE}" type already registered in this factory.`);
     this.knownItemTypes[variation.TYPE] = variation;
   }
 }
