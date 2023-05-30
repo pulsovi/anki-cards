@@ -1,7 +1,9 @@
 import Joi from 'joi';
+import type TaskSyncer from 'task-syncer';
 
 import ModelItem, { rawModelItemSchema } from './ModelItem';
 import type { ModelItemOptions, RawModelItem } from './ModelItem';
+import PugFile from './PugFile';
 import { todo } from './util/todo';
 
 interface RawModelItemTemplate extends RawModelItem {
@@ -20,11 +22,15 @@ interface RawModelItemTemplate extends RawModelItem {
 
   /** Face of the card */
   face: 'Back' | 'Front';
+
+  /** Locals to use when render the pug template */
+  locals?: Record<string, string>;
 }
 const rawModelItemTemplateSchema: Joi.Schema<RawModelItemTemplate> = rawModelItemSchema.append({
   card: Joi.string().required(),
   contentType: Joi.valid('text').optional(),
   face: Joi.valid('Back', 'Front').required(),
+  locals: Joi.object().pattern(Joi.string(), Joi.string()).optional(),
   model: Joi.string().required(),
   type: Joi.valid('template').required(),
 });
@@ -40,6 +46,8 @@ export default class ModelItemTemplate extends ModelItem<string> {
   public readonly card: string;
   public readonly face: 'Back' | 'Front';
 
+  private readonly locals?: Record<string, string>;
+
   /**
    * @param raw Must be RawModelItemTemplate
    */
@@ -51,6 +59,7 @@ export default class ModelItemTemplate extends ModelItem<string> {
     this.model = source.model;
     this.card = source.card;
     this.face = source.face;
+    this.locals = source.locals;
   }
 
   public async getAnki (): Promise<string | null> {
@@ -61,8 +70,11 @@ export default class ModelItemTemplate extends ModelItem<string> {
     });
   }
 
-  public async getCompiledPug (): Promise<string> {
-    return todo() as any;
+  public async getCompiledPug (syncer?: TaskSyncer): Promise<string> {
+    if (!this.src.endsWith('.pug')) throw new Error(`Impossible de récupérer le code html de ce template <${this.src}>, seuls les fichier .pug sont admis.`);
+    const pugFile = new PugFile(this.src, this.name);
+    const compileTemplate = await pugFile.compile(syncer);
+    return compileTemplate(this.locals);
   }
 
   public async setAnki (data: string): Promise<void> {

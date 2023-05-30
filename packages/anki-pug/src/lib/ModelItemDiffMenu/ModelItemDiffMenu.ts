@@ -56,7 +56,7 @@ export default class ModelItemDiffMenu extends Menu<ModelItemPair> {
     const item = this.getModelItem();
     return (await Promise.all([
       item.getAnki(),
-      item.getCompiledPug(),
+      item.getCompiledPug(this.syncer),
     ])) as ModelItemPair;
   }
 }

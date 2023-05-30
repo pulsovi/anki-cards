@@ -1,5 +1,6 @@
 import type AnkiConnect from 'anki-connect';
 import Joi from 'joi';
+import type TaskSyncer from 'task-syncer';
 
 /** The type a model item can be */
 export type ModelItemType = Buffer | string;
@@ -67,7 +68,7 @@ export default abstract class ModelItem<T extends ModelItemType = ModelItemType>
   }
 
   /** Return the compiled contents of the pug version of this model item */
-  public abstract getCompiledPug (): Promise<T>;
+  public abstract getCompiledPug (syncer?: TaskSyncer): Promise<T>;
 
   /**
    * Assign in Anki the provided content for this item
