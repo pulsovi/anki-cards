@@ -43,7 +43,7 @@ export default class ModelItemFactory {
     );
 
     cases[cases.length - 1].otherwise = rawModelItemSchema;
-    return Joi.alternatives().conditional('type', { 'switch': cases }).required();
+    return Joi.alternatives().conditional('.type', { 'switch': cases }).required();
   }
 
   /**

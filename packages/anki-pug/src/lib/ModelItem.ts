@@ -8,7 +8,7 @@ type ShallowCopy<T> = { [K in keyof T]: T[K] };
 
 /** A concrete extension of ModelItem class */
 export type ModelItemConcrete = ShallowCopy<typeof ModelItem> &
-(new (raw: RawModelItem, options: ModelItemOptions) => ModelItem);
+(new (raw: unknown, options: ModelItemOptions) => ModelItem);
 
 export interface RawModelItem {
 

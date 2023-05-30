@@ -6,15 +6,16 @@ import type { ModelItemOptions, RawModelItem } from './ModelItem';
 import { todo } from './util/todo';
 
 interface RawModelItemMedia extends RawModelItem {
+
   /** path of the media source file */
   src: string;
 
   /** content type of the file */
   contentType?: 'binary' | 'text';
 }
-const rawModelItemMediaSchema = rawModelItemSchema.append({
-  type: Joi.valid('media').required(),
+const rawModelItemMediaSchema: Joi.Schema<RawModelItemMedia> = rawModelItemSchema.append({
   contentType: Joi.valid('binary', 'text').optional(),
+  type: Joi.valid('media').required(),
 });
 
 export default class ModelItemMedia extends ModelItem<Buffer> {
@@ -25,12 +26,15 @@ export default class ModelItemMedia extends ModelItem<Buffer> {
   public readonly src: string;
   public readonly contentType: 'binary' | 'text';
 
-  public constructor (raw: RawModelItemMedia, options: ModelItemOptions) {
-    Joi.assert(raw, rawModelItemMediaSchema);
+  /**
+   * @param raw Must be RawModelItemMedia
+   */
+  public constructor (raw: unknown, options: ModelItemOptions) {
+    const source = Joi.attempt(raw, rawModelItemMediaSchema);
     super(options);
-    this.name = raw.name;
-    this.src = raw.src;
-    this.contentType = raw.contentType ?? 'binary';
+    this.name = source.name;
+    this.src = source.src;
+    this.contentType = source.contentType ?? 'binary';
   }
 
   public async getAnki (): Promise<Buffer | null> {

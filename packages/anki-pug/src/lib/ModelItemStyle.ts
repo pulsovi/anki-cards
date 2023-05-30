@@ -12,7 +12,7 @@ interface RawModelItemStyle extends RawModelItem {
   /** content type of the file */
   contentType?: 'text';
 }
-const rawModelItemStyleSchema = rawModelItemSchema.append({
+const rawModelItemStyleSchema: Joi.Schema<RawModelItemStyle> = rawModelItemSchema.append({
   contentType: Joi.valid('text').optional(),
   type: Joi.valid('style').required(),
 });
@@ -25,11 +25,14 @@ export default class ModelItemStyle extends ModelItem<string> {
   public readonly src: string;
   public readonly contentType = 'text';
 
-  public constructor (raw: RawModelItemStyle, options: ModelItemOptions) {
-    Joi.assert(raw, rawModelItemStyleSchema);
+  /**
+   * @param raw Must be RawModelItemStyle
+   */
+  public constructor (raw: unknown, options: ModelItemOptions) {
+    const source = Joi.attempt(raw, rawModelItemStyleSchema);
     super(options);
-    this.name = raw.name;
-    this.src = raw.src;
+    this.name = source.name;
+    this.src = source.src;
   }
 
   public async getAnki (): Promise<string | null> {
