@@ -4,6 +4,7 @@ import type ModelItem from '../ModelItem';
 import type ModelItemDiffManager from '../ModelItemDiffManager';
 import type { TaskSyncer } from '../util';
 
+import ErrorHandler from './ErrorHandler';
 import type ModelItemDiffMenuItem from './ModelItemDiffMenuItem';
 import NewlineAtEofFilter from './NewlineAtEofFilter';
 import No from './No';
@@ -20,6 +21,7 @@ const items: (new (menu: ModelItemDiffMenu) => ModelItemDiffMenuItem)[] = [
 
   // sync responses
   NoDiffResponse,
+  ErrorHandler,
 
   // choices
   No,

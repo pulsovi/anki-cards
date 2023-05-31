@@ -62,12 +62,12 @@ export default class ModelItemTemplate extends ModelItem<string> {
     this.locals = source.locals;
   }
 
-  public async getAnki (): Promise<string | null> {
+  public async getAnki (): Promise<Error | string | null> {
     return await this.ankiConnection.cardFieldTemplates({
       cardName: this.card,
       field: this.face,
       modelName: this.model,
-    });
+    }).catch(error => error as Error);
   }
 
   public async getCompiledPug (syncer?: TaskSyncer): Promise<string> {

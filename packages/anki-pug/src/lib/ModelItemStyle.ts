@@ -35,7 +35,7 @@ export default class ModelItemStyle extends ModelItem<string> {
     this.src = source.src;
   }
 
-  public async getAnki (): Promise<string | null> {
+  public async getAnki (): Promise<string | Error | null> {
     return todo() as any;
   }
 

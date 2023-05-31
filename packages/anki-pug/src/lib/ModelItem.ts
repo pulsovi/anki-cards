@@ -82,5 +82,5 @@ export default abstract class ModelItem<T extends ModelItemType = ModelItemType>
    *
    * @return The Anki content for this model item if found, null otherwise
    */
-  public abstract getAnki (): Promise<T | null>;
+  public abstract getAnki (): Promise<T | Error | null>;
 }
