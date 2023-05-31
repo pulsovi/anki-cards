@@ -1,3 +1,6 @@
+import path from 'path';
+
+import fs from 'fs-extra';
 import Joi from 'joi';
 
 import ModelItem, { rawModelItemSchema } from './ModelItem';
@@ -11,9 +14,13 @@ interface RawModelItemStyle extends RawModelItem {
 
   /** content type of the file */
   contentType?: 'text';
+
+  /** Name of the model containing this template */
+  model: string;
 }
 const rawModelItemStyleSchema: Joi.Schema<RawModelItemStyle> = rawModelItemSchema.append({
   contentType: Joi.valid('text').optional(),
+  model: Joi.string().required(),
   type: Joi.valid('style').required(),
 });
 
@@ -24,6 +31,7 @@ export default class ModelItemStyle extends ModelItem<string> {
   public readonly name: string;
   public readonly src: string;
   public readonly contentType = 'text';
+  public readonly model: string;
 
   /**
    * @param raw Must be RawModelItemStyle
@@ -32,15 +40,18 @@ export default class ModelItemStyle extends ModelItem<string> {
     const source = Joi.attempt(raw, rawModelItemStyleSchema);
     super(options);
     this.name = source.name;
+    this.model = source.model;
     this.src = source.src;
   }
 
   public async getAnki (): Promise<string | Error | null> {
-    return todo() as any;
+    return await this.ankiConnection.getCSS({ modelName: this.model })
+      .catch(error => error);
   }
 
   public async getCompiledPug (): Promise<string> {
-    return todo() as any;
+    if (path.extname(this.src) === '.css') return await fs.readFile(this.src, 'utf8');
+    throw new Error(`Impossible de compiler ce type de fichier ${this.src}`);
   }
 
   public async setAnki (data: string): Promise<void> {
