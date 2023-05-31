@@ -24,7 +24,7 @@ export default class Menu<Data> {
     const filteredData = await this.filterData(data);
     const syncResponse = this.getSyncResponse(filteredData);
 
-    if (!syncResponse && this.syncer) {
+    if (this.syncer) {
       const canPrompt = await this.syncer.ready.then(() => true, () => false);
       if (!canPrompt) return;
     }
