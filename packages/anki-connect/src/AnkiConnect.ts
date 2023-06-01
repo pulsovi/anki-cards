@@ -5,18 +5,7 @@
 import axios from 'axios';
 import TaskSyncer from 'task-syncer';
 
-import type {
-  BaseAPI,
-  CardTemplate,
-  MediaFileAPI,
-  ModelTemplates,
-  ModelTemplatesAPI,
-  ModelStylingAPI,
-  RequestParameters,
-  RequestPermissionAPI,
-  RequestResponse,
-  RequestResult,
-} from './API.d';
+import type * as API from './API.d';
 import { todo } from './util';
 
 export default class AnkiConnect {
@@ -41,18 +30,19 @@ export default class AnkiConnect {
    * returning null if the file does not exist.
    */
   public async retrieveMediaFile (params: { filename: string }): Promise<Buffer | null> {
-    const base64 = await this.requestAPI<MediaFileAPI>({ action: 'retrieveMediaFile', params });
+    const base64 = await this.requestAPI<API.MediaFileAPI>({ action: 'retrieveMediaFile', params });
     if (!base64) return null;
     return Buffer.from(base64, 'base64');
   }
 
-  public async cardFieldTemplates ({ cardName, field, modelName }: {
+  /** Get the template of one side of a model card */
+  public async cardSideTemplates ({ cardName, side, modelName }: {
     modelName: string;
     cardName: string;
-    field: 'Back' | 'Front';
+    side: 'Back' | 'Front';
   }): Promise<string> {
     const cardTemplates = await this.cardTemplates({ cardName, modelName });
-    return cardTemplates[field];
+    return cardTemplates[side];
   }
 
   public async getCSS (options: { modelName: string }): Promise<string> {
@@ -60,38 +50,61 @@ export default class AnkiConnect {
   }
 
   public async modelStyling ({ modelName }: { modelName: string }): Promise<string> {
-    const response = await this.requestAPI<ModelStylingAPI>(
+    const response = await this.requestAPI<API.ModelStylingAPI>(
       { action: 'modelStyling', params: { modelName }}
     );
     return response.css;
   }
 
+  /**
+   * Returns an object indicating the template content for the provided card by
+   * name connected to the provided model by name.
+   */
   public async cardTemplates ({ cardName, modelName }: {
     modelName: string;
     cardName: string;
-  }): Promise<CardTemplate> {
+  }): Promise<API.CardTemplate> {
     const modelTemplates = await this.modelTemplates({ modelName });
     if (cardName in modelTemplates) return modelTemplates[cardName];
     throw new Error(`Unable to find card "${cardName}" in model "${modelName}".`);
   }
 
-  public async modelTemplates ({ modelName }: { modelName: string }): Promise<ModelTemplates> {
-    return await this.requestAPI<ModelTemplatesAPI>(
+  /**
+   * Returns an object indicating the template content for each card connected
+   * to the provided model by name.
+   */
+  public async modelTemplates (
+    { modelName }: { modelName: string }
+  ): Promise<API.ModelTemplates> {
+    return await this.requestAPI<API.ModelTemplatesAPI>(
       { action: 'modelTemplates', params: { modelName }}
     );
   }
 
-  /** Update one side of one template in one model */
-  public async updateModelTemplate (
-    { modelName, templateName, side, value }: {
+  /** Update all or part of templates of a model */
+  public async updateModelTemplates ({ modelName, cards }: {
+    modelName: string;
+    cards: API.PartialModelTemplates;
+  }): Promise<void> {
+    await this.requestAPI<API.UpdateModelTemplatesAPI>({
+      action: 'updateModelTemplates',
+      params: { model: {
+        name: modelName,
+        templates: cards,
+      }},
+    });
+  }
+
+  /** Update the template of one side of a model card */
+  public async updateCardSideTemplate (
+    { modelName, cardName, side, value }: {
       modelName: string;
-      templateName: string;
+      cardName: string;
       side: 'Back' | 'Front';
       value: string;
     }
   ): Promise<void> {
-    await Promise.resolve(todo({ modelName, templateName, side, value }, this));
-    // AnkiConnect method: updateModelTemplates
+    await this.updateModelTemplates({ modelName, cards: { [cardName]: { [side]: value }}});
   }
 
   private async requestAPI<T extends BaseAPI> (
@@ -120,19 +133,19 @@ export default class AnkiConnect {
     return result;
   }
 
-  private async request<T extends BaseAPI> (
-    parameters: RequestParameters<T>
-  ): Promise<RequestResult<T>> {
+  private async request<T extends API.BaseAPI> (
+    parameters: API.RequestParameters<T>
+  ): Promise<API.RequestResult<T>> {
     const response = await axios
       .post(this.url, JSON.stringify({ ...parameters, version: this.version }))
       .catch((err: Error) => { throw new Error(err.message); });
-    const { error, result } = response.data as RequestResponse<T>;
+    const { error, result } = response.data as API.RequestResponse<T>;
 
     if (error === null) return result;
     throw new Error(error);
   }
 
-  private async requestPermission (): Promise<RequestResult<RequestPermissionAPI>> {
-    return await this.request<RequestPermissionAPI>({ action: 'requestPermission' });
+  private async requestPermission (): Promise<API.RequestResult<API.RequestPermissionAPI>> {
+    return await this.request<API.RequestPermissionAPI>({ action: 'requestPermission' });
   }
 }

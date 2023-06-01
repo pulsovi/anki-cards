@@ -13,12 +13,35 @@ export interface CardTemplate {
   /* eslint-enable @typescript-eslint/naming-convention */
 }
 
+export type ModelTemplates = Record<string, CardTemplate>;
+export type PartialModelTemplates = Record<string, Partial<CardTemplate>>;
+
+export interface MediaFileAPI extends BaseAPI {
+  request: {
+    action: 'retrieveMediaFile';
+    params: {
+      filename: string;
+    };
+  };
+  result: string;
+}
+
 export interface ModelStylingAPI extends BaseAPI {
   request: {
     action: 'modelStyling';
     params: { modelName: string };
   };
   result: { css: string };
+}
+
+export interface ModelTemplatesAPI extends BaseAPI {
+  request: {
+    action: 'modelTemplates';
+    params: {
+      modelName: string;
+    };
+  };
+  result: ModelTemplates;
 }
 
 export interface RequestPermissionAPI extends BaseAPI {
@@ -34,26 +57,16 @@ export interface RequestPermissionAPI extends BaseAPI {
   };
 }
 
-export type ModelTemplates = Record<string, CardTemplate>;
-
-export interface ModelTemplatesAPI extends BaseAPI {
+export interface UpdateModelTemplatesAPI extends BaseAPI {
   request: {
-    action: 'modelTemplates';
+    action: 'updateModelTemplates';
     params: {
-      modelName: string;
+      model: {
+        name: string;
+        templates: PartialModelTemplates;
+      };
     };
   };
-  result: ModelTemplates;
-}
-
-export interface MediaFileAPI extends BaseAPI {
-  request: {
-    action: 'retrieveMediaFile';
-    params: {
-      filename: string;
-    };
-  };
-  result: string;
 }
 
 export type AllAPI = ModelStylingAPI | ModelTemplatesAPI | RequestPermissionAPI;
