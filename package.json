@@ -4,6 +4,7 @@
     "packages/*"
   ],
   "devDependencies": {
+    "eslint_d": "^12.2.1",
     "husky": "^7.0.0",
     "lint-staged": "^13.2.2"
   },

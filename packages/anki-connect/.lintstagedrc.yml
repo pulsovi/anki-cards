@@ -1,8 +1,8 @@
 "**/*.js":
-  - "yarn eslint --fix"
+  - "yarn eslint_d --fix"
 "**/*.test.ts":
-  - "yarn eslint --fix"
+  - "yarn eslint_d --fix"
   - "yarn jest --bail"
 "**/*!(test).ts":
-  - "yarn eslint --fix"
+  - "yarn eslint_d --fix"
   - "yarn jest --bail --findRelatedTests --passWithNoTests"

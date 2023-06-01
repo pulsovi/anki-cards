@@ -1,2 +1,2 @@
 "./*.js":
-  - "eslint --fix"
+  - "eslint_d --fix"
