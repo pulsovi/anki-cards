@@ -6,7 +6,6 @@ import axios from 'axios';
 import TaskSyncer from 'task-syncer';
 
 import type * as API from './API.d';
-import { todo } from './util';
 
 export default class AnkiConnect {
   private readonly url: string;
@@ -107,30 +106,21 @@ export default class AnkiConnect {
     await this.updateModelTemplates({ modelName, cards: { [cardName]: { [side]: value }}});
   }
 
-  private async requestAPI<T extends BaseAPI> (
-    parameters: RequestParameters<T>
-  ): Promise<RequestResult<T>> {
+  private async requestAPI<T extends API.BaseAPI> (
+    parameters: API.RequestParameters<T>
+  ): Promise<API.RequestResult<T>> {
     if (parameters.action === 'requestPermission')
       throw new Error('Do not use "requestAPI" for "requestPermission", use "request" instead.');
-    const ticket = this.syncer.getTicket(parameters.action);
-    await ticket.ready;
-    const permission = await this.requestPermission().catch(err => {
-      ticket.close();
-      throw err;
-    });
-
-    if (permission.permission === 'denied') {
-      ticket.close();
-      throw new Error('AnkiConnect permission denied');
-    }
-    if (permission.requireApikey) {
-      ticket.close();
-      return todo('AnkiConnect require API key') as RequestResult<T>;
-    }
-
-    const result = await this.request(parameters);
-    ticket.close();
-    return result;
+    const response = await this.syncer.enqueue(async () => {
+      const permission = await this.requestPermission();
+      if (permission.permission === 'denied')
+        throw new Error('AnkiConnect permission denied');
+      if (permission.requireApikey)
+        throw new Error('AnkiConnect Error; TODO: require API key');
+      const result = await this.request<T>(parameters);
+      return result;
+    }, parameters.action);
+    return response;
   }
 
   private async request<T extends API.BaseAPI> (
