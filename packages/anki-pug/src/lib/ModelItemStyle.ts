@@ -44,9 +44,9 @@ export default class ModelItemStyle extends ModelItem<string> {
     this.src = source.src;
   }
 
-  public async getAnki (): Promise<string | Error | null> {
+  public async getAnki (): Promise<Error | string | null> {
     return await this.ankiConnection.getCSS({ modelName: this.model })
-      .catch(error => error);
+      .catch(error => error as Error);
   }
 
   public async getCompiledPug (): Promise<string> {

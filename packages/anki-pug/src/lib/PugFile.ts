@@ -13,6 +13,7 @@ export default class PugFile {
   }
 
   public async compile (_syncer?: TaskSyncer): Promise<compileTemplate> {
-    return await Promise.resolve(compileFile(this.pugFile));
+    const result = compileFile(this.pugFile);
+    return await Promise.resolve(result);
   }
 }

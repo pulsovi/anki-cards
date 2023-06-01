@@ -1,13 +1,10 @@
 import inquirer from 'inquirer';
 import type { ExpandChoiceOptions, ExpandQuestion } from 'inquirer';
+import type TaskSyncer from 'task-syncer';
 
 import type { SyncOrPromise } from '../types';
 
 import type MenuItem from './MenuItem';
-
-interface TaskSyncer {
-  ready: Promise<void>;
-}
 
 export default class Menu<Data> {
   protected items: MenuItem<Data>[] = [];
@@ -73,8 +70,7 @@ export default class Menu<Data> {
 
   protected async getResponse (data: Data | null): Promise<MenuItem<Data>> {
     const question = this.getQuestion(data);
-    const inquirerPromise = inquirer.prompt(question);
-    const response = await inquirerPromise.then(choice => choice.value);
+    const response = await inquirer.prompt(question).then(choice => choice.value);
     return response;
   }
 

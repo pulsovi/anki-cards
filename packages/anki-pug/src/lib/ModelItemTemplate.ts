@@ -21,7 +21,7 @@ interface RawModelItemTemplate extends RawModelItem {
   card: string;
 
   /** Face of the card */
-  face: 'Back' | 'Front';
+  side: 'Back' | 'Front';
 
   /** Locals to use when render the pug template */
   locals?: Record<string, string>;
@@ -29,9 +29,9 @@ interface RawModelItemTemplate extends RawModelItem {
 const rawModelItemTemplateSchema: Joi.Schema<RawModelItemTemplate> = rawModelItemSchema.append({
   card: Joi.string().required(),
   contentType: Joi.valid('text').optional(),
-  face: Joi.valid('Back', 'Front').required(),
   locals: Joi.object().pattern(Joi.string(), Joi.string()).optional(),
   model: Joi.string().required(),
+  side: Joi.valid('Back', 'Front').required(),
   type: Joi.valid('template').required(),
 });
 
@@ -44,7 +44,7 @@ export default class ModelItemTemplate extends ModelItem<string> {
   public readonly contentType = 'text';
   public readonly model: string;
   public readonly card: string;
-  public readonly face: 'Back' | 'Front';
+  public readonly side: 'Back' | 'Front';
 
   private readonly locals?: Record<string, string>;
 
@@ -58,15 +58,15 @@ export default class ModelItemTemplate extends ModelItem<string> {
     this.src = source.src;
     this.model = source.model;
     this.card = source.card;
-    this.face = source.face;
+    this.side = source.side;
     this.locals = source.locals;
   }
 
   public async getAnki (): Promise<Error | string | null> {
-    return await this.ankiConnection.cardFieldTemplates({
-      cardName: this.card,
-      field: this.face,
+    return await this.ankiConnection.cardSideTemplates({
       modelName: this.model,
+      cardName: this.card,
+      side: this.side,
     }).catch(error => error as Error);
   }
 
@@ -78,6 +78,11 @@ export default class ModelItemTemplate extends ModelItem<string> {
   }
 
   public async setAnki (data: string): Promise<void> {
-    return todo() as any;
+    await this.ankiConnection.updateCardSideTemplate({
+      modelName: this.model,
+      cardName: this.card,
+      side: this.side,
+      value: data,
+    });
   }
 }
