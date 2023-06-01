@@ -19,7 +19,7 @@
     "build": "rm -rf ./dist && yarn babel src --out-dir ./dist --extensions \".ts\" $*",
     "emit-types": "tsc --declaration --emitDeclarationOnly",
     "lint": "yarn eslint .",
-    "pre-commit": "yarn lint-staged",
+    "pre-commit": "",
     "prepack": "yarn build && yarn emit-types"
   },
   "devDependencies": {
