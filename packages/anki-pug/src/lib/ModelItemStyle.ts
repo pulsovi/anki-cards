@@ -5,7 +5,6 @@ import Joi from 'joi';
 
 import ModelItem, { rawModelItemSchema } from './ModelItem';
 import type { ModelItemOptions, RawModelItem } from './ModelItem';
-import { todo } from './util/todo';
 
 interface RawModelItemStyle extends RawModelItem {
 
@@ -55,6 +54,6 @@ export default class ModelItemStyle extends ModelItem<string> {
   }
 
   public async setAnki (data: string): Promise<void> {
-    return todo() as any;
+    await this.ankiConnection.updateModelStyling({ modelName: this.model, css: data });
   }
 }

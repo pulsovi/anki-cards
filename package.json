@@ -12,10 +12,7 @@
     "commit-msg": "npm-run-all \"commit-msg:\\* -- $@\"",
     "commit-msg:anki-pug": "cd packages/anki-pug && yarn commit-msg",
     "postinstall": "yarn husky install",
-    "pre-commit": "npm-run-all pre-commit:\\*",
-    "pre-commit:_": "lint-staged",
-    "pre-commit:anki-connect": "cd packages/anki-connect && yarn pre-commit",
-    "pre-commit:anki-pug": "cd packages/anki-pug && yarn pre-commit"
+    "pre-commit": "lint-staged"
   },
   "resolutions": {
     "task-syncer": "portal:../../task-syncer",

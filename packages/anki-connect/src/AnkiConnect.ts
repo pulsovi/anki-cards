@@ -1,6 +1,6 @@
 /*
  * https://github.com/FooSoft/anki-connect/blob/master/README.md
- * https://foosoft.net/projects/anki-connect/index.html
+ * API: https://foosoft.net/projects/anki-connect/index.html
  */
 import axios from 'axios';
 import TaskSyncer from 'task-syncer';
@@ -53,6 +53,17 @@ export default class AnkiConnect {
       { action: 'modelStyling', params: { modelName }}
     );
     return response.css;
+  }
+
+  /**
+   * Modify the CSS styling of an existing model by name.
+   */
+  public async updateModelStyling (
+    { modelName, css }: { modelName: string; css: string }
+  ): Promise<void> {
+    await this.requestAPI<API.UpdateModelStylingAPI>(
+      { action: 'updateModelStyling', params: { model: { name: modelName, css }}}
+    );
   }
 
   /**

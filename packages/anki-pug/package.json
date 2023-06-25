@@ -19,7 +19,6 @@
     "commit-msg": "yarn fix-with-test",
     "debug-tests": "yarn node --stack-trace-limit=100 --trace-warnings --async-stack-traces $(yarn bin jest)",
     "lint": "yarn eslint .",
-    "pre-commit": "",
     "prepack": "yarn build",
     "test": "jest"
   },

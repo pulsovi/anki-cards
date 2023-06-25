@@ -4,7 +4,6 @@ import type TaskSyncer from 'task-syncer';
 import ModelItem, { rawModelItemSchema } from './ModelItem';
 import type { ModelItemOptions, RawModelItem } from './ModelItem';
 import PugFile from './PugFile';
-import { todo } from './util/todo';
 
 interface RawModelItemTemplate extends RawModelItem {
 
@@ -24,12 +23,15 @@ interface RawModelItemTemplate extends RawModelItem {
   side: 'Back' | 'Front';
 
   /** Locals to use when render the pug template */
-  locals?: Record<string, string>;
+  locals?: Record<string, number | string>;
 }
 const rawModelItemTemplateSchema: Joi.Schema<RawModelItemTemplate> = rawModelItemSchema.append({
   card: Joi.string().required(),
   contentType: Joi.valid('text').optional(),
-  locals: Joi.object().pattern(Joi.string(), Joi.string()).optional(),
+  locals: Joi.object().pattern(
+    Joi.string(),
+    Joi.alternatives(Joi.string(), Joi.number())
+  ).optional(),
   model: Joi.string().required(),
   side: Joi.valid('Back', 'Front').required(),
   type: Joi.valid('template').required(),

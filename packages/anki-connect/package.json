@@ -17,9 +17,8 @@
   },
   "scripts": {
     "build": "rm -rf ./dist && yarn babel src --out-dir ./dist --extensions \".ts\" $*",
-    "emit-types": "tsc --declaration --emitDeclarationOnly",
+    "emit-types": "rm -rf ./types && tsc --project tsconfig.types.json",
     "lint": "yarn eslint .",
-    "pre-commit": "",
     "prepack": "yarn build && yarn emit-types"
   },
   "devDependencies": {

@@ -34,6 +34,13 @@ export interface ModelStylingAPI extends BaseAPI {
   result: { css: string };
 }
 
+export interface UpdateModelStylingAPI extends BaseAPI {
+  request: {
+    action: 'updateModelStyling';
+    params: { model: { name: string; css: string }};
+  };
+}
+
 export interface ModelTemplatesAPI extends BaseAPI {
   request: {
     action: 'modelTemplates';
