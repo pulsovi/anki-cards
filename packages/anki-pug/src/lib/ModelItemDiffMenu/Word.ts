@@ -16,6 +16,7 @@ export default class Word extends ModelItemDiffMenuItem {
   }
 
   public async act (data: ModelItemPair): Promise<boolean> {
+    if (!this.canAct(data)) throw new Error('Cannot act on this data');
     const [rawOutput, compiledPug] = data.map(modelItemToString);
     const diffString = diffWordsWithSpace(rawOutput, compiledPug).reduce((reduced: string, chunk) => {
       if (chunk.added || chunk.removed) {
@@ -46,7 +47,15 @@ export default class Word extends ModelItemDiffMenuItem {
   ): (ExpandChoiceOptions & { value: ModelItemDiffMenuItem }) | null {
     const modelItem = this.menu.getModelItem();
     if (modelItem.contentType !== 'text') return null;
-    if (!data || !data[0] || !data[1]) return null;
+    if (!this.canAct(data)) return null;
     return super.getChoice(data);
+  }
+
+  private canAct (data: unknown): data is [Buffer | string, Buffer | string] {
+    return (
+      Array.isArray(data) &&
+      data.length === 2 &&
+      data.every(item => typeof item === 'string' || item instanceof Buffer)
+    );
   }
 }
