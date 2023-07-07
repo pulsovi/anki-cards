@@ -58,6 +58,9 @@ export default abstract class ModelItem<T extends ModelItemType = ModelItemType>
   /** The name of this item, such "Card1_recto" or "background_img", ... */
   public abstract readonly name: string;
 
+  /** The source file of this item */
+  public abstract readonly src: string;
+
   public constructor (options: ModelItemOptions) {
     this.ankiConnection = options.ankiConnection;
   }
@@ -82,5 +85,5 @@ export default abstract class ModelItem<T extends ModelItemType = ModelItemType>
    *
    * @return The Anki content for this model item if found, null otherwise
    */
-  public abstract getAnki (): Promise<T | Error | null>;
+  public abstract getAnki (): Promise<Error | T | null>;
 }

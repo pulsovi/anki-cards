@@ -11,6 +11,7 @@ import No from './No';
 import NoDiffResponse from './NoDiffResponse';
 import Overwrite from './Overwrite';
 import Quit from './Quit';
+import Source from './Source';
 import Word from './Word';
 
 import type { ModelItemPair } from '.';
@@ -26,6 +27,7 @@ const items: (new (menu: ModelItemDiffMenu) => ModelItemDiffMenuItem)[] = [
   // choices
   No,
   Overwrite,
+  Source,
   Word,
   Quit,
 ];
