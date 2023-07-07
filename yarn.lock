@@ -2890,11 +2890,11 @@ __metadata:
     axios: ^0.27.2
     core-js: ^3.22.8
     eslint: ^8.17.0
-    eslint-config-pulsovi-typescript: ^0.3.13
+    eslint-config-pulsovi-typescript: ^0.5.0
     eslint_d: ^12.2.1
     jest: ^29.5.0
     lint-staged: ^13.2.2
-    task-syncer: ^0.1.0
+    task-syncer: ^0.2.0
     typescript: ^4.7.3
   languageName: unknown
   linkType: soft
@@ -2939,7 +2939,7 @@ __metadata:
     debug: ^4.3.4
     diff: ^5.0.0
     eslint: ^8.8.0
-    eslint-config-pulsovi-typescript: ^0.3.13
+    eslint-config-pulsovi-typescript: ^0.5.0
     eslint_d: ^12.2.1
     fs-extra: ^10.0.1
     inquirer: ^8.2.1
@@ -2954,7 +2954,7 @@ __metadata:
     rc: ^1.2.8
     read-pkg-up: ^7.0.0
     readdirp: ^3.6.0
-    task-syncer: ^0.1.2
+    task-syncer: ^0.2.0
     typescript: ^4.5.5
   bin:
     anki-pug: bin/anki-pug.js
@@ -4138,41 +4138,41 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-pulsovi-node@npm:0.2.4":
-  version: 0.2.4
-  resolution: "eslint-config-pulsovi-node@npm:0.2.4"
+"eslint-config-pulsovi-node@npm:0.3.0":
+  version: 0.3.0
+  resolution: "eslint-config-pulsovi-node@npm:0.3.0"
   dependencies:
-    eslint-config-pulsovi: 3.9.2
+    eslint-config-pulsovi: 3.10.0
     eslint-plugin-node: ^11.1.0
   peerDependencies:
     eslint: ^7.29.0 || ^8.0.0
-  checksum: 998b1e645d509172d4229c379b89cc28dd528c3bd65f5afb63ec40906f008b8174919f8252f73ca4c0a2cceca2cd3d1845e065594085a462754ef5d042a52ed7
+  checksum: e489441424e93728d0f99afb2de74e090ac3a16477fa0128ab14b594c18c4d33a5da2d9542635499fc3cd3968127b7de8df32262b745c58c42b60a613941fd6a
   languageName: node
   linkType: hard
 
-"eslint-config-pulsovi-typescript@npm:^0.3.13":
-  version: 0.3.13
-  resolution: "eslint-config-pulsovi-typescript@npm:0.3.13"
+"eslint-config-pulsovi-typescript@npm:^0.5.0":
+  version: 0.5.0
+  resolution: "eslint-config-pulsovi-typescript@npm:0.5.0"
   dependencies:
     "@typescript-eslint/eslint-plugin": ^5.11.0
-    eslint-config-pulsovi-node: 0.2.4
+    eslint-config-pulsovi-node: 0.3.0
     eslint-import-resolver-typescript: ^2.4.0
     eslint-plugin-import: "*"
   peerDependencies:
     "@typescript-eslint/parser": ^5.11.0
     eslint: ^7.29.0 || ^8.0.0
     typescript: "*"
-  checksum: a86801e64f459599a6a9ffdbe7e4437712df103ca029740ad79dd77a2a2f252d0267b027800e9cd01e04b77aa275140c21ac223ffa21d58c9c259cc9c6ff80af
+  checksum: b0da42e6a35213c899b9d92419e557a460df9854efa9d162e839d099e8e0b4aca7f31e7d46bfe1f52c590764fea0beabdbbdb3b206c67f331139d3b608ab034f
   languageName: node
   linkType: hard
 
-"eslint-config-pulsovi@npm:3.9.2":
-  version: 3.9.2
-  resolution: "eslint-config-pulsovi@npm:3.9.2"
+"eslint-config-pulsovi@npm:3.10.0":
+  version: 3.10.0
+  resolution: "eslint-config-pulsovi@npm:3.10.0"
   dependencies:
     eslint-config-airbnb-base: ^15.0.0
     eslint-plugin-import: ^2.26.0
-    eslint-plugin-pulsovi: 0.1.6
+    eslint-plugin-pulsovi: 0.1.7
   peerDependencies:
     eslint: ^7.29.0 || ^8.0.0
     eslint-config-pulsovi-browser: "*"
@@ -4191,7 +4191,7 @@ __metadata:
       optional: true
     eslint-config-pulsovi-react:
       optional: true
-  checksum: 02b7d03b9d484a3fab330beedfe179178ef2aa044ee204200349d11c35af1903aa52f3e2f6d9afdffda3c61560e73bacc176ae820714ab1a7d779eec2b525525
+  checksum: 22d3df38fc7d0bb37fafc1284d85d5daa3e901e8b5c388d2b9d3283b5419356662539ad68d2de1e6e51165b7e24e8cc132a38b7ae1756ac9ea1186156f2d8d23
   languageName: node
   linkType: hard
 
@@ -4282,14 +4282,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-pulsovi@npm:0.1.6":
-  version: 0.1.6
-  resolution: "eslint-plugin-pulsovi@npm:0.1.6"
+"eslint-plugin-pulsovi@npm:0.1.7":
+  version: 0.1.7
+  resolution: "eslint-plugin-pulsovi@npm:0.1.7"
   dependencies:
     debug: ^4.3.1
   peerDependencies:
     eslint: ^7.29.0 || ^8.0.0
-  checksum: f20351ec0fb9a88917baa21350989316a6cf1d275af6d8901a69f94eba8054478752f1ffd79f71c69838f5ad47b6500dde64c6f39c84190e39424ef2eab7a215
+  checksum: 54e00132798ce3550b61290c52e79e434aa025f535be4a16e7e4a14d821d57c263b6746f569fb660892aa5848abdddcb6e5237f6538ca699a6fd635b0ed556cb
   languageName: node
   linkType: hard
 
