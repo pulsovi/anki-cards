@@ -32,34 +32,43 @@ describe('ModelItemDiffManager', () => {
     it('wait for template name prompted before resolve', async () => {
       // Arrange
       let prompted = false;
-      const templateLike = {
-        getAnki: async () => await Promise.resolve('same_text'),
-        getCompiledPug: async () => await Promise.resolve('same_text'),
-        getName: () => 'templateLike',
-      } as Partial<ModelItem> as ModelItem;
-      const modelDiffManagerLike = { isManageable: () => true } as unknown as ModelDiffManager;
+      let fullfilled = false;
+      let error: unknown = null;
       const templateDiffManagerLike = {
-        getModelItem: () => templateLike,
-        modelDiffManager: modelDiffManagerLike,
-        prompt: () => { prompted = true; },
-      } as unknown as ModelItemDiffManager;
+        getModelItem () {
+          return {
+            getAnki: async () => await Promise.resolve('same_text'),
+            getCompiledPug: async () => await Promise.resolve('same_text'),
+            getName: () => 'templateLike',
+          } as Partial<ModelItem> as ModelItem;
+        },
+        modelDiffManager: {
+          isManageable () { return false; },
+        } as Partial<ModelDiffManager> as ModelDiffManager,
+        prompt (): void { prompted = true; },
+      } as Partial<ModelItemDiffManager> as ModelItemDiffManager;
       const diffConfigLike = {} as DiffConfig;
       const syncer = new TaskSyncer('wait for template name prompted before resolve');
       const firstTicket = syncer.getTicket();
 
       // Act
-      // eslint-disable-next-line prefer-reflect
-      const processPromise = ModelItemDiffManager.prototype.process.apply(templateDiffManagerLike, [
-        diffConfigLike, syncer.getTicket(),
-      ]);
-      // laisser le temps à tout le code asynchrone ne dépendant pas du ticket de se dérouler
-      await new Promise(rs => { setTimeout(rs, 500); });
-      // permettre au prompt de se lancer
-      firstTicket.close();
-      // si le process n'a pas attendu le ticket, cette ligne s'executera de façon synchrone
-      await processPromise;
+      ModelItemDiffManager.prototype.process.bind(templateDiffManagerLike)(
+        diffConfigLike, syncer.getTicket()
+      ).then(() => { fullfilled = true; }, err => { error = err; });
 
       // Assert
+
+      // Si le prompt n'attend pas le ticket, ce bloc échouera
+      await new Promise(rs => { setTimeout(rs, 300); });
+      expect(fullfilled).toBe(false);
+      expect(error).toBeNull();
+      expect(prompted).toBe(false);
+
+      // si le ticket ne se déclenche pas, ce bloc échouera
+      firstTicket.close();
+      await new Promise(rs => { setTimeout(rs, 300); });
+      expect(fullfilled).toBe(true);
+      expect(error).toBeNull();
       expect(prompted).toBe(true);
     });
   });
