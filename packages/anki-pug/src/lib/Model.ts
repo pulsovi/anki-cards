@@ -55,7 +55,20 @@ export default class Model {
    * ModelItem in Raw and throw an error otherwise
    */
   private validateModule (moduleValue: RawModelItem[]): ValidationResult<RawModelItem[]> {
-    return Joi.array().items(...this.services.modelItemFactory.getRawSchemas()).validate(moduleValue);
+    const schema = Joi.array().items(this.services.modelItemFactory.getRawConditionalSchema());
+    const validation = schema.validate(moduleValue);
+
+    // Returning result with full error object (with call stack) if validate fail
+    if (validation.error) {
+      try {
+        Joi.assert(moduleValue, schema);
+      } catch (error) {
+        // Add the error stack
+        Object.assign(validation, { error });
+      }
+    }
+
+    return validation;
   }
 
   private async _getAllModelItems (syncer: TaskSyncer): Promise<ModelItem[]> {

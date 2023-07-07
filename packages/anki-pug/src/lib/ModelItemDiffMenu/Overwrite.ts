@@ -16,7 +16,7 @@ export default class Overwrite extends ModelItemDiffMenuItem {
   }
 
   public async act ([_anki, pug]: ModelItemPair): Promise<boolean> {
-    if (!pug) return !todo();
+    if (!pug || pug instanceof Error) return !todo();
     const modelItem = this.menu.getModelItem();
 
     await modelItem.setAnki(pug);

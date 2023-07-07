@@ -48,7 +48,7 @@ export default class ModelItemTemplate extends ModelItem<string> {
   public readonly card: string;
   public readonly side: 'Back' | 'Front';
 
-  private readonly locals?: Record<string, string>;
+  private readonly locals?: Record<string, number | string>;
 
   /**
    * @param raw Must be RawModelItemTemplate
