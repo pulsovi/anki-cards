@@ -10,6 +10,8 @@ import { diff } from './diff-command';
 import { test } from './test-command';
 import type { AnkiPugTestConfig } from './test-command';
 
+Error.stackTraceLimit = Infinity;
+
 debug.enable('anki-pug*');
 rootLogger('debug enabled from', __filename);
 
