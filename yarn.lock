@@ -4150,9 +4150,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-pulsovi-typescript@npm:^0.5.0":
-  version: 0.5.0
-  resolution: "eslint-config-pulsovi-typescript@npm:0.5.0"
+"eslint-config-pulsovi-typescript@npm:^0.6.0":
+  version: 0.6.0
+  resolution: "eslint-config-pulsovi-typescript@npm:0.6.0"
   dependencies:
     "@typescript-eslint/eslint-plugin": ^5.11.0
     eslint-config-pulsovi-node: 0.3.0
@@ -4162,7 +4162,7 @@ __metadata:
     "@typescript-eslint/parser": ^5.11.0
     eslint: ^7.29.0 || ^8.0.0
     typescript: "*"
-  checksum: b0da42e6a35213c899b9d92419e557a460df9854efa9d162e839d099e8e0b4aca7f31e7d46bfe1f52c590764fea0beabdbbdb3b206c67f331139d3b608ab034f
+  checksum: 2bf21a868162a788b1227bb495c96290fb3d7b4516083d6841162bd8437d0e04c0b3154c5e61927f262f66102580d11bb17b0aa9dbeb64d905ade3fd391738c4
   languageName: node
   linkType: hard
 

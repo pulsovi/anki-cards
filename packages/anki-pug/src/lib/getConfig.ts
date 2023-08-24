@@ -1,6 +1,4 @@
-import path from 'path';
-
-import Joi from 'joi';
+import type Joi from 'joi';
 import { load } from 'js-yaml';
 import rc from 'rc';
 
@@ -8,40 +6,13 @@ import { jsonClone } from './util';
 
 const appName = 'ankipug';
 
-export interface AnkiPugConfig {
-  ankiProfile: string;
-  configPath: string;
-  testsPath?: string;
-  modelsPath: string;
-}
-
-const schema = Joi.object({
-  ankiProfile: Joi.string().required(),
-  configPath: Joi.string(),
-  modelsPath: Joi.string().required(),
-  testsPath: Joi.string(),
-});
-
-const defaults = {};
-
-function defaultMap (config: Partial<AnkiPugConfig>): AnkiPugConfig {
-  const retVal = { ...config } as AnkiPugConfig;
-  if ('modelsPath' in retVal) {
-    if ('configPath' in retVal)
-      retVal.modelsPath = path.resolve(path.dirname(retVal.configPath), retVal.modelsPath);
-    else retVal.modelsPath = path.resolve(retVal.modelsPath);
-    if (!('testsPath' in retVal)) retVal.testsPath = path.join(retVal.modelsPath, '../tests');
-  }
-  return retVal;
-}
-
 class ValidationError extends Error {
   public constructor (error: Error, results: {
     _: unknown;
     __: unknown;
     argv: unknown;
     configs: string[] | undefined;
-    parsed: AnkiPugConfig;
+    parsed: object;
   }) {
     const { _, __, configs, parsed } = results;
     let message = 'There is an error in one of your config files, \n';
@@ -71,20 +42,33 @@ class ValidationError extends Error {
   }
 }
 
-export default function getConfig (
-  argv: object | null = null
-): AnkiPugConfig {
-  const rcResult = rc(appName, jsonClone(defaults), argv, loadYaml);
-  const { '--': __, _, config, configs, ...params } = rcResult;
+function getConfig<T> (argv: object | null, schema: Joi.AnySchema<T>, defaults?: object | ((raw: object) => object)): T;
+function getConfig<T> (argv: T): T;
+function getConfig (argv?: object | null): object;
+function getConfig<T> (
+  argv: object | null = null,
+  schema?: Joi.AnySchema<T>,
+  defaults?: object | ((raw: object) => object)
+): T | object {
+  const rcResult = rc(appName, jsonClone(defaults, true), argv, loadYaml);
+  const { '--': __, _, config, configs, ...rawResult } = rcResult;
 
-  if (config) params.configPath = config;
-  const parsed = defaultMap(params);
-  const { error } = schema.validate(params);
+  // add configPath
+  if (config) rawResult.configPath = config;
 
-  if (error) throw new ValidationError(error, { _, __, argv, configs, parsed });
+  // add defaults
+  let fullResult: object = rawResult;
+  if (defaults) {
+    if (typeof defaults !== 'object') fullResult = defaults(fullResult);
+    fullResult = { ...defaults, ...fullResult };
+  }
 
-  return parsed;
+  if (!schema) return fullResult;
+  const { error, value } = schema.validate(fullResult);
+  if (error) throw new ValidationError(error, { _, __, argv, configs, parsed: fullResult });
+  return value;
 }
+export default getConfig;
 
 function loadYaml (content: string): object {
   return load(content) as object;

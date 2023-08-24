@@ -1,5 +1,4 @@
-import path from 'path';
-
+import { ankiPugConfigSchema } from '../src/bin/diff-command';
 import getConfig from '../src/lib/getConfig';
 
 describe('getConfig', () => {
@@ -9,7 +8,7 @@ describe('getConfig', () => {
   });
 
   it('throw an error on incorrect configuration', () => {
-    expect(() => getConfig({ test: 'hello' })).toThrow();
+    expect(() => getConfig({ test: 'hello' }, ankiPugConfigSchema)).toThrow();
   });
 
   it('does not cache earlier calls', () => {
@@ -18,16 +17,16 @@ describe('getConfig', () => {
     expect(getConfig({ ankiProfile: 'foo', modelsPath: 'foo' })).toEqual(first);
   });
 
-  it('process well relative paths', () => {
+  it('do not process relative paths', () => {
     const config = getConfig({
       ankiProfile: 'foo',
       configPath: `${__dirname}/.coucourc`,
       modelsPath: './foo/models',
     });
-    expect(config.modelsPath).toBe(path.resolve(`${__dirname}/foo/models`));
+    expect(config.modelsPath).toBe('./foo/models');
   });
 
   it('requires ankiProfile', () => {
-    expect(() => getConfig({ modelsPath: 'foo' })).toThrow();
+    expect(() => getConfig({ modelsPath: 'foo' }, ankiPugConfigSchema)).toThrow();
   });
 });

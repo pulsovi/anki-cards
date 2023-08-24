@@ -2,10 +2,13 @@
 import { program } from 'commander';
 import debug from 'debug';
 
-import { diff, test } from '../lib';
 import { displayError } from '../lib/ErrorManager';
-import type { AnkiPugConfig } from '../lib/getConfig';
 import { rootLogger } from '../lib/util';
+
+import type { AnkiPugConfig } from './diff-command';
+import { diff } from './diff-command';
+import { test } from './test-command';
+import type { AnkiPugTestConfig } from './test-command';
 
 debug.enable('anki-pug*');
 rootLogger('debug enabled from', __filename);
@@ -27,7 +30,7 @@ program.command('test')
   .option('-m|--model-dir <path>', 'The directory which contains the models templates — the pug files.')
   .option('-d|--directory <path>', 'The folder in which to store the test files, default <model-dir>/../tests/ .')
   .action(async (parsedArgs: { modelDir?: string; directory?: string }) => {
-    const argv: Partial<AnkiPugConfig> = {};
+    const argv: Partial<AnkiPugTestConfig> = {};
     if (parsedArgs.modelDir) argv.modelsPath = parsedArgs.modelDir;
     if (parsedArgs.directory) argv.testsPath = parsedArgs.directory;
     await test(argv);
