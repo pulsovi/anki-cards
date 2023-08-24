@@ -21,7 +21,7 @@ export default class ModuleLoader<U> {
     moduleName?: string
   ) {
     this.modulePath = modulePath;
-    this.moduleName = moduleName;
+    if (moduleName) this.moduleName = moduleName;
   }
 
   public getModulePath (): string {
