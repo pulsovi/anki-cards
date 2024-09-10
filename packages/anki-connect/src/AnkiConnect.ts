@@ -135,14 +135,16 @@ export default class AnkiConnect {
   }
 
   private async request<T extends API.BaseAPI> (
-    parameters: API.RequestParameters<T>
+    parameters: API.RequestParameters<T>,
+    attempts = 0
   ): Promise<API.RequestResult<T>> {
     const response = await axios
-      .post(this.url, JSON.stringify({ ...parameters, version: this.version }))
-      .catch((err: Error) => { throw new Error(err.message); });
+      .post(this.url, JSON.stringify({ ...parameters, version: this.version }), { timeout: 100000 })
+      .catch((err: Error) => ({ data: { error: err }}));
     const { error, result } = response.data as API.RequestResponse<T>;
 
     if (error === null) return result;
+    if (attempts < 3) return await this.request(parameters, attempts + 1);
     throw new Error(error);
   }
 

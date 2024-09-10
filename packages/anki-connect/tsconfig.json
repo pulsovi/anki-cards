@@ -3,6 +3,7 @@
   "include": ["src/**/*", "tests/**/*"],
   "compilerOptions": {
     "lib": ["es2021"],
-    "declarationDir": "./types"
+    "declarationDir": "./types",
+    "sourceMap": true
   }
 }
