@@ -12,8 +12,9 @@ export default class ErrorHandler extends ModelItemDiffMenuItem {
     data.forEach(item => { if (item instanceof Error) console.info(item, '\n'); });
 
     const response = await inquirer.prompt({
-      type: 'confirm',
       message: 'Reessayer ?',
+      name: 'error handler',
+      type: 'confirm',
     });
     console.info({ response });
     todo();

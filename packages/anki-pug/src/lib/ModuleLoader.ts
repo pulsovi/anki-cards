@@ -20,7 +20,8 @@ export default class ModuleLoader<U> {
     modulePath: string,
     moduleName?: string
   ) {
-    this.modulePath = modulePath;
+    //this.modulePath = modulePath;
+    this.modulePath = `file:///${modulePath.replace(/\\/gu, '/')}`;
     if (moduleName) this.moduleName = moduleName;
   }
 

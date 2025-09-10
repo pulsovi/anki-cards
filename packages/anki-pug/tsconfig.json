@@ -3,6 +3,15 @@
   "include": ["src/**/*", "tests/**/*"],
   "compilerOptions": {
     "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+
+    /**
+     * décommenter cette ligne pendant le développement et la remettre en
+     * commentaire au moment du commit, sinon le pre-commit flanche
+     *
+     * Une fois que toutes les erreurs levées par cette ligne seront corrigées,
+     * on la laissera dans le code final
+     */
+    "exactOptionalPropertyTypes": true
   }
 }

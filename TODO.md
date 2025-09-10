@@ -1,3 +1,4 @@
+- [ ] Séparer les packages en plusieurs projets git distincts
 [ ] Supprimer les fichiers / dossiers inutiles à la racine du monorepo
   * [ ] Déplacer le contenu du dossier `config` en tant que configuration par défaut dans les packages ad-hoc
   * [ ] `/model` 

@@ -50,7 +50,7 @@ function getConfig<T> (
   schema?: Joi.AnySchema<T>,
   defaults?: object | ((raw: object) => object)
 ): T | object {
-  const rcResult = rc(appName, jsonClone(defaults, true), argv, loadYaml);
+  const rcResult = rc(appName, null, argv, loadYaml);
   const { '--': __, _, config, configs, ...rawResult } = rcResult;
 
   // add configPath

@@ -71,7 +71,7 @@ export default abstract class ModelItem<T extends ModelItemType = ModelItemType>
   }
 
   /** Return the compiled contents of the pug version of this model item */
-  public abstract getCompiledPug (syncer?: TaskSyncer): Promise<T>;
+  public abstract getCompiledPug (syncer?: TaskSyncer): Promise<T|Error>;
 
   /**
    * Assign in Anki the provided content for this item

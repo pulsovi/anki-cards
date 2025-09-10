@@ -48,12 +48,14 @@ export default class ModelItemStyle extends ModelItem<string> {
       .catch(error => error as Error);
   }
 
-  public async getCompiledPug (): Promise<string> {
-    if (path.extname(this.src) === '.css') return await fs.readFile(this.src, 'utf8');
+  public async getCompiledPug (): Promise<Error | string> {
+    if (path.extname(this.src) === '.css') {
+      return await fs.readFile(this.src, 'utf8').catch(error => error);
+    }
     throw new Error(`Impossible de compiler ce type de fichier ${this.src}`);
   }
 
   public async setAnki (data: string): Promise<void> {
-    await this.ankiConnection.updateModelStyling({ modelName: this.model, css: data });
+    await this.ankiConnection.updateModelStyling({ css: data, modelName: this.model });
   }
 }
